@@ -1,0 +1,278 @@
+import React from 'react';
+import BasePage from "../../base/BasePage";
+
+import TablePagePresenter from '../../presenters/TablePagePresenter';
+import Table from "../../components/Table";
+import AddField from "./components/AddField";
+import {addSchemaUseCase, updateSchemaUseCase, deleteSchemaUseCase} from '../../domain/schema/usecases';
+import {findObjectUseCase} from '../../domain/object/usecases';
+import {exportCSVUseCase} from '../../domain/csv/usecases';
+
+import {Link} from "react-router-dom";
+import Search from "./components/Search";
+import dialog from "../../components/Modal/dialog";
+import AddCLass from "./components/AddClass";
+import DeleteClass from "./components/DeleteClass";
+import DeleteField from "./components/DeleteField";
+import Progress from "../../components/Progress";
+import NavBar from "../../components/NavBar";
+
+
+class TablePage extends BasePage {
+    constructor(props) {
+        super(props);
+        this.presenter = new TablePagePresenter(
+            this,
+            findObjectUseCase(),
+            addSchemaUseCase(),
+            updateSchemaUseCase(),
+            exportCSVUseCase(),
+            deleteSchemaUseCase(),
+        );
+        this.state = {
+            objects: [],
+            selected: [],
+            progress: true,
+            count: 0,
+        };
+    }
+
+    componentDidMount() {
+        this.presenter.componentDidMount();
+    }
+
+    /*when class change*/
+    componentDidUpdate(prevProps, prevState) {
+        this.presenter.componentDidUpdate(prevProps, prevState);
+    }
+
+    getClassName() {
+        return this.props.match.params.name;
+    }
+
+    addClassSubmit(schema, e) {
+        e.preventDefault();
+        this.presenter.addClassSubmit(schema);
+    }
+
+    editClassClick(schema, e) {
+        e.preventDefault();
+        this.presenter.editClassClick(schema);
+    }
+
+    addFieldSubmit(field, e) {
+        e.preventDefault();
+        this.presenter.addFieldSubmit(field);
+    }
+
+    deleteClassSubmit(schema, e) {
+        e.preventDefault();
+        this.presenter.deleteClassSubmit(schema.name);
+    }
+
+    deleteFieldSubmit(field, e) {
+        e.preventDefault();
+        dialog.close();
+        this.presenter.deleteFieldSubmit(field.name);
+    }
+
+    addFieldClick() {
+        const field = {};
+        dialog.fire({
+            title: 'Add a new field',
+            html: <AddField
+                object={field}
+                onSubmit={this.addFieldSubmit.bind(this, field)}
+                onCancel={() => dialog.close()}/>,
+            footer: false,
+        });
+    }
+
+    closeDialog() {
+        dialog.close();
+    }
+
+    addClassClick() {
+        const schema = {};
+        dialog.fire({
+            title: 'Add a new class',
+            html: <AddCLass
+                object={schema}
+                onSubmit={this.addClassSubmit.bind(this, schema)}
+                onCancel={() => dialog.close()}/>,
+            footer: false
+        });
+    }
+
+    deleteFieldClick() {
+        const field = {};
+        const schema = this.getSchema(this.getClassName());
+        dialog.fire({
+            title: 'Delete a field?',
+            html: <DeleteField
+                fields={Object.keys(schema.fields)}
+                object={field}
+                onSubmit={this.deleteFieldSubmit.bind(this, field)}
+                onCancel={() => dialog.close()}/>,
+            footer: false
+        });
+    }
+
+    deleteClassClick() {
+        const schema = this.getSchema(this.getClassName());
+        dialog.fire({
+            title: 'Delete this class?',
+            html: <DeleteClass
+                object={schema}
+                onSubmit={this.deleteClassSubmit.bind(this, schema)}
+                onCancel={() => dialog.close()}/>,
+            footer: false
+        });
+    }
+
+
+    setObjects(objects) {
+        return this.setStatePromise({objects});
+    }
+
+    getObjects() {
+        return this.state.objects;
+    }
+
+    getSelected() {
+        return this.state.selected;
+    }
+
+    setSelected(selected) {
+        this.setState({selected});
+    }
+
+    showProgress() {
+        this.setState({progress: true});
+    }
+
+    hideProgress() {
+        this.setState({progress: false});
+    }
+
+    onItemClick(index, field) {
+        this.presenter.onItemClick(index, field);
+    }
+
+    navigateToForm(className, id) {
+        this.navigateTo("/class/" + className + "/form", {id});
+    }
+
+    searchSubmit(query) {
+        this.presenter.searchSubmit(query);
+    }
+
+    loadMore() {
+        this.presenter.loadMore();
+    }
+
+    setCount(count) {
+        return this.setStatePromise({count});
+    }
+
+    onSelect(index) {
+        this.presenter.onSelect(index);
+    }
+
+    onSelectAll(checked) {
+        this.presenter.onSelectAll(checked);
+    }
+
+    exportClick() {
+        this.presenter.exportClick();
+    }
+
+    render() {
+        const schema = this.getSchema(this.getClassName());
+        const {objects, selected, count} = this.state;
+        if (!schema) return <Progress/>;
+        return (
+            <>
+                <NavBar className="shadow-sm"/>
+                <div className="container px-lg-4 py-lg-3 mt-3">
+                    <Search
+                        onSubmit={this.searchSubmit.bind(this)}
+                        fields={schema.fields}/>
+                    <div className="d-flex justify-content-end mt-3">
+                        <Link
+                            to={'/class/' + this.getClassName() + '/form'}
+                            type="button"
+                            className="btn btn-dark btn-sm shadow-none">
+                            <i className="bi bi-plus-circle"></i>
+                            <span className="fs-xs ms-1">ADD</span>
+                        </Link>
+                        <button
+                            onClick={this.exportClick.bind(this)}
+                            type="button"
+                            className="btn btn-dark btn-sm shadow-none ms-1">
+                            <i className="bi bi-box-arrow-up"></i>
+                            <span className="fs-xs ms-1">EXPORT</span>
+                        </button>
+                        <button type="button" className="btn btn-dark btn-sm shadow-none ms-1">
+                            <i className="bi bi-box-arrow-in-down"></i>
+                            <span className="fs-xs ms-1">IMPORT</span>
+                        </button>
+
+                        <div className="dropdown d-inline-block">
+                            <button
+                                type="button"
+                                className="btn btn-dark btn-sm shadow-none ms-1"
+                                data-bs-toggle="dropdown">
+                                <i className="bi bi-three-dots-vertical"></i>
+                                <span className="fs-xs ms-1">ACTIONS</span>
+                            </button>
+                            <div className="dropdown-menu dropdown-menu-right fs-xs">
+                                <button
+                                    onClick={this.addFieldClick.bind(this)}
+                                    className="dropdown-item">
+                                    Add a field
+                                </button>
+                                <button
+                                    onClick={this.deleteFieldClick.bind(this)}
+                                    className="dropdown-item">
+                                    Delete a field
+                                </button>
+                                <button
+                                    className="dropdown-item">
+                                    Delete selected rows
+                                </button>
+                                <div className="dropdown-divider"></div>
+                                <button
+                                    onClick={this.addClassClick.bind(this)}
+                                    className="dropdown-item">
+                                    Add a class
+                                </button>
+                                <button
+                                    onClick={this.editClassClick.bind(this)}
+                                    className="dropdown-item">
+                                    Edit this class
+                                </button>
+                                <button
+                                    onClick={this.deleteClassClick.bind(this)}
+                                    className="dropdown-item">
+                                    Delete this class
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <Table
+                        selected={selected}
+                        onSelect={this.onSelect.bind(this)}
+                        onSelectAll={this.onSelectAll.bind(this)}
+                        progress={objects.length < count}
+                        next={this.loadMore.bind(this)}
+                        onItemClick={this.onItemClick.bind(this)}
+                        fields={schema.fields}
+                        objects={objects}/>
+                </div>
+            </>
+        );
+    }
+}
+
+export default TablePage;

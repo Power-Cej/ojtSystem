@@ -1,0 +1,35 @@
+[
+  {
+    "icon": "i bi-fonts",
+    "command": "fontSize",
+    "value": 5
+  },
+  {
+    "icon": "bi bi-type-bold",
+    "command": "bold"
+  },
+  {
+    "icon": "bi bi-type-italic",
+    "command": "italic"
+  },
+  {
+    "icon": "bi bi-justify-left",
+    "command": "justifyLeft"
+  },
+  {
+    "icon": "bi bi-text-center",
+    "command": "justifyCenter"
+  },
+  {
+    "icon": "bi bi-justify-right",
+    "command": "justifyRight"
+  },
+  {
+    "icon": "bi bi-list-ul",
+    "command": "insertUnorderedList"
+  },
+  {
+    "icon": "bi bi-list-ol",
+    "command": "insertOrderedList"
+  }
+]

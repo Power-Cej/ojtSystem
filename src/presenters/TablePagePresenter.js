@@ -1,0 +1,196 @@
+class TablePagePresenter {
+    constructor(view, findObjectUseCase, addSchemaUseCase, updateSchemaUseCase, exportCSVUseCase, deleteSchemaUseCase) {
+        this.view = view;
+        this.findObjectUseCase = findObjectUseCase;
+        this.addSchemaUseCase = addSchemaUseCase;
+        this.updateSchemaUseCase = updateSchemaUseCase;
+        this.exportCSVUseCase = exportCSVUseCase;
+        this.deleteSchemaUseCase = deleteSchemaUseCase;
+        this.limit = 10;
+        this.current = 1;
+        this.count = 0;
+        this.objects = [];
+        this.where = {};
+    }
+
+    componentDidMount() {
+        this.init();
+    }
+
+    init() {
+        this.current = 1;
+        this.view.setCount(0)
+            .then(() => this.view.setObjects([]))
+            .then(() => this.getData());
+    }
+
+    componentDidUpdate(prevProps) {
+        const prevClassName = prevProps.match.params.name;
+        const newClassName = this.view.getClassName();
+        //if className change
+        if (prevClassName !== newClassName) {
+            this.init();
+        }
+    }
+
+    find() {
+        const className = this.view.getClassName();
+        const skip = (this.current - 1) * this.limit;
+        const query = {count: true, limit: this.limit, skip, where: this.where, include: ['all']};
+        return this.findObjectUseCase.execute(className, query);
+    }
+
+    getData() {
+        return this.find()
+            .then(({count, objects}) => {
+                if (count > 0) {
+                    this.view.setCount(count);
+                    this.view.setObjects(this.view.getObjects().concat(objects));
+                }
+            })
+            .catch(error => {
+                this.view.showError(error);
+            });
+    }
+
+
+    onItemClick(index) {
+        const objects = this.view.getObjects();
+        const object = objects[index];
+        const className = this.view.getClassName();
+        this.view.navigateToForm(className, object.id);
+    }
+
+    onSelect(index) {
+        const objects = this.view.getObjects();
+        const selectedObjects = this.view.getSelected();
+        const selected = objects[index];
+        const i = selectedObjects.indexOf(selected);
+        if (i > -1) {
+            selectedObjects.splice(i, 1);
+        } else {
+            selectedObjects.push(selected);
+        }
+        this.view.setSelected(selectedObjects);
+    }
+
+    searchSubmit(where) {
+        this.where = where;
+        this.init();
+    }
+
+    loadMore() {
+        this.current++;
+        this.getData();
+    }
+
+    updateSchema(schema) {
+        this.updateSchemaUseCase.execute(schema)
+            .then(() => {
+
+            })
+            .catch(error => {
+                this.view.showError(error.message);
+            })
+    }
+
+    onSelectAll(checked) {
+        const objects = this.view.getObjects();
+        if (checked) {
+            this.view.setSelected([...objects]);
+        } else {
+            this.view.setSelected([]);
+        }
+    }
+
+    exportClick() {
+        const objects = this.view.getSelected();
+        const className = this.view.getClassName();
+        this.exportCSVUseCase.execute(objects, className)
+            .then(() => {
+                //hide progress
+            });
+    }
+
+    addFieldSubmit(field) {
+        const className = this.view.getClassName();
+        const schemas = this.view.getSchemas();
+        const index = schemas.findIndex(s => s.name === className);
+        const {name, ...options} = field;
+        schemas[index]['fields'][name] = options;
+        this.updateSchemaUseCase.execute(schemas[index])
+            .then(() => {
+                this.view.setSchemas(schemas);
+                this.view.closeDialog();
+            })
+            .catch(error => {
+                this.view.showError(error);
+            });
+    }
+
+    deleteFieldSubmit(field) {
+        const className = this.view.getClassName();
+        const schema = this.view.getSchema(className);
+        delete schema['fields'][field];
+        this.updateSchemaUseCase.execute(schema)
+            .then(() => {
+                this.view.forceUpdate();
+                this.view.closeDialog();
+            })
+            .catch(error => {
+                this.view.showError(error);
+            });
+    }
+
+    addClassSubmit(schema) {
+        this.view.closeDialog();
+        this.addSchemaUseCase.execute(schema)
+            .then(schema => {
+                const schemas = this.view.getSchemas();
+                schemas.push(schema);
+                this.view.setSchemas(schemas);
+                this.view.navigateTo("/class/" + schema.name);
+            })
+            .catch(error => {
+                this.view.showError(error);
+            });
+    }
+
+    editClassClick(schema) {
+        this.view.closeDialog();
+        this.updateSchemaUseCase.execute(schema)
+            .then(schema => {
+                // const schemas = this.view.getSchemas();
+                // schemas.push(schema);
+                // this.view.setSchemas(schemas);
+                // this.view.navigateTo("/class/" + schema.name);
+            })
+            .catch(error => {
+                this.view.showError(error);
+            });
+    }
+
+    deleteClassSubmit(className) {
+        if (className !== this.view.getClassName()) {
+            this.view.closeDialog();
+            this.view.showError('Please enter correct Class name');
+            return;
+        }
+        this.deleteSchemaUseCase.execute(className)
+            .then(() => {
+                this.view.closeDialog();
+                const schemas = this.view.getSchemas();
+                const index = schemas.findIndex(s => s.className === className);
+                schemas.splice(index, 1);
+                this.view.setSchemas(schemas);
+                this.view.navigateToClass(schemas[0].className);
+            })
+            .catch(error => {
+                this.view.closeDialog();
+                this.view.showError(error);
+            });
+    }
+
+}
+
+export default TablePagePresenter;
