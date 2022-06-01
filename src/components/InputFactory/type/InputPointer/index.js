@@ -9,9 +9,9 @@ import getSchemaByClass from '../../../../getSchemaByClass';
 import objectToOption from "../InputRelation/objectToOption";
 // possible to reuse the InputRelations with props isMulti
 // for not dependent to each other it's ok for now
-function InputPointer({className, field, object, target}) {
-    const {schemas} = React.useContext(Context);
-    const schema = getSchemaByClass(schemas, target);
+function InputPointer({className, field, object, target, schemas}) {
+    const context = React.useContext(Context);
+    const schema = getSchemaByClass(context.schemas || schemas, target);
     const indexes = React.useMemo(() => {
         const i = getIndexes(schema.fields);
         return i.length > 0 ? i : ['name'];

@@ -10,7 +10,7 @@ class SchemaNetwork {
     }
 
     addSchema(schema) {
-        return this.rest.request('POST', ENDPOINT, schema);
+        return this.rest.request('POST', ENDPOINT, {body:schema});
     }
 
     getSchema(className) {
@@ -18,7 +18,7 @@ class SchemaNetwork {
     }
 
     updateSchema(className, schema) {
-        return this.rest.request('PUT', ENDPOINT + className, schema);
+        return this.rest.request('PUT', ENDPOINT + className, {body:schema});
     }
 
     deleteSchema(className) {

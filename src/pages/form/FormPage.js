@@ -1,10 +1,10 @@
 import BasePage from "../../base/BasePage";
-import {withContext} from '../../AppContext';
-import FormPagePresenter from "../../presenters/FormPagePresenter";
+import FormPagePresenter from "./FormPagePresenter";
 import getSchemaByClass from "../../getSchemaByClass";
 import InputFactory from "../../components/InputFactory";
-import {saveObjectUseCase, findObjectUseCase, updateObjectUseCase} from '../../domain/object/usecases';
+import {saveObjectUseCase, findObjectUseCase, updateObjectUseCase} from '../../domain/object';
 import NavBar from "../../components/NavBar";
+import withContext from "../../withContext";
 
 class FormPage extends BasePage {
     constructor(props) {
@@ -18,12 +18,11 @@ class FormPage extends BasePage {
     }
 
     getClassName() {
-        return this.props.match.params.name;
+        return this.props.params.name;
     }
 
     getObjectId() {
-        const state = this.props.location.state;
-        return state && state.id ? state.id : undefined;
+        return this.props.params.id;
     }
 
     formSubmit(e) {
@@ -44,10 +43,6 @@ class FormPage extends BasePage {
         this.presenter.backClick();
     }
 
-    navigateBack() {
-        let className = this.getClassName();
-        this.props.history.push(`/class/${className}`);
-    }
 
     setObject(object) {
         this.setState({object});

@@ -3,7 +3,7 @@ import MainPagePresenter from './MainPagePresenter';
 import Menu from '../../components/Menu';
 import {getAllSchemasUseCase} from '../../domain/schema/usecases';
 import {getCurrentUserUseCase, signOutUseCase} from '../../domain/user';
-import {withContext} from '../../AppContext';
+import withContext from '../../withContext';
 import {Routes, Route} from 'react-router-dom';
 import OffCanvas from '../../components/OffCanvas';
 import TablePage from "../table/TablePage";
@@ -13,9 +13,9 @@ import NotFoundPage from "../notfound";
 import Layout from "../../components/Layout";
 import Progress from "../../components/Progress";
 import getProfile from "../../getProfile";
-import {findObjectUseCase} from "../../domain/object/usecases";
+import {findObjectUseCase} from "../../domain/object";
 import MigrationPage from "../migration/MigrationPage";
-import SignInPage from "../signin/SignInPage";
+import AccountPage from "../account/AccountPage";
 
 
 class MainPage extends BasePage {
@@ -48,7 +48,7 @@ class MainPage extends BasePage {
                         <div className="text-center">
                             <img className="img-fluid rounded-circle img-thumbnail p-0 m-2"
                                  src={getProfile(user)} width="80" height="80" alt="profile"/>
-                            <p className="text-white">{user.name}</p>
+                            <p className="text-white">{user.name || user.username}</p>
                         </div>
                         <hr className="dropdown-divider bg-light"/>
                         <Menu
@@ -58,9 +58,10 @@ class MainPage extends BasePage {
                 <main className="vh-100 d-flex flex-column">
                     <Routes>
                         <Route exact path={'/class/:name'} element={<TablePage/>}/>
-                        <Route path={'/class/:name/form'} element={<FormPage/>}/>
+                        <Route path={'/class/:name/form/'} element={<FormPage/>}/>
+                        <Route path={'/class/:name/form/:id'} element={<FormPage/>}/>
                         <Route path={'/migration'} element={<MigrationPage/>}/>
-                        <Route path={'/migration'} element={<MigrationPage/>}/>
+                        <Route path={'/account'} element={<AccountPage/>}/>
                         <Route element={<NotFoundPage/>}/>
                     </Routes>
                 </main>

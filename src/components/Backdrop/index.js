@@ -5,7 +5,7 @@ import React from "react";
 function Backdrop(props) {
     const [isOpen, setOpen] = React.useState(props.isOpen);
     const element = React.useMemo(() => {
-        const element = document.createElement('div';
+        const element = document.createElement('div');
         document.body.appendChild(element);
         return element;
     }, []);

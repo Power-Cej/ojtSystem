@@ -3,12 +3,9 @@ import BasePage from "../../base/BasePage";
 import {Link} from "react-router-dom";
 import InputString from "../../components/InputFactory/type/InputString";
 import InputPassword from "../../components/InputFactory/type/InputPassword";
-import SignUpPresenter from "../../presenters/SignUpPresenter";
+import SignUpPresenter from "./SignUpPresenter";
 import {signUpUseCase} from "../../domain/user";
 import Button from "../../components/Button";
-import Animate from "../../components/Animate";
-import workAnimation from "../../lotties/programmer-work.json";
-import ScrollToTop from "../../ScrollToTop";
 
 class SignUpPage extends BasePage {
     constructor(props) {
@@ -32,9 +29,66 @@ class SignUpPage extends BasePage {
 
     render() {
         const {user} = this.state;
+        if (true) {
+            return (
+                <div className="vh-100">
+                    <div className="container d-flex h-100">
+                        <div className="bg-white shadow rounded m-auto">
+                            <div className="p-4 p-lg-5">
+                                <div className="text-center py-4">
+                                    <img src="/assets/images/logo.svg" width="175px"/>
+                                </div>
+                                <form className="mb-4" onSubmit={this.formSubmit.bind(this)}>
+                                    <div className="row g-3 mb-3">
+                                        <div className="col-md-12">
+                                            <label className="form-label fs-sm">Email Address</label>
+                                            <InputString
+                                                required
+                                                type="email"
+                                                autoComplete="nope"
+                                                className="form-control"
+                                                placeholder="Email Address"
+                                                field="email"
+                                                object={user}/>
+                                        </div>
+                                        <div className="col-md-12">
+                                            <label className="form-label fs-sm">Password</label>
+                                            <InputPassword
+                                                required
+                                                className="form-control"
+                                                placeholder="Password"
+                                                field="password"
+                                                object={user}
+                                            />
+                                        </div>
+                                        <div className="col-md-12">
+                                            <label className="form-label fs-sm">Confirm Password</label>
+                                            <InputPassword
+                                                required
+                                                className="form-control"
+                                                placeholder="Password"
+                                                field="confirmPassword"
+                                                object={user}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="text-center">
+                                        <Button
+                                            progress={this.state.progress}
+                                            type="submit"
+                                            className="btn-primary w-50">
+                                            {this.state.progress ? 'Please wait...' : 'SIGNUP'}
+                                        </Button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )
+        }
         return (
             <React.Fragment>
-                <ScrollToTop/>
                 <div className="vh-100 vw-100 position-absolute">
                     <div className="h-100 d-flex">
                         <div className="container my-auto py-3">
@@ -47,9 +101,6 @@ class SignUpPage extends BasePage {
                                                      src="/logo-banner.svg" alt="logo"/>
                                                 <p className="mb-0">We are more than just a community.<br/>
                                                     Change the nation through your Language.</p>
-                                                <Animate
-                                                    width="70%"
-                                                    animationData={workAnimation}/>
                                             </div>
                                         </div>
                                     </div>

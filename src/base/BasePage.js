@@ -127,17 +127,17 @@ class BasePage extends React.Component {
     }
 
     navigateTo(url, argument) {
-        const {history} = this.props;
-        if (history) {
-            history.push(url, argument);
+        const params = new URLSearchParams(argument).toString();
+        const navigate = this.props.navigate;
+        if (navigate) {
+            navigate(url);
         } else {
             document.location.href = url;
         }
     }
 
     navigateBack() {
-        const {history} = this.props;
-        history.goBack();
+        this.navigateTo(-1);
     }
 
     navigateToClass(className) {

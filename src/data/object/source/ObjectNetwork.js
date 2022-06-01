@@ -6,7 +6,7 @@ class ObjectNetwork {
     }
 
     saveObject(className, object) {
-        return this.rest.request('POST', ENDPOINT + className, object);
+        return this.rest.request('POST', ENDPOINT + className, {body: object});
     }
 
     getObject(className, id) {
@@ -14,7 +14,7 @@ class ObjectNetwork {
     }
 
     findObject(className, query, session) {
-        return this.rest.request('GET', ENDPOINT + className, query, undefined, session);
+        return this.rest.request('GET', ENDPOINT + className, {query, session});
     }
 
     deleteObject(className, id) {
@@ -22,7 +22,7 @@ class ObjectNetwork {
     }
 
     updateObject(className, object, query, session) {
-        return this.rest.request('PUT', ENDPOINT + className, object, query, session);
+        return this.rest.request('PUT', ENDPOINT + className, {body: object, query, session});
     }
 }
 

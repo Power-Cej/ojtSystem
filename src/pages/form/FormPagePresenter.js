@@ -1,4 +1,4 @@
-import changes from "../changes";
+import changes from "../../changes";
 
 class FormPagePresenter {
     constructor(view, saveObjectUseCase, findObjectUseCase, updateObjectUseCase) {
@@ -45,6 +45,7 @@ class FormPagePresenter {
                     this.view.hideProgress();
                     this.view.showSuccessSnackbar("Successfully updated!");
                     this.view.navigateBack();
+
                 })
                 .catch(error => {
                     this.view.hideProgress();

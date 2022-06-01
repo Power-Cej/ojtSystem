@@ -3,7 +3,7 @@ class SignUpPresenter {
         this.view = view;
         this.signUpUseCase = signUpUseCase;
     }
-    
+
     submit({email, password, confirmPassword, ...others}) {
         if (password !== confirmPassword) {
             this.view.showError('password must be the same');
@@ -25,6 +25,7 @@ class SignUpPresenter {
                     });
             })
             .catch(error => {
+                this.view.hideProgress();
                 this.view.showError(error);
             });
     }

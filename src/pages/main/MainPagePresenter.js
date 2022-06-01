@@ -20,7 +20,6 @@ class MainPagePresenter {
             .then(user => {
                 this.view.hideProgress();
                 this.view.setCurrentUser(user);
-                this.getSubscriptions(user);
                 this.getSchema();
             })
             .catch(error => {
@@ -33,16 +32,6 @@ class MainPagePresenter {
             });
     }
 
-    getSubscriptions(user) {
-        const query = {
-            where: {user: {id: user.id}},
-            include: ['plan']
-        };
-        this.findSubscription.execute('subscriptions', query)
-            .then(subscriptions => {
-                this.view.setSubscription(subscriptions[0] || false);
-            });
-    }
 
     getSchema() {
         this.getSchemaUseCase.execute()

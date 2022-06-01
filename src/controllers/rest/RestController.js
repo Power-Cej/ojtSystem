@@ -77,8 +77,10 @@ class RestController {
             .then(() => this.writeHeader())
             .then(() => this.getUrl(path));
     }
-
     request(method, path, args) {
+        if(args && args.body){
+            args.body = JSON.stringify(args.body);
+        }
         return this.init(path)
             .then((url) => this.send(url, {method, ...args}));
     }

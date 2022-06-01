@@ -15,11 +15,7 @@ class SignInPresenter {
         Promise.resolve()
             .then(() => this.signInUseCase.execute(user))
             .then((user) => {
-                if(user.emailVerified){
-                    this.view.navigateTo('/');
-                }else{
-                    this.view.navigateTo('/verify', {transition:'slide-left',...user});
-                }
+                this.view.navigateTo('/');
             })
             .catch(error => {
                 this.view.hideProgress();

@@ -1,5 +1,6 @@
 import React from "react";
 import BasePage from "../../base/BasePage";
+import withContext from "../../withContext";
 import InputPassword from "../../components/InputFactory/type/InputPassword";
 import SignInPresenter from "./SignInPresenter";
 import {signInUseCase} from "../../domain/user";
@@ -13,14 +14,14 @@ class SignInPage extends BasePage {
         this.presenter = new SignInPresenter(this, signInUseCase());
         this.state = {user: {}, progress: false};
     }
-    
+
     formSubmit(e) {
         e.preventDefault();
         this.presenter.submit(this.state.user);
     }
 
     getMasterKey() {
-        return this.props.match.params.masterKey;
+        return this.props.params && this.props.params.masterKey;
     }
 
     showProgress() {
@@ -89,4 +90,4 @@ class SignInPage extends BasePage {
     }
 }
 
-export default SignInPage;
+export default withContext(SignInPage);

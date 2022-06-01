@@ -7,6 +7,7 @@ function noop() {
 
 const defaultProps = {
     onChange: noop,
+    id: 'check-default'
 };
 
 const Checkbox = React.forwardRef(function Checkbox({className, id, onChange, checked, label, ...props}, ref) {

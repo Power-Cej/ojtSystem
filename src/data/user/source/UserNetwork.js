@@ -4,11 +4,11 @@ class UserNetwork {
     }
 
     signIn(user) {
-        return this.rest.request('POST', '/signin', user);
+        return this.rest.request('POST', '/signin', {body: user});
     }
 
     signUp(user) {
-        return this.rest.request('POST', '/signup', user);
+        return this.rest.request('POST', '/signup', {body: user});
     }
 
     signOut() {

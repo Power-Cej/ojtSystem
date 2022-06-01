@@ -1,6 +1,8 @@
-import {findObjectUseCase} from "../../../../domain/object/usecases";
+import {findObjectUseCase} from "../../../../domain/object";
 import objectToOption from "./objectToOption";
+
 const find = findObjectUseCase();
+
 function GetOption(targetClass, indexes, key, callback) {
     this.query = {count: true, limit: 20, where: {}};
     if (key && indexes.length > 0) {

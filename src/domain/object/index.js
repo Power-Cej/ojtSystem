@@ -1,4 +1,4 @@
-import repository from '../../../data/object';
+import repository from '../../data/object';
 import SaveObjectUseCase from './SaveObjectUseCase';
 import FindObjectUseCase from './FindObjectUseCase';
 import UpdateObjectUseCase from './UpdateObjectUseCase';

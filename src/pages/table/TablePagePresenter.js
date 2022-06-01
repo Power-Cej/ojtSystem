@@ -25,7 +25,7 @@ class TablePagePresenter {
     }
 
     componentDidUpdate(prevProps) {
-        const prevClassName = prevProps.match.params.name;
+        const prevClassName = prevProps.params.name;
         const newClassName = this.view.getClassName();
         //if className change
         if (prevClassName !== newClassName) {
@@ -156,14 +156,12 @@ class TablePagePresenter {
             });
     }
 
-    editClassClick(schema) {
+    editClassSubmit(schema) {
         this.view.closeDialog();
         this.updateSchemaUseCase.execute(schema)
             .then(schema => {
-                // const schemas = this.view.getSchemas();
-                // schemas.push(schema);
-                // this.view.setSchemas(schemas);
-                // this.view.navigateTo("/class/" + schema.name);
+                const schemas = this.view.getSchemas();
+                this.view.setSchemas(schemas);
             })
             .catch(error => {
                 this.view.showError(error);
@@ -191,6 +189,9 @@ class TablePagePresenter {
             });
     }
 
+    addClick() {
+        this.view.navigateToForm(this.view.getClassName());
+    }
 }
 
 export default TablePagePresenter;
