@@ -7,15 +7,23 @@ import InputImage from "./type/InputImage";
 import InputText from "./type/InputText";
 import InputDate from "./type/InputDate";
 import InputNumber from "./type/InputNumber";
+import InputSelect from "./type/InputSelect";
 
-function InputFactory({type, field, object, ...options}) {
-    switch (type) {
+function InputFactory({type, _type, field, object, ...options}) {
+    switch (_type || type) {
         case 'Email':
         case 'String':
             return <InputString
                 field={field}
                 type={type.toLowerCase()}
                 object={object}
+                {...options}/>;
+        case 'Enum':
+            return <InputSelect
+                field={field}
+                type={type.toLowerCase()}
+                object={object}
+                options={options.values}
                 {...options}/>;
         case 'Number':
         case 'Tel':

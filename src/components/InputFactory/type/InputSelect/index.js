@@ -1,6 +1,6 @@
 import classNames from "../../../../classNames";
 
-function InputSelect({className, field, object, options, onChange, ...props}) {
+function InputSelect({className, field, object, options=[], onChange, ...props}) {
     const classes = classNames('form-select fs-sm', className);
 
     function change(e) {
@@ -8,13 +8,13 @@ function InputSelect({className, field, object, options, onChange, ...props}) {
         object[field] = value;
         onChange && onChange(value);
     }
-
+    const value = object[field];
     return (
         <select
             className={classes}
             onChange={change}
             {...props}
-            defaultValue="">
+            defaultValue={value}>
             <option value="" disabled>
                 Select {field}
             </option>

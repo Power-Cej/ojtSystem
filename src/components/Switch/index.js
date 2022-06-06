@@ -14,7 +14,16 @@ const Switch = React.forwardRef(function Switch({className, id, onChange, checke
     const classes = classNames('form-check form-switch', className);
     return (
         <div className={classes}>
-            <input className="form-check-input" type="checkbox" role="switch" id={id}/>
+            <input
+                className="form-check-input"
+                type="checkbox"
+                role="switch"
+                ref={ref}
+                checked={checked}
+                onChange={(e) => onChange(e.target.checked)}
+                id={id}
+                {...props}
+            />
             <label className="form-check-label" htmlFor={id}>{label}</label>
         </div>
     );

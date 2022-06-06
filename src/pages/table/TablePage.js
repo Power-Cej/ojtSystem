@@ -62,7 +62,7 @@ class TablePage extends BasePage {
         dialog.fire({
             title: 'Edit a class',
             html: <AddCLass
-                object={schema}
+                schema={schema}
                 onSubmit={onSubmit.bind(this, schema)}
                 onCancel={() => dialog.close()}/>,
             footer: false
@@ -92,7 +92,7 @@ class TablePage extends BasePage {
         dialog.fire({
             title: 'Add a new field',
             html: <AddField
-                object={field}
+                field={field}
                 schemas={schemas.map(s => s.name)}
                 onSubmit={onSubmit.bind(this, field)}
                 onCancel={() => dialog.close()}/>,
@@ -109,7 +109,7 @@ class TablePage extends BasePage {
         dialog.fire({
             title: 'Add a new class',
             html: <AddCLass
-                object={schema}
+                schema={schema}
                 onSubmit={this.addClassSubmit.bind(this, schema)}
                 onCancel={() => dialog.close()}/>,
             footer: false

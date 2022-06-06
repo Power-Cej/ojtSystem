@@ -28,7 +28,7 @@ function InputPointer({className, field, object, target, schemas}) {
     function loadOptions(key, callback) {
         new GetOption(target, indexes, key, callback);
     }
-
+    
     function onChange(values) {
         setValues(values);
         object[field] = optionToObject(values);

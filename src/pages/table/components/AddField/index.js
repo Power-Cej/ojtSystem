@@ -1,17 +1,24 @@
 import React from "react";
 import InputString from "../../../../components/InputFactory/type/InputString";
 import InputSelect from "../../../../components/InputFactory/type/InputSelect";
+import InputArray from "../../../../components/InputFactory/type/InputArray";
 
-const options = ['String', 'Number', 'Boolean', 'Date', 'Object', 'Array', 'Pointer', 'Relation', 'Image'];
+const options = ['String', 'Number', 'Boolean', 'Date', 'Object', 'Array', 'Pointer', 'Relation', 'Image', 'Enum'];
 
 
-function AddField({object, onSubmit, onCancel, schemas}) {
+function AddField({field, onSubmit, onCancel, schemas}) {
     const [isPointer, setPointer] = React.useState(false);
+    const [isEnum, setEnum] = React.useState(false);
 
     function onChange(value) {
         setPointer(value === 'Pointer');
+        if (value === 'Enum') {
+            setEnum(true);
+            field['type'] = 'String';
+            field['_type'] = 'Enum';
+        }
     }
-    
+
     return (
         <div className="p-3 pb-4">
             <form onSubmit={onSubmit}>
@@ -23,7 +30,7 @@ function AddField({object, onSubmit, onCancel, schemas}) {
                             field="name"
                             placeholder="give it a good name"
                             required
-                            object={object}/>
+                            object={field}/>
                     </div>
                     <div className="col-md-12">
                         <label className="form-label fs-sm">field type</label>
@@ -33,7 +40,7 @@ function AddField({object, onSubmit, onCancel, schemas}) {
                             field="type"
                             options={options}
                             required
-                            object={object}/>
+                            object={field}/>
                     </div>
                     {
                         isPointer && (
@@ -44,11 +51,22 @@ function AddField({object, onSubmit, onCancel, schemas}) {
                                     field="target"
                                     options={schemas}
                                     required
-                                    object={object}/>
+                                    object={field}/>
                             </div>
                         )
                     }
-
+                    {
+                        isEnum && (
+                            <div className="col-md-12">
+                                <label className="form-label fs-sm">values</label>
+                                <InputArray
+                                    className="form-control form-control"
+                                    field="values"
+                                    required
+                                    object={field}/>
+                            </div>
+                        )
+                    }
                     <div className="col-md-12 text-end">
                         <button
                             type="submit"
