@@ -1,5 +1,8 @@
+import localSchemas from "../../schemas.json";
+import mergeSchema from "../../mergeSchema";
+
 /**
- * responsible for get the current user and current subscriptions schema
+ * responsible for get the current user and current roles and schemas
  */
 class MainPagePresenter {
     constructor(view, getCurrentUserUseCase, findSubscription, signOutUseCase, getSchemaUseCase) {
@@ -35,7 +38,8 @@ class MainPagePresenter {
 
     getSchema() {
         this.getSchemaUseCase.execute()
-            .then(schemas => {
+            .then(_schemas => {
+                const schemas = mergeSchema(localSchemas, _schemas);
                 this.view.setSchemas(schemas);
                 this.view.hideProgress();
             })

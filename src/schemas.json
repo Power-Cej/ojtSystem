@@ -1,0 +1,12 @@
+[
+  {
+    "name": "users",
+    "fields": {
+      "roles": {
+        "type": "ReverseRelation",
+        "target": "roles",
+        "field": "roles"
+      }
+    }
+  }
+]

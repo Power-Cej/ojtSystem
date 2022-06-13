@@ -16,7 +16,7 @@ function OffCanvas({children, signOutClick}) {
         setCollapse(true);
     }, [location, setCollapse])
 
-    const handleEvent = React.useCallback(()=>{
+    const handleEvent = React.useCallback(() => {
         const events = pointer.getEvents();
         const event = events[0];
         const offcanvas = ref.current;
@@ -42,7 +42,7 @@ function OffCanvas({children, signOutClick}) {
                 break;
             default:
         }
-    },[setCollapse])
+    }, [setCollapse])
 
     React.useEffect(() => {
         const offcanvas = ref.current;

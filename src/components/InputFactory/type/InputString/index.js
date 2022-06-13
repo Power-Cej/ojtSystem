@@ -7,7 +7,6 @@ const defaultProps = {
 
 function InputString({className, field, options, object, ...props}) {
     const classes = classNames('form-control', className);
-
     function onInput(e) {
         const value = e.target.value;
         object[field] = value;

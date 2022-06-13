@@ -8,7 +8,7 @@ import Context from "../../../../AppContext";
 import getIndexes from '../../../../getIndexes';
 import getSchemaByClass from '../../../../getSchemaByClass';
 
-function InputRelation({className, field, object, target}) {
+function InputReverseRelation({className, field, object, target}) {
     const {schemas} = React.useContext(Context);
     const schema = getSchemaByClass(schemas, target);
     const indexes = React.useMemo(() => {
@@ -53,4 +53,4 @@ function InputRelation({className, field, object, target}) {
     );
 }
 
-export default InputRelation;
+export default InputReverseRelation;

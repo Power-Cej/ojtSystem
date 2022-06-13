@@ -16,6 +16,8 @@ import getProfile from "../../getProfile";
 import {findObjectUseCase} from "../../domain/object";
 import MigrationPage from "../migration/MigrationPage";
 import AccountPage from "../account/AccountPage";
+import RolePage from "../role/RolePage";
+import UserFormPage from "../user/UserFormPage";
 
 
 class MainPage extends BasePage {
@@ -59,6 +61,10 @@ class MainPage extends BasePage {
                     <Routes>
                         <Route exact path={'/class/:name'} element={<TablePage/>}/>
                         <Route path={'/class/:name/form/'} element={<FormPage/>}/>
+                        <Route path={'/class/roles/form'} element={<RolePage/>}/>
+                        <Route path={'/class/roles/form/:id'} element={<RolePage/>}/>
+                        <Route path={'/class/users/form'} element={<UserFormPage/>}/>
+                        <Route path={'/class/users/form/:id'} element={<UserFormPage/>}/>
                         <Route path={'/class/:name/form/:id'} element={<FormPage/>}/>
                         <Route path={'/migration'} element={<MigrationPage/>}/>
                         <Route path={'/account'} element={<AccountPage/>}/>

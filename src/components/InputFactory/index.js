@@ -8,6 +8,7 @@ import InputText from "./type/InputText";
 import InputDate from "./type/InputDate";
 import InputNumber from "./type/InputNumber";
 import InputSelect from "./type/InputSelect";
+import InputReverseRelation from "./type/InputReverseRelation";
 
 function InputFactory({type, _type, field, object, ...options}) {
     switch (_type || type) {
@@ -52,6 +53,12 @@ function InputFactory({type, _type, field, object, ...options}) {
 
         case 'Relation':
             return <InputRelation
+                field={field}
+                type={type.toLowerCase()}
+                object={object}
+                {...options}/>;
+        case 'ReverseRelation':
+            return <InputReverseRelation
                 field={field}
                 type={type.toLowerCase()}
                 object={object}

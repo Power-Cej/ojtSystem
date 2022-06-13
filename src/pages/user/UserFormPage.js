@@ -1,16 +1,16 @@
 import BasePage from "../../base/BasePage";
-import FormPagePresenter from "./FormPagePresenter";
+import UserFormPagePresenter from "./UserFormPagePresenter";
 import getSchemaByClass from "../../getSchemaByClass";
 import InputFactory from "../../components/InputFactory";
 import {saveObjectUseCase, findObjectUseCase, updateObjectUseCase} from '../../domain/object';
 import NavBar from "../../components/NavBar";
 import withContext from "../../withContext";
 
-class FormPage extends BasePage {
+class UserFormPage extends BasePage {
     constructor(props) {
         super(props);
         this.state = {object: {}};
-        this.presenter = new FormPagePresenter(this, saveObjectUseCase(), findObjectUseCase(), updateObjectUseCase());
+        this.presenter = new UserFormPagePresenter(this, saveObjectUseCase(), findObjectUseCase(), updateObjectUseCase());
     }
 
     componentDidMount() {
@@ -18,7 +18,7 @@ class FormPage extends BasePage {
     }
 
     getClassName() {
-        return this.props.params.name;
+        return 'users';
     }
 
     getObjectId() {
@@ -104,4 +104,4 @@ class FormPage extends BasePage {
     }
 }
 
-export default withContext(FormPage);
+export default withContext(UserFormPage);
