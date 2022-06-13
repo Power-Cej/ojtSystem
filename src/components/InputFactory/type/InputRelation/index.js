@@ -1,7 +1,6 @@
 import React from 'react';
 import AsyncSelect from 'react-select/async';
 import classNames from "../../../../classNames";
-import optionToObject from './optionToObject';
 import objectToOption from './objectToOption';
 import GetOption from './GetOption';
 import Context from "../../../../AppContext";
@@ -22,6 +21,7 @@ function InputRelation({className, field, object, target}) {
     const [values, setValues] = React.useState([]);
     React.useEffect(() => {
         setValues(relations.map(obj => objectToOption(obj, indexes)));
+        object[field] = [];
     }, [relations, indexes]);
 
     function loadOptions(key, callback) {
@@ -29,11 +29,13 @@ function InputRelation({className, field, object, target}) {
     }
 
     function onChange(_values) {
-        let added = _values.filter(i => !values.find(o => o.value === i.value));
-        let removed = values.filter(i => !_values.find(o => o.value === i.value));
-        added = added.map(o => ({id: o.value}));
-        removed = removed.map(o => ({id: o.value, __operation: 'REMOVE'}));
-        object[field] = [...added, ...removed];
+        const added = _values
+            .filter(i => !values.includes(i))
+            .map(o => ({id: o.id}));
+        const removed = values.filter(i => !_values.includes(i))
+            .map(o => ({id: o.id, __operation: 'REMOVE'}));
+        const objects = [...added, ...removed];
+        object[field] = [...objects, ...object[field].filter(a => !objects.find(b => a.id === b.id))];
         setValues(_values);
     }
 

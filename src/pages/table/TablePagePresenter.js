@@ -1,7 +1,10 @@
+import {deleteObjectUseCase} from "../../domain/object";
+
 class TablePagePresenter {
-    constructor(view, findObjectUseCase, addSchemaUseCase, updateSchemaUseCase, exportCSVUseCase, deleteSchemaUseCase) {
+    constructor(view, findObjectUseCase, deleteObjectUseCase, addSchemaUseCase, updateSchemaUseCase, exportCSVUseCase, deleteSchemaUseCase) {
         this.view = view;
         this.findObjectUseCase = findObjectUseCase;
+        this.deleteObjectUseCase = deleteObjectUseCase;
         this.addSchemaUseCase = addSchemaUseCase;
         this.updateSchemaUseCase = updateSchemaUseCase;
         this.exportCSVUseCase = exportCSVUseCase;
@@ -191,6 +194,21 @@ class TablePagePresenter {
 
     addClick() {
         this.view.navigateToForm(this.view.getClassName());
+    }
+
+    deleteSelected() {
+        const objects = this.view.getObjects();
+        const selected = this.view.getSelected();
+        const collection = this.view.getClassName();
+        const promises = selected.map(o => this.deleteObjectUseCase.execute(collection, o.id));
+        Promise.all(promises)
+            .then(() => {
+                this.view.setObjects(objects.filter(o => !selected.includes(o)));
+            })
+            .catch(error => {
+                this.view.closeDialog();
+                this.view.showError(error);
+            });
     }
 }
 

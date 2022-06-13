@@ -3,7 +3,7 @@
     "name": "users",
     "fields": {
       "roles": {
-        "type": "ReverseRelation",
+        "type": "Relation",
         "target": "roles",
         "field": "roles"
       }

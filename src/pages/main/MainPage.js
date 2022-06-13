@@ -62,7 +62,7 @@ class MainPage extends BasePage {
                         <Route exact path={'/class/:name'} element={<TablePage/>}/>
                         <Route path={'/class/:name/form/'} element={<FormPage/>}/>
                         <Route path={'/class/roles/form'} element={<RolePage/>}/>
-                        <Route path={'/class/roles/form/:id'} element={<RolePage/>}/>
+                        {/*<Route path={'/class/roles/form/:id'} element={<RolePage/>}/>*/}
                         <Route path={'/class/users/form'} element={<UserFormPage/>}/>
                         <Route path={'/class/users/form/:id'} element={<UserFormPage/>}/>
                         <Route path={'/class/:name/form/:id'} element={<FormPage/>}/>

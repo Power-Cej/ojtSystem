@@ -4,7 +4,7 @@ import TablePagePresenter from './TablePagePresenter';
 import Table from "../../components/Table";
 import AddField from "./components/AddField";
 import {addSchemaUseCase, updateSchemaUseCase, deleteSchemaUseCase} from '../../domain/schema/usecases';
-import {findObjectUseCase} from '../../domain/object';
+import {deleteObjectUseCase, findObjectUseCase} from '../../domain/object';
 import {exportCSVUseCase} from '../../domain/csv/usecases';
 import Search from "./components/Search";
 import dialog from "../../components/Modal/dialog";
@@ -22,6 +22,7 @@ class TablePage extends BasePage {
         this.presenter = new TablePagePresenter(
             this,
             findObjectUseCase(),
+            deleteObjectUseCase(),
             addSchemaUseCase(),
             updateSchemaUseCase(),
             exportCSVUseCase(),
@@ -203,6 +204,10 @@ class TablePage extends BasePage {
         this.presenter.addClick();
     }
 
+    deleteSelected() {
+        this.presenter.deleteSelected();
+    }
+
     render() {
         const schema = this.getSchema(this.getClassName());
         const {objects, selected, count} = this.state;
@@ -255,6 +260,7 @@ class TablePage extends BasePage {
                                     Delete a field
                                 </button>
                                 <button
+                                    onClick={this.deleteSelected.bind(this)}
                                     className="dropdown-item">
                                     Delete selected rows
                                 </button>

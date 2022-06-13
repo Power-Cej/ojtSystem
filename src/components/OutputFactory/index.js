@@ -25,7 +25,7 @@ function OutputFactory({type, field, object, ...options}) {
                 object={object}
                 {...options}/>;
         default:
-            return <div/>;
+            return null;
     }
 }
 
