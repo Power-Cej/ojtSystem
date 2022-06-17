@@ -43,13 +43,6 @@ function InputFactory({type, _type, field, object, ...options}) {
                 type={type.toLowerCase()}
                 object={object}
                 {...options}/>;
-        case 'Password':
-            return <InputPassword
-                field={field}
-                type={type.toLowerCase()}
-                object={object}
-                {...options}/>;
-
         case 'Relation':
             return <InputRelation
                 field={field}
@@ -69,7 +62,7 @@ function InputFactory({type, _type, field, object, ...options}) {
                 object={object}
                 {...options}/>;
         default:
-            return <div/>;
+            return null;
     }
 }
 

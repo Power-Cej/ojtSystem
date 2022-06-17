@@ -112,12 +112,13 @@ class BasePage extends React.Component {
         this.context.setGlobalState({user});
     }
 
-    getSubscription() {
-        return this.context.subscription;
+    setRoles(roles) {
+        this.context.setGlobalState({roles});
     }
 
-    setSubscription(subscription) {
-        this.context.setGlobalState({subscription});
+
+    getRoles() {
+        return this.context.roles;
     }
 
     setStatePromise(object) {

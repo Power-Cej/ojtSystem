@@ -18,8 +18,8 @@ function InputString({className, field, options, object, ...props}) {
             defaultValue={value}
             className={classes}
             name={field}
-            onInput={onInput}
-            {...props}/>
+            placeholder={field}
+            onInput={onInput}/>
     )
 }
 

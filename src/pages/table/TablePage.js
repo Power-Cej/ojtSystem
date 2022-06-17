@@ -211,8 +211,8 @@ class TablePage extends BasePage {
     render() {
         const schema = this.getSchema(this.getClassName());
         const {objects, selected, count} = this.state;
+        const user = this.getCurrentUser();
         if (!schema) return <Progress/>;
-
         return (
             <>
                 <NavBar className="shadow-sm"/>
@@ -250,36 +250,42 @@ class TablePage extends BasePage {
                             </button>
                             <div className="dropdown-menu dropdown-menu-right fs-xs">
                                 <button
-                                    onClick={this.addFieldClick.bind(this)}
-                                    className="dropdown-item">
-                                    Add a field
-                                </button>
-                                <button
-                                    onClick={this.deleteFieldClick.bind(this)}
-                                    className="dropdown-item">
-                                    Delete a field
-                                </button>
-                                <button
                                     onClick={this.deleteSelected.bind(this)}
                                     className="dropdown-item">
                                     Delete selected rows
                                 </button>
-                                <div className="dropdown-divider"></div>
-                                <button
-                                    onClick={this.addClassClick.bind(this)}
-                                    className="dropdown-item">
-                                    Add a class
-                                </button>
-                                <button
-                                    onClick={this.editClassClick.bind(this, schema)}
-                                    className="dropdown-item">
-                                    Edit this class
-                                </button>
-                                <button
-                                    onClick={this.deleteClassClick.bind(this)}
-                                    className="dropdown-item">
-                                    Delete this class
-                                </button>
+                                {
+                                    user.isMaster && (
+                                        <>
+                                            <div className="dropdown-divider"></div>
+                                            <button
+                                                onClick={this.addFieldClick.bind(this)}
+                                                className="dropdown-item">
+                                                Add a field
+                                            </button>
+                                            <button
+                                                onClick={this.deleteFieldClick.bind(this)}
+                                                className="dropdown-item">
+                                                Delete a field
+                                            </button>
+                                            <button
+                                                onClick={this.addClassClick.bind(this)}
+                                                className="dropdown-item">
+                                                Add a class
+                                            </button>
+                                            <button
+                                                onClick={this.editClassClick.bind(this, schema)}
+                                                className="dropdown-item">
+                                                Edit this class
+                                            </button>
+                                            <button
+                                                onClick={this.deleteClassClick.bind(this)}
+                                                className="dropdown-item">
+                                                Delete this class
+                                            </button>
+                                        </>
+                                    )
+                                }
                             </div>
                         </div>
                     </div>

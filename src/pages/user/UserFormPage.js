@@ -70,9 +70,6 @@ class UserFormPage extends BasePage {
                                         Object.keys(fields).map((field) => {
                                             let {type, ...options} = fields[field];
                                             if (options.hasOwnProperty('write') && !options.write) return null;
-                                            if (schema.name === "users" && field === "password") {
-                                                type = "Password";
-                                            }
                                             return (
                                                 <div className="col-md-4" key={field}>
                                                     <label className="form-label fs-sm">{field}</label>

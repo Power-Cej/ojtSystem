@@ -11,7 +11,7 @@ class UserRepository {
                 return user;
             });
     }
-
+    
     signUp(user) {
         return this.network.signUp(user);
     }
