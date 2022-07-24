@@ -11,11 +11,12 @@ class MigrationPresenter {
         this.view.showProgress();
         this.exportUseCase.execute()
             .then(response => {
+                const blob = new Blob([response],{type:'application/octet-stream'});
                 this.view.hideProgress();
                 const date = new Date();
                 const day = date.toISOString().slice(0, 10).replaceAll('-', '');
                 const time = date.toLocaleTimeString('en-GB').replaceAll(':', '');
-                saveAs(response, day + time);
+                saveAs(blob, day + time);
             })
             .catch(error => {
                 this.view.showError(error);

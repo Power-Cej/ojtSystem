@@ -2,16 +2,15 @@ import GetAllSchemasUseCase from './GetAllSchemasUseCase';
 import AddSchemaUseCase from './AddSchemaUseCase';
 import UpdateSchemaUseCase from './UpdateSchemaUseCase';
 import DeleteSchemaUseCase from './DeleteSchemaUseCase';
-import repository from '../../../data/schema';
 export function getAllSchemasUseCase(){
-    return new GetAllSchemasUseCase(repository);
+    return new GetAllSchemasUseCase();
 }
 export function addSchemaUseCase(){
-    return new AddSchemaUseCase(repository);
+    return new AddSchemaUseCase();
 }
 export function updateSchemaUseCase(){
-    return new UpdateSchemaUseCase(repository);
+    return new UpdateSchemaUseCase();
 }
 export function deleteSchemaUseCase(){
-    return new DeleteSchemaUseCase(repository);
+    return new DeleteSchemaUseCase();
 }

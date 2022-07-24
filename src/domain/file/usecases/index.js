@@ -1,12 +1,11 @@
 import SaveImageUseCase from './SaveImageUseCase';
 import SaveFileUseCase from './SaveFileUseCase';
-import repository from '../../../data/file';
 
 export function saveFileUseCase() {
-    return new SaveFileUseCase(repository);
+    return new SaveFileUseCase();
 }
 
 export function saveImageUseCase() {
-    return new SaveImageUseCase(repository);
+    return new SaveImageUseCase();
 }
 

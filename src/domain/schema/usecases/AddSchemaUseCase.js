@@ -1,10 +1,8 @@
-class AddSchemaUseCase {
-    constructor(repository) {
-        this.repository = repository;
-    }
+import Queue from 'nq';
 
+class AddSchemaUseCase {
     execute(schema) {
-        return this.repository.addSchema(schema);
+        return Queue.Collection.create(schema);
     }
 }
 

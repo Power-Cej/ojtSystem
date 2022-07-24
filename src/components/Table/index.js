@@ -82,8 +82,7 @@ function Table({fields, objects, progress, onItemClick, next, selected, onSelect
                     {
                         progress && (
                             <tr>
-                                <td colSpan={Object.keys(fields).length + 1}><Progress className="fs-sm">Loading
-                                    ...</Progress></td>
+                                <td colSpan={Object.keys(fields).length + 1}><Progress className="fs-sm">Loading ...</Progress></td>
                             </tr>
                         )
                     }

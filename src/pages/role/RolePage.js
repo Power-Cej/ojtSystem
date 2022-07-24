@@ -6,10 +6,9 @@ import RolePagePresenter from "./RolePagePresenter";
 import {findObjectUseCase, saveObjectUseCase, updateObjectUseCase} from "../../domain/object";
 import withContext from "../../withContext";
 import getSchemaByClass from "../../getSchemaByClass";
-import Table from "../../components/Table";
 import {updateSchemaUseCase} from "../../domain/schema/usecases";
 
-const permissionKeys = ['find', 'create', 'update', 'delete'];
+const permissionKeys = ['modify', 'find', 'create', 'update', 'delete'];
 
 class RolePage extends BasePage {
     constructor(props) {
@@ -62,6 +61,7 @@ class RolePage extends BasePage {
 
     render() {
         const role = this.state.role;
+        const user = this.getCurrentUser();
         const schemas = this.getSchemas();
         return (
             <>
@@ -85,6 +85,7 @@ class RolePage extends BasePage {
                                                 <th className="fs-xs align-middle">Privilege</th>
                                                 {
                                                     permissionKeys.map(key => {
+                                                        if (!user.isMaster && key === 'modify') return null;
                                                         return (
                                                             <th key={key}
                                                                 className="fs-xs align-middle text-capitalize">{key}</th>
@@ -103,13 +104,14 @@ class RolePage extends BasePage {
                                                             <td className="fs-sm">{collection}</td>
                                                             {
                                                                 permissionKeys.map(key => {
-                                                                    const id = this.getPermissionId();
+                                                                    const id = this.getPermissionId().toLowerCase();
                                                                     const access = permissions[key] || [];
                                                                     const check = access.includes(id);
+                                                                    if (!user.isMaster && key === 'modify') return null;
                                                                     return (
                                                                         <td key={key}>
                                                                             <Checkbox
-                                                                                onChange={this.permissionChange.bind(this,schema, key)}
+                                                                                onChange={this.permissionChange.bind(this, schema, key)}
                                                                                 checked={check}/>
                                                                         </td>
                                                                     )

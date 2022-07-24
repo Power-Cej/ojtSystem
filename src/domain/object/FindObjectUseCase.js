@@ -1,10 +1,8 @@
-class FindObjectUseCase {
-    constructor(repository) {
-        this.repository = repository;
-    }
+import Queue from 'nq';
 
-    execute(className, query, session) {
-        return this.repository.findObject(className, query, session);
+class FindObjectUseCase {
+    execute(collection, query, session) {
+        return Queue.Document.find(collection, query, session);
     }
 }
 

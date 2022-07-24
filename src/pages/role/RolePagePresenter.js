@@ -89,7 +89,7 @@ class RolePagePresenter {
 
     permissionChange(schema, key, checked) {
         const schemas = this.view.getSchemas();
-        const id = this.view.getPermissionId();
+        const id = this.view.getPermissionId().toLowerCase();
         const permissions = schema.permissions;
         if (checked) {
             permissions[key] = permissions[key] || [];

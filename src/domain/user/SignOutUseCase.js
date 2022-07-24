@@ -1,10 +1,8 @@
-class SignOutUseCase {
-    constructor(repository) {
-        this.repository = repository;
-    }
+import Queue from 'nq';
 
+class SignOutUseCase {
     execute() {
-        return this.repository.signOut();
+        return Queue.User.signOut();
     }
 }
 

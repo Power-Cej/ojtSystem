@@ -1,10 +1,9 @@
+import Queue from 'nq';
+
 class GetAllSchemasUseCase {
-    constructor(repository) {
-        this.repository = repository;
-    }
 
     execute() {
-        return this.repository.getAllSchemas();
+        return Queue.Collection.find();
     }
 }
 

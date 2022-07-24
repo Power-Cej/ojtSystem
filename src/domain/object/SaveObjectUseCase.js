@@ -1,10 +1,8 @@
-class SaveObjectUseCase {
-    constructor(repository) {
-        this.repository = repository;
-    }
+import Queue from 'nq';
 
-    execute(className, object) {
-        return this.repository.saveObject(className, object);
+class SaveObjectUseCase {
+    execute(collection, object, session) {
+        return Queue.Document.create(collection, object, session);
     }
 }
 

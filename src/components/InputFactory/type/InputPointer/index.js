@@ -14,7 +14,7 @@ function InputPointer({className, field, object, target, schemas}) {
     const schema = getSchemaByClass(context.schemas || schemas, target);
     const indexes = React.useMemo(() => {
         const i = getIndexes(schema.fields);
-        return i.length > 0 ? i : ['name'];
+        return i.length > 0 ? i : ['name', 'id'];
     }, [schema.fields]);
     const relations = React.useMemo(() => {
         return object[field];
@@ -28,7 +28,7 @@ function InputPointer({className, field, object, target, schemas}) {
     function loadOptions(key, callback) {
         new GetOption(target, indexes, key, callback);
     }
-    
+
     function onChange(values) {
         setValues(values);
         object[field] = optionToObject(values);

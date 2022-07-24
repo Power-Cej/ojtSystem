@@ -7,9 +7,16 @@ import SignUpPage from "./pages/signup/SignUpPage";
 import NotFoundPage from "./pages/notfound";
 import React from "react";
 import AccessDeniedPage from "./pages/denied";
+import Queue from 'nq';
 
-Config.set('SERVER_URL', 'http://165.232.167.26:8888/v1');
-Config.set('APPLICATION_ID', '6560588f36297abd70cb7433774d5e09');
+// Config.set('SERVER_URL', 'https://api.mweeb.com/v1');
+// Config.set('SERVER_URL', 'http://165.232.167.26:8888/v1');
+// Config.set('APPLICATION_ID', '6560588f36297abd70cb7433774d5e09');
+
+
+
+Queue.setUrl('https://api.mweeb.com/v1');
+Queue.setApplicationId('6560588f36297abd70cb7433774d5e09');
 
 function App() {
     return (

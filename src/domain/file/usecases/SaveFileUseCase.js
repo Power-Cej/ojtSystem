@@ -1,10 +1,8 @@
-class SaveFileUseCase {
-    constructor(repository) {
-        this.repository = repository;
-    }
+import Queue from 'nq';
 
-    execute(file) {
-        return this.repository.saveFile(file);
+class SaveFileUseCase {
+    execute(blob, session) {
+        return Queue.File.save(blob, session);
     }
 }
 

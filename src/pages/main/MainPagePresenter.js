@@ -45,6 +45,10 @@ class MainPagePresenter {
     }
 
     getRoles() {
+        if (this.user.isMaster) {
+            this.view.setRoles([]);
+            return;
+        }
         return this.getRolesByUserUseCase.execute(this.user)
             .then(roles => {
                 if (roles.length === 0) {
@@ -61,7 +65,6 @@ class MainPagePresenter {
             .then(_schemas => {
                 const schemas = mergeSchema(localSchemas, _schemas);
                 this.view.setSchemas(schemas);
-                this.view.hideProgress();
             })
     }
 

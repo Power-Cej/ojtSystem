@@ -1,10 +1,8 @@
-class DeleteSchemaUseCase {
-    constructor(repository) {
-        this.repository = repository;
-    }
+import Queue from 'nq';
 
-    execute(className) {
-        return this.repository.deleteSchema(className);
+class DeleteSchemaUseCase {
+    execute(name) {
+        return Queue.Collection.delete(name);
     }
 }
 

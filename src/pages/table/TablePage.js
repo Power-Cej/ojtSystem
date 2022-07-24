@@ -4,7 +4,7 @@ import TablePagePresenter from './TablePagePresenter';
 import Table from "../../components/Table";
 import AddField from "./components/AddField";
 import {addSchemaUseCase, updateSchemaUseCase, deleteSchemaUseCase} from '../../domain/schema/usecases';
-import {deleteObjectUseCase, findObjectUseCase} from '../../domain/object';
+import {deleteObjectUseCase, findObjectUseCase, updateObjectUseCase} from '../../domain/object';
 import {exportCSVUseCase} from '../../domain/csv/usecases';
 import Search from "./components/Search";
 import dialog from "../../components/Modal/dialog";
@@ -14,6 +14,8 @@ import DeleteField from "./components/DeleteField";
 import Progress from "../../components/Progress";
 import NavBar from "../../components/NavBar";
 import withContext from "../../withContext";
+import Access from "./components/Access";
+import access from "../../access";
 
 
 class TablePage extends BasePage {
@@ -22,6 +24,7 @@ class TablePage extends BasePage {
         this.presenter = new TablePagePresenter(
             this,
             findObjectUseCase(),
+            updateObjectUseCase(),
             deleteObjectUseCase(),
             addSchemaUseCase(),
             updateSchemaUseCase(),
@@ -112,6 +115,26 @@ class TablePage extends BasePage {
             html: <AddCLass
                 schema={schema}
                 onSubmit={this.addClassSubmit.bind(this, schema)}
+                onCancel={() => dialog.close()}/>,
+            footer: false
+        });
+    }
+
+    onCLickAccess() {
+        const schema = {};
+
+        function submit(acl, e) {
+            e.preventDefault();
+            this.presenter.accessSubmit(acl);
+        }
+
+        const acl = access(this.state.selected);
+        dialog.fire({
+            title: 'Add a new class',
+            html: <Access
+                access={acl}
+                schema={schema}
+                onSubmit={submit.bind(this, acl)}
                 onCancel={() => dialog.close()}/>,
             footer: false
         });
@@ -253,6 +276,11 @@ class TablePage extends BasePage {
                                     onClick={this.deleteSelected.bind(this)}
                                     className="dropdown-item">
                                     Delete selected rows
+                                </button>
+                                <button
+                                    onClick={this.onCLickAccess.bind(this)}
+                                    className="dropdown-item">
+                                    Access
                                 </button>
                                 {
                                     user.isMaster && (

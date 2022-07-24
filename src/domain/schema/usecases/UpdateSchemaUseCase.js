@@ -1,10 +1,9 @@
+import Queue from 'nq';
+
 class UpdateSchemaUseCase {
-    constructor(repository) {
-        this.repository = repository;
-    }
 
     execute(schema) {
-        return this.repository.updateSchema(schema.name, schema);
+        return Queue.Collection.update(schema);
     }
 }
 

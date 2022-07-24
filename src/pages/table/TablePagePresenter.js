@@ -1,9 +1,8 @@
-import {deleteObjectUseCase} from "../../domain/object";
-
 class TablePagePresenter {
-    constructor(view, findObjectUseCase, deleteObjectUseCase, addSchemaUseCase, updateSchemaUseCase, exportCSVUseCase, deleteSchemaUseCase) {
+    constructor(view, findObjectUseCase, updateObjectUseCase, deleteObjectUseCase, addSchemaUseCase, updateSchemaUseCase, exportCSVUseCase, deleteSchemaUseCase) {
         this.view = view;
         this.findObjectUseCase = findObjectUseCase;
+        this.updateObjectUseCase = updateObjectUseCase;
         this.deleteObjectUseCase = deleteObjectUseCase;
         this.addSchemaUseCase = addSchemaUseCase;
         this.updateSchemaUseCase = updateSchemaUseCase;
@@ -11,8 +10,6 @@ class TablePagePresenter {
         this.deleteSchemaUseCase = deleteSchemaUseCase;
         this.limit = 10;
         this.current = 1;
-        this.count = 0;
-        this.objects = [];
         this.where = {};
     }
 
@@ -55,7 +52,6 @@ class TablePagePresenter {
                 this.view.showError(error);
             });
     }
-
 
     onItemClick(index) {
         const objects = this.view.getObjects();
@@ -204,6 +200,24 @@ class TablePagePresenter {
         Promise.all(promises)
             .then(() => {
                 this.view.setObjects(objects.filter(o => !selected.includes(o)));
+            })
+            .catch(error => {
+                this.view.closeDialog();
+                this.view.showError(error);
+            });
+    }
+
+    accessSubmit(acl) {
+        console.log(acl);
+        const selected = this.view.getSelected();
+        const collection = this.view.getClassName();
+        const promises = selected.map(o => {
+            o.acl = acl;
+            return this.updateObjectUseCase.execute(collection, o)
+        });
+        Promise.all(promises)
+            .then(() => {
+                this.view.closeDialog();
             })
             .catch(error => {
                 this.view.closeDialog();

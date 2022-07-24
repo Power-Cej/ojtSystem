@@ -57,7 +57,7 @@ class MainPage extends BasePage {
                         </div>
                         <hr className="dropdown-divider bg-light"/>
                         <Menu
-                            menus={schemas.filter(s => canRead(roles, s.permissions))}/>
+                            menus={schemas.filter(s => canRead(roles, s.permissions) || user.isMaster)}/>
                     </nav>
                 </OffCanvas>
                 <main className="vh-100 d-flex flex-column">

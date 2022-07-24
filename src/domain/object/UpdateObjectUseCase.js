@@ -1,13 +1,8 @@
-class UpdateObjectUseCase {
-    constructor(repository) {
-        this.repository = repository;
-    }
+import Queue from 'nq';
 
-    execute(className, object, query, session) {
-        if (query === undefined) {
-            query = {where: {id: object.id}};
-        }
-        return this.repository.updateObject(className, object, query,session);
+class UpdateObjectUseCase {
+    execute(collection, document, session) {
+        return Queue.Document.update(collection, document, session);
     }
 }
 

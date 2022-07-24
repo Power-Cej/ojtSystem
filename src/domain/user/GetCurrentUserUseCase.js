@@ -1,9 +1,11 @@
+import Queue from 'nq';
+
 class GetCurrentUserUseCase {
-    constructor(rest) {
-        this.rest = rest;
+    constructor() {
     }
+
     execute() {
-        return this.rest.request('GET', '/me');
+        return Queue.User.getCurrentUser();
     }
 }
 

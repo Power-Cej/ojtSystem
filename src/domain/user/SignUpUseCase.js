@@ -1,9 +1,8 @@
+import Queue from 'nq';
 class SignUpUseCase {
-    constructor(repository) {
-        this.repository = repository;
-    }
+
     execute(user) {
-        return this.repository.signUp(user);
+        return Queue.User.signUp(user);
     }
 }
 

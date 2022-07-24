@@ -1,11 +1,9 @@
-class GetRolesByUserUseCase {
-    constructor(rest) {
-        this.rest = rest;
-    }
+import Queue from 'nq';
 
-    execute(user) {
+class GetRolesByUserUseCase {
+    execute(user, session) {
         const query = {where: {users: [{id: user.id}]}};
-        return this.rest.request('GET', '/classes/roles', {query});
+        return Queue.Document.find('roles', query, session);
     }
 }
 

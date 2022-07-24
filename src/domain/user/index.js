@@ -2,33 +2,25 @@ import GetCurrentUserUseCase from './GetCurrentUserUseCase';
 import SignUpUseCase from './SignUpUseCase';
 import SignInUseCase from './SignInUseCase';
 import SignOutUseCase from './SignOutUseCase';
-import repository from '../../data/user';
-import UpdateUserUseCase from "./UpdateUserUseCase";
 import ResetPasswordUseCase from "./ResetPasswordUseCase";
-import getRestController from '../../controllers/rest';
-const restController = getRestController();
 
 export function getCurrentUserUseCase() {
-    return new GetCurrentUserUseCase(restController);
+    return new GetCurrentUserUseCase();
 }
 
 export function signUpUseCase() {
-    return new SignUpUseCase(repository);
+    return new SignUpUseCase();
 }
 
 export function signInUseCase() {
-    return new SignInUseCase(repository);
+    return new SignInUseCase();
 }
 
 export function signOutUseCase() {
-    return new SignOutUseCase(repository);
-}
-
-export function updateUserUseCase() {
-    return new UpdateUserUseCase(repository);
+    return new SignOutUseCase();
 }
 
 export function resetPasswordUseCase() {
-    return new ResetPasswordUseCase(repository);
+    return new ResetPasswordUseCase();
 }
 
