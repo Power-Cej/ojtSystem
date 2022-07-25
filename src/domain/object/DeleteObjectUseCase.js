@@ -1,10 +1,7 @@
+import Queue from 'nq';
 class DeleteObjectUseCase {
-    constructor(repository) {
-        this.repository = repository;
-    }
-
-    execute(className, id) {
-        return this.repository.deleteObject(className, id);
+    execute(collection, id,session) {
+        return Queue.Document.delete(collection, id, session);
     }
 }
 
