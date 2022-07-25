@@ -277,15 +277,16 @@ class TablePage extends BasePage {
                                     className="dropdown-item">
                                     Delete selected rows
                                 </button>
-                                <button
-                                    onClick={this.onCLickAccess.bind(this)}
-                                    className="dropdown-item">
-                                    Access
-                                </button>
                                 {
                                     user.isMaster && (
                                         <>
+
                                             <div className="dropdown-divider"></div>
+                                            <button
+                                                onClick={this.onCLickAccess.bind(this)}
+                                                className="dropdown-item">
+                                                Access
+                                            </button>
                                             <button
                                                 onClick={this.addFieldClick.bind(this)}
                                                 className="dropdown-item">

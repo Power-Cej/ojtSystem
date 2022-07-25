@@ -15,7 +15,8 @@ import Queue from 'nq';
 
 
 
-Queue.setUrl('https://api.mweeb.com/v1');
+Queue.setUrl('https://api.easybenta.com/v1');
+// Queue.setUrl('https://api.mweeb.com/v1');
 Queue.setApplicationId('6560588f36297abd70cb7433774d5e09');
 
 function App() {
