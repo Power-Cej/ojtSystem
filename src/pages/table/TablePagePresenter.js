@@ -201,14 +201,13 @@ class TablePagePresenter {
             .then(() => {
                 this.view.setObjects(objects.filter(o => !selected.includes(o)));
             })
-            .catch(error => {
-                this.view.closeDialog();
+            .catch((error) => {
+                this.view.hideProgress();
                 this.view.showError(error);
             });
     }
 
     accessSubmit(acl) {
-        console.log(acl);
         const selected = this.view.getSelected();
         const collection = this.view.getClassName();
         const promises = selected.map(o => {

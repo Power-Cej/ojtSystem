@@ -1,12 +1,12 @@
 import React from "react";
 import BasePage from "../../base/BasePage";
-import withContext from "../../withContext";
 import InputPassword from "../../components/InputFactory/type/InputPassword";
 import SignInPresenter from "./SignInPresenter";
 import {signInUseCase} from "../../domain/user";
 import InputString from "../../components/InputFactory/type/InputString";
 import Button from "../../components/Button";
 import {Link} from "react-router-dom";
+import withRouter from "../../withRouter";
 
 class SignInPage extends BasePage {
     constructor() {
@@ -40,7 +40,7 @@ class SignInPage extends BasePage {
                     <div className="bg-white shadow rounded m-auto">
                         <div className="p-4 p-lg-5">
                             <div className="text-center py-4">
-                                <img src="/assets/images/logo.svg" width="175px"/>
+                                <img src="/assets/images/logo.svg" alt="logo" width="175px"/>
                             </div>
                             <form className="mb-4" onSubmit={this.formSubmit.bind(this)}>
                                 <div className="row g-3 mb-3">
@@ -90,4 +90,4 @@ class SignInPage extends BasePage {
     }
 }
 
-export default withContext(SignInPage);
+export default withRouter(SignInPage);

@@ -4,7 +4,8 @@ import getSchemaByClass from "../../getSchemaByClass";
 import InputFactory from "../../components/InputFactory";
 import {saveObjectUseCase, findObjectUseCase, updateObjectUseCase} from '../../domain/object';
 import NavBar from "../../components/NavBar";
-import withContext from "../../withContext";
+import camelToTitleCase from "../../camelToTitleCase";
+import withRouter from "../../withRouter";
 
 class FormPage extends BasePage {
     constructor(props) {
@@ -35,7 +36,7 @@ class FormPage extends BasePage {
     }
 
     getSchema() {
-        const schemas = this.props.schemas;
+        const schemas = this.context.schemas;
         return getSchemaByClass(schemas, this.getClassName());
     }
 
@@ -51,7 +52,7 @@ class FormPage extends BasePage {
     render() {
         const object = this.state.object;
         const schema = this.getSchema();
-        if (!schema) return null;
+        if (!schema) return <h1>no schema</h1>;
         const {fields} = schema;
 
         return (
@@ -75,7 +76,8 @@ class FormPage extends BasePage {
                                             // }
                                             return (
                                                 <div className="col-md-4" key={field}>
-                                                    <label className="form-label fs-sm">{field}</label>
+                                                    <label
+                                                        className="form-label fs-sm">{camelToTitleCase(field)}</label>
                                                     <InputFactory
                                                         className="fs-sm"
                                                         field={field}
@@ -104,4 +106,4 @@ class FormPage extends BasePage {
     }
 }
 
-export default withContext(FormPage);
+export default withRouter(FormPage);

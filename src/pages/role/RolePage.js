@@ -4,9 +4,9 @@ import InputString from "../../components/InputFactory/type/InputString";
 import Checkbox from "../../components/Checkbox";
 import RolePagePresenter from "./RolePagePresenter";
 import {findObjectUseCase, saveObjectUseCase, updateObjectUseCase} from "../../domain/object";
-import withContext from "../../withContext";
 import getSchemaByClass from "../../getSchemaByClass";
 import {updateSchemaUseCase} from "../../domain/schema/usecases";
+import withRouter from "../../withRouter";
 
 const permissionKeys = ['modify', 'find', 'create', 'update', 'delete'];
 
@@ -144,4 +144,4 @@ class RolePage extends BasePage {
     }
 }
 
-export default withContext(RolePage);
+export default withRouter(RolePage);

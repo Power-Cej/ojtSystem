@@ -4,7 +4,7 @@ import getSchemaByClass from "../../getSchemaByClass";
 import InputFactory from "../../components/InputFactory";
 import {saveObjectUseCase, findObjectUseCase, updateObjectUseCase} from '../../domain/object';
 import NavBar from "../../components/NavBar";
-import withContext from "../../withContext";
+import withRouter from "../../withRouter";
 
 class UserFormPage extends BasePage {
     constructor(props) {
@@ -29,13 +29,12 @@ class UserFormPage extends BasePage {
         e.preventDefault();
         this.presenter.submit();
     }
-
     getObject() {
         return this.state.object;
     }
 
     getSchema() {
-        const schemas = this.props.schemas;
+        const schemas = this.context.schemas;
         return getSchemaByClass(schemas, this.getClassName());
     }
 
@@ -51,7 +50,7 @@ class UserFormPage extends BasePage {
     render() {
         const object = this.state.object;
         const schema = this.getSchema();
-        if (!schema) return null;
+        if (!schema) return <h1>no schema</h1>;
         const {fields} = schema;
 
         return (
@@ -101,4 +100,4 @@ class UserFormPage extends BasePage {
     }
 }
 
-export default withContext(UserFormPage);
+export default withRouter(UserFormPage);

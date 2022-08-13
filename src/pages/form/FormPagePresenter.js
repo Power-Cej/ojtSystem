@@ -45,7 +45,6 @@ class FormPagePresenter {
                     this.view.hideProgress();
                     this.view.showSuccessSnackbar("Successfully updated!");
                     this.view.navigateBack();
-
                 })
                 .catch(error => {
                     this.view.hideProgress();

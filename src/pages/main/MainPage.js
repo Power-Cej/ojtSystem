@@ -3,7 +3,6 @@ import MainPagePresenter from './MainPagePresenter';
 import Menu from '../../components/Menu';
 import {getAllSchemasUseCase} from '../../domain/schema/usecases';
 import {getCurrentUserUseCase, signOutUseCase} from '../../domain/user';
-import withContext from '../../withContext';
 import {Routes, Route} from 'react-router-dom';
 import OffCanvas from '../../components/OffCanvas';
 import TablePage from "../table/TablePage";
@@ -13,7 +12,6 @@ import NotFoundPage from "../notfound";
 import Layout from "../../components/Layout";
 import Progress from "../../components/Progress";
 import getProfile from "../../getProfile";
-import {findObjectUseCase} from "../../domain/object";
 import MigrationPage from "../migration/MigrationPage";
 import AccountPage from "../account/AccountPage";
 import RolePage from "../role/RolePage";
@@ -79,4 +77,4 @@ class MainPage extends BasePage {
     }
 }
 
-export default withContext(MainPage);
+export default MainPage;

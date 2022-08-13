@@ -2,6 +2,7 @@ import OutputFactory from "../OutputFactory";
 import Progress from "../Progress";
 import InfiniteScroll from "react-infinite-scroller";
 import Checkbox from "../Checkbox";
+import camelToTitleCase from "../../camelToTitleCase";
 
 
 function Table({fields, objects, progress, onItemClick, next, selected, onSelect, onSelectAll}) {
@@ -25,9 +26,9 @@ function Table({fields, objects, progress, onItemClick, next, selected, onSelect
                         {Object.keys(fields).map((field) => {
                             const {type, ...options} = fields[field];
                             if (options.hasOwnProperty('read') && !options.read) return null;
-                            const label = options.label || field;
+                            const label = options.label || camelToTitleCase(field);
                             return (
-                                <th key={field} className="fs-xs align-middle">{label}</th>
+                                <th key={field} className="fs-xs align-middle text-nowrap">{label}</th>
                             );
                         })}
                     </tr>

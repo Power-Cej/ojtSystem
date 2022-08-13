@@ -13,9 +13,9 @@ import DeleteClass from "./components/DeleteClass";
 import DeleteField from "./components/DeleteField";
 import Progress from "../../components/Progress";
 import NavBar from "../../components/NavBar";
-import withContext from "../../withContext";
 import Access from "./components/Access";
 import access from "../../access";
+import withRouter from "../../withRouter";
 
 
 class TablePage extends BasePage {
@@ -333,4 +333,4 @@ class TablePage extends BasePage {
     }
 }
 
-export default withContext(TablePage);
+export default withRouter(TablePage);
