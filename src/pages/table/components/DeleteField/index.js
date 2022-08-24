@@ -1,4 +1,4 @@
-import InputSelect from "../../../../components/InputFactory/type/InputSelect";
+import {InputSelect} from "nq-component";
 
 const options = ['id', 'createdAt', 'updatedAt', 'acl', 'username', 'password', 'email', 'emailVerified'];
 

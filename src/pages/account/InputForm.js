@@ -1,7 +1,6 @@
 import React from "react";
 import InputFactory from "../../components/InputFactory";
 import getValue from "../../getValue";
-import OutputFactory from "../../components/OutputFactory";
 
 function InputForm({title, fields, object, onSave}) {
     const [isEdit, setEdit] = React.useState(false);
@@ -80,12 +79,12 @@ function InputForm({title, fields, object, onSave}) {
                                 <i className={icon}></i>
                                 <span className="ms-2 fw-light">{label}</span>
                                 <span className="fs-sm">
-                                    <OutputFactory
-                                        type={getValue(type, type, 'String')}
-                                        field={field}
-                                        object={object}
-                                        {...options}
-                                    />
+                                    {/*<OutputFactory*/}
+                                    {/*    type={getValue(type, type, 'String')}*/}
+                                    {/*    field={field}*/}
+                                    {/*    object={object}*/}
+                                    {/*    {...options}*/}
+                                    {/*/>*/}
                                 </span>
                             </li>
                         )

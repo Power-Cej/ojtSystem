@@ -3,7 +3,7 @@ import UserFormPagePresenter from "./UserFormPagePresenter";
 import getSchemaByClass from "../../getSchemaByClass";
 import InputFactory from "../../components/InputFactory";
 import {saveObjectUseCase, findObjectUseCase, updateObjectUseCase} from '../../domain/object';
-import NavBar from "../../components/NavBar";
+import {NavBar} from "nq-component";
 import withRouter from "../../withRouter";
 
 class UserFormPage extends BasePage {

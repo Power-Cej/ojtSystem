@@ -2,7 +2,7 @@ import React from 'react';
 import resolvingPromise from "../resolvingPromise";
 import Context from "../AppContext";
 import getSchemaByClass from "../getSchemaByClass";
-import dialog from "../components/Modal/dialog";
+import {dialog} from "nq-component";
 import ProgressDialog from "./ProgressDialog";
 import ConfirmDialog from "./ConfirmDialog";
 

@@ -1,24 +1,17 @@
 import React from "react";
-import InputString from "../../../../components/InputFactory/type/InputString";
-import InputSelect from "../../../../components/InputFactory/type/InputSelect";
-import InputArray from "../../../../components/InputFactory/type/InputArray";
+import {InputString} from "nq-component";
+import {InputSelect} from "nq-component";
+import {InputBooleanSwitch} from "nq-component";
+import OptionType from "./OptionType";
 
 const options = ['String', 'Number', 'Boolean', 'Date', 'Object', 'Array', 'Pointer', 'Relation', 'Image', 'Enum'];
 
 
-function AddField({field, onSubmit, onCancel, schemas}) {
-    const [isPointer, setPointer] = React.useState(false);
-    const [isEnum, setEnum] = React.useState(false);
-
-    function onChange(value) {
-        setPointer(value === 'Pointer');
-        if (value === 'Enum') {
-            setEnum(true);
-            field['type'] = 'String';
-            field['_type'] = 'Enum';
-        }
-    }
-
+function AddField({field, onSubmit, onCancel, collections}) {
+    const [type, setType] = React.useState('String');
+    React.useEffect(() => {
+        field['type'] = 'String';
+    }, [field]);
     return (
         <div className="p-3 pb-4">
             <form onSubmit={onSubmit}>
@@ -35,42 +28,39 @@ function AddField({field, onSubmit, onCancel, schemas}) {
                     <div className="col-md-12">
                         <label className="form-label fs-sm">field type</label>
                         <InputSelect
-                            onChange={onChange}
+                            onChange={value => setType(value)}
                             className="form-control form-control"
                             field="type"
                             options={options}
                             required
                             object={field}/>
                     </div>
-                    {
-                        isPointer && (
-                            <div className="col-md-12">
-                                <label className="form-label fs-sm">target class</label>
-                                <InputSelect
-                                    className="form-control form-control"
-                                    field="target"
-                                    options={schemas}
-                                    required
-                                    object={field}/>
-                            </div>
-                        )
-                    }
-                    {
-                        isEnum && (
-                            <div className="col-md-12">
-                                <label className="form-label fs-sm">values</label>
-                                <InputArray
-                                    className="form-control form-control"
-                                    field="values"
-                                    required
-                                    object={field}/>
-                            </div>
-                        )
-                    }
+                    <OptionType
+                        type={type}
+                        field={field}
+                        collections={collections}/>
+                    <div className="col-md-12">
+                        <InputBooleanSwitch
+                            id="switch-required"
+                            field="required"
+                            object={field}/>
+                    </div>
+                    <div className="col-md-12">
+                        <InputBooleanSwitch
+                            id="switch-unique"
+                            field="unique"
+                            object={field}/>
+                    </div>
+                    <div className="col-md-12">
+                        <InputBooleanSwitch
+                            id="switch-index"
+                            field="index"
+                            object={field}/>
+                    </div>
                     <div className="col-md-12 text-end">
                         <button
                             type="submit"
-                            className="btn btn-primary fs-sm">
+                            className="btn btn-sm btn-primary fs-sm">
                             <i className="bi bi-file-earmark-check me-2"></i>ADD FIELD
                         </button>
                         <button
@@ -80,7 +70,6 @@ function AddField({field, onSubmit, onCancel, schemas}) {
                         </button>
                     </div>
                 </div>
-
             </form>
         </div>
     );

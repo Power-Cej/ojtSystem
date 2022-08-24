@@ -3,7 +3,7 @@ import FormPagePresenter from "./FormPagePresenter";
 import getSchemaByClass from "../../getSchemaByClass";
 import InputFactory from "../../components/InputFactory";
 import {saveObjectUseCase, findObjectUseCase, updateObjectUseCase} from '../../domain/object';
-import NavBar from "../../components/NavBar";
+import {NavBar} from "nq-component";
 import camelToTitleCase from "../../camelToTitleCase";
 import withRouter from "../../withRouter";
 
@@ -80,7 +80,7 @@ class FormPage extends BasePage {
                                                         className="form-label fs-sm">{camelToTitleCase(field)}</label>
                                                     <InputFactory
                                                         className="fs-sm"
-                                                        field={field}
+                                                        name={field}
                                                         type={type}
                                                         object={object}
                                                         {...options}/>

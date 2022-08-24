@@ -1,18 +1,16 @@
 import React from 'react';
 import BasePage from "../../base/BasePage";
 import TablePagePresenter from './TablePagePresenter';
-import Table from "../../components/Table";
+import {Table,dialog} from "nq-component";
 import AddField from "./components/AddField";
 import {addSchemaUseCase, updateSchemaUseCase, deleteSchemaUseCase} from '../../domain/schema/usecases';
 import {deleteObjectUseCase, findObjectUseCase, updateObjectUseCase} from '../../domain/object';
 import {exportCSVUseCase} from '../../domain/csv/usecases';
 import Search from "./components/Search";
-import dialog from "../../components/Modal/dialog";
 import AddCLass from "./components/AddClass";
 import DeleteClass from "./components/DeleteClass";
 import DeleteField from "./components/DeleteField";
-import Progress from "../../components/Progress";
-import NavBar from "../../components/NavBar";
+import {NavBar,Progress} from "nq-component";
 import Access from "./components/Access";
 import access from "../../access";
 import withRouter from "../../withRouter";
@@ -35,7 +33,7 @@ class TablePage extends BasePage {
             objects: [],
             selected: [],
             progress: true,
-            count: 0,
+            hasMore: false,
         };
     }
 
@@ -62,7 +60,6 @@ class TablePage extends BasePage {
             e.preventDefault();
             this.presenter.editClassSubmit(schema);
         }
-
         dialog.fire({
             title: 'Edit a class',
             html: <AddCLass
@@ -97,7 +94,7 @@ class TablePage extends BasePage {
             title: 'Add a new field',
             html: <AddField
                 field={field}
-                schemas={schemas.map(s => s.name)}
+                collections={schemas.map(s => s.name)}
                 onSubmit={onSubmit.bind(this, field)}
                 onCancel={() => dialog.close()}/>,
             footer: false,
@@ -166,13 +163,8 @@ class TablePage extends BasePage {
         });
     }
 
-
     setObjects(objects) {
         return this.setStatePromise({objects});
-    }
-
-    getObjects() {
-        return this.state.objects;
     }
 
     getSelected() {
@@ -207,10 +199,6 @@ class TablePage extends BasePage {
         this.presenter.loadMore();
     }
 
-    setCount(count) {
-        return this.setStatePromise({count});
-    }
-
     onSelect(index) {
         this.presenter.onSelect(index);
     }
@@ -231,9 +219,13 @@ class TablePage extends BasePage {
         this.presenter.deleteSelected();
     }
 
+    setMore(hasMore) {
+        this.setState({hasMore});
+    }
+
     render() {
         const schema = this.getSchema(this.getClassName());
-        const {objects, selected, count} = this.state;
+        const {objects, selected, hasMore, progress} = this.state;
         const user = this.getCurrentUser();
         if (!schema) return <Progress/>;
         return (
@@ -322,7 +314,8 @@ class TablePage extends BasePage {
                         selected={selected}
                         onSelect={this.onSelect.bind(this)}
                         onSelectAll={this.onSelectAll.bind(this)}
-                        progress={objects.length < count}
+                        progress={progress}
+                        hasMore={hasMore}
                         next={this.loadMore.bind(this)}
                         onItemClick={this.onItemClick.bind(this)}
                         fields={schema.fields}

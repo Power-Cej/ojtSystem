@@ -1,4 +1,4 @@
-import InputString from "../../../../components/InputFactory/type/InputString";
+import {InputString} from "nq-component";
 
 function DeleteClass({object, onSubmit, onCancel}) {
     return (

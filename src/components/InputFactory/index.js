@@ -1,26 +1,37 @@
 import React from 'react';
-import InputString from "./type/InputString";
-import InputRelation from "./type/InputRelation";
-import InputPointer from "./type/InputPointer";
-import InputPassword from "./type/InputPassword";
-import InputImage from "./type/InputImage";
-import InputText from "./type/InputText";
-import InputDate from "./type/InputDate";
-import InputNumber from "./type/InputNumber";
-import InputSelect from "./type/InputSelect";
+import {
+    InputString,
+    InputPassword,
+    InputDate,
+    InputNumber,
+    InputSelect,
+    InputText,
+    InputRelation,
+    InputImage
+} from "nq-component";
+import {findObjectUseCase} from "../../domain/object";
+import Context from "../../AppContext";
 
-function InputFactory({type, _type, field, object, ...options}) {
+const find = findObjectUseCase();
+
+function InputFactory({type, _type, name, object, ...options}) {
+    const context = React.useContext(Context);
     switch (_type || type) {
         case 'Email':
         case 'String':
             return <InputString
-                field={field}
+                name={name}
                 type={type.toLowerCase()}
+                object={object}
+                {...options}/>;
+        case 'Password':
+            return <InputPassword
+                name={name}
                 object={object}
                 {...options}/>;
         case 'Enum':
             return <InputSelect
-                field={field}
+                name={name}
                 type={type.toLowerCase()}
                 object={object}
                 options={options.values}
@@ -28,36 +39,41 @@ function InputFactory({type, _type, field, object, ...options}) {
         case 'Number':
         case 'Tel':
             return <InputNumber
-                field={field}
+                name={name}
                 object={object}
                 {...options}/>;
         case 'Date':
             return <InputDate
-                field={field}
+                name={name}
                 type={type.toLowerCase()}
                 object={object}
                 {...options}/>;
         case 'Text':
             return <InputText
-                field={field}
+                name={name}
                 type={type.toLowerCase()}
                 object={object}
                 {...options}/>;
         case 'Relation':
             return <InputRelation
-                field={field}
+                isMulti
+                name={name}
                 type={type.toLowerCase()}
                 object={object}
+                schemas={context.schemas}
+                find={find}
                 {...options}/>;
         case 'Pointer':
-            return <InputPointer
-                field={field}
+            return <InputRelation
+                name={name}
                 type={type.toLowerCase()}
                 object={object}
+                schemas={context.schemas}
+                find={find}
                 {...options}/>;
         case 'Image':
             return <InputImage
-                field={field}
+                name={name}
                 type={type.toLowerCase()}
                 object={object}
                 {...options}/>;

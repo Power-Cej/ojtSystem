@@ -8,20 +8,53 @@ class TablePagePresenter {
         this.updateSchemaUseCase = updateSchemaUseCase;
         this.exportCSVUseCase = exportCSVUseCase;
         this.deleteSchemaUseCase = deleteSchemaUseCase;
-        this.limit = 10;
-        this.current = 1;
-        this.where = {};
     }
 
     componentDidMount() {
         this.init();
+        this.getData();
     }
 
     init() {
+        this.limit = 10;
         this.current = 1;
-        this.view.setCount(0)
-            .then(() => this.view.setObjects([]))
-            .then(() => this.getData());
+        this.where = {};
+        this.documents = [];
+        this.progress = true;
+    }
+
+    getData() {
+        const className = this.view.getClassName();
+        const skip = (this.current - 1) * this.limit;
+        const query = {
+            count: true,
+            limit: this.limit,
+            skip: skip,
+            where: this.where,
+            include: ['all'],
+            sort: {createdAt: -1}
+        };
+        this.setProgress(true);
+        return this.findObjectUseCase.execute(className, query)
+            .then(({count, objects}) => {
+                this.documents = this.documents.concat(objects);
+                this.view.setMore(count > this.documents.length);
+                this.view.setObjects(this.documents);
+                this.setProgress(false);
+            })
+            .catch(error => {
+                this.setProgress(false);
+                this.view.showError(error);
+            });
+    }
+
+    setProgress(progress) {
+        this.progress = progress;
+        if (progress) {
+            this.view.showProgress();
+        } else {
+            this.view.hideProgress();
+        }
     }
 
     componentDidUpdate(prevProps) {
@@ -30,40 +63,20 @@ class TablePagePresenter {
         //if className change
         if (prevClassName !== newClassName) {
             this.init();
+            this.view.setObjects([]);
+            this.getData();
         }
     }
 
-    find() {
-        const className = this.view.getClassName();
-        const skip = (this.current - 1) * this.limit;
-        const query = {count: true, limit: this.limit, skip, where: this.where, include: ['all']};
-        return this.findObjectUseCase.execute(className, query);
-    }
-
-    getData() {
-        return this.find()
-            .then(({count, objects}) => {
-                if (count > 0) {
-                    this.view.setCount(count);
-                    this.view.setObjects(this.view.getObjects().concat(objects));
-                }
-            })
-            .catch(error => {
-                this.view.showError(error);
-            });
-    }
-
     onItemClick(index) {
-        const objects = this.view.getObjects();
-        const object = objects[index];
+        const document = this.documents[index];
         const className = this.view.getClassName();
-        this.view.navigateToForm(className, object.id);
+        this.view.navigateToForm(className, document.id);
     }
 
     onSelect(index) {
-        const objects = this.view.getObjects();
         const selectedObjects = this.view.getSelected();
-        const selected = objects[index];
+        const selected = this.documents[index];
         const i = selectedObjects.indexOf(selected);
         if (i > -1) {
             selectedObjects.splice(i, 1);
@@ -75,12 +88,16 @@ class TablePagePresenter {
 
     searchSubmit(where) {
         this.where = where;
-        this.init();
+        this.documents = [];
+        this.current = 1;
+        this.getData();
     }
 
     loadMore() {
-        this.current++;
-        this.getData();
+        if (!this.progress) {
+            this.current++;
+            this.getData();
+        }
     }
 
     updateSchema(schema) {
@@ -94,9 +111,8 @@ class TablePagePresenter {
     }
 
     onSelectAll(checked) {
-        const objects = this.view.getObjects();
         if (checked) {
-            this.view.setSelected([...objects]);
+            this.view.setSelected([...this.documents]);
         } else {
             this.view.setSelected([]);
         }
@@ -193,13 +209,13 @@ class TablePagePresenter {
     }
 
     deleteSelected() {
-        const objects = this.view.getObjects();
         const selected = this.view.getSelected();
         const collection = this.view.getClassName();
         const promises = selected.map(o => this.deleteObjectUseCase.execute(collection, o.id));
         Promise.all(promises)
             .then(() => {
-                this.view.setObjects(objects.filter(o => !selected.includes(o)));
+                this.documents = this.documents.filter(o => !selected.includes(o));
+                this.view.setObjects(this.documents);
             })
             .catch((error) => {
                 this.view.hideProgress();

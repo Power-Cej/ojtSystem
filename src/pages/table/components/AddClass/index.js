@@ -1,8 +1,8 @@
 import React from 'react';
-import InputString from "../../../../components/InputFactory/type/InputString";
-import InputIcon from "../../../../components/InputFactory/type/InputIcon";
-import Switch from "../../../../components/Switch";
-import InputJson from "../../../../components/InputFactory/type/InputJson";
+import {InputString} from "nq-component";
+import {InputIcon} from "nq-component";
+import {Switch} from "nq-component";
+import {InputJson} from "nq-component";
 
 function AddCLass({schema, onSubmit, onCancel}) {
     const [isAdvanced, setAdvanced] = React.useState(false);

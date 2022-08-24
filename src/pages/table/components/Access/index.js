@@ -1,5 +1,5 @@
 import React from 'react';
-import Checkbox from "../../../../components/Checkbox";
+import {Checkbox} from "nq-component";
 
 
 const permissionKeys = ['read', 'write'];

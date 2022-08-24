@@ -1,7 +1,7 @@
 import BasePage from "../../base/BasePage";
-import NavBar from "../../components/NavBar";
-import InputString from "../../components/InputFactory/type/InputString";
-import Checkbox from "../../components/Checkbox";
+import {NavBar} from "nq-component";
+import {InputString} from "nq-component";
+import {Checkbox} from "nq-component";
 import RolePagePresenter from "./RolePagePresenter";
 import {findObjectUseCase, saveObjectUseCase, updateObjectUseCase} from "../../domain/object";
 import getSchemaByClass from "../../getSchemaByClass";

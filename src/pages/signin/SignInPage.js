@@ -1,12 +1,11 @@
 import React from "react";
 import BasePage from "../../base/BasePage";
-import InputPassword from "../../components/InputFactory/type/InputPassword";
 import SignInPresenter from "./SignInPresenter";
 import {signInUseCase} from "../../domain/user";
-import InputString from "../../components/InputFactory/type/InputString";
-import Button from "../../components/Button";
+import {Button} from "nq-component";
 import {Link} from "react-router-dom";
 import withRouter from "../../withRouter";
+import {InputString,InputPassword} from "nq-component";
 
 class SignInPage extends BasePage {
     constructor() {
@@ -52,7 +51,7 @@ class SignInPage extends BasePage {
                                             autoComplete="nope"
                                             className="form-control"
                                             placeholder="Email Address"
-                                            field="email"
+                                            name="email"
                                             object={user}/>
                                     </div>
                                     <div className="col-md-12">
@@ -61,7 +60,7 @@ class SignInPage extends BasePage {
                                             required
                                             className="form-control"
                                             placeholder="Password"
-                                            field="password"
+                                            name="password"
                                             object={user}
                                         />
                                     </div>

@@ -1,6 +1,4 @@
-import classNames from "../classNames";
-import Progress from "../components/Progress";
-import Spinner from "../components/Spinner";
+import {Progress,Spinner} from "nq-component";
 
 function noop() {
 }

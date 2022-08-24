@@ -1,9 +1,9 @@
 import BasePage from "../../base/BasePage";
-import NavBar from "../../components/NavBar";
+import {NavBar} from "nq-component";
 import React from "react";
 import MigrationPresenter from "./MigrationPresenter";
 import {exportUseCase, importUseCase} from "../../domain/migration";
-import Button from "../../components/Button";
+import {Button} from "nq-component";
 import browseFile from "../../browseFile";
 
 class MigrationPage extends BasePage {
