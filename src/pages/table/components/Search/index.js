@@ -14,7 +14,7 @@ function Search({fields, onSubmit}) {
 
     function onChange(value) {
         const query = {};
-        query[key] = {$regex: value};
+        query[key] = {$regex: value, $options: 'i'};
         setQuery(query);
         clearTimeout(timeout);
         timeout = setTimeout(() => {

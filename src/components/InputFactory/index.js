@@ -55,16 +55,9 @@ function InputFactory({type, _type, name, object, ...options}) {
                 object={object}
                 {...options}/>;
         case 'Relation':
-            return <InputRelation
-                isMulti
-                name={name}
-                type={type.toLowerCase()}
-                object={object}
-                schemas={context.schemas}
-                find={find}
-                {...options}/>;
         case 'Pointer':
             return <InputRelation
+                isMulti={type === 'Relation'}
                 name={name}
                 type={type.toLowerCase()}
                 object={object}
