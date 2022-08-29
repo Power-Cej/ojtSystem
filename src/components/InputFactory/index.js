@@ -14,24 +14,24 @@ import Context from "../../AppContext";
 
 const find = findObjectUseCase();
 
-function InputFactory({type, _type, name, object, ...options}) {
+function InputFactory({type, _type, field, object, ...options}) {
     const context = React.useContext(Context);
     switch (_type || type) {
         case 'Email':
         case 'String':
             return <InputString
-                name={name}
+                field={field}
                 type={type.toLowerCase()}
                 object={object}
                 {...options}/>;
         case 'Password':
             return <InputPassword
-                name={name}
+                field={field}
                 object={object}
                 {...options}/>;
         case 'Enum':
             return <InputSelect
-                name={name}
+                field={field}
                 type={type.toLowerCase()}
                 object={object}
                 options={options.values}
@@ -39,18 +39,18 @@ function InputFactory({type, _type, name, object, ...options}) {
         case 'Number':
         case 'Tel':
             return <InputNumber
-                name={name}
+                field={field}
                 object={object}
                 {...options}/>;
         case 'Date':
             return <InputDate
-                name={name}
+                field={field}
                 type={type.toLowerCase()}
                 object={object}
                 {...options}/>;
         case 'Text':
             return <InputText
-                name={name}
+                field={field}
                 type={type.toLowerCase()}
                 object={object}
                 {...options}/>;
@@ -58,7 +58,7 @@ function InputFactory({type, _type, name, object, ...options}) {
         case 'Pointer':
             return <InputRelation
                 isMulti={type === 'Relation'}
-                name={name}
+                field={field}
                 type={type.toLowerCase()}
                 object={object}
                 schemas={context.schemas}
@@ -66,7 +66,7 @@ function InputFactory({type, _type, name, object, ...options}) {
                 {...options}/>;
         case 'Image':
             return <InputImage
-                name={name}
+                field={field}
                 type={type.toLowerCase()}
                 object={object}
                 {...options}/>;

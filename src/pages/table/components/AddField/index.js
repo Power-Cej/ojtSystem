@@ -42,19 +42,19 @@ function AddField({field, onSubmit, onCancel, collections}) {
                     <div className="col-md-12">
                         <InputBooleanSwitch
                             id="switch-required"
-                            name="required"
+                            field="required"
                             object={field}/>
                     </div>
                     <div className="col-md-12">
                         <InputBooleanSwitch
                             id="switch-unique"
-                            name="unique"
+                            field="unique"
                             object={field}/>
                     </div>
                     <div className="col-md-12">
                         <InputBooleanSwitch
                             id="switch-index"
-                            name="index"
+                            field="index"
                             object={field}/>
                     </div>
                     <div className="col-md-12 text-end">

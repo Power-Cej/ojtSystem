@@ -1,0 +1,25 @@
+import DateWeek from "./DateWeek";
+import DateMonth from "./DateMonth";
+import DateDay from "./DateDay";
+
+function DateType({field, type, onChange}) {
+    switch (type) {
+        case 'Daily':
+            return <DateDay
+                field={field}
+                onChange={onChange}
+            />
+        case 'Weekly':
+            return <DateWeek
+                field={field}
+                onChange={onChange}
+            />
+        case 'Monthly':
+            return <DateMonth
+                field={field}
+                onChange={onChange}
+            />
+    }
+}
+
+export default DateType;

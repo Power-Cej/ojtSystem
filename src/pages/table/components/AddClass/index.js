@@ -20,7 +20,7 @@ function AddCLass({schema, onSubmit, onCancel}) {
                         {
                             isAdvanced && (
                                 <InputJson
-                                    name="schema"
+                                    field="schema"
                                     object={{schema: schema}}
                                     rows="10"
                                 />
@@ -32,7 +32,7 @@ function AddCLass({schema, onSubmit, onCancel}) {
                                     <div className="col-md-12">
                                         <label className="form-label">class name</label>
                                         <InputString
-                                            name="name"
+                                            field="name"
                                             placeholder="give it a good name"
                                             required
                                             object={schema}/>
@@ -40,13 +40,13 @@ function AddCLass({schema, onSubmit, onCancel}) {
                                     <div className="col-md-12">
                                         <label className="form-label">icon</label>
                                         <InputIcon
-                                            name='icon'
+                                            field='icon'
                                             object={schema}/>
                                     </div>
                                     <div className="col-md-12">
                                         <label className="form-label">label</label>
                                         <InputString
-                                            name='label'
+                                            field='label'
                                             placeholder="optional"
                                             object={schema}/>
                                     </div>

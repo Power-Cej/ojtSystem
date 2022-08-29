@@ -9,7 +9,7 @@ import TablePage from "../table/TablePage";
 import FormPage from "../form/FormPage";
 import BasePage from "../../base/BasePage";
 import NotFoundPage from "../notfound";
-import {Layout,Progress} from "nq-component";
+import {Layout, Progress} from "nq-component";
 import getProfile from "../../getProfile";
 import MigrationPage from "../migration/MigrationPage";
 import AccountPage from "../account/AccountPage";

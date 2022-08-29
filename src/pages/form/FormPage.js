@@ -80,7 +80,7 @@ class FormPage extends BasePage {
                                                         className="form-label fs-sm">{camelToTitleCase(field)}</label>
                                                     <InputFactory
                                                         className="fs-sm"
-                                                        name={field}
+                                                        field={field}
                                                         type={type}
                                                         object={object}
                                                         {...options}/>

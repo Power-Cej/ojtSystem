@@ -21,6 +21,7 @@ class TablePagePresenter {
         this.where = {};
         this.documents = [];
         this.progress = true;
+        this.view.setObjects([]);
     }
 
     getData() {
@@ -87,9 +88,8 @@ class TablePagePresenter {
     }
 
     searchSubmit(where) {
+        this.init();
         this.where = where;
-        this.documents = [];
-        this.current = 1;
         this.getData();
     }
 

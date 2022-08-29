@@ -11318,11 +11318,6 @@ body {
   box-shadow: none !important;
 }
 
-.input-group input {
-  border-right: 0 !important;
-  padding-right: 0 !important;
-}
-
 .input-group :focus ~ button {
   border-color: #809cd4;
   color: #0038A8;

@@ -1,51 +1,58 @@
 import React from 'react';
+import InputType from "./InputType";
 
 let timeout;
 
 function Search({fields, onSubmit}) {
-    const keys = Object.keys(fields);
-    const [key, setKey] = React.useState(keys.length > 0 ? keys[0] : "");
-    const [query, setQuery] = React.useState({});
+    const [key, setKey] = React.useState();
+    const [where, setWhere] = React.useState({});
 
     function submit(e) {
         e.preventDefault();
-        onSubmit(query);
+        onSubmit(where);
     }
 
-    function onChange(value) {
-        const query = {};
-        query[key] = {$regex: value, $options: 'i'};
-        setQuery(query);
+    React.useEffect(() => {
+        const keys = Object.keys(fields);
+        setKey(keys[0]);
+    }, [fields]);
+
+    function onChange(where) {
+        setWhere(where);
         clearTimeout(timeout);
         timeout = setTimeout(() => {
-            onSubmit(query);
+            onSubmit(where);
         }, 300);
     }
-
+    
     return (
-        <form className="d-flex justify-content-end" onSubmit={submit}>
-            <div>
-                <div className="input-group">
-                    <select
-                        onChange={e => setKey(e.target.value)}
-                        className="form-select shadow-none fs-xs">
-                        {
-                            Object.keys(fields)
-                                .map((key) => {
-                                    const options = fields[key];
-                                    if (options.hasOwnProperty('read') && !options.read) return null;
-                                    return (
-                                        <option key={key} value={key}>{key}</option>
-                                    );
-                                })
-                        }
-                    </select>
-                    <input
-                        type="text"
-                        onChange={e => onChange(e.target.value)}
-                        className="form-control form-control-sm shadow-none"
-                        placeholder="Search"/>
-                </div>
+        <form onSubmit={submit}>
+            <div className="d-flex justify-content-end">
+                <select
+                    value={key}
+                    className="form-select shadow-none fs-xs w-auto rounded-0 rounded-start"
+                    onChange={e => setKey(e.target.value)}>
+                    {
+                        Object.keys(fields)
+                            .map((key) => {
+                                const options = fields[key];
+                                if (options.hasOwnProperty('read') && !options.read) return null;
+                                return (
+                                    <option key={key} value={key}>{key}</option>
+                                );
+                            })
+                    }
+                </select>
+                {
+                    fields[key] && (
+                        <InputType
+                            type={fields[key].type}
+                            field={key}
+                            onChange={onChange}
+                        />
+                    )
+                }
+
             </div>
         </form>
     );

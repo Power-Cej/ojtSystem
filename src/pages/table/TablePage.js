@@ -1,7 +1,7 @@
 import React from 'react';
 import BasePage from "../../base/BasePage";
 import TablePagePresenter from './TablePagePresenter';
-import {Table,dialog} from "nq-component";
+import {Table, dialog} from "nq-component";
 import AddField from "./components/AddField";
 import {addSchemaUseCase, updateSchemaUseCase, deleteSchemaUseCase} from '../../domain/schema/usecases';
 import {deleteObjectUseCase, findObjectUseCase, updateObjectUseCase} from '../../domain/object';
@@ -10,7 +10,7 @@ import Search from "./components/Search";
 import AddCLass from "./components/AddClass";
 import DeleteClass from "./components/DeleteClass";
 import DeleteField from "./components/DeleteField";
-import {NavBar,Progress} from "nq-component";
+import {NavBar, Progress} from "nq-component";
 import Access from "./components/Access";
 import access from "../../access";
 import withRouter from "../../withRouter";
@@ -60,6 +60,7 @@ class TablePage extends BasePage {
             e.preventDefault();
             this.presenter.editClassSubmit(schema);
         }
+
         dialog.fire({
             title: 'Edit a class',
             html: <AddCLass

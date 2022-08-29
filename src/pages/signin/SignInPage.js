@@ -51,7 +51,7 @@ class SignInPage extends BasePage {
                                             autoComplete="nope"
                                             className="form-control"
                                             placeholder="Email Address"
-                                            name="email"
+                                            field="email"
                                             object={user}/>
                                     </div>
                                     <div className="col-md-12">
@@ -60,7 +60,7 @@ class SignInPage extends BasePage {
                                             required
                                             className="form-control"
                                             placeholder="Password"
-                                            name="password"
+                                            field="password"
                                             object={user}
                                         />
                                     </div>

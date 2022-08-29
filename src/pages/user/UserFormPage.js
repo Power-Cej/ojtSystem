@@ -29,6 +29,7 @@ class UserFormPage extends BasePage {
         e.preventDefault();
         this.presenter.submit();
     }
+
     getObject() {
         return this.state.object;
     }

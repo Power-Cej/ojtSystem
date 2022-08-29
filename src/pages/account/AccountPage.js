@@ -109,6 +109,7 @@ class AccountPage extends BasePage {
 
     render() {
         const user = this.state.user;
+        const information = this.state.information;
         if (!user) return null;
         const name = user.name || user.username;
         const profile = getProfile(user);
@@ -182,7 +183,67 @@ class AccountPage extends BasePage {
                                 </div>
                             </div>
                         </div>
-
+                        <div className="col-md-6">
+                            <div className="mt-3 mt-md-0">
+                                <div className="bg-white p-3 shadow-sm">
+                                    <span className="text-muted fs-sm">User Information</span>
+                                    <ul className="list-group list-group-flush">
+                                        <InputInfo
+                                            icon="bi bi-card-checklist"
+                                            field="name"
+                                            object={user}
+                                            label={"Full Name: "}
+                                            placeholder="fist-name last-name"
+                                            onSave={this.saveUserClick.bind(this)}
+                                        />
+                                        <InputInfo
+                                            icon="bi bi-envelope"
+                                            field="email"
+                                            object={user}
+                                            label={"Email: "}
+                                            onSave={this.saveUserClick.bind(this)}
+                                        />
+                                        <PasswordForm
+                                            fields={password}
+                                            object={user}
+                                            onSave={this.savePasswordClick.bind(this)}
+                                        />
+                                        <InputInfo
+                                            type="Date"
+                                            icon="bi bi-link-45deg"
+                                            field="createdAt"
+                                            object={user}
+                                            label={"Joined: "}
+                                            edit={false}
+                                            onSave={this.saveUserClick.bind(this)}
+                                        />
+                                    </ul>
+                                </div>
+                            </div>
+                            <div className="mt-3">
+                                <div className="bg-white p-3 shadow-sm">
+                                    <span className="text-muted fs-sm">Social Media Accounts</span>
+                                    <ul className="list-group list-group-flush">
+                                        {
+                                            social.map((so, index) => {
+                                                return (
+                                                    <InputInfo
+                                                        key={so.field}
+                                                        icon={so.icon}
+                                                        field={so.field}
+                                                        object={information}
+                                                        label={so.label}
+                                                        maxLength={100}
+                                                        placeholder={so.placeholder}
+                                                        onSave={this.saveInformationClick.bind(this)}
+                                                    />
+                                                )
+                                            })
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </>
