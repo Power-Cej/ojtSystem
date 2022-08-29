@@ -11,8 +11,6 @@ function DateMonth({field, onChange}) {
         endDate.setHours(23, 59, 59, 999);
         where[field] = {$gte: startDate.toISOString(), $lte: endDate.toISOString()};
         onChange(where);
-        console.log('start', startDate);
-        console.log('end', endDate);
         setValue(endDate.toISOString().slice(0, 7));
     }
 

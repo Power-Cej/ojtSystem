@@ -1,7 +1,9 @@
 import React from "react";
 import DateType from "./DateType";
 
-const keys = ['Daily', 'Weekly', 'Monthly', 'Quarterly', 'Annually', 'Custom'];
+const keys = ['Daily', 'Weekly', 'Monthly', 'Custom'];
+
+// const keys = ['Daily', 'Weekly', 'Monthly', 'Quarterly', 'Annually', 'Custom'];
 
 function TypeDate({field, onChange}) {
     const [key, setKey] = React.useState(keys[0]);

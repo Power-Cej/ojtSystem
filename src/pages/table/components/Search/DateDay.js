@@ -6,11 +6,11 @@ function DateDay({field, onChange}) {
 
     function _onChange(startDate) {
         setValue(startDate.toISOString().slice(0, 10));
-        const where = {};
         startDate.setHours(0, 0, 0, 0);
         const endDate = new Date();
         endDate.setDate(startDate.getDate());
         endDate.setHours(23, 59, 59, 999);
+        const where = {};
         where[field] = {$gte: startDate.toISOString(), $lte: endDate.toISOString()};
         onChange(where);
     }

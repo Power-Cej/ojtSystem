@@ -1,6 +1,7 @@
 import DateWeek from "./DateWeek";
 import DateMonth from "./DateMonth";
 import DateDay from "./DateDay";
+import DateRange from "./DateRange";
 
 function DateType({field, type, onChange}) {
     switch (type) {
@@ -16,6 +17,11 @@ function DateType({field, type, onChange}) {
             />
         case 'Monthly':
             return <DateMonth
+                field={field}
+                onChange={onChange}
+            />
+        case 'Custom':
+            return <DateRange
                 field={field}
                 onChange={onChange}
             />
