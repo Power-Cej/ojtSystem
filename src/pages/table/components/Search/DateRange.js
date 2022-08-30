@@ -27,6 +27,7 @@ function DateRange({field, onChange}) {
         const date = new Date();
         setStart(date.toISOString().slice(0, 10));
         setEnd(date.toISOString().slice(0, 10));
+
     }, []);
 
     return (

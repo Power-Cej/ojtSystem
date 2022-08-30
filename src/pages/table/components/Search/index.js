@@ -2,6 +2,7 @@ import React from 'react';
 import InputType from "./InputType";
 
 let timeout;
+const types = ['String', 'Date'];
 
 function Search({fields, onSubmit}) {
     const [key, setKey] = React.useState();
@@ -24,7 +25,7 @@ function Search({fields, onSubmit}) {
             onSubmit(where);
         }, 300);
     }
-    
+
     return (
         <form onSubmit={submit}>
             <div className="d-flex justify-content-end">
@@ -36,6 +37,7 @@ function Search({fields, onSubmit}) {
                         Object.keys(fields)
                             .map((key) => {
                                 const options = fields[key];
+                                if (!types.includes(options.type)) return null;
                                 if (options.hasOwnProperty('read') && !options.read) return null;
                                 return (
                                     <option key={key} value={key}>{key}</option>

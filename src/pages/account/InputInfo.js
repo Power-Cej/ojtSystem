@@ -68,8 +68,6 @@ function InputInfo({field, object, onSave, icon, label, placeholder, edit, ...pr
                 {/*            object={object}*/}
                 {/*            {...props}/>*/}
                 {/*</span>*/}
-
-
             </li>
         </>
     )

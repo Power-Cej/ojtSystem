@@ -11324,7 +11324,7 @@ body {
   background-color: #fff;
 }
 
-input[type=radio] {
+input[type=radio], input[type=checkbox] {
   box-shadow: none !important;
 }
 

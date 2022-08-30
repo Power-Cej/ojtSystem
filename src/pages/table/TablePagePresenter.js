@@ -21,6 +21,7 @@ class TablePagePresenter {
         this.where = {};
         this.documents = [];
         this.progress = true;
+        this.view.setMore(false);
         this.view.setObjects([]);
     }
 
@@ -211,8 +212,8 @@ class TablePagePresenter {
     deleteSelected() {
         const selected = this.view.getSelected();
         const collection = this.view.getClassName();
-        const promises = selected.map(o => this.deleteObjectUseCase.execute(collection, o.id));
-        Promise.all(promises)
+        this.view.showDialog({title: 'Delete Data?', message: 'Are you sure you want to delete?'})
+            .then(() => Promise.all(selected.map(o => this.deleteObjectUseCase.execute(collection, o.id))))
             .then(() => {
                 this.documents = this.documents.filter(o => !selected.includes(o));
                 this.view.setObjects(this.documents);

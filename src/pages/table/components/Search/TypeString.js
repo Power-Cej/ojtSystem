@@ -7,9 +7,7 @@ function TypeString({onChange, field}) {
         onChange(where);
     }
 
-    React.useEffect(() => {
-        _onChange('');
-    }, []);
+
 
     return (
         <input

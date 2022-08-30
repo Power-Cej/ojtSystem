@@ -73,7 +73,7 @@ body {
   background-color: $input-focus-bg;
 }
 
-input[type="radio"] {
+input[type="radio"], input[type="checkbox"] {
   box-shadow: none !important;
 }
 
