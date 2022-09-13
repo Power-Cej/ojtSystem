@@ -7,7 +7,8 @@ import {
     InputSelect,
     InputText,
     InputRelation,
-    InputImage
+    InputImage,
+    InputBooleanCheckbox,
 } from "nq-component";
 import {findObjectUseCase} from "../../domain/object";
 import Context from "../../AppContext";
@@ -66,6 +67,13 @@ function InputFactory({type, _type, field, object, ...options}) {
                 {...options}/>;
         case 'Image':
             return <InputImage
+                field={field}
+                type={type.toLowerCase()}
+                object={object}
+                {...options}/>;
+        case 'Boolean':
+            return <InputBooleanCheckbox
+                id={object.id}
                 field={field}
                 type={type.toLowerCase()}
                 object={object}

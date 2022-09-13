@@ -13,7 +13,7 @@ function TypeRelation({field, collections}) {
             <label className="form-label fs-sm">target class</label>
             <InputSelect
                 className="form-control form-control"
-                name="target"
+                field="target"
                 options={collections}
                 object={field}
                 required

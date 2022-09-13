@@ -13,6 +13,7 @@ Queue.setUrl('https://api.sushi.innque.com/v1');
 Queue.setApplicationId('6560588f36297abd70cb7433774d5e09');
 
 function App() {
+
     return (
         <AppProvider>
             <BrowserRouter>

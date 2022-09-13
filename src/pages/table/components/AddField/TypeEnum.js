@@ -14,7 +14,7 @@ function TypeEnum({field}) {
             <label className="form-label fs-sm">values</label>
             <InputArray
                 className="form-control form-control"
-                name="values"
+                field="values"
                 required
                 object={field}/>
         </div>

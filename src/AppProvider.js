@@ -1,12 +1,13 @@
 import React from 'react';
 import Context from './AppContext';
 
+
 class AppProvider extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
     }
-    
+
     setGlobalState(state) {
         this.setState(state);
     }
