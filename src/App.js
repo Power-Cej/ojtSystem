@@ -7,8 +7,8 @@ import React from "react";
 import AccessDeniedPage from "./pages/denied";
 import Queue from 'nq';
 
-Queue.setUrl('https://api.sushi.innque.com/v1');
-// Queue.setUrl('https://api.mweeb.com/v1');
+// Queue.setUrl('https://api.sushi.innque.com/v1');
+Queue.setUrl('https://api.mweeb.com/v1');
 // Queue.setUrl('https://api.mercantile.pwrdv.com/v1');
 Queue.setApplicationId('6560588f36297abd70cb7433774d5e09');
 
