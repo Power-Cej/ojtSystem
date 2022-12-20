@@ -232,7 +232,7 @@ class TablePage extends BasePage {
         return (
             <>
                 <NavBar className="shadow-sm"/>
-                <div className="container px-lg-4 py-lg-3 mt-3">
+                <div className="container px-lg-4 py-lg-3 mt-3 overflow-auto">
                     <Search
                         onSubmit={this.searchSubmit.bind(this)}
                         fields={schema.fields}/>
