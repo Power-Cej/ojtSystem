@@ -58,7 +58,7 @@ class FormPage extends BasePage {
         return (
             <>
                 <NavBar className="shadow-sm"/>
-                <div className="container-fluid mt-3">
+                <div className="container-fluid mt-3 overflow-auto">
                     <div className="card shadow-sm">
                         <div className="card-body">
                             <form className="p-2" onSubmit={this.formSubmit.bind(this)}>

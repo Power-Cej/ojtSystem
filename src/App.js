@@ -11,6 +11,7 @@ import Queue from 'nq';
 // Queue.setUrl('https://api.jsla.academy/v1');
 Queue.setUrl('https://api.figarocoffeegroup.com/v1');
 // Queue.setUrl('https://api.mercantile.pwrdv.com/v1');
+// Queue.setUrl('http://localhost/v1');
 Queue.setApplicationId('6560588f36297abd70cb7433774d5e09');
 
 function App() {

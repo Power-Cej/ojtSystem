@@ -14,7 +14,6 @@ import getProfile from "../../getProfile";
 import MigrationPage from "../migration/MigrationPage";
 import AccountPage from "../account/AccountPage";
 import RolePage from "../role/RolePage";
-import UserFormPage from "../user/UserFormPage";
 import {getRolesByUserUseCase} from "../../domain/role";
 import canRead from "../../canRead";
 
@@ -81,8 +80,6 @@ class MainPage extends BasePage {
                         <Route path={'/class/:name/form/'} element={<FormPage/>}/>
                         <Route path={'/class/roles/form'} element={<RolePage/>}/>
                         <Route path={'/class/roles/form/:id'} element={<RolePage/>}/>
-                        <Route path={'/class/users/form'} element={<UserFormPage/>}/>
-                        <Route path={'/class/users/form/:id'} element={<UserFormPage/>}/>
                         <Route path={'/class/:name/form/:id'} element={<FormPage/>}/>
                         <Route path={'/migration'} element={<MigrationPage/>}/>
                         <Route path={'/account'} element={<AccountPage/>}/>

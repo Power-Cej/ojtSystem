@@ -14,6 +14,7 @@ import {NavBar, Progress} from "nq-component";
 import Access from "./components/Access";
 import access from "../../access";
 import withRouter from "../../withRouter";
+import Scroll from "../../components/Scroll";
 
 
 class TablePage extends BasePage {
@@ -197,7 +198,8 @@ class TablePage extends BasePage {
     }
 
     loadMore() {
-        this.presenter.loadMore();
+        console.log('loadMore');
+        // this.presenter.loadMore();
     }
 
     onSelect(index) {
@@ -232,7 +234,7 @@ class TablePage extends BasePage {
         return (
             <>
                 <NavBar className="shadow-sm"/>
-                <div className="container px-lg-4 py-lg-3 mt-3 overflow-auto">
+                <div className="container px-lg-4 py-lg-3 mt-3">
                     <Search
                         onSubmit={this.searchSubmit.bind(this)}
                         fields={schema.fields}/>
@@ -311,16 +313,20 @@ class TablePage extends BasePage {
                             </div>
                         </div>
                     </div>
-                    <Table
-                        selected={selected}
-                        onSelect={this.onSelect.bind(this)}
-                        onSelectAll={this.onSelectAll.bind(this)}
-                        progress={progress}
-                        hasMore={hasMore}
-                        next={this.loadMore.bind(this)}
-                        onItemClick={this.onItemClick.bind(this)}
-                        fields={schema.fields}
-                        objects={objects}/>
+                    <Scroll
+                        hasMore={true}
+                        loadMore={this.loadMore.bind(this)}>
+                        <Table
+                            selected={selected}
+                            onSelect={this.onSelect.bind(this)}
+                            onSelectAll={this.onSelectAll.bind(this)}
+                            progress={progress}
+                            hasMore={hasMore}
+                            next={this.loadMore.bind(this)}
+                            onItemClick={this.onItemClick.bind(this)}
+                            fields={schema.fields}
+                            objects={objects}/>
+                    </Scroll>
                 </div>
             </>
         );
