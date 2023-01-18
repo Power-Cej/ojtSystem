@@ -5,10 +5,9 @@ import mergeSchema from "../../mergeSchema";
  * responsible for get the current user and current roles and schemas
  */
 class MainPagePresenter {
-    constructor(view, getCurrentUserUseCase, getRolesByUserUseCase, signOutUseCase, getSchemaUseCase) {
+    constructor(view, getCurrentUserUseCase, signOutUseCase, getSchemaUseCase) {
         this.view = view;
         this.getCurrentUserUseCase = getCurrentUserUseCase;
-        this.getRolesByUserUseCase = getRolesByUserUseCase;
         this.signOutUseCase = signOutUseCase;
         this.getSchemaUseCase = getSchemaUseCase;
     }
@@ -21,7 +20,6 @@ class MainPagePresenter {
         this.view.showProgress();
         Promise.resolve()
             .then(() => this.getUser())
-            .then(() => this.getRoles())
             .then(() => this.getSchema())
             .then(() => {
                 this.view.hideProgress();
@@ -40,25 +38,15 @@ class MainPagePresenter {
         return this.getCurrentUserUseCase.execute()
             .then(user => {
                 this.user = user;
+                if (!user.roles) {
+                    this.view.navigateTo('/denied');
+                    return;
+                }
+                this.view.setRoles(user.roles);
                 this.view.setCurrentUser(user);
             });
     }
 
-    getRoles() {
-        if (this.user.isMaster) {
-            this.view.setRoles([]);
-            return;
-        }
-        return this.getRolesByUserUseCase.execute(this.user)
-            .then(roles => {
-                if (roles.length === 0) {
-                    this.view.navigateTo('/denied');
-                    return;
-                }
-                this.roles = roles;
-                this.view.setRoles(roles);
-            });
-    }
 
     getSchema() {
         return this.getSchemaUseCase.execute()

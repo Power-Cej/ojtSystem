@@ -21,7 +21,7 @@ import canRead from "../../canRead";
 class MainPage extends BasePage {
     constructor(props) {
         super(props);
-        this.presenter = new MainPagePresenter(this, getCurrentUserUseCase(), getRolesByUserUseCase(), signOutUseCase(), getAllSchemasUseCase());
+        this.presenter = new MainPagePresenter(this, getCurrentUserUseCase(), signOutUseCase(), getAllSchemasUseCase());
     }
 
     componentDidMount() {
