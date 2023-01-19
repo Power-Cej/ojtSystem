@@ -1,34 +1,18 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 
-const propTypes = {
-    children: PropTypes.node.isRequired,
-    element: PropTypes.node,
-    hasMore: PropTypes.bool,
-    initialLoad: PropTypes.bool,
-    loader: PropTypes.node,
-    loadMore: PropTypes.func.isRequired,
-    ref: PropTypes.func,
-    getScrollParent: PropTypes.func,
-    threshold: PropTypes.number,
-    useCapture: PropTypes.bool,
-    useWindow: PropTypes.bool
-};
 const defaultProps = {
     element: 'div',
     hasMore: false,
     initialLoad: true,
     ref: null,
-    threshold: 250,
+    threshold: 0,
     useWindow: true,
     useCapture: false,
     loader: null,
     getScrollParent: null
 };
 
-class Scroll extends Component {
-
-
+class Scroll extends React.Component {
     constructor(props) {
         super(props);
         this.scrollListener = this.scrollListener.bind(this);
@@ -38,10 +22,6 @@ class Scroll extends Component {
 
     componentDidMount() {
         this.options = this.eventListenerOptions();
-        this.attachScrollListener();
-    }
-
-    componentDidUpdate() {
         this.attachScrollListener();
     }
 
@@ -87,12 +67,12 @@ class Scroll extends Component {
     }
 
     detachMousewheelListener() {
-        let scrollEl = window;
+        let scrollElement = window;
         if (this.props.useWindow === false) {
-            scrollEl = this.scrollComponent.parentNode;
+            scrollElement = this.scrollComponent.parentNode;
         }
 
-        scrollEl.removeEventListener(
+        scrollElement.removeEventListener(
             'mousewheel',
             this.mousewheelListener,
             this.options ? this.options : this.props.useCapture
@@ -100,17 +80,16 @@ class Scroll extends Component {
     }
 
     detachScrollListener() {
-        let scrollEl = window;
+        let scrollElement = window;
         if (this.props.useWindow === false) {
-            scrollEl = this.getParentElement(this.scrollComponent);
+            scrollElement = this.getParentElement(this.scrollComponent);
         }
-
-        scrollEl.removeEventListener(
+        scrollElement.removeEventListener(
             'scroll',
             this.scrollListener,
             this.options ? this.options : this.props.useCapture
         );
-        scrollEl.removeEventListener(
+        scrollElement.removeEventListener(
             'resize',
             this.scrollListener,
             this.options ? this.options : this.props.useCapture
@@ -125,32 +104,30 @@ class Scroll extends Component {
         return element && element.parentNode;
     }
 
-
     attachScrollListener() {
         const parentElement = this.getParentElement(this.scrollComponent);
-        if (!this.props.hasMore || !parentElement) {
+        if (!parentElement) {
             return;
         }
-        let scrollEl = window;
+        let scrollElement = window;
         if (this.props.useWindow === false) {
-            scrollEl = parentElement;
+            scrollElement = parentElement;
         }
-        scrollEl.addEventListener(
+        scrollElement.addEventListener(
             'mousewheel',
             this.mousewheelListener,
             this.options ? this.options : this.props.useCapture
         );
-        scrollEl.addEventListener(
+        scrollElement.addEventListener(
             'scroll',
             this.scrollListener,
             this.options ? this.options : this.props.useCapture
         );
-        scrollEl.addEventListener(
+        scrollElement.addEventListener(
             'resize',
             this.scrollListener,
             this.options ? this.options : this.props.useCapture
         );
-
         if (this.props.initialLoad) {
             this.scrollListener();
         }
@@ -166,46 +143,18 @@ class Scroll extends Component {
 
     scrollListener() {
         const element = this.scrollComponent;
-        const scrollEl = window;
+        const scrollElement = window;
         const parentNode = this.getParentElement(element);
         let offset;
         if (this.props.useWindow) {
             // get the root element
             const doc = document.documentElement || document.body.parentNode || document.body;
             // get the scroll top position
-            const scrollTop = scrollEl.pageYOffset !== undefined ? scrollEl.pageYOffset : doc.scrollTop;
-            offset = this.calculateOffset(element, scrollTop);
+            const scrollTop = scrollElement.pageYOffset !== undefined ? scrollElement.pageYOffset : doc.scrollTop;
+            this.props.onScroll && this.props.onScroll(scrollTop);
         } else {
             offset = element.scrollHeight - parentNode.scrollTop - parentNode.clientHeight;
         }
-        // check if the offset is in the threshold
-        // check if the element is still in the DOM and visible
-        // to avoid trying to load more content after element has removed.
-        console.log(offset);
-        if (offset < Number(this.props.threshold) && (element && element.offsetParent !== null)) {
-            this.detachScrollListener();
-            this.beforeScrollHeight = parentNode.scrollHeight;
-            this.beforeScrollTop = parentNode.scrollTop;
-            // Call loadMore after detachScrollListener to allow for non-async loadMore functions
-            if (typeof this.props.loadMore === 'function') {
-                this.props.loadMore();
-                this.loadMore = true;
-            }
-        }
-    }
-
-    calculateOffset(element, scrollTop) {
-        if (!element) {
-            return 0;
-        }
-        return (this.calculateTopPosition(element) + (element.offsetHeight - scrollTop - window.innerHeight));
-    }
-
-    calculateTopPosition(element) {
-        if (!element) {
-            return 0;
-        }
-        return element.offsetTop + this.calculateTopPosition(element.offsetParent);
     }
 
     render() {
@@ -217,7 +166,7 @@ class Scroll extends Component {
             loader,
             loadMore,
             pageStart,
-            ref,
+            reff,
             threshold,
             useCapture,
             useWindow,
@@ -227,13 +176,11 @@ class Scroll extends Component {
         // get reference of the element
         props.ref = node => {
             this.scrollComponent = node;
-            // pass reference outside if defined
-            ref && ref(node);
+            reff && reff(node);
         };
         return React.createElement(element, props, children);
     }
 }
 
-Scroll.propTypes = propTypes;
 Scroll.defaultProps = defaultProps;
 export default Scroll;

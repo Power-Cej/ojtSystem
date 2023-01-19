@@ -14,7 +14,7 @@ import {NavBar, Progress} from "nq-component";
 import Access from "./components/Access";
 import access from "../../access";
 import withRouter from "../../withRouter";
-import Scroll from "../../components/Scroll";
+import InfiniteScroll from "../../components/InfiniteScroll";
 
 
 class TablePage extends BasePage {
@@ -198,8 +198,8 @@ class TablePage extends BasePage {
     }
 
     loadMore() {
-        console.log('loadMore');
-        // this.presenter.loadMore();
+        alert("loadMore");
+        this.presenter.loadMore();
     }
 
     onSelect(index) {
@@ -224,6 +224,7 @@ class TablePage extends BasePage {
 
     setMore(hasMore) {
         this.setState({hasMore});
+        console.log('hasMore', hasMore);
     }
 
     render() {
@@ -313,20 +314,18 @@ class TablePage extends BasePage {
                             </div>
                         </div>
                     </div>
-                    <Scroll
-                        hasMore={true}
-                        loadMore={this.loadMore.bind(this)}>
+                    <InfiniteScroll
+                        loadMore={this.loadMore.bind(this)}
+                        hasMore={hasMore}>
                         <Table
                             selected={selected}
                             onSelect={this.onSelect.bind(this)}
                             onSelectAll={this.onSelectAll.bind(this)}
                             progress={progress}
-                            hasMore={hasMore}
-                            next={this.loadMore.bind(this)}
                             onItemClick={this.onItemClick.bind(this)}
                             fields={schema.fields}
                             objects={objects}/>
-                    </Scroll>
+                    </InfiniteScroll>
                 </div>
             </>
         );

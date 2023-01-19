@@ -16,7 +16,7 @@ class TablePagePresenter {
     }
 
     init() {
-        this.limit = 10000;
+        this.limit = 15;
         this.current = 1;
         this.where = {};
         this.documents = [];
@@ -40,8 +40,11 @@ class TablePagePresenter {
         return this.findObjectUseCase.execute(className, query)
             .then(({count, objects}) => {
                 this.documents = this.documents.concat(objects);
-                this.view.setMore(count > this.documents.length);
-                this.view.setObjects(this.documents);
+                // this.view.setObjects(objects);
+                this.view.setStatePromise({objects: objects})
+                    .then(() => {
+                        this.view.setMore(count > objects.length);
+                    });
                 this.setProgress(false);
             })
             .catch(error => {
