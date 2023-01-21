@@ -16,12 +16,11 @@ class TablePagePresenter {
     }
 
     init() {
-        this.limit = 15;
+        this.limit = 10;
         this.current = 1;
         this.where = {};
         this.documents = [];
         this.progress = true;
-        this.view.setMore(false);
         this.view.setObjects([]);
     }
 
@@ -36,30 +35,18 @@ class TablePagePresenter {
             include: ['all'],
             sort: {createdAt: -1}
         };
-        this.setProgress(true);
+        this.view.showProgress();
         return this.findObjectUseCase.execute(className, query)
             .then(({count, objects}) => {
                 this.documents = this.documents.concat(objects);
-                // this.view.setObjects(objects);
-                this.view.setStatePromise({objects: objects})
-                    .then(() => {
-                        this.view.setMore(count > objects.length);
-                    });
-                this.setProgress(false);
+                this.view.setCount(count);
+                this.view.setObjects(this.documents);
+                this.view.hideProgress();
             })
             .catch(error => {
-                this.setProgress(false);
+                this.view.hideProgress();
                 this.view.showError(error);
             });
-    }
-
-    setProgress(progress) {
-        this.progress = progress;
-        if (progress) {
-            this.view.showProgress();
-        } else {
-            this.view.hideProgress();
-        }
     }
 
     componentDidUpdate(prevProps) {
@@ -98,10 +85,8 @@ class TablePagePresenter {
     }
 
     loadMore() {
-        if (!this.progress) {
-            this.current++;
-            this.getData();
-        }
+        this.current++;
+        this.getData();
     }
 
     updateSchema(schema) {

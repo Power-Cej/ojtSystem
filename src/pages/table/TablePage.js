@@ -10,11 +10,10 @@ import Search from "./components/Search";
 import AddCLass from "./components/AddClass";
 import DeleteClass from "./components/DeleteClass";
 import DeleteField from "./components/DeleteField";
-import {NavBar, Progress} from "nq-component";
+import {NavBar, Progress,InfiniteScroll} from "nq-component";
 import Access from "./components/Access";
 import access from "../../access";
 import withRouter from "../../withRouter";
-import InfiniteScroll from "../../components/InfiniteScroll";
 
 
 class TablePage extends BasePage {
@@ -34,8 +33,9 @@ class TablePage extends BasePage {
             objects: [],
             selected: [],
             progress: true,
-            hasMore: false,
+            count: 0,
         };
+        this.parent = React.createRef();
     }
 
     componentDidMount() {
@@ -166,7 +166,7 @@ class TablePage extends BasePage {
     }
 
     setObjects(objects) {
-        return this.setStatePromise({objects});
+        this.setState({objects});
     }
 
     getSelected() {
@@ -198,8 +198,11 @@ class TablePage extends BasePage {
     }
 
     loadMore() {
-        alert("loadMore");
         this.presenter.loadMore();
+    }
+
+    setCount(count) {
+        this.setState({count});
     }
 
     onSelect(index) {
@@ -222,20 +225,15 @@ class TablePage extends BasePage {
         this.presenter.deleteSelected();
     }
 
-    setMore(hasMore) {
-        this.setState({hasMore});
-        console.log('hasMore', hasMore);
-    }
-
     render() {
         const schema = this.getSchema(this.getClassName());
-        const {objects, selected, hasMore, progress} = this.state;
+        const {objects, selected, count, progress} = this.state;
         const user = this.getCurrentUser();
         if (!schema) return <Progress/>;
         return (
             <>
                 <NavBar className="shadow-sm"/>
-                <div className="container px-lg-4 py-lg-3 mt-3">
+                <div className="container px-lg-4 py-lg-3 mt-3 overflow-auto" ref={this.parent}>
                     <Search
                         onSubmit={this.searchSubmit.bind(this)}
                         fields={schema.fields}/>
@@ -314,9 +312,11 @@ class TablePage extends BasePage {
                             </div>
                         </div>
                     </div>
+
                     <InfiniteScroll
+                        useWindow={false}
                         loadMore={this.loadMore.bind(this)}
-                        hasMore={hasMore}>
+                        hasMore={(!progress && count > objects.length)}>
                         <Table
                             selected={selected}
                             onSelect={this.onSelect.bind(this)}
@@ -326,6 +326,8 @@ class TablePage extends BasePage {
                             fields={schema.fields}
                             objects={objects}/>
                     </InfiniteScroll>
+
+
                 </div>
             </>
         );
