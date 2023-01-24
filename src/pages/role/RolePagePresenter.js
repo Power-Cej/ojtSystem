@@ -54,6 +54,14 @@ class RolePagePresenter {
                     this.view.showError(error);
                 });
         } else {
+            const roles = this.view.getCurrentRoles();
+            const aclRoles = roles.map(r => `role:${r.name}`);
+            const user = this.view.getCurrentUser();
+            const acl = {
+                read: [user.id, aclRoles],
+                write: [user.id, aclRoles],
+            }
+            object.acl = acl;
             this.saveObjectUseCase.execute(className, object)
                 .then(this.saveSchema.bind(this))
                 // .then(() => {

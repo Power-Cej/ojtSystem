@@ -35,7 +35,7 @@ class MainPage extends BasePage {
     render() {
         const user = this.getCurrentUser();
         const schemas = this.getSchemas();
-        const roles = this.getRoles();
+        const roles = this.getCurrentRoles();
         if (user === undefined || schemas === undefined) {
             return (
                 <Progress/>

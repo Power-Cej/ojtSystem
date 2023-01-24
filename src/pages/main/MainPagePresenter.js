@@ -42,7 +42,7 @@ class MainPagePresenter {
                     this.view.navigateTo('/denied');
                     return;
                 }
-                this.view.setRoles(user.roles);
+                this.view.setCurrentRoles(user.roles);
                 this.view.setCurrentUser(user);
             });
     }

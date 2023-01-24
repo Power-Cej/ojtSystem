@@ -51,6 +51,14 @@ class FormPagePresenter {
                     this.view.showError(error);
                 });
         } else {
+            const roles = this.view.getRoles();
+            const aclRoles = roles.map(r => `role:${r.name}`);
+            const user = this.view.getUser();
+            const acl = {
+                read: [user.id, aclRoles],
+                write: [user.id, aclRoles],
+            }
+            object.acl = acl;
             this.saveObjectUseCase.execute(className, object)
                 .then(() => {
                     this.view.hideProgress();

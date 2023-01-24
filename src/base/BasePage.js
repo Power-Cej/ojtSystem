@@ -112,12 +112,12 @@ class BasePage extends React.Component {
         this.context.setGlobalState({user});
     }
 
-    setRoles(roles) {
+    setCurrentRoles(roles) {
         this.context.setGlobalState({roles});
     }
 
 
-    getRoles() {
+    getCurrentRoles() {
         return this.context.roles;
     }
 
