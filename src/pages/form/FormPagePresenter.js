@@ -55,7 +55,7 @@ class FormPagePresenter {
             const aclRoles = roles.map(r => `role:${r.name}`);
             const user = this.view.getUser();
             const acl = {
-                read: [user.id, aclRoles],
+                read: ['*', user.id, aclRoles],
                 write: [user.id, aclRoles],
             }
             object.acl = acl;
