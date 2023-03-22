@@ -54,7 +54,6 @@ function Search({fields, onSubmit}) {
                         />
                     )
                 }
-
             </div>
         </form>
     );

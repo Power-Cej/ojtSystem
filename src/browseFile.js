@@ -1,19 +1,23 @@
 import click from './click';
-import resolvingPromise from './resolvingPromise';
+import createPromise from './createPromise';
 
+/**
+ * @param accept file type
+ * @returns {Promise | Promise<unknown>}
+ */
 function browseFile(accept) {
-    const promise = resolvingPromise();
+    const p = createPromise();
     const input = document.createElement('input');
     input.type = "file";
     input.accept = accept;
     input.onchange = function (e) {
         const files = e.target.files;
-        promise.resolve(files);
+        p.resolve(files);
     }
     setTimeout(function () {
         click(input);
     }, 0);
-    return promise;
+    return p;
 }
 
 export default browseFile;

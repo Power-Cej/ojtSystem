@@ -10424,4 +10424,9 @@ a, .btn-link {
   cursor: pointer;
 }
 
+.table-responsive::-webkit-scrollbar {
+  width: 5px;
+  height: 0px;
+}
+
 /*# sourceMappingURL=custom.css.map */

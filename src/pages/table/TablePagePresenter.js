@@ -1,5 +1,7 @@
+import browseFile from "../../browseFile";
+
 class TablePagePresenter {
-    constructor(view, findObjectUseCase, updateObjectUseCase, deleteObjectUseCase, addSchemaUseCase, updateSchemaUseCase, exportCSVUseCase, deleteSchemaUseCase) {
+    constructor(view, findObjectUseCase, updateObjectUseCase, deleteObjectUseCase, addSchemaUseCase, updateSchemaUseCase, exportCSVUseCase, deleteSchemaUseCase, importCSVUseCase) {
         this.view = view;
         this.findObjectUseCase = findObjectUseCase;
         this.updateObjectUseCase = updateObjectUseCase;
@@ -8,24 +10,24 @@ class TablePagePresenter {
         this.updateSchemaUseCase = updateSchemaUseCase;
         this.exportCSVUseCase = exportCSVUseCase;
         this.deleteSchemaUseCase = deleteSchemaUseCase;
+        this.importCSVUseCase = importCSVUseCase;
     }
 
     componentDidMount() {
         this.init();
-        this.getData();
+        this.getObjects();
     }
 
     init() {
         this.limit = 10;
         this.current = 1;
         this.where = {};
-        this.documents = [];
-        this.progress = true;
+        this.objects = [];
         this.view.setObjects([]);
     }
 
-    getData() {
-        const className = this.view.getClassName();
+    getObjects() {
+        const collection = this.view.getCollectionName();
         const skip = (this.current - 1) * this.limit;
         const query = {
             count: true,
@@ -36,11 +38,11 @@ class TablePagePresenter {
             sort: {createdAt: -1}
         };
         this.view.showProgress();
-        return this.findObjectUseCase.execute(className, query)
+        return this.findObjectUseCase.execute(collection, query)
             .then(({count, objects}) => {
-                this.documents = this.documents.concat(objects);
+                this.objects = this.objects.concat(objects);
                 this.view.setCount(count);
-                this.view.setObjects(this.documents);
+                this.view.setObjects(this.objects);
                 this.view.hideProgress();
             })
             .catch(error => {
@@ -51,24 +53,24 @@ class TablePagePresenter {
 
     componentDidUpdate(prevProps) {
         const prevClassName = prevProps.params.name;
-        const newClassName = this.view.getClassName();
-        //if className change
+        const newClassName = this.view.getCollectionName();
+        //if collection change
         if (prevClassName !== newClassName) {
             this.init();
             this.view.setObjects([]);
-            this.getData();
+            this.getObjects();
         }
     }
 
-    onItemClick(index) {
-        const document = this.documents[index];
-        const className = this.view.getClassName();
-        this.view.navigateToForm(className, document.id);
+    onClickItem(index) {
+        const document = this.objects[index];
+        const collection = this.view.getCollectionName();
+        this.view.navigateToForm(collection, document.id);
     }
 
     onSelect(index) {
         const selectedObjects = this.view.getSelected();
-        const selected = this.documents[index];
+        const selected = this.objects[index];
         const i = selectedObjects.indexOf(selected);
         if (i > -1) {
             selectedObjects.splice(i, 1);
@@ -81,12 +83,12 @@ class TablePagePresenter {
     searchSubmit(where) {
         this.init();
         this.where = where;
-        this.getData();
+        this.getObjects();
     }
 
     loadMore() {
         this.current++;
-        this.getData();
+        this.getObjects();
     }
 
     updateSchema(schema) {
@@ -101,25 +103,34 @@ class TablePagePresenter {
 
     onSelectAll(checked) {
         if (checked) {
-            this.view.setSelected([...this.documents]);
+            this.view.setSelected([...this.objects]);
         } else {
             this.view.setSelected([]);
         }
     }
 
+    importClick() {
+        const schema = this.view.getSchema(this.view.getCollectionName());
+        browseFile('csv/*')
+            .then(files => this.importCSVUseCase.execute(files, schema))
+            .then(() => {
+                // this.view.reload();
+            })
+    }
+
     exportClick() {
         const objects = this.view.getSelected();
-        const className = this.view.getClassName();
-        this.exportCSVUseCase.execute(objects, className)
+        const collection = this.view.getCollectionName();
+        this.exportCSVUseCase.execute(objects, collection)
             .then(() => {
                 //hide progress
             });
     }
 
     addFieldSubmit(field) {
-        const className = this.view.getClassName();
+        const collection = this.view.getCollectionName();
         const schemas = this.view.getSchemas();
-        const index = schemas.findIndex(s => s.name === className);
+        const index = schemas.findIndex(s => s.collection === collection);
         const {name, ...options} = field;
         schemas[index]['fields'][name] = options;
         this.updateSchemaUseCase.execute(schemas[index])
@@ -133,8 +144,8 @@ class TablePagePresenter {
     }
 
     deleteFieldSubmit(field) {
-        const className = this.view.getClassName();
-        const schema = this.view.getSchema(className);
+        const collection = this.view.getCollectionName();
+        const schema = this.view.getSchema(collection);
         delete schema['fields'][field];
         this.updateSchemaUseCase.execute(schema)
             .then(() => {
@@ -153,7 +164,7 @@ class TablePagePresenter {
                 const schemas = this.view.getSchemas();
                 schemas.push(schema);
                 this.view.setSchemas(schemas);
-                this.view.navigateTo("/class/" + schema.name);
+                this.view.navigateTo("/collection/" + schema.collection);
             })
             .catch(error => {
                 this.view.showError(error);
@@ -172,20 +183,20 @@ class TablePagePresenter {
             });
     }
 
-    deleteClassSubmit(className) {
-        if (className !== this.view.getClassName()) {
+    deleteClassSubmit(collection) {
+        if (collection !== this.view.getCollectionName()) {
             this.view.closeDialog();
             this.view.showError('Please enter correct Class name');
             return;
         }
-        this.deleteSchemaUseCase.execute(className)
+        this.deleteSchemaUseCase.execute(collection)
             .then(() => {
                 this.view.closeDialog();
                 const schemas = this.view.getSchemas();
-                const index = schemas.findIndex(s => s.className === className);
+                const index = schemas.findIndex(s => s.collection === collection);
                 schemas.splice(index, 1);
                 this.view.setSchemas(schemas);
-                this.view.navigateToClass(schemas[0].className);
+                this.view.navigateTo('/collection/' + schemas[0].collection);
             })
             .catch(error => {
                 this.view.closeDialog();
@@ -194,17 +205,17 @@ class TablePagePresenter {
     }
 
     addClick() {
-        this.view.navigateToForm(this.view.getClassName());
+        this.view.navigateToForm(this.view.getCollectionName());
     }
 
     deleteSelected() {
         const selected = this.view.getSelected();
-        const collection = this.view.getClassName();
+        const collection = this.view.getCollectionName();
         this.view.showDialog({title: 'Delete Data?', message: 'Are you sure you want to delete?'})
             .then(() => Promise.all(selected.map(o => this.deleteObjectUseCase.execute(collection, o.id))))
             .then(() => {
-                this.documents = this.documents.filter(o => !selected.includes(o));
-                this.view.setObjects(this.documents);
+                this.objects = this.objects.filter(o => !selected.includes(o));
+                this.view.setObjects(this.objects);
             })
             .catch((error) => {
                 this.view.hideProgress();
@@ -214,7 +225,7 @@ class TablePagePresenter {
 
     accessSubmit(acl) {
         const selected = this.view.getSelected();
-        const collection = this.view.getClassName();
+        const collection = this.view.getCollectionName();
         const promises = selected.map(o => {
             o.acl = acl;
             return this.updateObjectUseCase.execute(collection, o)

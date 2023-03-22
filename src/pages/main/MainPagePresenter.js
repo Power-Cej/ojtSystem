@@ -1,6 +1,3 @@
-import localSchemas from "../../schemas.json";
-import mergeSchema from "../../mergeSchema";
-
 /**
  * responsible for get the current user and current roles and schemas
  */
@@ -50,8 +47,7 @@ class MainPagePresenter {
 
     getSchema() {
         return this.getSchemaUseCase.execute()
-            .then(_schemas => {
-                const schemas = mergeSchema(localSchemas, _schemas);
+            .then(schemas => {
                 this.view.setSchemas(schemas);
             })
     }

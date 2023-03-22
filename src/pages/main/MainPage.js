@@ -1,8 +1,8 @@
 import React from 'react';
 import MainPagePresenter from './MainPagePresenter';
 import {Menu} from "nq-component";
-import {getAllSchemasUseCase} from '../../domain/schema/usecases';
-import {getCurrentUserUseCase, signOutUseCase} from '../../domain/user';
+import {getAllSchemasUseCase} from '../../usecases/schema/usecases';
+import {getCurrentUserUseCase, signOutUseCase} from '../../usecases/user';
 import {Routes, Route} from 'react-router-dom';
 import {OffCanvas} from 'nq-component';
 import TablePage from "../table/TablePage";
@@ -14,7 +14,7 @@ import getProfile from "../../getProfile";
 import MigrationPage from "../migration/MigrationPage";
 import AccountPage from "../account/AccountPage";
 import RolePage from "../role/RolePage";
-import {getRolesByUserUseCase} from "../../domain/role";
+import {getRolesByUserUseCase} from "../../usecases/role";
 import canRead from "../../canRead";
 
 
@@ -41,7 +41,6 @@ class MainPage extends BasePage {
                 <Progress/>
             )
         }
-
         return (
             <Layout>
                 <Layout.Context.Consumer>
@@ -59,7 +58,11 @@ class MainPage extends BasePage {
                                             </div>
                                             <hr className="dropdown-divider bg-light"/>
                                             <Menu
-                                                menus={schemas.filter(s => canRead(roles, s.permissions) || user.isMaster)}/>
+                                                menus={schemas
+                                                    .filter(s => canRead(roles, s.permissions) || user.isMaster)
+                                                    .map(s => ({
+                                                        name: s.collection || s.name
+                                                    }))}/>
                                         </nav>
                                     </div>
                                     <div className="my-2">
@@ -76,11 +79,11 @@ class MainPage extends BasePage {
                 </Layout.Context.Consumer>
                 <main className="vh-100 d-flex flex-column">
                     <Routes>
-                        <Route exact path={'/class/:name'} element={<TablePage/>}/>
-                        <Route path={'/class/:name/form/'} element={<FormPage/>}/>
-                        <Route path={'/class/roles/form'} element={<RolePage/>}/>
-                        <Route path={'/class/roles/form/:id'} element={<RolePage/>}/>
-                        <Route path={'/class/:name/form/:id'} element={<FormPage/>}/>
+                        <Route exact path={'/collection/:name'} element={<TablePage/>}/>
+                        <Route path={'/collection/:name/form/'} element={<FormPage/>}/>
+                        <Route path={'/collection/roles/form'} element={<RolePage/>}/>
+                        <Route path={'/collection/roles/form/:id'} element={<RolePage/>}/>
+                        <Route path={'/collection/:name/form/:id'} element={<FormPage/>}/>
                         <Route path={'/migration'} element={<MigrationPage/>}/>
                         <Route path={'/account'} element={<AccountPage/>}/>
                         <Route element={<NotFoundPage/>}/>

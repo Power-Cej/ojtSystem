@@ -3,14 +3,14 @@ import BasePage from "../../base/BasePage";
 import TablePagePresenter from './TablePagePresenter';
 import {Table, dialog} from "nq-component";
 import AddField from "./components/AddField";
-import {addSchemaUseCase, updateSchemaUseCase, deleteSchemaUseCase} from '../../domain/schema/usecases';
-import {deleteObjectUseCase, findObjectUseCase, updateObjectUseCase} from '../../domain/object';
-import {exportCSVUseCase} from '../../domain/csv/usecases';
+import {addSchemaUseCase, updateSchemaUseCase, deleteSchemaUseCase} from '../../usecases/schema/usecases';
+import {deleteObjectUseCase, findObjectUseCase, updateObjectUseCase} from '../../usecases/object';
+import {exportCSVUseCase, importCSVUseCase} from '../../usecases/csv/usecases';
 import Search from "./components/Search";
 import AddCLass from "./components/AddClass";
 import DeleteClass from "./components/DeleteClass";
 import DeleteField from "./components/DeleteField";
-import {NavBar, Progress,InfiniteScroll} from "nq-component";
+import {NavBar, Progress, InfiniteScroll} from "nq-component";
 import Access from "./components/Access";
 import access from "../../access";
 import withRouter from "../../withRouter";
@@ -28,6 +28,7 @@ class TablePage extends BasePage {
             updateSchemaUseCase(),
             exportCSVUseCase(),
             deleteSchemaUseCase(),
+            importCSVUseCase(),
         );
         this.state = {
             objects: [],
@@ -47,7 +48,7 @@ class TablePage extends BasePage {
         this.presenter.componentDidUpdate(prevProps, prevState);
     }
 
-    getClassName() {
+    getCollectionName() {
         return this.props.params.name;
     }
 
@@ -74,7 +75,7 @@ class TablePage extends BasePage {
 
     deleteClassSubmit(schema, e) {
         e.preventDefault();
-        this.presenter.deleteClassSubmit(schema.name);
+        this.presenter.deleteClassSubmit(schema.collection);
     }
 
     deleteFieldSubmit(field, e) {
@@ -96,7 +97,7 @@ class TablePage extends BasePage {
             title: 'Add a new field',
             html: <AddField
                 field={field}
-                collections={schemas.map(s => s.name)}
+                collections={schemas.map(s => s.collection)}
                 onSubmit={onSubmit.bind(this, field)}
                 onCancel={() => dialog.close()}/>,
             footer: false,
@@ -110,7 +111,7 @@ class TablePage extends BasePage {
     addClassClick() {
         const schema = {};
         dialog.fire({
-            title: 'Add a new class',
+            title: 'Add a new collection',
             html: <AddCLass
                 schema={schema}
                 onSubmit={this.addClassSubmit.bind(this, schema)}
@@ -129,7 +130,7 @@ class TablePage extends BasePage {
 
         const acl = access(this.state.selected);
         dialog.fire({
-            title: 'Add a new class',
+            title: 'Add a new collection',
             html: <Access
                 access={acl}
                 schema={schema}
@@ -141,7 +142,7 @@ class TablePage extends BasePage {
 
     deleteFieldClick() {
         const field = {};
-        const schema = this.getSchema(this.getClassName());
+        const schema = this.getSchema(this.getCollectionName());
         dialog.fire({
             title: 'Delete a field?',
             html: <DeleteField
@@ -154,9 +155,9 @@ class TablePage extends BasePage {
     }
 
     deleteClassClick() {
-        const schema = this.getSchema(this.getClassName());
+        const schema = this.getSchema(this.getCollectionName());
         dialog.fire({
-            title: 'Delete this class?',
+            title: 'Delete this collection?',
             html: <DeleteClass
                 object={schema}
                 onSubmit={this.deleteClassSubmit.bind(this, schema)}
@@ -185,12 +186,12 @@ class TablePage extends BasePage {
         this.setState({progress: false});
     }
 
-    onItemClick(index, field) {
-        this.presenter.onItemClick(index, field);
+    onClickItem(index, field) {
+        this.presenter.onClickItem(index, field);
     }
 
-    navigateToForm(className, id = '') {
-        this.navigateTo("/class/" + className + "/form/" + id);
+    navigateToForm(collection, id = '') {
+        this.navigateTo("/collection/" + collection + "/form/" + id);
     }
 
     searchSubmit(query) {
@@ -213,6 +214,10 @@ class TablePage extends BasePage {
         this.presenter.onSelectAll(checked);
     }
 
+    importClick() {
+        this.presenter.importClick();
+    }
+
     exportClick() {
         this.presenter.exportClick();
     }
@@ -226,14 +231,14 @@ class TablePage extends BasePage {
     }
 
     render() {
-        const schema = this.getSchema(this.getClassName());
+        const schema = this.getSchema(this.getCollectionName());
         const {objects, selected, count, progress} = this.state;
         const user = this.getCurrentUser();
         if (!schema) return <Progress/>;
         return (
             <>
                 <NavBar className="shadow-sm"/>
-                <div className="container px-lg-4 py-lg-3 mt-3 overflow-auto" ref={this.parent}>
+                <div className="container px-lg-4 py-lg-3" style={{height: "calc(100% - 130px)"}}>
                     <Search
                         onSubmit={this.searchSubmit.bind(this)}
                         fields={schema.fields}/>
@@ -252,7 +257,9 @@ class TablePage extends BasePage {
                             <i className="bi bi-box-arrow-up"></i>
                             <span className="fs-xs ms-1">EXPORT</span>
                         </button>
-                        <button type="button" className="btn btn-dark btn-sm shadow-none ms-1">
+                        <button
+                            onClick={this.importClick.bind(this)}
+                            type="button" className="btn btn-dark btn-sm shadow-none ms-1">
                             <i className="bi bi-box-arrow-in-down"></i>
                             <span className="fs-xs ms-1">IMPORT</span>
                         </button>
@@ -294,17 +301,17 @@ class TablePage extends BasePage {
                                             <button
                                                 onClick={this.addClassClick.bind(this)}
                                                 className="dropdown-item">
-                                                Add a class
+                                                Add a collection
                                             </button>
                                             <button
                                                 onClick={this.editClassClick.bind(this, schema)}
                                                 className="dropdown-item">
-                                                Edit this class
+                                                Edit this collection
                                             </button>
                                             <button
                                                 onClick={this.deleteClassClick.bind(this)}
                                                 className="dropdown-item">
-                                                Delete this class
+                                                Delete this collection
                                             </button>
                                         </>
                                     )
@@ -312,22 +319,24 @@ class TablePage extends BasePage {
                             </div>
                         </div>
                     </div>
-
                     <InfiniteScroll
+                        className="h-100 mt-3"
                         useWindow={false}
                         loadMore={this.loadMore.bind(this)}
                         hasMore={(!progress && count > objects.length)}>
                         <Table
+                            hasSelect
+                            setRef={this.parent}
+                            className="overflow-auto h-100"
+                            excludeFields={['createdAt', 'updatedAt', 'acl']}
                             selected={selected}
                             onSelect={this.onSelect.bind(this)}
                             onSelectAll={this.onSelectAll.bind(this)}
                             progress={progress}
-                            onItemClick={this.onItemClick.bind(this)}
+                            onClickItem={this.onClickItem.bind(this)}
                             fields={schema.fields}
                             objects={objects}/>
                     </InfiniteScroll>
-
-
                 </div>
             </>
         );

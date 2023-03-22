@@ -1,5 +1,5 @@
 import React from 'react';
-import {signOutUseCase} from "../../domain/user";
+import {signOutUseCase} from "../../usecases/user";
 import BasePage from "../../base/BasePage";
 
 class AccessDeniedPage extends BasePage {

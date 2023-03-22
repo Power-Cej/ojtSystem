@@ -474,12 +474,12 @@
         var n = e.prototype;
         return n.resolve = function (e) {
             if (this.resolved || this.rejected) return this;
-            if (L(e)) throw new Error("Can not resolve promise with another promise");
+            if (L(e)) throw new Error("Can not resolve createPromise with another createPromise");
             return this.resolved = !0, this.value = e, this.dispatch(), this
         }, n.reject = function (e) {
             var n = this;
             if (this.resolved || this.rejected) return this;
-            if (L(e)) throw new Error("Can not reject promise with another promise");
+            if (L(e)) throw new Error("Can not reject createPromise with another createPromise");
             if (!e) {
                 var t = e && "function" == typeof e.toString ? e.toString() : {}.toString.call(e);
                 e = new Error("Expected reject to be called with Error, got " + t)

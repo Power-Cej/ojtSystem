@@ -1,5 +1,6 @@
 import React from "react";
 import InputFactory from "../../components/InputFactory";
+import {OutputFactory} from "nq-component";
 
 const defaultProps = {
     type: "String",
@@ -61,13 +62,13 @@ function InputInfo({field, object, onSave, icon, label, placeholder, edit, ...pr
                         onClick={() => setEdit(true)}
                         className="btn btn-link p-0 fs-sm float-end">{value ? 'Edit' : 'Add'}</button>)
                 }
-                {/*<span*/}
-                {/*    className="fs-sm text-nowrap">*/}
-                {/*        <OutputFactory*/}
-                {/*            field={field}*/}
-                {/*            object={object}*/}
-                {/*            {...props}/>*/}
-                {/*</span>*/}
+                <span
+                    className="fs-sm text-nowrap">
+                        <OutputFactory
+                            field={field}
+                            object={object}
+                            {...props}/>
+                </span>
             </li>
         </>
     )

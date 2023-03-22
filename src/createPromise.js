@@ -1,4 +1,4 @@
-function resolvingPromise() {
+function createPromise() {
     let res;
     let rej;
     const promise = new Promise((resolve, reject) => {
@@ -10,4 +10,4 @@ function resolvingPromise() {
     return promise;
 }
 
-export default resolvingPromise;
+export default createPromise;

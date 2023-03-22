@@ -14,13 +14,13 @@ class FormPagePresenter {
     }
 
     init() {
-        const className = this.view.getClassName();
+        const collection = this.view.getCollectionName();
         const id = this.view.getObjectId();
         const query = {include: ['all'], where: {id}};
         if (id) {
             this.view.showProgress();
             this.findObjectUseCase
-                .execute(className, query)
+                .execute(collection, query)
                 .then(([object]) => {
                     this.view.hideProgress();
                     this.object = object;
@@ -34,13 +34,13 @@ class FormPagePresenter {
     }
 
     submit() {
-        const className = this.view.getClassName();
+        const collection = this.view.getCollectionName();
         const object = this.view.getObject();
         this.view.showProgress();
         if (object.id) {
             const change = changes(this.object, object);
             change.id = this.object.id;
-            this.updateObjectUseCase.execute(className, change)
+            this.updateObjectUseCase.execute(collection, change)
                 .then(() => {
                     this.view.hideProgress();
                     this.view.showSuccessSnackbar("Successfully updated!");
@@ -51,15 +51,15 @@ class FormPagePresenter {
                     this.view.showError(error);
                 });
         } else {
-            const roles = this.view.getRoles();
+            const roles = this.view.getCurrentRoles();
             const aclRoles = roles.map(r => `role:${r.name}`);
-            const user = this.view.getUser();
+            const user = this.view.getCurrentUser();
             const acl = {
                 read: ['*', user.id, aclRoles],
                 write: [user.id, aclRoles],
             }
             object.acl = acl;
-            this.saveObjectUseCase.execute(className, object)
+            this.saveObjectUseCase.execute(collection, object)
                 .then(() => {
                     this.view.hideProgress();
                     this.view.showSuccessSnackbar("Successfully saved!");

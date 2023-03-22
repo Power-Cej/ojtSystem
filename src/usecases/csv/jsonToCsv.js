@@ -1,4 +1,4 @@
-const PAPA from 'papaparse';
+import PAPA from 'papaparse';
 
 
 function flatten(object, prefix = [], current = {}, result = []) {

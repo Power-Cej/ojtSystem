@@ -1,8 +1,8 @@
 import Queue from 'nq';
 
 class DeleteSchemaUseCase {
-    execute(name) {
-        return Queue.Collection.delete(name);
+    execute(collection) {
+        return new Queue.Schema().delete(collection);
     }
 }
 

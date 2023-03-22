@@ -9,11 +9,14 @@ import {
     InputRelation,
     InputImage,
     InputBooleanCheckbox,
+    InputJson,
 } from "nq-component";
-import {findObjectUseCase} from "../../domain/object";
+import {findObjectUseCase} from "../../usecases/object";
+import {saveImageUseCase} from "../../usecases/file";
 import Context from "../../AppContext";
 
 const find = findObjectUseCase();
+const save = saveImageUseCase();
 
 function InputFactory({type, _type, field, object, ...options}) {
     const context = React.useContext(Context);
@@ -68,14 +71,20 @@ function InputFactory({type, _type, field, object, ...options}) {
         case 'Image':
             return <InputImage
                 field={field}
-                type={type.toLowerCase()}
                 object={object}
+                save={save}
                 {...options}/>;
         case 'Boolean':
             return <InputBooleanCheckbox
                 id={object.id}
                 field={field}
                 type={type.toLowerCase()}
+                object={object}
+                {...options}/>;
+        case 'Object':
+            return <InputJson
+                id={object.id}
+                field={field}
                 object={object}
                 {...options}/>;
         default:

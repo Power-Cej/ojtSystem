@@ -1,7 +1,6 @@
 import React from 'react';
-import resolvingPromise from "../resolvingPromise";
+import createPromise from "../createPromise";
 import Context from "../AppContext";
-import getSchemaByClass from "../getSchemaByClass";
 import {dialog} from "nq-component";
 import ProgressDialog from "./ProgressDialog";
 import ConfirmDialog from "./ConfirmDialog";
@@ -11,7 +10,6 @@ import ConfirmDialog from "./ConfirmDialog";
  */
 
 class BasePage extends React.Component {
-
     showProgress() {
         this.setState({progress: true});
     }
@@ -20,8 +18,9 @@ class BasePage extends React.Component {
         this.setState({progress: false});
     }
 
+    // block the UI to show the progress dialog
     showProgressDialog() {
-        const promise = resolvingPromise();
+        const promise = createPromise();
         dialog.fire({
                 html: (
                     <ProgressDialog/>
@@ -38,6 +37,7 @@ class BasePage extends React.Component {
 
     showError(error, title) {
         if (error instanceof Object) {
+            console.log(error);
             return this.showError(error.message, title);
         }
         if (typeof error === 'string') {
@@ -53,6 +53,7 @@ class BasePage extends React.Component {
         }
     }
 
+    // show success dialog
     showSuccess(message, title) {
         const options = {
             title: title || "Success",
@@ -65,8 +66,9 @@ class BasePage extends React.Component {
         return this.showDialog(options);
     }
 
+    // the generic popup dialog
     showDialog({title, message, icon, type, ...options}) {
-        const promise = resolvingPromise();
+        const promise = createPromise();
         dialog.fire({
                 html: (
                     <ConfirmDialog
@@ -87,70 +89,87 @@ class BasePage extends React.Component {
         return promise;
     }
 
+    // show timeout dialog
     showSuccessSnackbar(message) {
         // return showSuccessDialog(message, true);
-    }
-
-    getSchemas() {
-        return this.context.schemas;
-    }
-
-    getSchema(className) {
-        const schemas = this.getSchemas();
-        return getSchemaByClass(schemas, className);
-    }
-
-    setSchemas(schemas) {
-        this.context.setGlobalState({schemas});
-    }
-
-    getCurrentUser() {
-        return this.context.user;
     }
 
     setCurrentUser(user) {
         this.context.setGlobalState({user});
     }
 
+    getCurrentUser() {
+        return this.context.user;
+    }
+
     setCurrentRoles(roles) {
         this.context.setGlobalState({roles});
     }
-
 
     getCurrentRoles() {
         return this.context.roles;
     }
 
+    setSchemas(schemas) {
+        this.context.setGlobalState({schemas});
+    }
+
+    getSchemas() {
+        return this.context.schemas;
+    }
+
+    getSchema(collection) {
+        const schemas = this.getSchemas();
+        if (schemas) {
+            return schemas.find(s => s.collection === collection);
+        }
+    }
+
     setStatePromise(object) {
-        const promise = resolvingPromise();
+        const promise = createPromise();
         this.setState(object, promise.resolve);
         return promise
     }
 
-    navigateTo(url, argument) {
-        const params = new URLSearchParams(argument).toString();
+    navigateTo(path, argument, options) {
         const navigate = this.props.navigate;
         if (navigate) {
-            navigate(url);
+            navigate(path, {state: argument, ...options});
         } else {
-            document.location.href = url;
+            const params = new URLSearchParams(argument).toString();
+            document.location.href = path;
         }
+    }
+
+    /**
+     * Get the object pass from navigate
+     * @returns {*}
+     */
+    getArgument() {
+        const location = this.props.location;
+        if (location) {
+            return this.props.location.state;
+        }
+    }
+
+    /**
+     * Get the value of parameter from URL
+     * @returns {*}
+     */
+    getParams() {
+        return this.props.params;
     }
 
     navigateBack() {
         this.navigateTo(-1);
     }
 
-    navigateToClass(className) {
-        this.navigateTo('/class/' + className);
-    }
-
-    getParams() {
-        return this.props.location.state;
-    }
-
     reload() {
         window.location.reload();
+    }
+
+    isMobile() {
+        return window.innerWidth <= 768;
     }
 }
 

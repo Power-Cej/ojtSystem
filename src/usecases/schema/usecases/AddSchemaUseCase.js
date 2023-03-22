@@ -2,7 +2,7 @@ import Queue from 'nq';
 
 class AddSchemaUseCase {
     execute(schema) {
-        return Queue.Collection.create(schema);
+        return new Queue.Schema().create(schema);
     }
 }
 

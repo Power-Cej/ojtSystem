@@ -6,9 +6,6 @@ function TypeString({onChange, field}) {
         where[field] = {$regex: value, $options: 'i'};
         onChange(where);
     }
-
-
-
     return (
         <input
             type="text"

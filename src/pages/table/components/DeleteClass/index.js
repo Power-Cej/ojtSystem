@@ -7,7 +7,7 @@ function DeleteClass({object, onSubmit, onCancel}) {
                 <div>
                     <label className="form-label">class name</label>
                     <InputString
-                        field="className"
+                        field="collection"
                         placeholder="Current class name"
                         required
                         object={object}/>

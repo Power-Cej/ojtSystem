@@ -19,7 +19,7 @@ function AddField({field, onSubmit, onCancel, collections}) {
                     <div className="col-md-12">
                         <label className="form-label fs-sm">field name</label>
                         <InputString
-                            className="form-control form-control"
+                            className="form-control"
                             field="name"
                             placeholder="give it a good name"
                             required
@@ -29,7 +29,7 @@ function AddField({field, onSubmit, onCancel, collections}) {
                         <label className="form-label fs-sm">field type</label>
                         <InputSelect
                             onChange={value => setType(value)}
-                            className="form-control form-control"
+                            className="form-control"
                             field="type"
                             options={options}
                             required

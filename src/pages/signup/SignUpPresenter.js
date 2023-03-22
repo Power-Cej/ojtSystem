@@ -21,7 +21,7 @@ class SignUpPresenter {
                 this.view.hideProgress();
                 this.view.showSuccess("Congratulations, your account has been successfully created.")
                     .then(() => {
-                        this.view.navigateTo('/');
+                        this.view.navigateTo('/signin');
                     });
             })
             .catch(error => {

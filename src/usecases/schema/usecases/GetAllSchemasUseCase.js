@@ -3,7 +3,7 @@ import Queue from 'nq';
 class GetAllSchemasUseCase {
 
     execute() {
-        return Queue.Collection.find();
+        return new Queue.Schema().find();
     }
 }
 

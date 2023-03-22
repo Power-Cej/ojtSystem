@@ -2,7 +2,7 @@ import BasePage from "../../base/BasePage";
 import {NavBar} from "nq-component";
 import React from "react";
 import MigrationPresenter from "./MigrationPresenter";
-import {exportUseCase, importUseCase} from "../../domain/migration";
+import {exportUseCase, importUseCase} from "../../usecases/migration";
 import {Button} from "nq-component";
 import browseFile from "../../browseFile";
 

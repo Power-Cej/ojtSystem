@@ -2,7 +2,7 @@ import Queue from 'nq';
 
 class SaveFileUseCase {
     execute(blob, session) {
-        return Queue.File.save(blob, session);
+        return new Queue.File().save(blob, session);
     }
 }
 

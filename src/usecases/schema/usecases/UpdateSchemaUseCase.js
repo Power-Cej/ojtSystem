@@ -1,9 +1,8 @@
 import Queue from 'nq';
 
 class UpdateSchemaUseCase {
-
     execute(schema) {
-        return Queue.Collection.update(schema);
+        return new Queue.Schema().update(schema);
     }
 }
 

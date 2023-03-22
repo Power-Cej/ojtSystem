@@ -3,9 +3,8 @@ import {NavBar} from "nq-component";
 import {InputString} from "nq-component";
 import {Checkbox} from "nq-component";
 import RolePagePresenter from "./RolePagePresenter";
-import {findObjectUseCase, saveObjectUseCase, updateObjectUseCase} from "../../domain/object";
-import getSchemaByClass from "../../getSchemaByClass";
-import {updateSchemaUseCase} from "../../domain/schema/usecases";
+import {findObjectUseCase, saveObjectUseCase, updateObjectUseCase} from "../../usecases/object";
+import {updateSchemaUseCase} from "../../usecases/schema/usecases";
 import withRouter from "../../withRouter";
 
 const permissionKeys = ['modify', 'find', 'create', 'update', 'delete'];
@@ -36,11 +35,6 @@ class RolePage extends BasePage {
 
     getObject() {
         return this.state.role;
-    }
-
-    getSchema() {
-        const schemas = this.props.schemas;
-        return getSchemaByClass(schemas, this.getClassName());
     }
 
     backCLick() {
@@ -97,7 +91,7 @@ class RolePage extends BasePage {
                                             <tbody>
                                             {
                                                 schemas.map(schema => {
-                                                    const collection = schema.name;
+                                                    const collection = schema.collection;
                                                     const permissions = schema.permissions;
                                                     return (
                                                         <tr>

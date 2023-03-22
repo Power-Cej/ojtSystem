@@ -6,15 +6,11 @@ import {dialog} from "nq-component";
 import AccountPresenter from "./AccountPresenter";
 import browseFile from "../../browseFile";
 import canvasToBlob from "../../canvasToBlob";
-import {saveFileUseCase} from "../../domain/file/usecases";
-import {findObjectUseCase, saveObjectUseCase, updateObjectUseCase} from "../../domain/object";
-import InputBio from "./InputBio";
+import {saveFileUseCase} from "../../usecases/file";
+import {findObjectUseCase, saveObjectUseCase, updateObjectUseCase} from "../../usecases/object";
 import InputInfo from "./InputInfo";
 import social from "./social.json";
-import contact from "./contact.json";
-import basic from "./basic.json";
 import password from "./password.json";
-import InputForm from "./InputForm";
 import PasswordForm from "./PasswordForm";
 import getProfile from "../../getProfile";
 

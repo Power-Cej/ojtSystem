@@ -30,9 +30,9 @@ function AddCLass({schema, onSubmit, onCancel}) {
                             !isAdvanced && (
                                 <>
                                     <div className="col-md-12">
-                                        <label className="form-label">class name</label>
+                                        <label className="form-label">collection name</label>
                                         <InputString
-                                            field="name"
+                                            field="collection"
                                             placeholder="give it a good name"
                                             required
                                             object={schema}/>
