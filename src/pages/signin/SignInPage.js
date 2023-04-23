@@ -5,7 +5,7 @@ import {signInUseCase} from "../../usecases/user";
 import {Button} from "nq-component";
 import {Link} from "react-router-dom";
 import withRouter from "../../withRouter";
-import {InputString,InputPassword} from "nq-component";
+import {InputString, InputPassword} from "nq-component";
 
 class SignInPage extends BasePage {
     constructor() {
@@ -51,7 +51,7 @@ class SignInPage extends BasePage {
                                             autoComplete="nope"
                                             className="form-control"
                                             placeholder="Email Address"
-                                            field="email"
+                                            field="username"
                                             object={user}/>
                                     </div>
                                     <div className="col-md-12">

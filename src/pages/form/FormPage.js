@@ -65,7 +65,10 @@ class FormPage extends BasePage {
                                 </div>
                                 {
                                     Object.keys(fields).map((field) => {
-                                        const {type, ...options} = fields[field];
+                                        let {type, pattern,...options} = fields[field];
+                                        if (field === 'password') {
+                                            type = "Password";
+                                        }
                                         if (options.hasOwnProperty('write') && !options.write) return null;
                                         return (
                                             <div className="col-md-4" key={field}>

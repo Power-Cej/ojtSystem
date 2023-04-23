@@ -1,15 +1,13 @@
+import Queue from 'nq';
 const ENDPOINT = '/import'
 
 class ImportUseCase {
-    constructor(rest) {
-        this.rest = rest;
-    }
-
     execute(file) {
-        const headers = {
-            "Content-Type": "application/octet-stream"
+        const options = {
+            body: file,
+            headers: {'Content-Type': 'application/octet-stream'}
         };
-        return this.rest.request('POST', ENDPOINT, {body: file, headers});
+        return new Queue.Rest().request('POST', ENDPOINT,options);
     }
 }
 

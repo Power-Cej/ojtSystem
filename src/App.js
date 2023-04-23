@@ -7,12 +7,16 @@ import React from "react";
 import AccessDeniedPage from "./pages/denied";
 import Queue from 'nq';
 
-Queue.setUrl('https://api.innque.com/v1');
+// Queue.setUrl('http://188.166.177.35:8888/v1');
 // Queue.setUrl('https://api.figarocoffeegroup.com/v1');
+Queue.setUrl('https://api.test.figarocoffeegroup.com/v1');
+// Queue.setUrl('https://api.innque.com/v1');
 // Queue.setUrl('https://api.mercantile.pwrdv.com/v1');
+// Queue.setUrl('https://api.mercantiletravel.com/v1');
 // Queue.setUrl('http://localhost/v1');
-Queue.setApplicationId('DHQK1WV3bj');// cavite
-// Queue.setApplicationId('6560588f36297abd70cb7433774d5e09');
+// Queue.setApplicationId('DHQK1WV3bj');// cavite
+
+Queue.setApplicationId('6560588f36297abd70cb7433774d5e09');
 
 function App() {
 

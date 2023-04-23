@@ -4,10 +4,10 @@ class SignInPresenter {
         this.signInUseCase = signInUseCase;
     }
 
-    submit({email, password}) {
+    submit({username, password}) {
         const masterKey = this.view.getMasterKey();
         const user = {
-            email,
+            username,
             password,
             masterKey
         }

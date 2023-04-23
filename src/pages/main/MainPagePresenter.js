@@ -35,11 +35,11 @@ class MainPagePresenter {
         return this.getCurrentUserUseCase.execute()
             .then(user => {
                 this.user = user;
-                if (!user.roles) {
+                if (!user.roles && !this.user.isMaster) {
                     this.view.navigateTo('/denied');
                     return;
                 }
-                this.view.setCurrentRoles(user.roles);
+                this.view.setCurrentRoles(user.roles || []);
                 this.view.setCurrentUser(user);
             });
     }
