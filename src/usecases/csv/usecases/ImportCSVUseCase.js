@@ -1,6 +1,6 @@
 import Papa from 'papaparse';
 import jsonToObject from "../jsonToObject";
-import SaveObjectUseCase from "../../object/SaveObjectUseCase";
+import UpdateObjectUseCase from "../../object/UpdateObjectUseCase";
 
 class ImportCSVUseCase {
 
@@ -18,10 +18,17 @@ class ImportCSVUseCase {
     getObjects(fields, objects) {
         return objects.map(o => jsonToObject(o, fields));
     }
-    
-    saveObjects(collection, objects) {
-        const save = new SaveObjectUseCase();
-        return Promise.all(objects.map(o => save.execute(collection, o)));
+
+    async saveObjects(collection, objects) {
+        const update = new UpdateObjectUseCase();
+        for (const object of objects) {
+            try {
+                const options = {upsert: true};
+                await update.execute(collection, object,options);
+            } catch (error) {
+                // ignore error
+            }
+        }
     }
 
     execute(files, schema) {

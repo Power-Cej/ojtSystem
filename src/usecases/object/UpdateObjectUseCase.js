@@ -1,7 +1,7 @@
 import Queue from 'nq';
 
 class UpdateObjectUseCase {
-    execute(collection, document, session) {
+    execute(collection, document, options, session) {
         return new Queue.Document().update(collection, document, session);
     }
 }
