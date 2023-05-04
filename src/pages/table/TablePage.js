@@ -10,7 +10,7 @@ import Search from "./components/Search";
 import AddCLass from "./components/AddClass";
 import DeleteClass from "./components/DeleteClass";
 import DeleteField from "./components/DeleteField";
-import {NavBar, Progress, InfiniteScroll} from "nq-component";
+import {NavBar, Progress,InfiniteScroll} from "nq-component";
 import Access from "./components/Access";
 import access from "../../access";
 import withRouter from "../../withRouter";
@@ -238,7 +238,7 @@ class TablePage extends BasePage {
         return (
             <>
                 <NavBar className="shadow-sm"/>
-                <div className="container px-lg-4 py-lg-3" style={{height: "calc(100% - 130px)"}}>
+                <div className="container px-lg-4 py-lg-3 overflow-auto">
                     <Search
                         onSubmit={this.searchSubmit.bind(this)}
                         fields={schema.fields}/>
@@ -321,13 +321,11 @@ class TablePage extends BasePage {
                     </div>
                     <InfiniteScroll
                         className="h-100 mt-3"
-                        useWindow={false}
                         loadMore={this.loadMore.bind(this)}
                         hasMore={(!progress && count > objects.length)}>
                         <Table
                             hasSelect
                             setRef={this.parent}
-                            className="overflow-auto h-100"
                             excludeFields={['createdAt', 'updatedAt', 'acl']}
                             selected={selected}
                             onSelect={this.onSelect.bind(this)}

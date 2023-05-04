@@ -212,12 +212,15 @@ class TablePagePresenter {
         const selected = this.view.getSelected();
         const collection = this.view.getCollectionName();
         this.view.showDialog({title: 'Delete Data?', message: 'Are you sure you want to delete?'})
-            .then(() => Promise.all(selected.map(o => this.deleteObjectUseCase.execute(collection, o.id))))
-            .then(() => {
-                this.objects = this.objects.filter(o => !selected.includes(o));
-                this.view.setObjects(this.objects);
+            .then(async () => {
+                for (const obj of selected) {
+                    await this.deleteObjectUseCase.execute(collection, obj.id);
+                    const index = this.objects.indexOf(obj);
+                    this.objects.splice(index,1);
+                    this.view.setObjects(this.objects);
+                }
             })
-            .catch((error) => {
+            .catch(error => {
                 this.view.hideProgress();
                 this.view.showError(error);
             });
