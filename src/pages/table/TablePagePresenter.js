@@ -1,7 +1,10 @@
 import browseFile from "../../browseFile";
+import csvToJson from "../../csvToJson";
+import unflatten from "../../unflatten";
+import jsonToObject from "../../jsonToObject";
 
 class TablePagePresenter {
-    constructor(view, findObjectUseCase, updateObjectUseCase, deleteObjectUseCase, addSchemaUseCase, updateSchemaUseCase, exportCSVUseCase, deleteSchemaUseCase, importCSVUseCase) {
+    constructor(view, findObjectUseCase, updateObjectUseCase, deleteObjectUseCase, addSchemaUseCase, updateSchemaUseCase, exportCSVUseCase, deleteSchemaUseCase, upsertUseCase) {
         this.view = view;
         this.findObjectUseCase = findObjectUseCase;
         this.updateObjectUseCase = updateObjectUseCase;
@@ -10,7 +13,7 @@ class TablePagePresenter {
         this.updateSchemaUseCase = updateSchemaUseCase;
         this.exportCSVUseCase = exportCSVUseCase;
         this.deleteSchemaUseCase = deleteSchemaUseCase;
-        this.importCSVUseCase = importCSVUseCase;
+        this.upsertUseCase = upsertUseCase;
     }
 
     componentDidMount() {
@@ -111,11 +114,21 @@ class TablePagePresenter {
 
     importClick() {
         const schema = this.view.getSchema(this.view.getCollectionName());
-        browseFile('csv/*')
-            .then(files => this.importCSVUseCase.execute(files, schema))
-            .then(() => {
-                // this.view.reload();
+        browseFile('text/csv')
+            .then(files => csvToJson(files[0]))
+            .then(objects => unflatten(objects))
+            .then(objects => objects.map(o => jsonToObject(o, schema.fields)))
+            .then(async objects => {
+                for (const obj of objects) {
+                    const object = await this.upsertUseCase.execute(schema.collection, obj);
+                    this.objects.push(object);
+                    this.view.setObjects(this.objects);
+                }
             })
+            .catch(error => {
+                this.view.hideProgress();
+                this.view.showError(error);
+            });
     }
 
     exportClick() {
@@ -216,7 +229,7 @@ class TablePagePresenter {
                 for (const obj of selected) {
                     await this.deleteObjectUseCase.execute(collection, obj.id);
                     const index = this.objects.indexOf(obj);
-                    this.objects.splice(index,1);
+                    this.objects.splice(index, 1);
                     this.view.setObjects(this.objects);
                 }
             })

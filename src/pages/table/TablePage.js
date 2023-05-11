@@ -4,13 +4,18 @@ import TablePagePresenter from './TablePagePresenter';
 import {Table, dialog} from "nq-component";
 import AddField from "./components/AddField";
 import {addSchemaUseCase, updateSchemaUseCase, deleteSchemaUseCase} from '../../usecases/schema/usecases';
-import {deleteObjectUseCase, findObjectUseCase, updateObjectUseCase} from '../../usecases/object';
-import {exportCSVUseCase, importCSVUseCase} from '../../usecases/csv/usecases';
+import {
+    deleteObjectUseCase,
+    findObjectUseCase,
+    updateObjectUseCase,
+    upsertUseCase
+} from '../../usecases/object';
+import {exportCSVUseCase} from '../../usecases/csv/usecases';
 import Search from "./components/Search";
 import AddCLass from "./components/AddClass";
 import DeleteClass from "./components/DeleteClass";
 import DeleteField from "./components/DeleteField";
-import {NavBar, Progress,InfiniteScroll} from "nq-component";
+import {NavBar, Progress, InfiniteScroll} from "nq-component";
 import Access from "./components/Access";
 import access from "../../access";
 import withRouter from "../../withRouter";
@@ -28,7 +33,7 @@ class TablePage extends BasePage {
             updateSchemaUseCase(),
             exportCSVUseCase(),
             deleteSchemaUseCase(),
-            importCSVUseCase(),
+            upsertUseCase(),
         );
         this.state = {
             objects: [],

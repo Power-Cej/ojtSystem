@@ -7,9 +7,9 @@ import React from "react";
 import AccessDeniedPage from "./pages/denied";
 import Queue from 'nq';
 
-// Queue.setUrl('http://188.166.177.35:8888/v1');
+Queue.setUrl('http://188.166.177.35:8888/v1');
 // Queue.setUrl('https://api.figarocoffeegroup.com/v1');
-Queue.setUrl('https://api.test.figarocoffeegroup.com/v1');
+// Queue.setUrl('https://api.test.figarocoffeegroup.com/v1');
 // Queue.setUrl('https://api.innque.com/v1');
 // Queue.setUrl('https://api.mercantile.pwrdv.com/v1');
 // Queue.setUrl('https://api.mercantiletravel.com/v1');

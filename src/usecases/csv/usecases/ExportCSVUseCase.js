@@ -5,7 +5,6 @@ import saveAs from '../../../saveAs';
 const MIMEType = {type: "text/csv;chartset=utf-8"};
 
 class ExportCSVUseCase {
-
     execute(objects, filename) {
         return new Promise((resolve, reject) => {
             try {
@@ -13,6 +12,8 @@ class ExportCSVUseCase {
                     acc.push(...flatten(cur));
                     return acc;
                 }, []);
+                console.log(JSON.stringify(objects));
+                console.log(JSON.stringify(flat));
                 const data = Papa.unparse(flat);
                 const blob = new Blob([data], MIMEType);
                 saveAs(blob, filename);
