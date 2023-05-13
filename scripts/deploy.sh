@@ -24,5 +24,5 @@ fi
 
 # remove to known hosts
 #$SSH_COMMAND "ssh-keygen -R github.com"
-$SSH_COMMAND rm ~/.ssh/known_hosts
-$SSH_COMMAND rm ~/.ssh/known_hosts.old
+# remove known_hosts files
+$SSH_COMMAND "rm ~/.ssh/known_hosts*"
