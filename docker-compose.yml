@@ -24,4 +24,4 @@ services:
 networks:
   default:
     external:
-      name: server-network
+      name: proxy-server-network
