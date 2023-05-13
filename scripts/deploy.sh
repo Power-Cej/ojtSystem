@@ -11,6 +11,9 @@ fi
 echo "using $SSH_HOST"
 
 TARGET_PATH="/$SSH_USERNAME/$REPOSITORY_NAME"
+# add github to known hosts
+$SSH_COMMAND "ssh-keyscan -t rsa github.com >>~/.ssh/known_hosts"
+
 # clone if not exist
 if $SSH_COMMAND [ -d "$TARGET_PATH" ]; then
   $SSH_COMMAND "cd $TARGET_PATH && git pull"
@@ -18,3 +21,8 @@ else
   $SSH_COMMAND "git clone git@github.com:innqueinc/nq-dashboard.git $TARGET_PATH"
   $SSH_COMMAND "cd $TARGET_PATH && docker-compose up -d"
 fi
+
+# remove to known hosts
+#$SSH_COMMAND "ssh-keygen -R github.com"
+$SSH_COMMAND rm ~/.ssh/known_hosts
+$SSH_COMMAND rm ~/.ssh/known_hosts.old
