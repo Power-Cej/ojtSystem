@@ -22,7 +22,5 @@ else
   $SSH_COMMAND "cd $TARGET_PATH && docker-compose up -d"
 fi
 
-# remove to known hosts
-#$SSH_COMMAND "ssh-keygen -R github.com"
 # remove known_hosts files
 $SSH_COMMAND "rm ~/.ssh/known_hosts*"
