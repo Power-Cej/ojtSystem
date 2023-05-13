@@ -1,0 +1,20 @@
+# ./scripts/deploy.sh "$SSH_HOST" "$SSH_USERNAME"
+
+SSH_HOST=$1
+SSH_USERNAME=$2
+REPOSITORY_NAME=$3
+SSH_COMMAND="ssh -A -o StrictHostKeyChecking=no $SSH_USERNAME@$SSH_HOST"
+# check host name
+if [ -z "$SSH_HOST" ]; then
+  echo "missing host" && exit 1
+fi
+echo "using $SSH_HOST"
+
+TARGET_PATH="/$SSH_USERNAME/$REPOSITORY_NAME"
+# clone if not exist
+if $SSH_COMMAND [ -d "$TARGET_PATH" ]; then
+  $SSH_COMMAND "cd $TARGET_PATH && git pull"
+else
+  $SSH_COMMAND "git clone git@github.com:innqueinc/nq-dashboard.git $TARGET_PATH"
+  $SSH_COMMAND "cd $TARGET_PATH && docker-compose up -d"
+fi
