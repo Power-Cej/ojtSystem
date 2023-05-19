@@ -1,5 +1,3 @@
-# ./scripts/deploy.sh "$SSH_HOST" "$SSH_USERNAME"
-
 SSH_HOST=$1
 SSH_USERNAME=$2
 REPOSITORY_NAME=$3
@@ -18,7 +16,7 @@ $SSH_COMMAND "ssh-keyscan -t rsa github.com >>~/.ssh/known_hosts"
 if $SSH_COMMAND [ -d "$TARGET_PATH" ]; then
   $SSH_COMMAND "cd $TARGET_PATH && git pull"
 else
-  $SSH_COMMAND "git clone git@github.com:innqueinc/nq-dashboard.git $TARGET_PATH"
+  $SSH_COMMAND "git clone git@github.com:innqueinc/$REPOSITORY_NAME.git $TARGET_PATH"
   $SSH_COMMAND "cd $TARGET_PATH && docker-compose up -d"
 fi
 

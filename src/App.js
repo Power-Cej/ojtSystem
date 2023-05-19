@@ -7,6 +7,7 @@ import React from "react";
 import AccessDeniedPage from "./pages/denied";
 import Queue from "nq";
 import Redirect from "./Redirect";
+import TestPage from "./pages/TestPage";
 
 Queue.setUrl('https://api.innque.com/v1');
 // Queue.setUrl("http://188.166.177.35:8888/v1");
@@ -21,6 +22,7 @@ function App() {
     <AppProvider>
       <BrowserRouter>
         <Routes>
+          <Route path="/test" element={<TestPage />} />
           <Route path="/signin" element={<SignInPage />} />
           <Route path="/signin/:masterKey" element={<SignInPage />} />
           <Route path="/signup" element={<SignUpPage />} />
