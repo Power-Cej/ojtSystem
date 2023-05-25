@@ -17,7 +17,7 @@ function AddField({field, onSubmit, onCancel, collections}) {
             <form onSubmit={onSubmit}>
                 <div className="row g-3">
                     <div className="col-md-12">
-                        <label className="form-label fs-sm">field name</label>
+                        <label className="form-label fs-sm">Field name</label>
                         <InputString
                             className="form-control"
                             field="name"
@@ -26,7 +26,7 @@ function AddField({field, onSubmit, onCancel, collections}) {
                             object={field}/>
                     </div>
                     <div className="col-md-12">
-                        <label className="form-label fs-sm">field type</label>
+                        <label className="form-label fs-sm">Field type</label>
                         <InputSelect
                             onChange={value => setType(value)}
                             className="form-control"

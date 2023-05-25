@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState}from 'react';
 import BasePage from "../../base/BasePage";
 import TablePagePresenter from './TablePagePresenter';
 import {Table, dialog} from "nq-component";
@@ -19,11 +19,21 @@ import {NavBar, Progress, InfiniteScroll} from "nq-component";
 import Access from "./components/Access";
 import access from "../../access";
 import withRouter from "../../withRouter";
-
+import { Navbar, NavDropdown, Nav } from 'react-bootstrap';
+import "./css/test.css";
 
 class TablePage extends BasePage {
     constructor(props) {
         super(props);
+          
+        this.state = {
+            isToggleActive: false,
+          };
+
+          this.state = {
+            navbarHovered: false
+          };
+
         this.presenter = new TablePagePresenter(
             this,
             findObjectUseCase(),
@@ -43,6 +53,18 @@ class TablePage extends BasePage {
         };
         this.parent = React.createRef();
     }
+    handleToggleClick = () => {
+        this.setState((prevState) => ({
+          isToggleActive: !prevState.isToggleActive,
+        }));
+      };
+      handleNavbarHover = () => {
+        this.setState({ navbarHovered: true });
+      };
+    
+      handleNavbarLeave = () => {
+        this.setState({ navbarHovered: false });
+      };    
 
     componentDidMount() {
         this.presenter.componentDidMount();
@@ -234,15 +256,24 @@ class TablePage extends BasePage {
     deleteSelected() {
         this.presenter.deleteSelected();
     }
+    
 
     render() {
+        const { isToggleActive } = this.state;
+        const navbarClassName = isToggleActive ? 'navbar-white' : '';
+        
+        const navbarStyle = {
+            backgroundColor: this.state.navbarHovered ? 'black' : 'light',
+            color: this.state.navbarHovered ? 'white' : 'black'
+          };
+
         const schema = this.getSchema(this.getCollectionName());
         const {objects, selected, count, progress} = this.state;
         const user = this.getCurrentUser();
         if (!schema) return <Progress/>;
         return (
             <>
-                <NavBar className="shadow-sm"/>
+                <NavBar className="shadow-sm test1"/>
                 <div className="container px-lg-4 py-lg-3 overflow-auto">
                     <Search
                         onSubmit={this.searchSubmit.bind(this)}
@@ -341,8 +372,96 @@ class TablePage extends BasePage {
                             objects={objects}/>
                     </InfiniteScroll>
                 </div>
+             
+                <Navbar bg='light' expand="lg" 
+                 className={`fs-6 ${navbarClassName} `}
+                style={navbarStyle}
+                onMouseEnter={this.handleNavbarHover}
+                onMouseLeave={this.handleNavbarLeave}>
+                    <Navbar.Toggle aria-controls="basic-navbar-nav" 
+                        onClick={this.handleToggleClick}>
+                        <i className="bi bi-three-dots-vertical" ></i>
+                    </Navbar.Toggle>
+                <Navbar.Collapse id="basic-navbar-nav">
+                    <Nav className="mr-auto d-flex flex-wrap">
+                        <Nav.Link>
+                        <button
+                            className="dropdown-item"
+                            onClick={this.addClick.bind(this)}
+                                    >
+                            <span className='bi bi-file-earmark-plus'>Add</span>
+                        </button>
+                        </Nav.Link>
+                        <Nav.Link>
+                        <button
+                                                onClick={this.onCLickAccess.bind(this)}
+                                                className="dropdown-item">
+                                                <span className='bi bi-check2-circle'>Access</span>
+                                            </button>
+                        </Nav.Link>
+                        <Nav.Link  onClick={this.addFieldClick.bind(this)}>
+                            <button
+                            
+                            className="dropdown-item"
+                            >
+                           <span className='bi bi-plus-circle'> Add a field </span>
+                            </button>
+                            
+                        </Nav.Link>   
+                        <Nav.Link>
+                        <button
+                                                onClick={this.deleteFieldClick.bind(this)}
+                                                className="dropdown-item">
+                                               <span className='bi bi-x-circle'> Delete a field</span>
+                                            </button>
+                        </Nav.Link>
+                        <Nav.Link>
+                        <button
+                                                onClick={this.addClassClick.bind(this)}
+                                                className="dropdown-item">
+                                                <span className='bi bi-plus-lg'>Add a collection</span>
+                                            </button>
+                        </Nav.Link>
+
+                        <Nav.Link>
+                        <button
+                                                onClick={this.editClassClick.bind(this, schema)}
+                                                className="dropdown-item">
+                                                <span className='bi bi-pencil-square'>Edit this collection</span>
+                                            </button>
+                        </Nav.Link>
+                        <Nav.Link>
+                        <button
+                                                onClick={this.deleteClassClick.bind(this)}
+                                                type="button"
+                                                className="dropdown-item">
+                                                <span className='bi bi-trash'>Delete this collection</span>
+                                            </button>
+                        </Nav.Link>
+                        <Nav.Link>
+                        <button
+                                               onClick={this.exportClick.bind(this)}
+                                                className="dropdown-item">
+                                                <span className='bi bi-box-arrow-up'>Export</span>
+                                            </button>
+                        </Nav.Link>
+                        <Nav.Link>
+                        <button
+                                               onClick={this.importClick.bind(this)}
+                                                className="dropdown-item">
+                                                <span className='bi bi-box-arrow-down'>Import</span>
+                                            </button>
+                        </Nav.Link>  
+                    </Nav>
+                </Navbar.Collapse>
+                </Navbar>
+                                
+                                
+    
             </>
         );
+
+        
     }
 }
 
