@@ -202,3 +202,15 @@ a, .btn-link {
   width: 5px;
   height: 0px;
 }
+
+.dropdown-menu-right {
+  right: 0 !important
+}
+
+.dropdown-item p {
+  margin-left: 1rem !important;
+}
+
+.rounded-full {
+  border-radius: 9999px;
+}

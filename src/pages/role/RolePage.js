@@ -1,11 +1,12 @@
 import BasePage from "../../base/BasePage";
-import {NavBar} from "nq-component";
+
 import {InputString} from "nq-component";
 import {Checkbox} from "nq-component";
 import RolePagePresenter from "./RolePagePresenter";
 import {findObjectUseCase, saveObjectUseCase, updateObjectUseCase} from "../../usecases/object";
 import {updateSchemaUseCase} from "../../usecases/schema/usecases";
 import withRouter from "../../withRouter";
+import NavBar from "../../components/navbar";
 
 const permissionKeys = ['modify', 'find', 'create', 'update', 'delete'];
 

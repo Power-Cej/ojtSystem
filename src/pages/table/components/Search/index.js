@@ -28,8 +28,8 @@ function Search({fields, onSubmit}) {
 
     return (
         <form onSubmit={submit}>
-            <div className="d-flex justify-content-end">
-                <select
+            <div className="d-flex justify-content-end align-items-center mt-3">
+                {/* <select
                     value={key}
                     className="form-select shadow-none fs-xs w-auto rounded-0 rounded-start"
                     onChange={e => setKey(e.target.value)}>
@@ -44,7 +44,8 @@ function Search({fields, onSubmit}) {
                                 );
                             })
                     }
-                </select>
+                </select> */}
+                
                 {
                     fields[key] && (
                         <InputType
@@ -53,7 +54,9 @@ function Search({fields, onSubmit}) {
                             onChange={onChange}
                         />
                     )
+                
                 }
+                <span class="bi bi-filter ps-3 pe-3">Filter</span>
             </div>
         </form>
     );

@@ -1,7 +1,7 @@
 import React,{useState}from 'react';
 import BasePage from "../../base/BasePage";
 import TablePagePresenter from './TablePagePresenter';
-import {Table, dialog} from "nq-component";
+import {Table, dialog, Button} from "nq-component";
 import AddField from "./components/AddField";
 import {addSchemaUseCase, updateSchemaUseCase, deleteSchemaUseCase} from '../../usecases/schema/usecases';
 import {
@@ -15,12 +15,13 @@ import Search from "./components/Search";
 import AddCLass from "./components/AddClass";
 import DeleteClass from "./components/DeleteClass";
 import DeleteField from "./components/DeleteField";
-import {NavBar, Progress, InfiniteScroll} from "nq-component";
+import { Progress, InfiniteScroll} from "nq-component";
 import Access from "./components/Access";
 import access from "../../access";
 import withRouter from "../../withRouter";
 import { Navbar, NavDropdown, Nav } from 'react-bootstrap';
 import "./css/test.css";
+import NavBar from '../../components/navbar';
 
 class TablePage extends BasePage {
     constructor(props) {
@@ -130,6 +131,8 @@ class TablePage extends BasePage {
             footer: false,
         });
     }
+
+    
 
     closeDialog() {
         dialog.close();
@@ -273,12 +276,23 @@ class TablePage extends BasePage {
         if (!schema) return <Progress/>;
         return (
             <>
-                <NavBar className="shadow-sm test1"/>
+                <NavBar 
+                    exportClick={() => this.exportClick()}
+                    importClick={() => this.importClick()}
+                    onClickAccess={() => this.onCLickAccess()}
+                    addFieldClick={() => this.addFieldClick()}
+                    deleteFieldClick={() => this.deleteFieldClick()}
+                    addClassClick={() => this.addClassClick()}
+                    editClassClick={() => this.editClassClick(schema)}
+                    deleteClassClick={() => this.deleteClassClick()}
+                    className="shadow-sm test1"/>
+
                 <div className="container px-lg-4 py-lg-3 overflow-auto">
                     <Search
                         onSubmit={this.searchSubmit.bind(this)}
                         fields={schema.fields}/>
-                    <div className="d-flex justify-content-end mt-3">
+
+                    {/* <div className="d-flex justify-content-end mt-3">
                         <button
                             onClick={this.addClick.bind(this)}
                             type="button"
@@ -354,7 +368,7 @@ class TablePage extends BasePage {
                                 }
                             </div>
                         </div>
-                    </div>
+                    </div>        */}
                     <InfiniteScroll
                         className="h-100 mt-3"
                         loadMore={this.loadMore.bind(this)}
@@ -373,7 +387,7 @@ class TablePage extends BasePage {
                     </InfiniteScroll>
                 </div>
              
-                <Navbar bg='light' expand="lg" 
+                {/* <Navbar bg='light' expand="lg" 
                  className={`fs-6 ${navbarClassName} `}
                 style={navbarStyle}
                 onMouseEnter={this.handleNavbarHover}
@@ -427,7 +441,7 @@ class TablePage extends BasePage {
                         <button
                                                 onClick={this.editClassClick.bind(this, schema)}
                                                 className="dropdown-item">
-                                                <span className='bi bi-pencil-square'>Edit this collection</span>
+                                                <span className='bi bi-pen-fill'>Edit this collection</span>
                                             </button>
                         </Nav.Link>
                         <Nav.Link>
@@ -454,9 +468,16 @@ class TablePage extends BasePage {
                         </Nav.Link>  
                     </Nav>
                 </Navbar.Collapse>
-                </Navbar>
+                </Navbar> */}
                                 
-                                
+                <div className="position-fixed bottom-0 end-0 m-4">
+                    <Button
+                        className="shadow-lg bg-primary"
+                        onClick={this.addClick.bind(this)}
+                        style={{width: '50px', height: '50px', borderRadius: '25px'}}>
+                        <i className="bi bi-plus-lg"/>
+                    </Button>
+                </div>      
     
             </>
         );

@@ -16,6 +16,7 @@ import AccountPage from "../account/AccountPage";
 import RolePage from "../role/RolePage";
 import {getRolesByUserUseCase} from "../../usecases/role";
 import canRead from "../../canRead";
+import NavBar from '../../components/navbar';
 
 
 class MainPage extends BasePage {
