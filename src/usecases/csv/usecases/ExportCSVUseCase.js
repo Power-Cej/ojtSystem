@@ -12,8 +12,6 @@ class ExportCSVUseCase {
                     acc.push(...flatten(cur));
                     return acc;
                 }, []);
-                console.log(JSON.stringify(objects));
-                console.log(JSON.stringify(flat));
                 const data = Papa.unparse(flat);
                 const blob = new Blob([data], MIMEType);
                 saveAs(blob, filename);

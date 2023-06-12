@@ -23,7 +23,7 @@ class MainPagePresenter {
             })
             .catch(error => {
                 this.view.hideProgress();
-                if (error.code === 209) {
+                if (error.code === 401) {
                     this.view.navigateTo('/signin');
                 } else {
                     this.view.showError(error);

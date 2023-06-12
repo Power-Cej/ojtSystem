@@ -82,6 +82,7 @@ function InputFactory({type, _type, field, object, ...options}) {
                 object={object}
                 {...options}/>;
         case 'Object':
+        case 'Array':
             return <InputJson
                 id={object.id}
                 field={field}

@@ -5,8 +5,8 @@ import {getAllSchemasUseCase} from '../../usecases/schema/usecases';
 import {getCurrentUserUseCase, signOutUseCase} from '../../usecases/user';
 import {Routes, Route} from 'react-router-dom';
 import {OffCanvas} from 'nq-component';
-import TablePage from "../table/TablePage";
-import FormPage from "../form/FormPage";
+import TablePage from "../collection-list/TablePage";
+import FormPage from "../collection-form/FormPage";
 import BasePage from "../../base/BasePage";
 import NotFoundPage from "../notfound";
 import {Layout, Progress} from "nq-component";
@@ -14,9 +14,7 @@ import getProfile from "../../getProfile";
 import MigrationPage from "../migration/MigrationPage";
 import AccountPage from "../account/AccountPage";
 import RolePage from "../role/RolePage";
-import {getRolesByUserUseCase} from "../../usecases/role";
 import canRead from "../../canRead";
-import NavBar from '../../components/navbar';
 
 
 class MainPage extends BasePage {
@@ -24,7 +22,6 @@ class MainPage extends BasePage {
         super(props);
         this.presenter = new MainPagePresenter(this, getCurrentUserUseCase(), signOutUseCase(), getAllSchemasUseCase());
     }
-
     componentDidMount() {
         this.presenter.componentDidMount();
     }

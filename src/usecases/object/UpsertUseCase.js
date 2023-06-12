@@ -1,12 +1,12 @@
 import Queue from 'nq';
 
 class UpsertUseCase {
-    execute(collection, object, session) {
+    execute(collection, object) {
         if (object.id) {
             const options = {upsert: true};
-            return new Queue.Document().update(collection, object, options, session);
+            return new Queue.Document().update(collection, object, options);
         } else {
-            return new Queue.Document().create(collection, object, session);
+            return new Queue.Document().create(collection, object);
         }
     }
 }

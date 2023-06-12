@@ -112,7 +112,7 @@ class AccountPage extends BasePage {
         return (
             <>
                 <NavBar className="shadow-sm"/>
-                <div className="container-fluid mt-3">
+                <div className="container mt-3">
                     <div className="row">
                         <div className="col-md-6">
                             <div className="bg-white p-3 shadow-sm">
