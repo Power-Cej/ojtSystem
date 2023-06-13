@@ -1,4 +1,4 @@
-import Papa from 'papaparse';
+// import Papa from 'papaparse';
 import unflatten from "../../../unflatten";
 import UpdateObjectUseCase from "../../object/UpdateObjectUseCase";
 import SaveObjectUseCase from "../../object/SaveObjectUseCase";
@@ -8,12 +8,12 @@ class ImportCSVUseCase {
 
     fileToJson(files) {
         return new Promise(resolve => {
-            for (const file of files) {
-                Papa.parse(file, {
-                    header: true,
-                    complete: resolve
-                });
-            }
+            // for (const file of files) {
+            //     Papa.parse(file, {
+            //         header: true,
+            //         complete: resolve
+            //     });
+            // }
         });
     }
 

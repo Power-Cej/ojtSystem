@@ -15,6 +15,7 @@ import MigrationPage from "../migration/MigrationPage";
 import AccountPage from "../account/AccountPage";
 import RolePage from "../role/RolePage";
 import canRead from "../../canRead";
+import withRouter from "../../withRouter";
 
 
 class MainPage extends BasePage {
@@ -22,12 +23,18 @@ class MainPage extends BasePage {
         super(props);
         this.presenter = new MainPagePresenter(this, getCurrentUserUseCase(), signOutUseCase(), getAllSchemasUseCase());
     }
+
     componentDidMount() {
         this.presenter.componentDidMount();
     }
 
     signOutClick() {
         this.presenter.signOutClick();
+    }
+
+    onClickMenu(e, item) {
+        e.preventDefault();
+        this.navigateTo('/collection/' + item.name);
     }
 
     render() {
@@ -56,6 +63,7 @@ class MainPage extends BasePage {
                                             </div>
                                             <hr className="dropdown-divider bg-light"/>
                                             <Menu
+                                                onClickItem={this.onClickMenu.bind(this)}
                                                 menus={schemas
                                                     .filter(s => canRead(roles, s.permissions) || user.isMaster)
                                                     .map(s => ({
@@ -92,4 +100,4 @@ class MainPage extends BasePage {
     }
 }
 
-export default MainPage;
+export default withRouter(MainPage);

@@ -1,13 +1,11 @@
 import React from "react";
-import Calendar from "../components/calendar/Calendar";
+import BasePage from "../base/BasePage";
 
-class TestPage extends React.Component {
-
+class App extends BasePage {
     render() {
-       return(
-           <Calendar/>
-       )
+        return <h1>hello</h1>
     }
+
 }
 
-export default TestPage;
+export default App;
