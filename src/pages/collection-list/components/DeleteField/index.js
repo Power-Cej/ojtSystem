@@ -6,11 +6,11 @@ const options = ['id', 'createdAt', 'updatedAt', 'acl', 'username', 'password', 
 function DeleteField({object, onSubmit, onCancel, fields}) {
     return (
         <>
-            <h4 className="fw-bold">Delete Field</h4>
             <div className="p-3 pb-4">
+                <h4 className="fw-bold">Delete Field</h4>
                 <form onSubmit={onSubmit}>
                     <div>
-                        <label className="form-label">which field</label>
+                        <label className="form-label">Which field</label>
                         <InputSelect
                             field="name"
                             options={fields.filter(f => !options.includes(f))}
@@ -25,7 +25,7 @@ function DeleteField({object, onSubmit, onCancel, fields}) {
                         </button>
                         <button
                             type="submit"
-                            className="btn btn-danger btn-sm ms-2">
+                            className="btn btn-outline-danger btn-sm ms-3">
                             <i className="bi bi-trash me-2"></i>YES, DELETE
                         </button>
                     </div>

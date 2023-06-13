@@ -79,10 +79,15 @@ class BaseTablePresenter {
         }
     }
 
+    onClickItem(index) {
+        const object = this.objects[index];
+        const collection = this.view.getCollectionName();
+        this.view.navigateTo("/collection/" + collection + "/form/" + object.id);
+    }
+
     async onClickDeleteSelected() {
         const selected = this.view.getSelected();
         const collection = this.view.getCollectionName();
-
         try {
             await this.view.showDialog({title: 'Delete Data?', message: 'Are you sure you want to delete?'});
             for (const obj of selected) {
@@ -97,8 +102,6 @@ class BaseTablePresenter {
             this.view.showError(error);
         }
     }
-
-
 }
 
 export default BaseTablePresenter;

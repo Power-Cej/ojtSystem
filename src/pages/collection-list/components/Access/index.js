@@ -95,7 +95,7 @@ function Access({access, onSubmit, onCancel}) {
                             </button>
                             <button
                                 type="button"
-                                className="btn btn-secondary btn-sm ms-2"
+                                className="btn btn-light btn-sm ms-3"
                                 onClick={onCancel}>Cancel
                             </button>
                         </div>

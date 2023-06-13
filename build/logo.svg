@@ -1,1 +1,6 @@
-<svg id="Layer_5" data-name="Layer 5" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 220 220"><defs><style>.cls-1{fill:none;}.cls-2{clip-path:url(#clip-path);}.cls-3{fill:#fff;}.cls-4{fill:#0038a8;}.cls-5{fill:#ce1126;}.cls-6{fill:#fcd116;}</style><clipPath id="clip-path"><rect class="cls-1" width="220" height="220"/></clipPath></defs><g class="cls-2"><rect class="cls-3" width="220" height="220" rx="34.57"/><path class="cls-4" d="M76.07,38.22c15.19,5.15,26.42,14,33.73,26h68.37a13,13,0,0,0,13-13h0a13,13,0,0,0-13-13Z"/><path class="cls-5" d="M76.07,178.54c15.19-5.15,26.42-14,33.73-26h68.37a13,13,0,0,1,13,13h0a13,13,0,0,1-13,13Z"/><circle class="cls-6" cx="43.62" cy="167" r="14.78"/><circle class="cls-6" cx="123.68" cy="108.92" r="14.78"/><circle class="cls-6" cx="43.62" cy="53" r="14.78"/></g></svg>
+<svg width="34" height="27" viewBox="0 0 34 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M4.8069 11.1682H0L10.5517 0L23.4483 13.5L19.6966 17.4273L17.2345 14.85L18.5241 13.5L10.5517 5.15455L4.8069 11.1682Z" fill="#212121"/>
+<path d="M23.4483 0L17.2345 6.50455L19.6966 9.08182L23.4483 5.15455L29.1931 11.1682H34L23.4483 0Z" fill="#212121"/>
+<path d="M4.8069 15.8318H0L10.5517 27L16.7655 20.4955L14.3034 17.9182L10.5517 21.8455L4.8069 15.8318Z" fill="#212121"/>
+<path d="M14.3034 9.57273L16.7655 12.15L15.4759 13.5L23.4483 21.8455L29.1931 15.8318H34L23.4483 27L10.5517 13.5L14.3034 9.57273Z" fill="#212121"/>
+</svg>

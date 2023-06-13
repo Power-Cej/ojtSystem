@@ -1,6 +1,7 @@
 SSH_HOST=$1
 SSH_USERNAME=$2
 REPOSITORY_NAME=$3
+REPOSITORY_OWNER=$4
 SSH_COMMAND="ssh -A -o StrictHostKeyChecking=no $SSH_USERNAME@$SSH_HOST"
 # check host name
 if [ -z "$SSH_HOST" ]; then
@@ -16,9 +17,11 @@ $SSH_COMMAND "ssh-keyscan -t rsa github.com >>~/.ssh/known_hosts"
 if $SSH_COMMAND [ -d "$TARGET_PATH" ]; then
   $SSH_COMMAND "cd $TARGET_PATH && git pull"
 else
-  $SSH_COMMAND "git clone git@github.com:innqueinc/$REPOSITORY_NAME.git $TARGET_PATH"
-  $SSH_COMMAND "cd $TARGET_PATH && docker-compose up -d"
+  $SSH_COMMAND "git clone git@github.com:$REPOSITORY_OWNER/$REPOSITORY_NAME.git $TARGET_PATH"
 fi
+
+# run docker
+$SSH_COMMAND "cd $TARGET_PATH && docker-compose up -d"
 
 # remove known_hosts files
 $SSH_COMMAND "rm ~/.ssh/known_hosts*"

@@ -1,14 +1,16 @@
 import {InputString} from "nq-component";
+import React from "react";
 
 function DeleteCollection({object, onSubmit, onCancel}) {
     return (
-        <div className="p-2">
+        <div className="p-3 pb-4">
+            <h4 className="fw-bold">Delete Collection</h4>
             <form onSubmit={onSubmit}>
                 <div>
-                    <label className="form-label">class name</label>
+                    <label className="form-label">Collection name</label>
                     <InputString
                         field="collection"
-                        placeholder="Current class name"
+                        placeholder="Enter Current Collection"
                         required
                         object={object}/>
                 </div>
@@ -20,7 +22,7 @@ function DeleteCollection({object, onSubmit, onCancel}) {
                     </button>
                     <button
                         type="submit"
-                        className="btn btn-danger btn-sm ms-2">
+                        className="btn btn-outline-danger btn-sm ms-3">
                         <i className="bi bi-trash me-2"></i>Yes, Delete
                     </button>
                 </div>

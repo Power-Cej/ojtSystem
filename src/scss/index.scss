@@ -1,4 +1,6 @@
 @import './variables.scss';
+@import './inputs.scss';
+@import './buttons.scss';
 @import '~bootstrap/scss/bootstrap.scss';
 @import "./offcanvas";
 
@@ -7,10 +9,12 @@ body {
   overflow-x: hidden;
   overscroll-behavior-x: none;
 }
+
 ::-webkit-scrollbar {
   width: 5px;
   height: 5px;
 }
+
 @media (min-width: 992px) {
   ::-webkit-scrollbar {
     width: 10px;

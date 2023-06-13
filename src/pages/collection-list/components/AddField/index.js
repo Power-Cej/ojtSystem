@@ -14,8 +14,8 @@ function AddField({field, onSubmit, onCancel, collections}) {
     }, [field]);
     return (
         <>
-            <h4 className="fw-bold">Add Field</h4>
             <div className="p-3 pb-4">
+                <h4 className="fw-bold">Add Field</h4>
                 <form onSubmit={onSubmit}>
                     <div className="row g-3">
                         <div className="col-md-12">
@@ -61,7 +61,7 @@ function AddField({field, onSubmit, onCancel, collections}) {
                             </button>
                             <button
                                 type="button"
-                                className="btn btn-light fs-sm ms-2"
+                                className="btn btn-light btn-sm fs-sm ms-2"
                                 onClick={onCancel}>CANCEL
                             </button>
                         </div>
