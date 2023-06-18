@@ -16,7 +16,7 @@ class RolePagePresenter {
     }
 
     init() {
-        const className = this.view.getClassName();
+        const className = this.view.getCollectionName();
         const id = this.view.getObjectId();
         const query = {include: ['all'], where: {id}};
         if (id) {
@@ -36,7 +36,7 @@ class RolePagePresenter {
     }
 
     submit() {
-        const className = this.view.getClassName();
+        const className = this.view.getCollectionName();
         const object = this.view.getObject();
         this.view.showProgress();
         if (object.id) {

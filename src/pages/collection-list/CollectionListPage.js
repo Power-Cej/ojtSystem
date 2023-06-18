@@ -1,5 +1,5 @@
 import React from 'react';
-import TablePagePresenter from './TablePagePresenter';
+import CollectionListPresenter from './CollectionListPresenter';
 import {Table, dialog, Button} from "nq-component";
 import AddField from "./components/AddField";
 import {addSchemaUseCase, updateSchemaUseCase, deleteSchemaUseCase} from '../../usecases/schema/usecases';
@@ -9,21 +9,21 @@ import {
     upsertUseCase
 } from '../../usecases/object';
 import {exportCSVUseCase} from '../../usecases/csv/usecases';
-import Search from "./components/Search";
-import AddCLass from "./components/AddCollection";
-import DeleteClass from "./components/DeleteCollection";
+import FormCollection from "./components/FormCollection";
+import DeleteCollection from "./components/DeleteCollection";
 import DeleteField from "./components/DeleteField";
 import {Progress, InfiniteScroll} from "nq-component";
-import Access from "./components/Access";
-import access from "../../access";
+import FormAccess from "./components/FormAccess";
+import mergeACl from "../../mergeACl";
 import withRouter from "../../withRouter";
+import Search from "../../components/Search";
 import {NavBar} from 'nq-component';
-import BaseTablePage from "../../base/BaseTablePage";
+import BaseListPage from "../../base/BaseListPage";
 
-class TablePage extends BaseTablePage {
+class CollectionListPage extends BaseListPage {
     constructor(props) {
         super(props);
-        this.presenter = new TablePagePresenter(
+        this.presenter = new CollectionListPresenter(
             this,
             findObjectUseCase(),
             deleteObjectUseCase(),
@@ -74,8 +74,7 @@ class TablePage extends BaseTablePage {
         }
 
         dialog.fire({
-            title: 'Edit a class',
-            html: <AddCLass
+            html: <FormCollection
                 schema={schema}
                 onSubmit={onSubmit.bind(this, schema)}
                 onCancel={() => dialog.close()}/>,
@@ -93,7 +92,6 @@ class TablePage extends BaseTablePage {
         }
 
         dialog.fire({
-            title: 'Add a new field',
             html: <AddField
                 field={field}
                 collections={schemas.map(s => s.collection)}
@@ -106,8 +104,7 @@ class TablePage extends BaseTablePage {
     onClickAddCollection() {
         const schema = {};
         dialog.fire({
-            title: 'Add a new collection',
-            html: <AddCLass
+            html: <FormCollection
                 schema={schema}
                 onSubmit={this.addCollectionSubmit.bind(this, schema)}
                 onCancel={() => dialog.close()}/>,
@@ -116,20 +113,16 @@ class TablePage extends BaseTablePage {
     }
 
     onCLickAccess() {
-        const schema = {};
-
-        function submit(acl, e) {
-            e.preventDefault();
+        function submit(acl) {
             this.presenter.accessSubmit(acl);
         }
 
-        const acl = access(this.state.selected);
+        const acl = mergeACl(this.state.selected);
         dialog.fire({
-            title: 'Add a new collection',
-            html: <Access
-                access={acl}
-                schema={schema}
-                onSubmit={submit.bind(this, acl)}
+            html: <FormAccess
+                currentUser={this.getCurrentUser()}
+                acl={acl}
+                onSubmit={submit.bind(this)}
                 onCancel={() => dialog.close()}/>,
             footer: false
         });
@@ -139,7 +132,6 @@ class TablePage extends BaseTablePage {
         const field = {};
         const schema = this.getSchema(this.getCollectionName());
         dialog.fire({
-            title: 'Delete a field?',
             html: <DeleteField
                 fields={Object.keys(schema.fields)}
                 object={field}
@@ -152,8 +144,7 @@ class TablePage extends BaseTablePage {
     onClickDeleteCollection() {
         const schema = this.getSchema(this.getCollectionName());
         dialog.fire({
-            title: 'Delete this collection?',
-            html: <DeleteClass
+            html: <DeleteCollection
                 object={schema}
                 onSubmit={this.deleteCollectionSubmit.bind(this, schema)}
                 onCancel={() => dialog.close()}/>,
@@ -224,7 +215,7 @@ class TablePage extends BaseTablePage {
                                     <i className='bi bi-journal-x pe-2'/> Delete a field
                                 </button>
                                 <button
-                                    onClick={this.onClickEditCollection.bind(this)}
+                                    onClick={this.onClickEditCollection.bind(this, schema)}
                                     className="dropdown-item py-3">
                                     <i className='bi bi-pencil-square pe-2'/>Edit this collection
                                 </button>
@@ -242,16 +233,45 @@ class TablePage extends BaseTablePage {
                         </div>
                     )}/>
                 <div className="overflow-auto">
-                    <div className="container px-lg-4 py-lg-3">
-                        <h1 className="fw-bold mt-3 text-capitalize">{this.getCollectionName()}</h1>
-                        <Search
-                            onSubmit={this.searchSubmit.bind(this)}
-                            fields={schema.fields}/>
-                        <InfiniteScroll
-                            className="h-100 mt-3"
-                            loadMore={this.loadMore.bind(this)}
-                            hasMore={(!progress && count > objects.length)}>
+                    <InfiniteScroll
+                        className="h-100"
+                        loadMore={this.loadMore.bind(this)}
+                        hasMore={(!progress && count > objects.length)}>
+                        <div className="p-3 p-lg-4">
+                            <div className="d-flex justify-content-between align-items-center">
+                                <h1 className="fw-bold mt-3 text-capitalize">{this.getCollectionName()}</h1>
+                                {
+                                    selected.length > 0 ? (
+                                            <div>
+                                                <span
+                                                    className="ms-2">Selected: </span>
+                                                <span className="fs-sm text-nowrap">{selected.length}</span>
+                                                <span
+                                                    className="ms-1">of </span>
+                                                <span className="fs-sm text-nowrap">{count}</span>
+                                            </div>
+                                        ) :
+                                        (
+                                            <div>
+                                                <span
+                                                    className="ms-2">Total: </span>
+                                                <span className="fs-sm text-nowrap">{objects.length}</span>
+                                                <span
+                                                    className="ms-1">of </span>
+                                                <span className="fs-sm text-nowrap">{count}</span>
+                                            </div>
+                                        )
+                                }
+
+                            </div>
+                            <Search
+                                className="mt-3"
+                                onSubmit={this.searchSubmit.bind(this)}
+                                fields={schema.fields}/>
+
+
                             <Table
+                                className="mt-3"
                                 hasSelect
                                 setRef={this.parent}
                                 excludeFields={['createdAt', 'updatedAt', 'acl']}
@@ -262,8 +282,8 @@ class TablePage extends BaseTablePage {
                                 onClickItem={this.onClickItem.bind(this)}
                                 fields={schema.fields}
                                 objects={objects}/>
-                        </InfiniteScroll>
-                    </div>
+                        </div>
+                    </InfiniteScroll>
                 </div>
                 <div className="position-fixed bottom-0 end-0 m-4">
                     <Button
@@ -278,4 +298,4 @@ class TablePage extends BaseTablePage {
     }
 }
 
-export default withRouter(TablePage);
+export default withRouter(CollectionListPage);

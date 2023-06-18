@@ -1,6 +1,6 @@
 import BasePage from "./BasePage";
 
-class BaseTablePage extends BasePage {
+class BaseListPage extends BasePage {
 
     getCollectionName() {
         return this.props.params.name;
@@ -55,4 +55,4 @@ class BaseTablePage extends BasePage {
     }
 }
 
-export default BaseTablePage;
+export default BaseListPage;

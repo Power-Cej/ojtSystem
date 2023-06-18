@@ -1,12 +1,13 @@
 import BasePage from "../../base/BasePage";
 
-import {InputString} from "nq-component";
+import {InputString, Table} from "nq-component";
 import {Checkbox} from "nq-component";
 import RolePagePresenter from "./RolePagePresenter";
 import {findObjectUseCase, saveObjectUseCase, updateObjectUseCase} from "../../usecases/object";
 import {updateSchemaUseCase} from "../../usecases/schema/usecases";
 import withRouter from "../../withRouter";
 import NavBar from "../../components/navbar";
+import React from "react";
 
 const permissionKeys = ['modify', 'find', 'create', 'update', 'delete'];
 
@@ -21,7 +22,7 @@ class RolePage extends BasePage {
         this.presenter.componentDidMount();
     }
 
-    getClassName() {
+    getCollectionName() {
         return 'roles';
     }
 
@@ -58,11 +59,24 @@ class RolePage extends BasePage {
         const role = this.state.role;
         const user = this.getCurrentUser();
         const schemas = this.getSchemas();
+        const fields = {
+            Collections: {
+                type: "String"
+            }
+        };
+        const objects = schemas.map(s => {
+            return {
+                id: s.collection,
+                Collections: s.collection,
+                schema:s,
+            };
+        })
         return (
             <>
                 <NavBar className="shadow-sm"/>
                 <div className="container">
                     <div className="py-3 px-lg-5 py-lg-4">
+                        <h1 className="fw-bold mt-3 text-capitalize">{this.getCollectionName()}</h1>
                         <div className="shadow-sm rounded bg-white">
                             <div className="p-3 px-lg-5 py-lg-4">
                                 <form onSubmit={this.formSubmit.bind(this)}>
@@ -73,53 +87,37 @@ class RolePage extends BasePage {
                                             field="name"
                                         />
                                     </div>
-                                    <div className="table-responsive shadow-sm mb-3">
-                                        <table className="table mb-0 w-100 table-striped">
-                                            <thead className="table-dark">
-                                            <tr>
-                                                <th className="fs-xs align-middle">Privilege</th>
-                                                {
-                                                    permissionKeys.map(key => {
-                                                        if (!user.isMaster && key === 'modify') return null;
-                                                        return (
-                                                            <th key={key}
-                                                                className="fs-xs align-middle text-capitalize">{key}</th>
-                                                        )
-                                                    })
-                                                }
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            {
-                                                schemas.map(schema => {
-                                                    const collection = schema.collection;
-                                                    const permissions = schema.permissions;
-                                                    return (
-                                                        <tr>
-                                                            <td className="fs-sm">{collection}</td>
-                                                            {
-                                                                permissionKeys.map(key => {
-                                                                    const id = this.getPermissionId().toLowerCase();
-                                                                    const access = permissions[key] || [];
-                                                                    const check = access.includes(id);
-                                                                    if (!user.isMaster && key === 'modify') return null;
-                                                                    return (
-                                                                        <td key={key}>
-                                                                            <Checkbox
-                                                                                onChange={this.permissionChange.bind(this, schema, key)}
-                                                                                checked={check}/>
-                                                                        </td>
-                                                                    )
-                                                                })
-                                                            }
-                                                        </tr>
-                                                    )
-                                                })
-                                            }
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div>
+                                    <Table
+                                        fields={fields}
+                                        objects={objects}
+                                        onCollapse={({schema}) => {
+                                            const collection = schema.collection;
+                                            const permissions = schema.permissions;
+                                            return (
+                                                <div className="row">
+                                                    {
+                                                        permissionKeys.map(key => {
+                                                            const id = this.getPermissionId().toLowerCase();
+                                                            const access = permissions[key] || [];
+                                                            const check = access.includes(id);
+                                                            if (!user.isMaster && key === 'modify') return null;
+                                                            return (
+                                                                <div className="col-6">
+                                                                    <Checkbox
+                                                                        className="text-capitalize"
+                                                                        label={key}
+                                                                        onChange={this.permissionChange.bind(this, schema, key)}
+                                                                        checked={check}
+                                                                    />
+                                                                </div>
+                                                            )
+                                                        })
+                                                    }
+                                                </div>
+                                            )
+                                        }}
+                                    />
+                                    <div className="mt-3">
                                         <button type="submit" className="btn btn-primary fs-sm me-3">
                                             <i className="bi bi-file-earmark-check me-2"></i>SAVE
                                         </button>
@@ -128,7 +126,6 @@ class RolePage extends BasePage {
                                         </button>
                                     </div>
                                 </form>
-
                             </div>
                         </div>
                     </div>

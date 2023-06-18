@@ -1,4 +1,4 @@
-class BaseTablePresenter {
+class BaseListPresenter {
     constructor(findObjectUseCase, deleteObjectUseCase, upsertUseCase) {
         this.findObjectUseCase = findObjectUseCase;
         this.deleteObjectUseCase = deleteObjectUseCase;
@@ -16,6 +16,7 @@ class BaseTablePresenter {
         this.where = {};
         this.objects = [];
         this.view.setObjects([]);
+        this.view.setSelected([]);
     }
 
     async getObjects() {
@@ -85,6 +86,11 @@ class BaseTablePresenter {
         this.view.navigateTo("/collection/" + collection + "/form/" + object.id);
     }
 
+    onClickAdd() {
+        const collection = this.view.getCollectionName();
+        this.view.navigateTo("/collection/" + collection + "/form");
+    }
+
     async onClickDeleteSelected() {
         const selected = this.view.getSelected();
         const collection = this.view.getCollectionName();
@@ -104,4 +110,4 @@ class BaseTablePresenter {
     }
 }
 
-export default BaseTablePresenter;
+export default BaseListPresenter;

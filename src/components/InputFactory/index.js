@@ -6,11 +6,12 @@ import {
     InputNumber,
     InputSelect,
     InputText,
-    InputRelation,
     InputImage,
     InputBooleanCheckbox,
     InputJson,
 } from "nq-component";
+import InputRelation from "../InputRelation";
+import InputPointer from "../InputPointer";
 import {findObjectUseCase} from "../../usecases/object";
 import {saveImageUseCase} from "../../usecases/file";
 import Context from "../../AppContext";
@@ -18,7 +19,7 @@ import Context from "../../AppContext";
 const find = findObjectUseCase();
 const save = saveImageUseCase();
 
-function InputFactory({type, _type, field, object, ...options}) {
+function InputFactory({type, _type, field, object, schemas, ...options}) {
     const context = React.useContext(Context);
     switch (_type || type) {
         case 'Email':
@@ -59,13 +60,14 @@ function InputFactory({type, _type, field, object, ...options}) {
                 object={object}
                 {...options}/>;
         case 'Relation':
-        case 'Pointer':
             return <InputRelation
                 isMulti={type === 'Relation'}
-                field={field}
-                type={type.toLowerCase()}
-                object={object}
-                schemas={context.schemas}
+                schemas={schemas || context.schemas}
+                find={find}
+                {...options}/>;
+        case 'Pointer':
+            return <InputPointer
+                schemas={schemas || context.schemas}
                 find={find}
                 {...options}/>;
         case 'Image':

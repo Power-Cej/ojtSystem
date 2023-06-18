@@ -2,9 +2,9 @@ import browseFile from "../../browseFile";
 import csvToJson from "../../csvToJson";
 import unflatten from "../../unflatten";
 import jsonToObject from "../../jsonToObject";
-import BaseTablePresenter from "../../base/BaseTablePresenter";
+import BaseListPresenter from "../../base/BaseListPresenter";
 
-class TablePagePresenter extends BaseTablePresenter {
+class CollectionListPresenter extends BaseListPresenter {
     constructor(view,
                 findObjectUseCase,
                 deleteObjectUseCase,
@@ -152,8 +152,9 @@ class TablePagePresenter extends BaseTablePresenter {
         const selected = this.view.getSelected();
         const collection = this.view.getCollectionName();
         const promises = selected.map(o => {
-            o.acl = acl;
-            return this.updateObjectUseCase.execute(collection, o)
+            const change = {id: o.id, acl};
+            o.acl = acl;// mutate the object
+            return this.upsertUseCase.execute(collection, change);
         });
         Promise.all(promises)
             .then(() => {
@@ -166,4 +167,4 @@ class TablePagePresenter extends BaseTablePresenter {
     }
 }
 
-export default TablePagePresenter;
+export default CollectionListPresenter;

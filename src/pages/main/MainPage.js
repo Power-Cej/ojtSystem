@@ -5,7 +5,7 @@ import {getAllSchemasUseCase} from '../../usecases/schema/usecases';
 import {getCurrentUserUseCase, signOutUseCase} from '../../usecases/user';
 import {Routes, Route} from 'react-router-dom';
 import {OffCanvas} from 'nq-component';
-import TablePage from "../collection-list/TablePage";
+import TablePage from "../collection-list/CollectionListPage";
 import FormPage from "../collection-form/FormPage";
 import BasePage from "../../base/BasePage";
 import NotFoundPage from "../notfound";
@@ -71,9 +71,9 @@ class MainPage extends BasePage {
                                                     }))}/>
                                         </nav>
                                     </div>
-                                    <div className="my-2">
+                                    <div className="m-3">
                                         <button
-                                            className="nav-link text-muted btn btn-link"
+                                            className="nav-link text-white btn btn-link"
                                             onClick={this.signOutClick.bind(this)}>
                                             <i className="bi bi-power"></i>
                                             <span className="ms-2 fw-bold small">Log out</span>

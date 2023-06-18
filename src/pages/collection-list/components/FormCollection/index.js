@@ -1,15 +1,14 @@
 import React from 'react';
 import {InputString} from "nq-component";
-import {InputIcon} from "nq-component";
 import {Switch} from "nq-component";
 import {InputJson} from "nq-component";
 
-function AddCollection({schema, onSubmit, onCancel}) {
+function FormCollection({schema, onSubmit, onCancel}) {
     const [isAdvanced, setAdvanced] = React.useState(false);
     return (
         <>
             <div className="p-3 pb-4">
-                <h4 className="fw-bold">Add Collection</h4>
+                <h4 className="fw-bold">{schema.collection ? "Edit" : "Add"} Collection</h4>
                 <div className="bg-light p-2">
                     <div className="d-flex justify-content-between">
                         <label>SCHEMA</label>
@@ -54,12 +53,12 @@ function AddCollection({schema, onSubmit, onCancel}) {
                             <button
                                 type="submit"
                                 className="btn btn-primary btn-sm">
-                                <i className="bi bi-file-earmark-check me-2"></i>Save class
+                                <i className="bi bi-file-earmark-check me-2"></i>SAVE
                             </button>
                             <button
                                 type="button"
                                 className="btn btn-light btn-sm ms-3"
-                                onClick={onCancel}>Cancel
+                                onClick={onCancel}>CANCEL
                             </button>
                         </div>
                     </div>
@@ -69,4 +68,4 @@ function AddCollection({schema, onSubmit, onCancel}) {
     );
 }
 
-export default AddCollection;
+export default FormCollection;
