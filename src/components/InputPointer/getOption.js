@@ -1,17 +1,19 @@
 import objectToOption from "./objectToOption";
 
-function GetOption(collection, indexes, word, callback, find, where) {
-    this.query = {count: true, limit: 100, where: where};
+let timeout;
+
+function getOption(collection, word, indexes, find, where, callback) {
+    const query = {count: true, limit: 100, where: {...where}};// don't mutate where
     if (word && indexes.length > 0) {
-        this.query.where['$or'] = indexes.map(index => {
+        query.where['$or'] = indexes.map(index => {
             const or = {};
             or[index] = {'$regex': word, '$options': 'i'};
             return or;
         });
     }
-    clearTimeout(this.timeout);
-    this.timeout = setTimeout(() => {
-        find.execute(collection, this.query)
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+        find.execute(collection, query)
             .then(({objects}) => {
                 // sort the result
                 callback(objects.map(obj => objectToOption(obj, indexes))
@@ -28,4 +30,4 @@ function GetOption(collection, indexes, word, callback, find, where) {
     }, 300);
 }
 
-export default GetOption;
+export default getOption;

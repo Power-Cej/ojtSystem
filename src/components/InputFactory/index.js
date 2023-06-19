@@ -1,32 +1,42 @@
 import React from 'react';
 import {
+    InputRelation,
     InputString,
     InputPassword,
-    InputDate,
     InputNumber,
-    InputSelect,
     InputText,
     InputImage,
-    InputBooleanCheckbox,
+    Checkbox,
     InputJson,
 } from "nq-component";
-import InputRelation from "../InputRelation";
 import InputPointer from "../InputPointer";
 import {findObjectUseCase} from "../../usecases/object";
 import {saveImageUseCase} from "../../usecases/file";
 import Context from "../../AppContext";
+import InputSelect from "../InputSelect";
 
 const find = findObjectUseCase();
 const save = saveImageUseCase();
+const defaultProps = {
+    object: {}
+}
 
 function InputFactory({type, _type, field, object, schemas, ...options}) {
     const context = React.useContext(Context);
+    const value = object[field];
     switch (_type || type) {
         case 'Email':
         case 'String':
             return <InputString
-                field={field}
                 type={type.toLowerCase()}
+                defaultValue={value}
+                field={field}
+                object={object}
+                {...options}/>;
+        case 'Date':
+            return <InputString
+                type={type.toLowerCase()}
+                field={field}
                 object={object}
                 {...options}/>;
         case 'Password':
@@ -34,25 +44,13 @@ function InputFactory({type, _type, field, object, schemas, ...options}) {
                 field={field}
                 object={object}
                 {...options}/>;
-        case 'Enum':
-            return <InputSelect
-                field={field}
-                type={type.toLowerCase()}
-                object={object}
-                options={options.values}
-                {...options}/>;
         case 'Number':
         case 'Tel':
             return <InputNumber
                 field={field}
                 object={object}
                 {...options}/>;
-        case 'Date':
-            return <InputDate
-                field={field}
-                type={type.toLowerCase()}
-                object={object}
-                {...options}/>;
+
         case 'Text':
             return <InputText
                 field={field}
@@ -62,12 +60,12 @@ function InputFactory({type, _type, field, object, schemas, ...options}) {
         case 'Relation':
             return <InputRelation
                 isMulti={type === 'Relation'}
-                schemas={schemas || context.schemas}
+                schema={options.schema || (schemas || context.schemas).find(s => s.collection === options.target)}
                 find={find}
                 {...options}/>;
         case 'Pointer':
             return <InputPointer
-                schemas={schemas || context.schemas}
+                schema={options.schema || (schemas || context.schemas).find(s => s.collection === options.target)}
                 find={find}
                 {...options}/>;
         case 'Image':
@@ -77,22 +75,25 @@ function InputFactory({type, _type, field, object, schemas, ...options}) {
                 save={save}
                 {...options}/>;
         case 'Boolean':
-            return <InputBooleanCheckbox
+            return <Checkbox
                 id={object.id}
-                field={field}
                 type={type.toLowerCase()}
-                object={object}
                 {...options}/>;
         case 'Object':
         case 'Array':
             return <InputJson
                 id={object.id}
-                field={field}
-                object={object}
+                defaultValue={JSON.stringify(value, null, 4) || ''}
+                {...options}/>;
+        case 'Enum':
+            return <InputSelect
+                type={type.toLowerCase()}
+                options={options.options}
                 {...options}/>;
         default:
             return null;
     }
 }
 
+InputFactory.defaultProps = defaultProps;
 export default InputFactory;

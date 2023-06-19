@@ -1,5 +1,6 @@
 import SaveObjectUseCase from './SaveObjectUseCase';
 import FindObjectUseCase from './FindObjectUseCase';
+import GetObjectUseCase from './GetObjectUseCase';
 import UpdateObjectUseCase from './UpdateObjectUseCase';
 import DeleteObjectUseCase from "./DeleteObjectUseCase";
 import UpsertUseCase from "./UpsertUseCase";
@@ -21,4 +22,7 @@ export function deleteObjectUseCase() {
 }
 export function upsertUseCase() {
     return new UpsertUseCase();
+}
+export function getObjectUseCase() {
+    return new GetObjectUseCase();
 }

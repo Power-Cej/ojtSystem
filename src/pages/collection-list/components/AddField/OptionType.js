@@ -1,15 +1,11 @@
-import TypeEnum from "./TypeEnum";
 import TypeRelation from "./TypeRelation";
 
-function OptionType({type, field, collections}) {
+function OptionType({type, collections, onChange}) {
     switch (type) {
-        case 'Enum':
-            return <TypeEnum
-                field={field}/>
         case 'Relation':
         case 'Pointer':
             return <TypeRelation
-                field={field}
+                onChange={onChange}
                 collections={collections}/>
         default:
             return null;

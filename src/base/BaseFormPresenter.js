@@ -1,0 +1,84 @@
+class BaseFormPresenter {
+    constructor(view, getObjectUseCase, upsertUseCase) {
+        this.view = view;
+        this.getObjectUseCase = getObjectUseCase;
+        this.upsertUseCase = upsertUseCase;
+    }
+
+    componentDidMount() {
+        this.init();
+        this.getObject();
+    }
+
+    init() {
+        this.object = {};
+        this.changes = {};// when data is change
+    }
+
+    async getObject() {
+        const collection = this.view.getCollectionName();
+        const id = this.view.getObjectId();
+        if (id) {
+            const options = {include: ['all']};
+            try {
+                this.view.showProgress();
+                const object = await this.getObjectUseCase.execute(collection, id, options);
+                this.view.hideProgress();
+                this.view.setObject(object);
+            } catch (error) {
+                this.view.hideProgress();
+                this.view.showError(error);
+            }
+        }
+    }
+
+
+    onChange(field, data) {
+        this.changes[field] = data;
+    }
+
+    async submit() {
+        try {
+            const collection = this.view.getCollectionName();
+            const object = this.view.getObject();
+            this.view.showProgress();
+            const roles = this.view.getCurrentRoles();
+            const aclRoles = roles.map(r => `role:${r.name}`);
+            const user = this.view.getCurrentUser();
+            const acl = {
+                read: ['*', user.id, ...aclRoles],
+                write: [user.id, ...aclRoles],
+            };
+            if (object.id) {
+                this.changes.id = object.id;
+            } else {
+                this.changes.acl = acl;
+            }
+            await this.upsertUseCase.execute(collection, this.changes);
+            this.view.hideProgress();
+            this.view.showSuccessSnackbar("Successfully updated!");
+            this.view.navigateBack();
+        } catch (error) {
+            this.view.hideProgress();
+            this.view.showError(error);
+        }
+    }
+
+
+    backClick() {
+        if (Object.values(this.changes).length > 0) {
+            const message = 'You have unsaved changes that will be lost if you proceed. Are you sure you want to discard these changes?';
+            this.view.showConfirmDialog(message, 'Discard Changes', 'DISCARD')
+                .then(() => {
+                    this.view.navigateBack();
+                })
+                .catch(() => {
+
+                });
+            return;
+        }
+        this.view.navigateBack();
+    }
+}
+
+export default BaseFormPresenter;

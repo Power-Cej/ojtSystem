@@ -1,21 +1,18 @@
-import {InputSelect} from "nq-component";
 import React from "react";
+import InputSelect from "../../../../components/InputSelect";
 
-function TypeRelation({field, collections}) {
-    React.useEffect(() => {
-        field['target'] = collections[0];
-        return () => {
-            delete field['target'];
-        }
-    }, [field, collections]);
+function TypeRelation({collections, onChange}) {
+    function _onChange(value) {
+        onChange({target: value});
+    }
+
     return (
         <div className="col-md-12">
-            <label className="form-label fs-sm">target class</label>
+            <label className="form-label fs-sm">Target Collection</label>
             <InputSelect
-                className="form-control form-control"
-                field="target"
                 options={collections}
-                object={field}
+                onChange={_onChange}
+                className="form-control"
                 required
             />
         </div>

@@ -1,5 +1,6 @@
 class BaseListPresenter {
-    constructor(findObjectUseCase, deleteObjectUseCase, upsertUseCase) {
+    constructor(view, findObjectUseCase, deleteObjectUseCase, upsertUseCase) {
+        this.view = view;
         this.findObjectUseCase = findObjectUseCase;
         this.deleteObjectUseCase = deleteObjectUseCase;
         this.upsertUseCase = upsertUseCase;

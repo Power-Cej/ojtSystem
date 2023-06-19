@@ -37,7 +37,6 @@ class BasePage extends React.Component {
 
     showError(error, title) {
         if (error instanceof Object) {
-            console.log(error);
             return this.showError(error.message, title);
         }
         if (typeof error === 'string') {
@@ -62,6 +61,19 @@ class BasePage extends React.Component {
             type: 'success',
             positiveButton: 'OKAY',
             negativeButton: false,
+        };
+        return this.showDialog(options);
+    }
+
+    // show confirm dialog
+    showConfirmDialog(message, title, positiveButton, negativeButton) {
+        const options = {
+            title: title || "Are you sure?",
+            message: message,
+            icon: 'bi bi-exclamation-triangle',
+            type: 'warning',
+            positiveButton: positiveButton || 'OKAY',
+            negativeButton: negativeButton || 'CANCEL',
         };
         return this.showDialog(options);
     }

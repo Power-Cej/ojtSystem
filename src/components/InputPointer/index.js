@@ -2,7 +2,7 @@ import React from 'react';
 
 import classNames from "../../classNames";
 import objectToOption from './objectToOption';
-import GetOption from './GetOption';
+import getOption from './getOption';
 import SelectSearch from "../SelectSearch";
 
 
@@ -29,7 +29,8 @@ function InputPointer({
                           defaultValue,
                           ...props
                       }) {
-    const [value, setValue] = React.useState([]);
+    const [value, setValue] = React.useState();
+    const [options, setOptions] = React.useState([]);
     // set default value
     React.useEffect(() => {
         if (isMulti) {
@@ -37,23 +38,33 @@ function InputPointer({
         } else {
             defaultValue && setValue(objectToOption(defaultValue, indexes));
         }
-    }, [indexes]);
+    }, [indexes, defaultValue, isMulti]);
 
-    // load or filter the options
-    function loadOptions(word, callback) {
-        GetOption(schema.collection, word, indexes, find, where, callback);
+    // load the initial select
+    React.useEffect(() => {
+        setValue({label: '', value: ''});//reset
+        getOption(schema.collection, '', indexes, find, where, setOptions);
+    }, [schema, find, indexes, where]);
+
+    function _onChange(option) {
+        setValue(option);
+        onChange(isMulti ? option.map(o => o.object) : option.object);
     }
 
-    function _onChange(data) {
-        setValue(data);
-        onChange(isMulti ? data.map(o => o.object) : data.object);
+    function onSearch(word) {
+        getOption(schema.collection, word, indexes, find, where, setOptions);
     }
+
+
     return (
         <SelectSearch
             className={classNames(className)}
-            loadOptions={loadOptions}
+            options={options}
             value={value}
+            onSearch={onSearch}
             onChange={_onChange}
+            label={`Select ${schema.collection}`}
+            focus
             {...props}
         />
     );

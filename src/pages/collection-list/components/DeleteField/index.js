@@ -1,21 +1,30 @@
-import {InputSelect} from "nq-component";
 import React from "react";
+import InputSelect from "../../../../components/InputSelect";
 
-const options = ['id', 'createdAt', 'updatedAt', 'acl', 'username', 'password', 'email', 'emailVerified'];
+// default field
+const options = ['id', 'createdAt', 'updatedAt', 'acl', 'username', 'password', 'email'];
 
-function DeleteField({object, onSubmit, onCancel, fields}) {
+function DeleteField({onSubmit, onCancel, fields}) {
+    const [field, setField] = React.useState();
+
+    function _onSubmit(e) {
+        e.preventDefault();
+        onSubmit(field);
+    }
+
     return (
         <>
             <div className="p-3 pb-4">
                 <h4 className="fw-bold">Delete Field</h4>
-                <form onSubmit={onSubmit}>
+                <form onSubmit={_onSubmit}>
                     <div>
                         <label className="form-label">Which field</label>
                         <InputSelect
                             field="name"
+                            label="Select field"
                             options={fields.filter(f => !options.includes(f))}
                             required
-                            object={object}/>
+                            onChange={setField}/>
                     </div>
                     <div className="mt-3 text-end">
                         <button

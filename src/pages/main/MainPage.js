@@ -6,7 +6,7 @@ import {getCurrentUserUseCase, signOutUseCase} from '../../usecases/user';
 import {Routes, Route} from 'react-router-dom';
 import {OffCanvas} from 'nq-component';
 import TablePage from "../collection-list/CollectionListPage";
-import FormPage from "../collection-form/FormPage";
+import FormPage from "../collection-form/CollectionFormPage";
 import BasePage from "../../base/BasePage";
 import NotFoundPage from "../notfound";
 import {Layout, Progress} from "nq-component";

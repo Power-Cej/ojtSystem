@@ -5,12 +5,12 @@ const noop = () => {
 const defaultProps = {
     loadOptions: noop,
     onChange: noop,
-    onSearch: noop,
     value: {label: "", value: ""},
     label: "Select"
 }
 
-function SelectSearch({value, label, onChange, onSearch, focus, options}) {
+function SelectSearch({value, label, onChange, loadOptions}) {
+    const [options, setOptions] = useState([]);
     const [search, setSearch] = useState('');
     const [text, setText] = useState('');
     const [isOpen, setOpen] = useState(false);
@@ -45,14 +45,20 @@ function SelectSearch({value, label, onChange, onSearch, focus, options}) {
         // set the new character input by the user
         setSearch(e.target.value);
         setText(e.target.value);
-        onSearch(e.target.value);
+        // load with search text
+        loadOptions(e.target.value, setOptions);
     }
+
+    // call the load in initialize
+    useEffect(() => {
+        loadOptions(search, setOptions);
+    }, []);
 
     function onClick(e) {
         if (!isOpen) {
             e.target.blur();
         }
-        setOpen(!isOpen || focus);
+        setOpen(true);
     }
 
     function onSelect(value) {
@@ -60,18 +66,9 @@ function SelectSearch({value, label, onChange, onSearch, focus, options}) {
         setOpen(false);
         if (search) {
             // reset the options if has search
-            onSearch('');
+            loadOptions('', setOptions);
         }
     }
-
-    function onFocus(e) {
-        if (!focus) {
-            e.target.blur();
-        }
-    }
-
-    const style = {cursor: (isOpen && focus) ? 'text' : 'default'};
-
     return (
         <div className="input-group" ref={ref}>
             <div style={{position: 'relative', width: '100%'}}>
@@ -82,8 +79,7 @@ function SelectSearch({value, label, onChange, onSearch, focus, options}) {
                     placeholder={label}
                     value={text}
                     onChange={_onChange}
-                    onFocus={onFocus}
-                    style={style}
+                    style={{cursor: isOpen ? 'text' : 'default'}}
                 />
                 {isOpen && (
                     <div className="list-group rounded-0"

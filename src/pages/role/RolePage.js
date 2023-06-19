@@ -2,11 +2,11 @@ import BasePage from "../../base/BasePage";
 
 import {InputString, Table} from "nq-component";
 import {Checkbox} from "nq-component";
+import {NavBar} from "nq-component";
 import RolePagePresenter from "./RolePagePresenter";
 import {findObjectUseCase, saveObjectUseCase, updateObjectUseCase} from "../../usecases/object";
 import {updateSchemaUseCase} from "../../usecases/schema/usecases";
 import withRouter from "../../withRouter";
-import NavBar from "../../components/navbar";
 import React from "react";
 
 const permissionKeys = ['modify', 'find', 'create', 'update', 'delete'];
@@ -68,14 +68,17 @@ class RolePage extends BasePage {
             return {
                 id: s.collection,
                 Collections: s.collection,
-                schema:s,
+                schema: s,
             };
         })
         return (
             <>
-                <NavBar className="shadow-sm"/>
-                <div className="container">
-                    <div className="py-3 px-lg-5 py-lg-4">
+                <NavBar
+                    className="shadow-sm"
+                    title="DASHBOARD"
+                />
+                <div className="overflow-auto">
+                    <div className="p-3 p-lg-4">
                         <h1 className="fw-bold mt-3 text-capitalize">{this.getCollectionName()}</h1>
                         <div className="shadow-sm rounded bg-white">
                             <div className="p-3 px-lg-5 py-lg-4">
@@ -129,7 +132,6 @@ class RolePage extends BasePage {
                             </div>
                         </div>
                     </div>
-
                 </div>
             </>
         )

@@ -1,46 +1,16 @@
-import BasePage from "../../base/BasePage";
-import FormPagePresenter from "./FormPagePresenter";
+import React from "react";
+import CollectionFormPresenter from "./CollectionFormPresenter";
 import InputFactory from "../../components/InputFactory";
-import {saveObjectUseCase, findObjectUseCase, updateObjectUseCase} from '../../usecases/object';
+import {getObjectUseCase, upsertUseCase} from '../../usecases/object';
 import {NavBar} from "nq-component";
 import withRouter from "../../withRouter";
+import BaseFormPage from "../../base/BaseFormPage";
 
-class FormPage extends BasePage {
+class CollectionFormPage extends BaseFormPage {
     constructor(props) {
         super(props);
         this.state = {object: {}};
-        this.presenter = new FormPagePresenter(this, saveObjectUseCase(), findObjectUseCase(), updateObjectUseCase());
-    }
-
-    componentDidMount() {
-        this.presenter.componentDidMount();
-    }
-
-    getCollectionName() {
-        return this.props.params.name;
-    }
-
-    getObjectId() {
-        return this.props.params.id;
-    }
-
-    formSubmit(e) {
-        e.preventDefault();
-        this.presenter.submit();
-    }
-
-    getObject() {
-        return this.state.object;
-    }
-
-
-    backCLick() {
-        this.presenter.backClick();
-    }
-
-
-    setObject(object) {
-        this.setState({object});
+        this.presenter = new CollectionFormPresenter(this, getObjectUseCase(), upsertUseCase());
     }
 
     render() {
@@ -48,13 +18,12 @@ class FormPage extends BasePage {
         const schema = this.getSchema(this.getCollectionName());
         if (!schema) return <h1>no schema</h1>;
         const {fields} = schema;
+        const label = this.getObjectId() === undefined ? "Add New " : "Edit ";
         return (
             <>
                 <NavBar className="shadow-sm"/>
                 <div className="container p-3 px-lg-5 py-lg-4 overflow-auto">
-                    <h2>
-                        Add New Items
-                    </h2>
+                    <h1 className="fw-bold mt-3 text-capitalize">{label + this.getCollectionName()}</h1>
                     <div className="mt-3 bg-white shadow rounded p-3 px-lg-5 py-lg-4">
                         <form onSubmit={this.formSubmit.bind(this)}>
                             <div className="row g-3 mb-3">
@@ -64,7 +33,7 @@ class FormPage extends BasePage {
                                 </div>
                                 {
                                     Object.keys(fields).map((field) => {
-                                        let {type, pattern,...options} = fields[field];
+                                        let {type, pattern, ...options} = fields[field];
                                         if (field === 'password') {
                                             type = "Password";
                                         }
@@ -78,6 +47,7 @@ class FormPage extends BasePage {
                                                     field={field}
                                                     type={type}
                                                     object={object}
+                                                    onChange={this.onChange.bind(this, field)}
                                                     {...options}/>
                                             </div>
                                         )
@@ -100,4 +70,4 @@ class FormPage extends BasePage {
     }
 }
 
-export default withRouter(FormPage);
+export default withRouter(CollectionFormPage);

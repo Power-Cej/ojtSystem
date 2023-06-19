@@ -13,8 +13,7 @@ class CollectionListPresenter extends BaseListPresenter {
                 addSchemaUseCase,
                 updateSchemaUseCase,
                 deleteSchemaUseCase) {
-        super(findObjectUseCase, deleteObjectUseCase, upsertUseCase);
-        this.view = view;
+        super(view, findObjectUseCase, deleteObjectUseCase, upsertUseCase);
         this.exportCSVUseCase = exportCSVUseCase;
         this.addSchemaUseCase = addSchemaUseCase;
         this.updateSchemaUseCase = updateSchemaUseCase;
@@ -30,16 +29,6 @@ class CollectionListPresenter extends BaseListPresenter {
             this.init();
             this.getObjects();
         }
-    }
-
-    updateSchema(schema) {
-        this.updateSchemaUseCase.execute(schema)
-            .then(() => {
-
-            })
-            .catch(error => {
-                this.view.showError(error.message);
-            })
     }
 
     importClick() {
@@ -114,11 +103,13 @@ class CollectionListPresenter extends BaseListPresenter {
             });
     }
 
-    editClassSubmit(schema) {
+    editCollectionSubmit(schema) {
         this.view.closeDialog();
         this.updateSchemaUseCase.execute(schema)
             .then(schema => {
                 const schemas = this.view.getSchemas();
+                const index = schemas.findIndex((s) => s.collection === schema.collection);
+                schemas[index] = schema;
                 this.view.setSchemas(schemas);
             })
             .catch(error => {

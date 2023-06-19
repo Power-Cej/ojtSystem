@@ -1,10 +1,27 @@
 import React from 'react';
-import {InputString} from "nq-component";
+import InputFactory from "../../../../components/InputFactory";
 import {Switch} from "nq-component";
-import {InputJson} from "nq-component";
 
 function FormCollection({schema, onSubmit, onCancel}) {
     const [isAdvanced, setAdvanced] = React.useState(false);
+    const [_schema, setSchema] = React.useState(schema);
+
+    React.useEffect(() => {
+        setSchema(schema);
+    }, [schema]);
+
+    function onChange(field, data) {
+        setSchema(schema => ({
+            ...schema,
+            [field]: data,
+        }));
+    }
+
+    function _onSubmit(e) {
+        e.preventDefault();
+        onSubmit(_schema);
+    }
+
     return (
         <>
             <div className="p-3 pb-4">
@@ -15,39 +32,42 @@ function FormCollection({schema, onSubmit, onCancel}) {
                         <Switch onChange={setAdvanced} id="schema-advance" label="Advanced"/>
                     </div>
                 </div>
-                <form className="mt-3" onSubmit={onSubmit}>
+                <form className="mt-3" onSubmit={_onSubmit}>
                     <div className="row g-3">
                         {
-                            isAdvanced && (
+                            isAdvanced
+                                ?
                                 <div className="col-md-12">
-                                    <InputJson
+                                    <InputFactory
+                                        type="Object"
                                         field="schema"
-                                        object={{schema: schema}}
+                                        object={{schema: _schema}}
                                         rows="10"
                                     />
                                 </div>
-                            )
-                        }
-                        {
-                            !isAdvanced && (
+                                :
                                 <>
                                     <div className="col-md-12">
                                         <label className="form-label">Collection Name</label>
-                                        <InputString
+                                        <InputFactory
+                                            onChange={onChange.bind(this, "collection")}
+                                            type="String"
                                             field="collection"
                                             placeholder="Give it a good name"
                                             required
-                                            object={schema}/>
+                                            disabled={schema.collection}
+                                            object={_schema}/>
                                     </div>
                                     <div className="col-md-12">
                                         <label className="form-label">Description</label>
-                                        <InputString
+                                        <InputFactory
+                                            onChange={onChange.bind(this, "description")}
+                                            type="String"
                                             field="description"
                                             placeholder="A short description"
-                                            object={schema}/>
+                                            object={_schema}/>
                                     </div>
                                 </>
-                            )
                         }
                         <div className="col-md-12 text-end">
                             <button

@@ -51,64 +51,37 @@ class CollectionListPage extends BaseListPage {
         dialog.close();
     }
 
-    addCollectionSubmit(schema, e) {
-        e.preventDefault();
-        this.presenter.addCollectionSubmit(schema);
-    }
 
-    deleteCollectionSubmit(schema, e) {
-        e.preventDefault();
-        this.presenter.deleteCollectionSubmit(schema.collection);
-    }
-
-    deleteFieldSubmit(field, e) {
-        e.preventDefault();
-        dialog.close();
-        this.presenter.deleteFieldSubmit(field.name);
+    onClickAddCollection() {
+        // create empty schema
+        dialog.fire({
+            html: <FormCollection
+                schema={{}}
+                onSubmit={(schema) => this.presenter.addCollectionSubmit(schema)}
+                onCancel={() => dialog.close()}/>,
+            footer: false
+        });
     }
 
     onClickEditCollection(schema) {
-        function onSubmit(schema, e) {
-            e.preventDefault();
-            this.presenter.editClassSubmit(schema);
-        }
-
         dialog.fire({
             html: <FormCollection
                 schema={schema}
-                onSubmit={onSubmit.bind(this, schema)}
+                onSubmit={s => this.presenter.editCollectionSubmit(s)}
                 onCancel={() => dialog.close()}/>,
             footer: false
         });
     }
 
-    onClickAddField() {
-        const field = {};
+    onClickAddField(schema) {
         const schemas = this.getSchemas();
-
-        function onSubmit(field, e) {
-            e.preventDefault();
-            this.presenter.addFieldSubmit(field);
-        }
-
         dialog.fire({
             html: <AddField
-                field={field}
+                schema={schema}
                 collections={schemas.map(s => s.collection)}
-                onSubmit={onSubmit.bind(this, field)}
+                onSubmit={s => this.presenter.editCollectionSubmit(s)}
                 onCancel={() => dialog.close()}/>,
             footer: false,
-        });
-    }
-
-    onClickAddCollection() {
-        const schema = {};
-        dialog.fire({
-            html: <FormCollection
-                schema={schema}
-                onSubmit={this.addCollectionSubmit.bind(this, schema)}
-                onCancel={() => dialog.close()}/>,
-            footer: false
         });
     }
 
@@ -129,13 +102,11 @@ class CollectionListPage extends BaseListPage {
     }
 
     onClickDeleteField() {
-        const field = {};
         const schema = this.getSchema(this.getCollectionName());
         dialog.fire({
             html: <DeleteField
                 fields={Object.keys(schema.fields)}
-                object={field}
-                onSubmit={this.deleteFieldSubmit.bind(this, field)}
+                onSubmit={(f) => this.presenter.deleteFieldSubmit(f)}
                 onCancel={() => dialog.close()}/>,
             footer: false
         });
@@ -145,8 +116,8 @@ class CollectionListPage extends BaseListPage {
         const schema = this.getSchema(this.getCollectionName());
         dialog.fire({
             html: <DeleteCollection
-                object={schema}
-                onSubmit={this.deleteCollectionSubmit.bind(this, schema)}
+                schema={schema}
+                onSubmit={() => this.presenter.deleteCollectionSubmit(schema.collection)}
                 onCancel={() => dialog.close()}/>,
             footer: false
         });
@@ -155,7 +126,6 @@ class CollectionListPage extends BaseListPage {
     onClickItem(index, field) {
         this.presenter.onClickItem(index, field);
     }
-
 
     onClickImport() {
         this.presenter.onClickImport();
@@ -205,7 +175,7 @@ class CollectionListPage extends BaseListPage {
                                 </button>
                                 <div className="dropdown-divider"></div>
                                 <button
-                                    onClick={this.onClickAddField.bind(this)}
+                                    onClick={this.onClickAddField.bind(this, schema)}
                                     className="dropdown-item py-3">
                                     <i className='bi bi-journal-plus pe-2'/>Add a field
                                 </button>
@@ -287,7 +257,7 @@ class CollectionListPage extends BaseListPage {
                 </div>
                 <div className="position-fixed bottom-0 end-0 m-4">
                     <Button
-                        className="shadow-lg bg-primary"
+                        className="shadow-sm bg-primary"
                         onClick={this.onClickAdd.bind(this)}
                         style={{width: '50px', height: '50px', borderRadius: '25px'}}>
                         <i className="bi bi-plus-lg"/>

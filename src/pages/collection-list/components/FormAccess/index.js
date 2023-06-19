@@ -40,7 +40,14 @@ function FormAccess({currentUser, acl, onSubmit, onCancel}) {
         setAccess({...value});
     }
 
-    if (isAdd) return <AddAccess onBack={()=>setIsAdd(false)}/>;
+    function onSubmitAddAccess(key) {
+        access.read.push(key);
+        access.write.push(key);
+        setAccess({...access});
+        setIsAdd(false);
+    }
+
+    if (isAdd) return <AddAccess onSubmit={onSubmitAddAccess} onBack={() => setIsAdd(false)}/>;
     return (
         <div className="p-2 pb-3">
             <h4 className="fw-bold">Access Control List</h4>

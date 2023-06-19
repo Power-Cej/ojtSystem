@@ -1,58 +1,73 @@
 import React from "react";
 import {InputString} from "nq-component";
-import {InputSelect} from "nq-component";
-import {InputBooleanSwitch} from "nq-component";
+import {Switch} from "nq-component";
 import OptionType from "./OptionType";
+import InputSelect from "../../../../components/InputSelect";
 
-const options = ['String', 'Number', 'Boolean', 'Date', 'Object', 'Array', 'Pointer', 'Relation', 'Image', 'Enum'];
+const options = ['String', 'Number', 'Pointer', 'Relation', 'Date', 'Boolean', 'Object', 'Array', 'Image'];
 
 
-function AddField({field, onSubmit, onCancel, collections}) {
-    const [type, setType] = React.useState('String');
-    React.useEffect(() => {
-        field['type'] = 'String';
-    }, [field]);
+
+function AddField({schema, onSubmit, onCancel, collections}) {
+    const [name, setName] = React.useState({});
+    const [type, setType] = React.useState(options[0]);
+    const [option, setOptions] = React.useState({});
+
+    function _onSubmit(e) {
+        e.preventDefault();
+        const _schema = {...schema};
+        _schema.fields[name] = _schema.fields[name] || {};
+        _schema.fields[name]["type"] = type;
+        _schema.fields[name] = {..._schema.fields[name], ...option};
+        onSubmit(_schema);
+    }
+
+    function onChangeName(value) {
+        setName(value);
+    }
+
+    function onChangeType(value) {
+        setType(value);
+    }
+
     return (
         <>
             <div className="p-3 pb-4">
                 <h4 className="fw-bold">Add Field</h4>
-                <form onSubmit={onSubmit}>
+                <form onSubmit={_onSubmit}>
                     <div className="row g-3">
                         <div className="col-md-12">
                             <label className="form-label fs-sm">Field name</label>
                             <InputString
                                 className="form-control"
-                                field="name"
                                 placeholder="Give it a good name"
-                                required
-                                object={field}/>
+                                onChange={onChangeName}
+                                required/>
                         </div>
                         <div className="col-md-12">
                             <label className="form-label fs-sm">Field type</label>
                             <InputSelect
-                                onChange={value => setType(value)}
-                                className="form-control"
-                                field="type"
                                 options={options}
-                                required
-                                object={field}/>
+                                onChange={onChangeType}
+                                className="form-control"
+                                required/>
                         </div>
                         <OptionType
                             type={type}
-                            field={field}
-                            collections={collections}/>
+                            collections={collections}
+                            onChange={setOptions}/>
                         <div className="col-md-12">
-                            <InputBooleanSwitch
-                                id="switch-required"
-                                field="required"
-                                object={field}/>
+                            <div className="d-flex">
+                                <Switch
+                                    id="switch-required"
+                                    label="Required"/>
+                                <Switch
+                                    id="switch-unique"
+                                    label="Unique"
+                                    className="ms-3"/>
+                            </div>
                         </div>
-                        <div className="col-md-12">
-                            <InputBooleanSwitch
-                                id="switch-unique"
-                                field="unique"
-                                object={field}/>
-                        </div>
+
                         <div className="col-md-12 text-end">
                             <button
                                 type="submit"

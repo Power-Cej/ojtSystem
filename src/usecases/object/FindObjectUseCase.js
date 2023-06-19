@@ -1,8 +1,8 @@
 import Queue from 'nq';
 
 class FindObjectUseCase {
-    execute(collection, query, session) {
-        return new Queue.Document().find(collection, query, session);
+    execute(collection, query, options) {
+        return new Queue.Document().find(collection, query, options);
     }
 }
 
