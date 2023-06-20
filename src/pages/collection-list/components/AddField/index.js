@@ -2,7 +2,7 @@ import React from "react";
 import {InputString} from "nq-component";
 import {Switch} from "nq-component";
 import OptionType from "./OptionType";
-import InputSelect from "../../../../components/InputSelect";
+import InputFactory from "../../../../components/InputFactory";
 
 const options = ['String', 'Number', 'Pointer', 'Relation', 'Date', 'Boolean', 'Object', 'Array', 'Image', 'File'];
 
@@ -57,7 +57,8 @@ function AddField({schema, onSubmit, onCancel, collections}) {
                         </div>
                         <div className="col-md-12">
                             <label className="form-label fs-sm">Field type</label>
-                            <InputSelect
+                            <InputFactory
+                                type="Enum"
                                 options={options}
                                 onChange={onChangeType}
                                 className="form-control"

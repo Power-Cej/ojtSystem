@@ -1,5 +1,5 @@
 import React from "react";
-import InputSelect from "../../../../components/InputSelect";
+import InputFactory from "../../../../components/InputFactory";
 
 function TypeRelation({collections, onChange}) {
     function _onChange(value) {
@@ -9,7 +9,8 @@ function TypeRelation({collections, onChange}) {
     return (
         <div className="col-md-12">
             <label className="form-label fs-sm">Target Collection</label>
-            <InputSelect
+            <InputFactory
+                type="Enum"
                 options={collections}
                 onChange={_onChange}
                 className="form-control"

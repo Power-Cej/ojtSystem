@@ -1,5 +1,5 @@
 import React from "react";
-import InputSelect from "../../../../components/InputSelect";
+import InputFactory from "../../../../components/InputFactory";
 
 // default field
 const options = ['id', 'createdAt', 'updatedAt', 'acl', 'username', 'password', 'email'];
@@ -19,8 +19,8 @@ function DeleteField({onSubmit, onCancel, fields}) {
                 <form onSubmit={_onSubmit}>
                     <div>
                         <label className="form-label">Which field</label>
-                        <InputSelect
-                            field="name"
+                        <InputFactory
+                            type="Enum"
                             label="Select field"
                             options={fields.filter(f => !options.includes(f))}
                             required

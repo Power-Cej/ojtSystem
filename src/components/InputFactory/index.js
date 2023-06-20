@@ -9,13 +9,12 @@ import {
     InputJson,
     InputImage,
     InputFile,
+    InputPointer,
+    InputSelect,
 } from "nq-component";
-import InputPointer from "../InputPointer";
 import {findObjectUseCase} from "../../usecases/object";
 import {saveFileUseCase, saveImageUseCase} from "../../usecases/file";
 import Context from "../../AppContext";
-import InputSelect from "../InputSelect";
-
 const findObject = findObjectUseCase();
 const saveImage = saveImageUseCase();
 const saveFile = saveFileUseCase();
