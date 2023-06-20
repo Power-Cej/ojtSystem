@@ -232,14 +232,11 @@ class CollectionListPage extends BaseListPage {
                                             </div>
                                         )
                                 }
-
                             </div>
                             <Search
                                 className="mt-3"
                                 onSubmit={this.searchSubmit.bind(this)}
                                 fields={schema.fields}/>
-
-
                             <Table
                                 className="mt-3"
                                 hasSelect

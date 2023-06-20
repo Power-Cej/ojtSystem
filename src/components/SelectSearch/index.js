@@ -86,7 +86,7 @@ function SelectSearch({value, label, onChange, onSearch, focus, options}) {
                     style={style}
                 />
                 {isOpen && (
-                    <div className="list-group rounded-0"
+                    <div className="list-group rounded-0 bg-white"
                          style={{
                              position: 'absolute',
                              top: '100%',
