@@ -4,8 +4,7 @@ import {Switch} from "nq-component";
 import OptionType from "./OptionType";
 import InputSelect from "../../../../components/InputSelect";
 
-const options = ['String', 'Number', 'Pointer', 'Relation', 'Date', 'Boolean', 'Object', 'Array', 'Image'];
-
+const options = ['String', 'Number', 'Pointer', 'Relation', 'Date', 'Boolean', 'Object', 'Array', 'Image', 'File'];
 
 
 function AddField({schema, onSubmit, onCancel, collections}) {
@@ -13,12 +12,24 @@ function AddField({schema, onSubmit, onCancel, collections}) {
     const [type, setType] = React.useState(options[0]);
     const [option, setOptions] = React.useState({});
 
+    function customType(field, type) {
+        switch (type) {
+            case 'Image':
+            case 'File':
+                field["type"] = 'String';
+                field["_type"] = type;
+                break;
+            default:
+                field["type"] = type;
+        }
+    }
+
     function _onSubmit(e) {
         e.preventDefault();
         const _schema = {...schema};
         _schema.fields[name] = _schema.fields[name] || {};
-        _schema.fields[name]["type"] = type;
         _schema.fields[name] = {..._schema.fields[name], ...option};
+        customType(_schema.fields[name], type);
         onSubmit(_schema);
     }
 

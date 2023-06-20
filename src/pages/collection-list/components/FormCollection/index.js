@@ -11,10 +11,14 @@ function FormCollection({schema, onSubmit, onCancel}) {
     }, [schema]);
 
     function onChange(field, data) {
-        setSchema(schema => ({
-            ...schema,
+        setSchema(s => ({
+            ...s,
             [field]: data,
         }));
+    }
+
+    function onChangeSchema(schema) {
+        setSchema(schema);
     }
 
     function _onSubmit(e) {
@@ -42,6 +46,7 @@ function FormCollection({schema, onSubmit, onCancel}) {
                                         type="Object"
                                         field="schema"
                                         object={{schema: _schema}}
+                                        onChange={onChangeSchema}
                                         rows="10"
                                     />
                                 </div>

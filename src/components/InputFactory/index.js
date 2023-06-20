@@ -5,18 +5,20 @@ import {
     InputPassword,
     InputNumber,
     InputText,
-    InputImage,
     Checkbox,
     InputJson,
+    InputImage,
+    InputFile,
 } from "nq-component";
 import InputPointer from "../InputPointer";
 import {findObjectUseCase} from "../../usecases/object";
-import {saveImageUseCase} from "../../usecases/file";
+import {saveFileUseCase, saveImageUseCase} from "../../usecases/file";
 import Context from "../../AppContext";
 import InputSelect from "../InputSelect";
 
-const find = findObjectUseCase();
-const save = saveImageUseCase();
+const findObject = findObjectUseCase();
+const saveImage = saveImageUseCase();
+const saveFile = saveFileUseCase();
 const defaultProps = {
     object: {}
 }
@@ -30,25 +32,18 @@ function InputFactory({type, _type, field, object, schemas, ...options}) {
             return <InputString
                 type={type.toLowerCase()}
                 defaultValue={value}
-                field={field}
-                object={object}
                 {...options}/>;
         case 'Date':
             return <InputString
                 type={type.toLowerCase()}
-                field={field}
-                object={object}
                 {...options}/>;
         case 'Password':
             return <InputPassword
-                field={field}
-                object={object}
                 {...options}/>;
         case 'Number':
         case 'Tel':
             return <InputNumber
-                field={field}
-                object={object}
+                defaultValue={value}
                 {...options}/>;
 
         case 'Text':
@@ -59,25 +54,31 @@ function InputFactory({type, _type, field, object, schemas, ...options}) {
                 {...options}/>;
         case 'Relation':
             return <InputRelation
+                defaultValue={value}
                 isMulti={type === 'Relation'}
                 schema={options.schema || (schemas || context.schemas).find(s => s.collection === options.target)}
-                find={find}
+                find={findObject}
                 {...options}/>;
         case 'Pointer':
             return <InputPointer
+                defaultValue={value}
                 schema={options.schema || (schemas || context.schemas).find(s => s.collection === options.target)}
-                find={find}
+                find={findObject}
                 {...options}/>;
         case 'Image':
             return <InputImage
-                field={field}
-                object={object}
-                save={save}
+                value={value}
+                save={saveImage}
+                {...options}/>;
+        case 'File':
+            return <InputFile
+                value={value}
+                save={saveFile}
                 {...options}/>;
         case 'Boolean':
             return <Checkbox
+                defaultChecked={value}
                 id={object.id}
-                type={type.toLowerCase()}
                 {...options}/>;
         case 'Object':
         case 'Array':

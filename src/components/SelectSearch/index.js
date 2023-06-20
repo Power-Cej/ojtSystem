@@ -10,7 +10,7 @@ const defaultProps = {
     label: "Select"
 }
 
-function SelectSearch({value, label, onChange, onSearch, focus, options}) {
+function SelectSearch({value, label, onChange, onSearch, focus, options, required}) {
     const [search, setSearch] = useState('');
     const [text, setText] = useState('');
     const [isOpen, setOpen] = useState(false);
@@ -84,6 +84,7 @@ function SelectSearch({value, label, onChange, onSearch, focus, options}) {
                     onChange={_onChange}
                     onFocus={onFocus}
                     style={style}
+                    required={required}
                 />
                 {isOpen && (
                     <div className="list-group rounded-0 bg-white"

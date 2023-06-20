@@ -1,4 +1,3 @@
-import React from "react";
 import BasePage from "./BasePage";
 
 class BaseFormPage extends BasePage {
@@ -23,7 +22,6 @@ class BaseFormPage extends BasePage {
         return this.state.object;
     }
 
-
     backCLick() {
         this.presenter.backClick();
     }
@@ -34,6 +32,7 @@ class BaseFormPage extends BasePage {
     }
 
     onChange(field, data) {
+        console.log(field,data);
         this.presenter.onChange(field, data);
     }
 

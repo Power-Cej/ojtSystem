@@ -238,17 +238,33 @@ class CollectionListPage extends BaseListPage {
                                 onSubmit={this.searchSubmit.bind(this)}
                                 fields={schema.fields}/>
                             <Table
-                                className="mt-3"
+                                fields={schema.fields}
+                                objects={objects}
                                 hasSelect
                                 setRef={this.parent}
-                                excludeFields={['createdAt', 'updatedAt', 'acl']}
+                                excludeFields={
+                                    Object.keys(schema.fields)
+                                        .reduce((acc, key) => {
+                                            const options = schema.fields[key];
+                                            switch (options._type || options.type) {
+                                                case 'Relation':
+                                                case 'Array':
+                                                case 'Object':
+                                                case 'File':
+                                                    acc.push(key);
+                                                    break;
+                                                default:
+                                            }
+                                            return acc;
+                                        }, ['createdAt', 'updatedAt', 'acl', 'password'])
+                                }
                                 selected={selected}
                                 onSelect={this.onSelect.bind(this)}
                                 onSelectAll={this.onSelectAll.bind(this)}
                                 progress={progress}
                                 onClickItem={this.onClickItem.bind(this)}
-                                fields={schema.fields}
-                                objects={objects}/>
+                                className="mt-3"
+                            />
                         </div>
                     </InfiniteScroll>
                 </div>

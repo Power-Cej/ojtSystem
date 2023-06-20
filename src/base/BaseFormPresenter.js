@@ -19,10 +19,10 @@ class BaseFormPresenter {
         const collection = this.view.getCollectionName();
         const id = this.view.getObjectId();
         if (id) {
-            const options = {include: ['all']};
+            const params = {include: ['all']};
             try {
                 this.view.showProgress();
-                const object = await this.getObjectUseCase.execute(collection, id, options);
+                const object = await this.getObjectUseCase.execute(collection, id, {params});
                 this.view.hideProgress();
                 this.view.setObject(object);
             } catch (error) {
@@ -38,6 +38,10 @@ class BaseFormPresenter {
     }
 
     async submit() {
+        if (Object.values(this.changes).length === 0) {
+            this.view.navigateBack();
+            return;
+        }
         try {
             const collection = this.view.getCollectionName();
             const object = this.view.getObject();
