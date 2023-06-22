@@ -46,17 +46,10 @@ class BaseFormPresenter {
             const collection = this.view.getCollectionName();
             const object = this.view.getObject();
             this.view.showProgress();
-            const roles = this.view.getCurrentRoles();
-            const aclRoles = roles.map(r => `role:${r.name}`);
-            const user = this.view.getCurrentUser();
-            const acl = {
-                read: ['*', user.id, ...aclRoles],
-                write: [user.id, ...aclRoles],
-            };
             if (object.id) {
                 this.changes.id = object.id;
             } else {
-                this.changes.acl = acl;
+                this.changes.acl = this.view.getAcl();
             }
             await this.upsertUseCase.execute(collection, this.changes);
             this.view.hideProgress();
@@ -69,7 +62,7 @@ class BaseFormPresenter {
     }
 
 
-    backClick() {
+    onClickBack() {
         if (Object.values(this.changes).length > 0) {
             const message = 'You have unsaved changes that will be lost if you proceed. Are you sure you want to discard these changes?';
             this.view.showConfirmDialog(message, 'Discard Changes', 'DISCARD')

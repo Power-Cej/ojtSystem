@@ -2,20 +2,21 @@ import React from "react";
 import {Link} from "react-router-dom";
 import SignInPresenter from "./SignInPresenter";
 import {signInUseCase} from "../../usecases/user";
-import {Button, InputString, InputPassword} from "nq-component";
+import {Button} from "nq-component";
 import BasePage from "../../base/BasePage";
 import withRouter from "../../withRouter";
+import InputFactory from "../../components/InputFactory";
 
 class SignInPage extends BasePage {
     constructor() {
         super();
         this.presenter = new SignInPresenter(this, signInUseCase());
-        this.state = {user: {}, progress: false};
+        this.state = {progress: false};
     }
 
     formSubmit(e) {
         e.preventDefault();
-        this.presenter.submit(this.state.user);
+        this.presenter.submit();
     }
 
     getMasterKey() {
@@ -28,6 +29,10 @@ class SignInPage extends BasePage {
 
     hideProgress() {
         this.setState({progress: false});
+    }
+
+    onChange(field, value) {
+        this.presenter.onChange(field, value);
     }
 
     render() {
@@ -54,24 +59,23 @@ class SignInPage extends BasePage {
                                         <div className="row g-3 mb-3">
                                             <div className="col-md-12">
                                                 <label className="form-label fs-sm">Email Address</label>
-                                                <InputString
+                                                <InputFactory
                                                     required
-                                                    type="email"
+                                                    type="Email"
                                                     autoComplete="nope"
                                                     className="form-control"
                                                     placeholder="Email Address"
-                                                    field="username"
-                                                    object={user}
+                                                    onChange={this.onChange.bind(this, "username")}
                                                 />
                                             </div>
                                             <div className="col-md-12">
                                                 <label className="form-label fs-sm">Password</label>
-                                                <InputPassword
+                                                <InputFactory
+                                                    type="Password"
                                                     required
                                                     className="form-control"
                                                     placeholder="Password"
-                                                    field="password"
-                                                    object={user}
+                                                    onChange={this.onChange.bind(this, "password")}
                                                 />
                                             </div>
                                         </div>

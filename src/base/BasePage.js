@@ -149,7 +149,7 @@ class BasePage extends React.Component {
             navigate(path, {state: argument, ...options});
         } else {
             const params = new URLSearchParams(argument).toString();
-            document.location.href = path;
+            document.location.href = `${path}?${params}`;
         }
     }
 

@@ -15,6 +15,7 @@ import {
 import {findObjectUseCase} from "../../usecases/object";
 import {saveFileUseCase, saveImageUseCase} from "../../usecases/file";
 import Context from "../../AppContext";
+
 const findObject = findObjectUseCase();
 const saveImage = saveImageUseCase();
 const saveFile = saveFileUseCase();
@@ -22,7 +23,8 @@ const defaultProps = {
     object: {}
 }
 
-function InputFactory({type, _type, field, object, schemas, ...options}) {
+function InputFactory(props) {
+    const {type, _type, field, object, schemas, ...options} = props;
     const context = React.useContext(Context);
     const value = object[field];
     switch (_type || type) {

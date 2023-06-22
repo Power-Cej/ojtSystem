@@ -22,8 +22,8 @@ class BaseFormPage extends BasePage {
         return this.state.object;
     }
 
-    backCLick() {
-        this.presenter.backClick();
+    onClickBack() {
+        this.presenter.onClickBack();
     }
 
 
@@ -32,10 +32,18 @@ class BaseFormPage extends BasePage {
     }
 
     onChange(field, data) {
-        console.log(field,data);
         this.presenter.onChange(field, data);
     }
 
+    getAcl() {
+        const roles = this.getCurrentRoles();
+        const aclRoles = roles.map(r => `role:${r.name}`);
+        const user = this.getCurrentUser();
+        return {
+            read: ['*', user.id, ...aclRoles],
+            write: [user.id, ...aclRoles],
+        };
+    }
 
 }
 

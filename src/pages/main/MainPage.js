@@ -28,8 +28,8 @@ class MainPage extends BasePage {
         this.presenter.componentDidMount();
     }
 
-    signOutClick() {
-        this.presenter.signOutClick();
+    onClickSignOut() {
+        this.presenter.onClickSignOut();
     }
 
     onClickMenu(e, item) {
@@ -74,7 +74,7 @@ class MainPage extends BasePage {
                                     <div className="m-3">
                                         <button
                                             className="nav-link text-white btn btn-link"
-                                            onClick={this.signOutClick.bind(this)}>
+                                            onClick={this.onClickSignOut.bind(this)}>
                                             <i className="bi bi-power"></i>
                                             <span className="ms-2 fw-bold small">Log out</span>
                                         </button>

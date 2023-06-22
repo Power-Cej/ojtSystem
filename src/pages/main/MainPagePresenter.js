@@ -52,7 +52,7 @@ class MainPagePresenter {
             })
     }
 
-    signOutClick() {
+    onClickSignOut() {
         const options = {
             title: 'Confirm',
             message: 'Are you sure you want to sign out?',

@@ -2,13 +2,15 @@ class SignInPresenter {
     constructor(view, signInUseCase) {
         this.view = view;
         this.signInUseCase = signInUseCase;
+        this.change = {};
     }
-
-    submit({username, password}) {
+    onChange(field, value) {
+        this.change[field] = value;
+    }
+    submit() {
         const masterKey = this.view.getMasterKey();
         const user = {
-            username,
-            password,
+            ...this.change,
             masterKey
         }
         this.view.showProgress();

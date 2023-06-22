@@ -17,8 +17,8 @@ import FormAccess from "./components/FormAccess";
 import mergeACl from "../../mergeACl";
 import withRouter from "../../withRouter";
 import Search from "../../components/Search";
-import {NavBar} from 'nq-component';
 import BaseListPage from "../../base/BaseListPage";
+import NavBar from "../../components/navbar";
 
 class CollectionListPage extends BaseListPage {
     constructor(props) {
@@ -143,8 +143,6 @@ class CollectionListPage extends BaseListPage {
         return (
             <>
                 <NavBar
-                    className="shadow-sm"
-                    title="DASHBOARD"
                     action={() => (
                         <div className="dropdown dropstart d-inline-block">
                             <i role="button" data-bs-toggle="dropdown" className="bi bi-three-dots-vertical"></i>

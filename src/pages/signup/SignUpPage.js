@@ -40,7 +40,8 @@ class SignUpPage extends BasePage {
                                         <div className="text-center p-3 w-100">
                                             <img
                                                 className="img-fluid login-img mb-3 w-50"
-                                                src="/assets/images/mweeb.svg"
+                                                alt="company-logo"
+                                                src="/logo.svg"/>
                                             />
                                             <h1 className="fw-bold text-black">NQ DASHBOARD</h1>
                                         </div>
@@ -102,7 +103,7 @@ class SignUpPage extends BasePage {
                                                     object={user}
                                                 />
                                             </div>
-                                           
+
                                         </div>
                                         <div className="text-center mb-3">
                                             <Button
