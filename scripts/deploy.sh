@@ -16,12 +16,13 @@ $SSH_COMMAND "ssh-keyscan -t rsa github.com >>~/.ssh/known_hosts"
 # clone if not exist
 if $SSH_COMMAND [ -d "$TARGET_PATH" ]; then
   $SSH_COMMAND "cd $TARGET_PATH && git pull"
+  # restart docker
+  $SSH_COMMAND "docker-compose restart"
 else
   $SSH_COMMAND "git clone git@github.com:$REPOSITORY_OWNER/$REPOSITORY_NAME.git $TARGET_PATH"
+  # run docker
+  $SSH_COMMAND "cd $TARGET_PATH && docker-compose up -d"
 fi
-
-# run docker
-$SSH_COMMAND "cd $TARGET_PATH && docker-compose up -d"
 
 # remove known_hosts files
 $SSH_COMMAND "rm ~/.ssh/known_hosts*"

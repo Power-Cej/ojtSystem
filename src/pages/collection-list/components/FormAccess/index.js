@@ -1,8 +1,8 @@
 import React from 'react';
 import {Checkbox} from "nq-component";
 import {Switch} from "nq-component";
-import {InputJson} from "nq-component";
 import AddAccess from "../AddAccess";
+import InputFactory from "../../../../components/InputFactory";
 
 
 const permissionKeys = ['read', 'write'];
@@ -62,7 +62,8 @@ function FormAccess({currentUser, acl, onSubmit, onCancel}) {
                     {
                         isAdvanced && (
                             <div className="col-md-12">
-                                <InputJson
+                                <InputFactory
+                                    type="Object"
                                     object={{access}}
                                     field="access"
                                     rows="10"

@@ -4,22 +4,15 @@ import BasePage from "../../base/BasePage";
 import SignUpPresenter from "./SignUpPresenter";
 import {signUpUseCase} from "../../usecases/user";
 import {updateObjectUseCase} from "../../usecases/object";
-import {Button, InputString, InputNumber, InputPassword} from "nq-component";
+import {Button} from "nq-component";
 import withRouter from "../../withRouter";
+import InputFactory from "../../components/InputFactory";
 
 class SignUpPage extends BasePage {
     constructor(props) {
         super(props);
         this.presenter = new SignUpPresenter(this, signUpUseCase(), updateObjectUseCase());
-        this.state = {user: {}, progress: false};
-    }
-
-    showProgress() {
-        this.setState({progress: true});
-    }
-
-    hideProgress() {
-        this.setState({progress: false});
+        this.state = {progress: false};
     }
 
     formSubmit(e) {
@@ -27,8 +20,11 @@ class SignUpPage extends BasePage {
         this.presenter.submit(this.state.user);
     }
 
+    onChange(field, value) {
+        this.presenter.onChange(field, value);
+    }
+
     render() {
-        const {user} = this.state;
         return (
             <div className="vh-100">
                 <div className="d-flex h-100">
@@ -40,8 +36,8 @@ class SignUpPage extends BasePage {
                                         <div className="text-center p-3 w-100">
                                             <img
                                                 className="img-fluid login-img mb-3 w-50"
+                                                src="/logo.svg"
                                                 alt="company-logo"
-                                                src="/logo.svg"/>
                                             />
                                             <h1 className="fw-bold text-black">NQ DASHBOARD</h1>
                                         </div>
@@ -51,84 +47,91 @@ class SignUpPage extends BasePage {
                                     <h2 className="fw-bold mb-3">Register</h2>
                                     <form onSubmit={this.formSubmit.bind(this)}>
                                         <div className="row g-3 mb-3">
-                                            <div className="col-md-12">
-                                                <label className="form-label fs-sm">Full Name</label>
-                                                <InputString
-                                                    required
+                                            <div className="col-md-6">
+                                                <label className="form-label fs-sm">First Name</label>
+                                                <InputFactory
+                                                    onChange={this.onChange.bind(this, "firstName")}
+                                                    type="String"
                                                     className="form-control"
-                                                    field="name"
-                                                    placeholder="e.g. Juan Dela Cruz"
-                                                    type="text"
-                                                    object={user}
+                                                    placeholder="e.g Juan"
+                                                    required
+                                                />
+                                            </div>
+                                            <div className="col-md-6">
+                                                <label className="form-label fs-sm">Last Name</label>
+                                                <InputFactory
+                                                    onChange={this.onChange.bind(this, "lastName")}
+                                                    type="String"
+                                                    className="form-control"
+                                                    placeholder="e.g Cruz"
+                                                    required
                                                 />
                                             </div>
                                             <div className="col-md-12">
                                                 <label className="form-label fs-sm">Email Address</label>
-                                                <InputString
-                                                    required
-                                                    type="email"
-                                                    autoComplete="nope"
+                                                <InputFactory
+                                                    onChange={this.onChange.bind(this, "email")}
+                                                    type="Email"
                                                     className="form-control"
                                                     placeholder="e.g. username@domain.com"
-                                                    field="email"
-                                                    object={user}/>
-                                            </div>
-                                            <div className="col-md-12">
-                                                <label className="form-label fs-sm">Mobile No.</label>
-                                                <InputNumber
-                                                    autoComplete="nope"
-                                                    className="form-control"
-                                                    placeholder="e.g. 09987654321"
-                                                    parse={false}
-                                                    field="mobile"
-                                                    object={user}/>
+                                                    required
+                                                />
                                             </div>
                                             <div className="col-md-6">
                                                 <label className="form-label fs-sm">Password</label>
-                                                <InputPassword
-                                                    required
+                                                <InputFactory
+                                                    onChange={this.onChange.bind(this, "password")}
+                                                    type="Password"
                                                     className="form-control"
                                                     placeholder="Password"
-                                                    field="password"
-                                                    object={user}
+                                                    required
                                                 />
                                             </div>
                                             <div className="col-md-6">
                                                 <label className="form-label fs-sm">Confirm Password</label>
-                                                <InputPassword
-                                                    required
+                                                <InputFactory
+                                                    onChange={this.onChange.bind(this, "confirmPassword")}
+                                                    type="Password"
                                                     className="form-control"
                                                     placeholder="Password"
-                                                    field="confirmPassword"
-                                                    object={user}
+                                                    required
                                                 />
                                             </div>
-
+                                            <div className="col-md-12">
+                                                <div className="form-check">
+                                                    <input
+                                                        className="form-check-input"
+                                                        type="checkbox"
+                                                        id="signup_cb_terms"
+                                                    />
+                                                    <label
+                                                        className="form-check-label fs-xs"
+                                                        htmlFor="signup_cb_terms"
+                                                    >
+                                                        By submitting this form, you agree to our
+                                                        <br/>
+                                                        <Link to="/terms" target="_blank">
+                                                            Terms and Conditions.
+                                                        </Link>
+                                                    </label>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div className="text-center mb-3">
                                             <Button
                                                 progress={this.state.progress}
                                                 type="submit"
-                                                className="btn-dark w-50">
+                                                className="btn-primary w-50">
                                                 {this.state.progress ? 'Please wait...' : 'SIGNUP'}
                                             </Button>
                                         </div>
                                         <div className="text-center">
-                                    <span className="fs-sm spanfont">
+                                    <span className="fs-sm">
                                       Already have an account?
                                       <Link to="/signin" className="ms-1">
-                                        <span className="text-decoration-underline">Sign in</span>
+                                        Sign in
                                       </Link>
                                     </span>
-                                        </div>
-                                        <div className="text-center">
-                                                <span className="fs-xs spanfont">
-                                                By signing up, you agreeing to our
-                                                <br/> 
-                                                            <Link to="/terms" target="_blank">
-                                                             Terms and Conditions.
-                                                            </Link>
-                                                 </span>
                                         </div>
                                     </form>
                                 </div>

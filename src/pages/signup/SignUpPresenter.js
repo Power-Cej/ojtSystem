@@ -1,10 +1,17 @@
 class SignUpPresenter {
-    constructor(view, signUpUseCase) {
+    constructor(view, signUpUseCase, updateObjectUseCase) {
         this.view = view;
         this.signUpUseCase = signUpUseCase;
+        this.updateObjectUseCase = updateObjectUseCase;
+        this.change = {};
     }
 
-    submit({email, password, confirmPassword, ...others}) {
+    onChange(field, value) {
+        this.change[field] = value;
+    }
+
+    submit() {
+        const {email, password, confirmPassword, ...others} = this.change;
         if (password !== confirmPassword) {
             this.view.showError('password must be the same');
             return;
@@ -16,12 +23,13 @@ class SignUpPresenter {
             ...others
         }
         this.view.showProgress();
-        this.signUpUseCase.execute(user)
+        Promise.resolve()
+            .then(() => this.signUpUseCase.execute(user))
             .then(() => {
                 this.view.hideProgress();
                 this.view.showSuccess("Congratulations, your account has been successfully created.")
                     .then(() => {
-                        this.view.navigateTo('/signin');
+                        this.view.navigateTo('/');
                     });
             })
             .catch(error => {
