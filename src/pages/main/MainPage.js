@@ -9,8 +9,7 @@ import TablePage from "../collection-list/CollectionListPage";
 import FormPage from "../collection-form/CollectionFormPage";
 import BasePage from "../../base/BasePage";
 import NotFoundPage from "../notfound";
-import {Layout, Progress} from "nq-component";
-import getProfile from "../../getProfile";
+import {Layout, Progress, LogoHolder} from "nq-component";
 import MigrationPage from "../migration/MigrationPage";
 import AccountPage from "../account/AccountPage";
 import RolePage from "../role/RolePage";
@@ -57,9 +56,13 @@ class MainPage extends BasePage {
                                     <div className="offcanvas-body">
                                         <nav className="navbar-dark">
                                             <div className="text-center">
-                                                <img className="img-fluid rounded-circle img-thumbnail p-0 m-2"
-                                                     src={getProfile(user)} width="80" height="80" alt="profile"/>
-                                                <p className="text-white">{user.name || user.username}</p>
+                                                <LogoHolder
+                                                    className="bg-white"
+                                                    textClassName="text-dark"
+                                                    logo={user.picture}
+                                                    name={user.username}
+                                                />
+                                                <p className="text-white mt-3">{user.name || user.username}</p>
                                             </div>
                                             <hr className="dropdown-divider bg-light"/>
                                             <Menu
