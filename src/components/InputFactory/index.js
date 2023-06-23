@@ -24,7 +24,7 @@ const defaultProps = {
 }
 
 function InputFactory(props) {
-    const {type, _type, field, object, schemas, ...options} = props;
+    const {type, _type, field, object, schemas, hidden, ...options} = props;
     const context = React.useContext(Context);
     const value = object[field];
     switch (_type || type) {
