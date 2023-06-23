@@ -47,26 +47,6 @@ class SignUpPage extends BasePage {
                                     <h2 className="fw-bold mb-3">Register</h2>
                                     <form onSubmit={this.formSubmit.bind(this)}>
                                         <div className="row g-3 mb-3">
-                                            <div className="col-md-6">
-                                                <label className="form-label fs-sm">First Name</label>
-                                                <InputFactory
-                                                    onChange={this.onChange.bind(this, "firstName")}
-                                                    type="String"
-                                                    className="form-control"
-                                                    placeholder="e.g Juan"
-                                                    required
-                                                />
-                                            </div>
-                                            <div className="col-md-6">
-                                                <label className="form-label fs-sm">Last Name</label>
-                                                <InputFactory
-                                                    onChange={this.onChange.bind(this, "lastName")}
-                                                    type="String"
-                                                    className="form-control"
-                                                    placeholder="e.g Cruz"
-                                                    required
-                                                />
-                                            </div>
                                             <div className="col-md-12">
                                                 <label className="form-label fs-sm">Email Address</label>
                                                 <InputFactory

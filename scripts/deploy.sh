@@ -17,7 +17,7 @@ $SSH_COMMAND "ssh-keyscan -t rsa github.com >>~/.ssh/known_hosts"
 if $SSH_COMMAND [ -d "$TARGET_PATH" ]; then
   $SSH_COMMAND "cd $TARGET_PATH && git pull"
   # restart docker
-  $SSH_COMMAND "docker-compose restart"
+  #  $SSH_COMMAND "docker-compose restart" no need to restart the nginx
 else
   $SSH_COMMAND "git clone git@github.com:$REPOSITORY_OWNER/$REPOSITORY_NAME.git $TARGET_PATH"
   # run docker
