@@ -26,7 +26,7 @@ class CollectionFormPage extends BaseFormPage {
                         <div className="p-3 p-lg-4">
                             <h1 className="fw-bold mt-3 text-capitalize">{label + this.getCollectionName()}</h1>
                             <div className="mt-3 bg-white shadow rounded p-3 px-lg-5 py-lg-4">
-                                <form onSubmit={this.formSubmit.bind(this)}>
+                                <form onSubmit={this.onSubmitForm.bind(this)}>
                                     <FormFactory
                                         schema={schema}
                                         object={object}

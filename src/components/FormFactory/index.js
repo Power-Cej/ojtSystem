@@ -50,11 +50,11 @@ function FormFactory({schema, object, onChange}) {
                                         <label
                                             className="form-label fs-sm">{field}</label>
                                         <InputFactory
-                                            className="fs-sm"
-                                            field={field}
-                                            type={type}
                                             object={object}
+                                            field={field}
                                             onChange={onChange.bind(this, field)}
+                                            type={type}
+                                            className="fs-sm"
                                             {...options}/>
                                     </div>
                                 )

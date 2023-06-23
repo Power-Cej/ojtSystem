@@ -12,7 +12,7 @@ class BaseFormPresenter {
 
     init() {
         this.object = {};
-        this.changes = {};// when data is change
+        this.change = {};// when data is change
     }
 
     async getObject() {
@@ -34,26 +34,34 @@ class BaseFormPresenter {
 
 
     onChange(field, data) {
-        this.changes[field] = data;
+        this.change[field] = data;
+    }
+
+    async save() {
+        const collection = this.view.getCollectionName();
+        const object = this.view.getObject();
+        if (object.id) {
+            this.change.id = object.id;
+        } else {
+            this.change.acl = this.view.getAcl();
+        }
+        try {
+            await this.upsertUseCase.execute(collection, this.change);
+        } catch (error) {
+            throw error; // rethrow the error to be caught by the caller
+        }
     }
 
     async submit() {
-        if (Object.values(this.changes).length === 0) {
+        if (Object.values(this.change).length === 0) {
             this.view.navigateBack();
             return;
         }
         try {
-            const collection = this.view.getCollectionName();
-            const object = this.view.getObject();
             this.view.showProgress();
-            if (object.id) {
-                this.changes.id = object.id;
-            } else {
-                this.changes.acl = this.view.getAcl();
-            }
-            await this.upsertUseCase.execute(collection, this.changes);
+            await this.save();
             this.view.hideProgress();
-            this.view.showSuccessSnackbar("Successfully updated!");
+            this.view.showSuccessSnackbar("Successfully saved!");
             this.view.navigateBack();
         } catch (error) {
             this.view.hideProgress();
@@ -63,7 +71,7 @@ class BaseFormPresenter {
 
 
     onClickBack() {
-        if (Object.values(this.changes).length > 0) {
+        if (Object.values(this.change).length > 0) {
             const message = 'You have unsaved changes that will be lost if you proceed. Are you sure you want to discard these changes?';
             this.view.showConfirmDialog(message, 'Discard Changes', 'DISCARD')
                 .then(() => {

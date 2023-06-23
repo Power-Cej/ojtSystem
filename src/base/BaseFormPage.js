@@ -13,7 +13,7 @@ class BaseFormPage extends BasePage {
         return this.props.params.id;
     }
 
-    formSubmit(e) {
+    onSubmitForm(e) {
         e.preventDefault();
         this.presenter.submit();
     }

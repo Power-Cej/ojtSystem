@@ -1,42 +1,62 @@
-import {Table} from "nq-component";
+import BasePage from "../../base/BasePage";
+
+import {InputString, Table} from "nq-component";
 import {Checkbox} from "nq-component";
 import {NavBar} from "nq-component";
 import RolePagePresenter from "./RolePagePresenter";
-import {getObjectUseCase, upsertUseCase} from "../../usecases/object";
+import {findObjectUseCase, saveObjectUseCase, updateObjectUseCase} from "../../usecases/object";
 import {updateSchemaUseCase} from "../../usecases/schema/usecases";
 import withRouter from "../../withRouter";
 import React from "react";
-import BaseFormPage from "../../base/BaseFormPage";
-import InputFactory from "../../components/InputFactory";
 
+const permissionKeys = ['modify', 'find', 'create', 'update', 'delete'];
 
-const permissionKeys = ['modify', 'create', 'get', 'find', 'update', 'delete'];
-
-class RolePage extends BaseFormPage {
+class RolePage extends BasePage {
     constructor(props) {
         super(props);
-        this.state = {object: {}};
-        this.presenter = new RolePagePresenter(this, getObjectUseCase(), upsertUseCase(), updateSchemaUseCase());
+        this.state = {role: {}};
+        this.presenter = new RolePagePresenter(this, saveObjectUseCase(), updateSchemaUseCase(), findObjectUseCase(), updateObjectUseCase());
     }
 
-    onChangePermission(schema, key, checked) {
-        this.presenter.onChangePermission(schema, key, checked);
-    }
-
-    getPermissionId() {
-        return 'role:' + this.state.object.name;
+    componentDidMount() {
+        this.presenter.componentDidMount();
     }
 
     getCollectionName() {
-        return "roles";
+        return 'roles';
     }
 
-    getKeys() {
-        return permissionKeys;
+    getObjectId() {
+        return this.props.params.id;
+    }
+
+    formSubmit(e) {
+        e.preventDefault();
+        this.presenter.submit();
+    }
+
+    getObject() {
+        return this.state.role;
+    }
+
+    backCLick() {
+        this.presenter.backClick();
+    }
+
+    setObject(role) {
+        this.setState({role});
+    }
+
+    getPermissionId() {
+        return 'role:' + this.state.role.name;
+    }
+
+    permissionChange(schema, key, checked) {
+        this.presenter.permissionChange(schema, key, checked);
     }
 
     render() {
-        const object = this.state.object;
+        const role = this.state.role;
         const user = this.getCurrentUser();
         const schemas = this.getSchemas();
         const fields = {
@@ -62,18 +82,15 @@ class RolePage extends BaseFormPage {
                         <h1 className="fw-bold mt-3 text-capitalize">{this.getCollectionName()}</h1>
                         <div className="shadow-sm rounded bg-white">
                             <div className="p-3 px-lg-5 py-lg-4">
-                                <form onSubmit={this.onSubmitForm.bind(this)}>
+                                <form onSubmit={this.formSubmit.bind(this)}>
                                     <div className="col-md-4 mb-3">
                                         <label className="form-label fs-sm">Role Name</label>
-                                        <InputFactory
-                                            object={object}
-                                            onChange={this.onChange.bind(this, "name")}
-                                            type="String"
+                                        <InputString
+                                            object={role}
                                             field="name"
                                         />
                                     </div>
                                     <Table
-                                        progress={this.state.progress}
                                         fields={fields}
                                         objects={objects}
                                         onCollapse={({schema}) => {
@@ -87,17 +104,13 @@ class RolePage extends BaseFormPage {
                                                             const access = permissions[key] || [];
                                                             const check = access.includes(id);
                                                             if (!user.isMaster && key === 'modify') return null;
-                                                            const _key = `${collection}-${key}`;
                                                             return (
-                                                                <div
-                                                                    key={_key}
-                                                                    className="col-6">
+                                                                <div className="col-6">
                                                                     <Checkbox
-                                                                        defaultChecked={check}
-                                                                        onChange={this.onChangePermission.bind(this, schema, key)}
-                                                                        id={_key}
-                                                                        label={key}
                                                                         className="text-capitalize"
+                                                                        label={key}
+                                                                        onChange={this.permissionChange.bind(this, schema, key)}
+                                                                        checked={check}
                                                                     />
                                                                 </div>
                                                             )
@@ -112,7 +125,7 @@ class RolePage extends BaseFormPage {
                                             <i className="bi bi-file-earmark-check me-2"></i>SAVE
                                         </button>
                                         <button type="button" className="btn btn-light fs-sm"
-                                                onClick={this.onClickBack.bind(this)}>GO BACK
+                                                onClick={this.backCLick.bind(this)}>GO BACK
                                         </button>
                                     </div>
                                 </form>
