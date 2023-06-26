@@ -3,7 +3,7 @@ import {Checkbox} from "nq-component";
 import {NavBar} from "nq-component";
 import {Progress} from "nq-component";
 import {Button} from "nq-component";
-import RolePagePresenter from "./RolePagePresenter";
+import RoleFormPresenter from "./RoleFormPresenter";
 import {getObjectUseCase, upsertUseCase} from "../../usecases/object";
 import {updateSchemaUseCase} from "../../usecases/schema/usecases";
 import withRouter from "../../withRouter";
@@ -14,11 +14,11 @@ import InputFactory from "../../components/InputFactory";
 
 const permissionKeys = ['modify', 'create', 'get', 'find', 'update', 'delete'];
 
-class RolePage extends BaseFormPage {
+class RoleFormPage extends BaseFormPage {
     constructor(props) {
         super(props);
         this.state = {object: {}};
-        this.presenter = new RolePagePresenter(this, getObjectUseCase(), upsertUseCase(), updateSchemaUseCase());
+        this.presenter = new RoleFormPresenter(this, getObjectUseCase(), upsertUseCase(), updateSchemaUseCase());
     }
 
     onChangePermission(schema, key, checked) {
@@ -133,4 +133,4 @@ class RolePage extends BaseFormPage {
     }
 }
 
-export default withRouter(RolePage);
+export default withRouter(RoleFormPage);

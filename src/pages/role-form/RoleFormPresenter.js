@@ -1,6 +1,6 @@
 import BaseFormPresenter from "../../base/BaseFormPresenter";
 
-class RolePagePresenter extends BaseFormPresenter {
+class RoleFormPresenter extends BaseFormPresenter {
     constructor(view, getObjectUseCase, upsertUseCase, updateSchemaUseCase) {
         super(view, getObjectUseCase, upsertUseCase);
         this.updateSchemaUseCase = updateSchemaUseCase;
@@ -57,4 +57,4 @@ class RolePagePresenter extends BaseFormPresenter {
 
 }
 
-export default RolePagePresenter;
+export default RoleFormPresenter;

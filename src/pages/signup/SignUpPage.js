@@ -101,7 +101,7 @@ class SignUpPage extends BasePage {
                                             <Button
                                                 progress={this.state.progress}
                                                 type="submit"
-                                                className="btn-primary w-50">
+                                                className="btn btn-primary w-50">
                                                 {this.state.progress ? 'Please wait...' : 'SIGNUP'}
                                             </Button>
                                         </div>

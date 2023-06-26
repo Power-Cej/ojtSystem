@@ -5,14 +5,14 @@ import {getAllSchemasUseCase} from '../../usecases/schema/usecases';
 import {getCurrentUserUseCase, signOutUseCase} from '../../usecases/user';
 import {Routes, Route} from 'react-router-dom';
 import {OffCanvas} from 'nq-component';
-import TablePage from "../collection-list/CollectionListPage";
-import FormPage from "../collection-form/CollectionFormPage";
+import CollectionListPage from "../collection-list/CollectionListPage";
+import CollectionFormPage from "../collection-form/CollectionFormPage";
 import BasePage from "../../base/BasePage";
 import NotFoundPage from "../notfound";
 import {Layout, Progress, LogoHolder} from "nq-component";
 import MigrationPage from "../migration/MigrationPage";
 import AccountPage from "../account/AccountPage";
-import RolePage from "../role/RolePage";
+import RoleFormPage from "../role-form/RoleFormPage";
 import canRead from "../../canRead";
 import withRouter from "../../withRouter";
 
@@ -88,11 +88,11 @@ class MainPage extends BasePage {
                 </Layout.Context.Consumer>
                 <main className="vh-100 d-flex flex-column">
                     <Routes>
-                        <Route exact path={'/collection/:name'} element={<TablePage/>}/>
-                        <Route path={'/collection/:name/form/'} element={<FormPage/>}/>
-                        <Route path={'/collection/roles/form'} element={<RolePage/>}/>
-                        <Route path={'/collection/roles/form/:id'} element={<RolePage/>}/>
-                        <Route path={'/collection/:name/form/:id'} element={<FormPage/>}/>
+                        <Route exact path={'/collection/:name'} element={<CollectionListPage/>}/>
+                        <Route path={'/collection/roles/form'} element={<RoleFormPage/>}/>
+                        <Route path={'/collection/roles/form/:id'} element={<RoleFormPage/>}/>
+                        <Route path={'/collection/:name/form/'} element={<CollectionFormPage/>}/>
+                        <Route path={'/collection/:name/form/:id'} element={<CollectionFormPage/>}/>
                         <Route path={'/migration'} element={<MigrationPage/>}/>
                         <Route path={'/account'} element={<AccountPage/>}/>
                         <Route element={<NotFoundPage/>}/>

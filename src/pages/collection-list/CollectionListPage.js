@@ -268,7 +268,7 @@ class CollectionListPage extends BaseListPage {
                 </div>
                 <div className="position-fixed bottom-0 end-0 m-4">
                     <Button
-                        className="shadow-sm bg-primary"
+                        className="btn btn-primary shadow-sm bg-primary"
                         onClick={this.onClickAdd.bind(this)}
                         style={{width: '50px', height: '50px', borderRadius: '25px'}}>
                         <i className="bi bi-plus-lg"/>
