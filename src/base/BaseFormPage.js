@@ -45,6 +45,17 @@ class BaseFormPage extends BasePage {
         };
     }
 
+    submitting() {
+        this.setState({ submitting: true });
+    }
+
+    submissionSuccess() {
+        this.setState({ submitting: false });
+    }
+
+    submissionError() {
+        this.setState({ submitting: false });
+    }
 }
 
 export default BaseFormPage;

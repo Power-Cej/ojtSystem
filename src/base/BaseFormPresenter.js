@@ -58,13 +58,13 @@ class BaseFormPresenter {
             return;
         }
         try {
-            this.view.showProgress();
+            this.view.submitting();
             await this.save();
-            this.view.hideProgress();
+            this.view.submissionSuccess();
             this.view.showSuccessSnackbar("Successfully saved!");
             this.view.navigateBack();
         } catch (error) {
-            this.view.hideProgress();
+            this.view.submissionError(error);
             this.view.showError(error);
         }
     }

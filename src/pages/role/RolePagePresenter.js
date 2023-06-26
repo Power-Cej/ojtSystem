@@ -39,18 +39,18 @@ class RolePagePresenter extends BaseFormPresenter {
 
     async submit() {
         try {
-            this.view.showProgress();
+            this.view.submitting();
             if (Object.values(this.change).length > 0) {
-                await super.submit();
+                await super.save();
             }
             if (Object.values(this.schemaChange).length > 0) {
                 await this.updateSchema();
             }
-            this.view.hideProgress();
+            this.view.submissionSuccess();
             this.view.showSuccessSnackbar("Successfully saved!");
             this.view.navigateBack();
         } catch (error) {
-            this.view.hideProgress();
+            this.view.submissionError(error);
             this.view.showError(error);
         }
     }

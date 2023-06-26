@@ -1,6 +1,8 @@
 import {Table} from "nq-component";
 import {Checkbox} from "nq-component";
 import {NavBar} from "nq-component";
+import {Progress} from "nq-component";
+import {Button} from "nq-component";
 import RolePagePresenter from "./RolePagePresenter";
 import {getObjectUseCase, upsertUseCase} from "../../usecases/object";
 import {updateSchemaUseCase} from "../../usecases/schema/usecases";
@@ -36,6 +38,7 @@ class RolePage extends BaseFormPage {
     }
 
     render() {
+        const progress = this.state.progress;
         const object = this.state.object;
         const user = this.getCurrentUser();
         const schemas = this.getSchemas();
@@ -79,6 +82,7 @@ class RolePage extends BaseFormPage {
                                         onCollapse={({schema}) => {
                                             const collection = schema.collection;
                                             const permissions = schema.permissions;
+                                            if (progress) return <Progress/>
                                             return (
                                                 <div className="row">
                                                     {
@@ -108,11 +112,15 @@ class RolePage extends BaseFormPage {
                                         }}
                                     />
                                     <div className="mt-3">
-                                        <button type="submit" className="btn btn-primary fs-sm me-3">
+                                        <Button
+                                            progress={this.state.submitting}
+                                            type="submit"
+                                            className="btn btn-primary fs-sm me-3">
                                             <i className="bi bi-file-earmark-check me-2"></i>SAVE
-                                        </button>
-                                        <button type="button" className="btn btn-light fs-sm"
-                                                onClick={this.onClickBack.bind(this)}>GO BACK
+                                        </Button>
+                                        <button
+                                            type="button" className="btn btn-light fs-sm"
+                                            onClick={this.onClickBack.bind(this)}>GO BACK
                                         </button>
                                     </div>
                                 </form>
