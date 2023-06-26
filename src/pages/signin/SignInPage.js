@@ -36,7 +36,6 @@ class SignInPage extends BasePage {
     }
 
     render() {
-        const {user} = this.state;
         return (
             <div className="vh-100">
                 <div className="d-flex h-100">
@@ -48,6 +47,7 @@ class SignInPage extends BasePage {
                                         <div className="text-center p-3 w-100">
                                             <img
                                                 className="img-fluid login-img mb-3 w-50"
+                                                alt="company logo"
                                                 src="/logo.svg"/>
                                             <h1 className="fw-bold text-black">NQ Dashboard</h1>
                                         </div>

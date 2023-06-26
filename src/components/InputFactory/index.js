@@ -31,11 +31,12 @@ function InputFactory(props) {
         case 'Email':
         case 'String':
             return <InputString
-                type={type.toLowerCase()}
                 defaultValue={value}
+                type={type.toLowerCase()}
                 {...options}/>;
         case 'Date':
             return <InputString
+                defaultValue={value && value.slice(0, 10)}
                 type={type.toLowerCase()}
                 {...options}/>;
         case 'Password':
@@ -84,8 +85,8 @@ function InputFactory(props) {
         case 'Object':
         case 'Array':
             return <InputJson
-                id={object.id}
                 defaultValue={JSON.stringify(value, null, 4) || ''}
+                id={object.id}
                 {...options}/>;
         case 'Enum':
             return <InputSelect
