@@ -243,6 +243,9 @@ class CollectionListPage extends BaseListPage {
                                     Object.keys(schema.fields)
                                         .reduce((acc, key) => {
                                             const options = schema.fields[key];
+                                            if (options.read === false) {
+                                                acc.push(key);
+                                            }
                                             switch (options._type || options.type) {
                                                 case 'Relation':
                                                 case 'Array':

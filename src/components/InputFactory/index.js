@@ -24,7 +24,7 @@ const defaultProps = {
 }
 
 function InputFactory(props) {
-    const {type, _type, field, object, schemas, hidden, ...options} = props;
+    const {type, _type, field, object, schemas, hidden, required, ...options} = props;
     const context = React.useContext(Context);
     const value = object[field];
     switch (_type || type) {
@@ -52,6 +52,7 @@ function InputFactory(props) {
                 field={field}
                 type={type.toLowerCase()}
                 object={object}
+                required={required}
                 {...options}/>;
         case 'Relation':
             return <InputRelation
@@ -59,39 +60,47 @@ function InputFactory(props) {
                 isMulti={type === 'Relation'}
                 schema={options.schema || (schemas || context.schemas).find(s => s.collection === options.target)}
                 find={findObject}
+                required={required}
                 {...options}/>;
         case 'Pointer':
             return <InputPointer
                 defaultValue={value}
                 schema={options.schema || (schemas || context.schemas).find(s => s.collection === options.target)}
                 find={findObject}
+                required={required}
                 {...options}/>;
         case 'Image':
             return <InputImage
                 value={value}
                 save={saveImage}
+                required={required}
                 {...options}/>;
         case 'File':
             return <InputFile
                 value={value}
                 save={saveFile}
+                required={required}
                 {...options}/>;
         case 'Boolean':
             return <Checkbox
                 defaultChecked={value}
                 id={object.id}
+                required={required}
                 {...options}/>;
         case 'Object':
         case 'Array':
             return <InputJson
                 defaultValue={JSON.stringify(value, null, 4) || ''}
                 id={object.id}
+                required={required}
                 {...options}/>;
         case 'Enum':
             return <InputSelect
                 defaultValue={value}
                 type={type.toLowerCase()}
                 options={options.options}
+                label={"Select " + field}
+                required={required}
                 {...options}/>;
         default:
             return null;
