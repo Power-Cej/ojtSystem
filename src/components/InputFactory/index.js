@@ -47,7 +47,6 @@ function InputFactory(props) {
             return <InputNumber
                 defaultValue={value}
                 {...options}/>;
-
         case 'Text':
             return <InputText
                 field={field}
@@ -90,6 +89,7 @@ function InputFactory(props) {
                 {...options}/>;
         case 'Enum':
             return <InputSelect
+                defaultValue={value}
                 type={type.toLowerCase()}
                 options={options.options}
                 {...options}/>;

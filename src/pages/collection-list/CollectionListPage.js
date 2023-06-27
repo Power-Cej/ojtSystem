@@ -135,7 +135,6 @@ class CollectionListPage extends BaseListPage {
         this.presenter.onClickExport();
     }
 
-
     render() {
         const schema = this.getSchema(this.getCollectionName());
         const {objects, selected, count, progress} = this.state;
