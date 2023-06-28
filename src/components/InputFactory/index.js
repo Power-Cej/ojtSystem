@@ -99,7 +99,7 @@ function InputFactory(props) {
                 defaultValue={value}
                 type={type.toLowerCase()}
                 options={options.options}
-                label={"Select " + field}
+                label={(options.dynamic ? "Select of type " : "Select ") + field}
                 required={required}
                 {...options}/>;
         default:
