@@ -256,7 +256,7 @@ class CollectionListPage extends BaseListPage {
                                                 default:
                                             }
                                             return acc;
-                                        }, ['createdAt', 'updatedAt', 'acl', 'password'])
+                                        }, ['acl', 'password'])
                                 }
                                 selected={selected}
                                 onSelect={this.onSelect.bind(this)}
