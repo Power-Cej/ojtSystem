@@ -13,7 +13,8 @@ class CollectionListPresenter extends BaseListPresenter {
                 addSchemaUseCase,
                 updateSchemaUseCase,
                 deleteSchemaUseCase) {
-        super(view, findObjectUseCase, deleteObjectUseCase, upsertUseCase);
+        super(view, findObjectUseCase, deleteObjectUseCase);
+        this.upsertUseCase = upsertUseCase;
         this.exportCSVUseCase = exportCSVUseCase;
         this.addSchemaUseCase = addSchemaUseCase;
         this.updateSchemaUseCase = updateSchemaUseCase;
@@ -59,23 +60,8 @@ class CollectionListPresenter extends BaseListPresenter {
             });
     }
 
-    addFieldSubmit(field) {
-        const collection = this.view.getCollectionName();
-        const schemas = this.view.getSchemas();
-        const index = schemas.findIndex(s => s.collection === collection);
-        const {name, ...options} = field;
-        schemas[index]['fields'][name] = options;
-        this.updateSchemaUseCase.execute(schemas[index])
-            .then(() => {
-                this.view.setSchemas(schemas);
-                this.view.closeDialog();
-            })
-            .catch(error => {
-                this.view.showError(error);
-            });
-    }
 
-    deleteFieldSubmit(field) {
+    onSubmitDeleteField(field) {
         const collection = this.view.getCollectionName();
         const schema = this.view.getSchema(collection);
         delete schema['fields'][field];
@@ -89,7 +75,7 @@ class CollectionListPresenter extends BaseListPresenter {
             });
     }
 
-    addCollectionSubmit(schema) {
+    onSubmitAddCollection(schema) {
         this.view.closeDialog();
         this.addSchemaUseCase.execute(schema)
             .then(schema => {
@@ -103,7 +89,7 @@ class CollectionListPresenter extends BaseListPresenter {
             });
     }
 
-    editCollectionSubmit(schema) {
+    onSubmitEditCollection(schema) {
         this.view.closeDialog();
         this.updateSchemaUseCase.execute(schema)
             .then(schema => {
@@ -117,7 +103,7 @@ class CollectionListPresenter extends BaseListPresenter {
             });
     }
 
-    deleteCollectionSubmit(collection) {
+    onSubmitDeleteCollection(collection) {
         if (collection !== this.view.getCollectionName()) {
             this.view.closeDialog();
             this.view.showError('Please enter correct Class name');
@@ -138,8 +124,7 @@ class CollectionListPresenter extends BaseListPresenter {
             });
     }
 
-
-    accessSubmit(acl) {
+    onSubmitAccess(acl) {
         const selected = this.view.getSelected();
         const collection = this.view.getCollectionName();
         const promises = selected.map(o => {

@@ -23,13 +23,6 @@ class SignInPage extends BasePage {
         return this.props.params && this.props.params.masterKey;
     }
 
-    showProgress() {
-        this.setState({progress: true});
-    }
-
-    hideProgress() {
-        this.setState({progress: false});
-    }
 
     onChange(field, value) {
         this.presenter.onChange(field, value);

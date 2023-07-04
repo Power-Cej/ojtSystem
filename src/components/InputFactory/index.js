@@ -15,6 +15,7 @@ import {
 import {findObjectUseCase} from "../../usecases/object";
 import {saveFileUseCase, saveImageUseCase} from "../../usecases/file";
 import Context from "../../AppContext";
+import InputIcon from "../InputIcon";
 
 const findObject = findObjectUseCase();
 const saveImage = saveImageUseCase();
@@ -23,8 +24,7 @@ const defaultProps = {
     object: {}
 }
 
-function InputFactory(props) {
-    const {type, _type, field, object, schemas, hidden, required, ...options} = props;
+function InputFactory({type, _type, field, object, schemas, hidden, required, ...props}) {
     const context = React.useContext(Context);
     const value = object[field];
     switch (_type || type) {
@@ -33,75 +33,81 @@ function InputFactory(props) {
             return <InputString
                 defaultValue={value}
                 type={type.toLowerCase()}
-                {...options}/>;
+                {...props}/>;
         case 'Date':
             return <InputString
                 defaultValue={value && value.slice(0, 10)}
                 type={type.toLowerCase()}
-                {...options}/>;
+                {...props}/>;
         case 'Password':
             return <InputPassword
-                {...options}/>;
+                {...props}/>;
         case 'Number':
         case 'Tel':
             return <InputNumber
                 defaultValue={value}
-                {...options}/>;
+                {...props}/>;
         case 'Text':
             return <InputText
                 field={field}
                 type={type.toLowerCase()}
                 object={object}
                 required={required}
-                {...options}/>;
+                {...props}/>;
         case 'Relation':
             return <InputRelation
                 defaultValue={value}
                 isMulti={type === 'Relation'}
-                schema={options.schema || (schemas || context.schemas).find(s => s.collection === options.target)}
+                schema={props.schema || (schemas || context.schemas).find(s => s.collection === props.target)}
                 find={findObject}
                 required={required}
-                {...options}/>;
+                {...props}/>;
         case 'Pointer':
             return <InputPointer
                 defaultValue={value}
-                schema={options.schema || (schemas || context.schemas).find(s => s.collection === options.target)}
+                schema={props.schema || (schemas || context.schemas).find(s => s.collection === props.target)}
                 find={findObject}
                 required={required}
-                {...options}/>;
+                {...props}/>;
         case 'Image':
             return <InputImage
                 value={value}
                 save={saveImage}
                 required={required}
-                {...options}/>;
+                {...props}/>;
         case 'File':
             return <InputFile
                 value={value}
                 save={saveFile}
                 required={required}
-                {...options}/>;
+                {...props}/>;
         case 'Boolean':
             return <Checkbox
                 defaultChecked={value}
                 id={object.id}
                 required={required}
-                {...options}/>;
+                {...props}/>;
         case 'Object':
         case 'Array':
             return <InputJson
                 defaultValue={JSON.stringify(value, null, 4) || ''}
                 id={object.id}
                 required={required}
-                {...options}/>;
+                {...props}/>;
         case 'Enum':
             return <InputSelect
                 defaultValue={value}
                 type={type.toLowerCase()}
-                options={options.options}
-                label={(options.dynamic ? "Select of type " : "Select ") + field}
+                options={props.options}
+                label={(props.dynamic ? "Select of type " : "Select ") + (field || '')}
                 required={required}
-                {...options}/>;
+                {...props}/>;
+        case 'Icon':
+            return <InputIcon
+                defaultValue={value}
+                options={props.options}
+                required={required}
+                {...props}/>;
         default:
             return null;
     }

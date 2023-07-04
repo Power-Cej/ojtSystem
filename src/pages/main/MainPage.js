@@ -15,7 +15,7 @@ import AccountPage from "../account/AccountPage";
 import RoleFormPage from "../role-form/RoleFormPage";
 import canRead from "../../canRead";
 import withRouter from "../../withRouter";
-
+import DashboardPage from "../dashboard/DashboardPage";
 
 class MainPage extends BasePage {
     constructor(props) {
@@ -33,7 +33,7 @@ class MainPage extends BasePage {
 
     onClickMenu(e, item) {
         e.preventDefault();
-        this.navigateTo('/collection/' + item.name);
+        this.navigateTo(item.route);
     }
 
     render() {
@@ -45,6 +45,14 @@ class MainPage extends BasePage {
                 <Progress/>
             )
         }
+
+        const menus = [...schemas
+            .filter(s => canRead(roles, s.permissions) || user.isMaster)
+            .sort((a, b) => (b.index || 0) - (a.index || 0))
+            .map(s => ({
+                name: s.collection || s.name,
+                route: '/collection/' + s.collection || s.name
+            }))];
         return (
             <Layout>
                 <Layout.Context.Consumer>
@@ -67,11 +75,7 @@ class MainPage extends BasePage {
                                             <hr className="dropdown-divider bg-light"/>
                                             <Menu
                                                 onClickItem={this.onClickMenu.bind(this)}
-                                                menus={schemas
-                                                    .filter(s => canRead(roles, s.permissions) || user.isMaster)
-                                                    .map(s => ({
-                                                        name: s.collection || s.name
-                                                    }))}/>
+                                                menus={menus}/>
                                         </nav>
                                     </div>
                                     <div className="m-3">
@@ -89,6 +93,7 @@ class MainPage extends BasePage {
                 <main className="vh-100 d-flex flex-column">
                     <Routes>
                         <Route exact path={'/collection/:name'} element={<CollectionListPage/>}/>
+                        <Route exact path={'/collection/dashboard'} element={<DashboardPage/>}/>
                         <Route path={'/collection/roles/form'} element={<RoleFormPage/>}/>
                         <Route path={'/collection/roles/form/:id'} element={<RoleFormPage/>}/>
                         <Route path={'/collection/:name/form/'} element={<CollectionFormPage/>}/>

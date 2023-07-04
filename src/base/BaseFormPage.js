@@ -44,18 +44,6 @@ class BaseFormPage extends BasePage {
             write: [user.id, ...aclRoles],
         };
     }
-
-    submitting() {
-        this.setState({ submitting: true });
-    }
-
-    submissionSuccess() {
-        this.setState({ submitting: false });
-    }
-
-    submissionError() {
-        this.setState({ submitting: false });
-    }
 }
 
 export default BaseFormPage;

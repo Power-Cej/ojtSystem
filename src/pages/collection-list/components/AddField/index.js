@@ -12,6 +12,10 @@ function AddField({schema, onSubmit, onCancel, collections}) {
     const [type, setType] = React.useState(options[0]);
     const [option, setOptions] = React.useState({});
 
+    function onChangeOptions(option) {
+        setOptions(s => ({...s, ...option}));
+    }
+
     function customType(field, type) {
         switch (type) {
             case 'Image':
@@ -71,9 +75,11 @@ function AddField({schema, onSubmit, onCancel, collections}) {
                         <div className="col-md-12">
                             <div className="d-flex">
                                 <Switch
+                                    onChange={(value) => onChangeOptions({required: value})}
                                     id="switch-required"
                                     label="Required"/>
                                 <Switch
+                                    onChange={(value) => onChangeOptions({unique: value})}
                                     id="switch-unique"
                                     label="Unique"
                                     className="ms-3"/>

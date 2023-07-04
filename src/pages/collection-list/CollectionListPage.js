@@ -39,7 +39,6 @@ class CollectionListPage extends BaseListPage {
             progress: true,
             count: 0,
         };
-        this.parent = React.createRef();
     }
 
     /*when class change*/
@@ -57,7 +56,7 @@ class CollectionListPage extends BaseListPage {
         dialog.fire({
             html: <FormCollection
                 schema={{}}
-                onSubmit={(schema) => this.presenter.addCollectionSubmit(schema)}
+                onSubmit={(schema) => this.presenter.onSubmitAddCollection(schema)}
                 onCancel={() => dialog.close()}/>,
             footer: false
         });
@@ -67,7 +66,7 @@ class CollectionListPage extends BaseListPage {
         dialog.fire({
             html: <FormCollection
                 schema={schema}
-                onSubmit={s => this.presenter.editCollectionSubmit(s)}
+                onSubmit={s => this.presenter.onSubmitEditCollection(s)}
                 onCancel={() => dialog.close()}/>,
             footer: false
         });
@@ -79,7 +78,7 @@ class CollectionListPage extends BaseListPage {
             html: <AddField
                 schema={schema}
                 collections={schemas.map(s => s.collection)}
-                onSubmit={s => this.presenter.editCollectionSubmit(s)}
+                onSubmit={s => this.presenter.onSubmitEditCollection(s)}
                 onCancel={() => dialog.close()}/>,
             footer: false,
         });
@@ -87,7 +86,7 @@ class CollectionListPage extends BaseListPage {
 
     onCLickAccess() {
         function submit(acl) {
-            this.presenter.accessSubmit(acl);
+            this.presenter.onSubmitAccess(acl);
         }
 
         const acl = mergeACl(this.state.selected);
@@ -106,7 +105,7 @@ class CollectionListPage extends BaseListPage {
         dialog.fire({
             html: <DeleteField
                 fields={Object.keys(schema.fields)}
-                onSubmit={(f) => this.presenter.deleteFieldSubmit(f)}
+                onSubmit={(f) => this.presenter.onSubmitDeleteField(f)}
                 onCancel={() => dialog.close()}/>,
             footer: false
         });
@@ -117,7 +116,7 @@ class CollectionListPage extends BaseListPage {
         dialog.fire({
             html: <DeleteCollection
                 schema={schema}
-                onSubmit={() => this.presenter.deleteCollectionSubmit(schema.collection)}
+                onSubmit={() => this.presenter.onSubmitDeleteCollection(schema.collection)}
                 onCancel={() => dialog.close()}/>,
             footer: false
         });
@@ -168,7 +167,7 @@ class CollectionListPage extends BaseListPage {
                                     onClick={this.onClickDeleteSelected.bind(this)}
                                     disabled={selected.length < 1}
                                     className="dropdown-item py-3">
-                                    <i className='bi bi-trash pe-2'/> Delete selected
+                                    <i className='bi bi-trash pe-2'/>Delete selected
                                 </button>
                                 <div className="dropdown-divider"></div>
                                 <button
@@ -179,7 +178,7 @@ class CollectionListPage extends BaseListPage {
                                 <button
                                     onClick={this.onClickDeleteField.bind(this)}
                                     className="dropdown-item py-3">
-                                    <i className='bi bi-journal-x pe-2'/> Delete a field
+                                    <i className='bi bi-journal-x pe-2'/>Delete a field
                                 </button>
                                 <button
                                     onClick={this.onClickEditCollection.bind(this, schema)}
@@ -238,7 +237,6 @@ class CollectionListPage extends BaseListPage {
                                 fields={schema.fields}
                                 objects={objects}
                                 hasSelect
-                                setRef={this.parent}
                                 excludeFields={
                                     Object.keys(schema.fields)
                                         .reduce((acc, key) => {

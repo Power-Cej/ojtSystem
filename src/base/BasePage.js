@@ -18,6 +18,18 @@ class BasePage extends React.Component {
         this.setState({progress: false});
     }
 
+    submitting() {
+        this.setState({submitting: true});
+    }
+
+    submissionSuccess() {
+        this.setState({submitting: false});
+    }
+
+    submissionError() {
+        this.setState({submitting: false});
+    }
+
     // block the UI to show the progress dialog
     showProgressDialog() {
         const promise = createPromise();

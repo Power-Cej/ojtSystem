@@ -1,9 +1,8 @@
 class BaseListPresenter {
-    constructor(view, findObjectUseCase, deleteObjectUseCase, upsertUseCase) {
+    constructor(view, findObjectUseCase, deleteObjectUseCase) {
         this.view = view;
         this.findObjectUseCase = findObjectUseCase;
         this.deleteObjectUseCase = deleteObjectUseCase;
-        this.upsertUseCase = upsertUseCase;
     }
 
     componentDidMount() {
@@ -16,6 +15,7 @@ class BaseListPresenter {
         this.current = 1;
         this.where = {};
         this.objects = [];
+        this.sort = {createdAt: -1};
         this.view.setObjects([]);
         this.view.setSelected([]);
     }
@@ -29,7 +29,7 @@ class BaseListPresenter {
             skip: skip,
             where: this.where,
             include: ['all'],
-            sort: {createdAt: -1}
+            sort: this.sort
         };
         this.view.showProgress();
         try {
@@ -37,10 +37,10 @@ class BaseListPresenter {
             this.objects = this.objects.concat(objects);
             this.view.setCount(count);
             this.view.setObjects(this.objects);
-        } catch (error) {
-            this.view.showError(error);
-        } finally {
             this.view.hideProgress();
+        } catch (error) {
+            this.view.hideProgress();
+            this.view.showError(error);
         }
     }
 

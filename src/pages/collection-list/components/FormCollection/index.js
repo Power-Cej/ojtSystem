@@ -10,11 +10,8 @@ function FormCollection({schema, onSubmit, onCancel}) {
         setSchema(schema);
     }, [schema]);
 
-    function onChange(field, data) {
-        setSchema(s => ({
-            ...s,
-            [field]: data,
-        }));
+    function onChange(field, value) {
+        setSchema(s => ({...s, [field]: value}));
     }
 
     function onChangeSchema(schema) {

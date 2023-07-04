@@ -15,14 +15,14 @@ function FormAccess({currentUser, acl, onSubmit, onCancel}) {
 
     // when check change
     function permissionChange(id, key, checked) {
-        setAccess(prevAccess => {
-            let newAccess = {...prevAccess};  // clone the previous state
+        setAccess(state => {
+            let access = {...state};  // clone the previous state
             if (checked) {
-                newAccess[key].push(id); // add id to the array
+                access[key].push(id); // add id to the array
             } else {
-                newAccess[key] = newAccess[key].filter(el => el !== id);  // remove id from the array
+                access[key] = access[key].filter(el => el !== id);  // remove id from the array
             }
-            return newAccess;
+            return access;
         });
     }
 
