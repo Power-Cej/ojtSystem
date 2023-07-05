@@ -45,7 +45,6 @@ class DashboardPage extends BaseListPage {
 
     onClickDeleteWidget() {
         const schemas = this.getSchemas();
-
         dialog.fire({
             html: <AddWidget
                 collections={schemas.map(s => s.collection)}
@@ -56,6 +55,10 @@ class DashboardPage extends BaseListPage {
                 onCancel={() => dialog.close()}/>,
             footer: false
         });
+    }
+
+    onCLickWidget(object) {
+        this.presenter.onCLickWidget(object);
     }
 
     render() {
@@ -92,7 +95,8 @@ class DashboardPage extends BaseListPage {
                                             <Count
                                                 collection={object.collection}
                                                 icon={object.icon}
-                                                where={object.where}/>
+                                                where={object.where}
+                                                onClick={this.onCLickWidget.bind(this, object)}/>
                                         </div>
                                     )
                                 })

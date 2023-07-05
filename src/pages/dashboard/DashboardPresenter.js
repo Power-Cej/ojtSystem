@@ -23,6 +23,10 @@ class DashboardPresenter extends BaseListPresenter {
             this.view.showError(error);
         }
     }
+
+    onCLickWidget(object) {
+        console.log(object);
+    }
 }
 
 export default DashboardPresenter;

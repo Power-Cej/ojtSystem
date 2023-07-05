@@ -1673,7 +1673,7 @@ const icons = [
     "bi bi-zoom-out"
 ]
 
-function map(i) {
+function mapOption(i) {
     return {label: <IconItem value={i} label={i.replaceAll("bi bi-", "")}/>, value: i}
 }
 
@@ -1682,6 +1682,13 @@ const noop = () => {
 const defaultProps = {
     onChange: noop
 };
+
+function map(option) {
+    if (typeof option === 'string') {
+        return {label: option, value: option};
+    }
+    return option;
+}
 
 function InputIcon({className, defaultValue, onChange}) {
     const [value, setValue] = React.useState({});
@@ -1693,10 +1700,10 @@ function InputIcon({className, defaultValue, onChange}) {
 
     return (
         <SelectSearch
-            value={{label: value.value}}
+            value={{label: value.value || defaultValue}}
             className={className}
             focus
-            options={icons.map(map)}
+            options={icons.map(mapOption)}
             onChange={change}/>
     )
 }

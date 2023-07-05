@@ -8,9 +8,11 @@ const options = ['CardCount'];
 function AddWidget({collections, onSubmit, onCancel}) {
     const [isAdvanced, setAdvanced] = React.useState(false);
     const [object, setObject] = React.useState();
+
     function onChange(field, value) {
         setObject(state => ({...state, [field]: value}));
     }
+
     function _onSubmit(e) {
         e.preventDefault();
         onSubmit(object);
@@ -62,7 +64,7 @@ function AddWidget({collections, onSubmit, onCancel}) {
                                         <InputFactory
                                             object={object}
                                             type="Enum"
-                                            options={collections}
+                                            options={collections.filter(c => c !== 'dashboard')}
                                             onChange={onChange.bind(this, "collection")}
                                             field="collection"
                                             className="form-control"
