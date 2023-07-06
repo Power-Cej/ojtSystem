@@ -205,7 +205,7 @@ class CollectionListPage extends BaseListPage {
                         hasMore={(!progress && count > objects.length)}>
                         <div className="p-3 p-lg-4">
                             <div className="d-flex justify-content-between align-items-center">
-                                <h1 className="fw-bold mt-3 text-capitalize">{this.getCollectionName()}</h1>
+                                <h1 className="fw-bold mt-3 text-capitalize">{schema.label || this.getCollectionName()}</h1>
                                 {
                                     selected.length > 0 ? (
                                             <div>

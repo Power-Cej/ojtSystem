@@ -45,12 +45,12 @@ class MainPage extends BasePage {
                 <Progress/>
             )
         }
-        
+
         const menus = [...schemas
             .filter(s => canRead(roles, s.permissions) || user.isMaster)
             .sort((a, b) => (b.index || 0) - (a.index || 0))
             .map(s => ({
-                name: s.collection || s.name,
+                name: s.label || s.collection || s.name,
                 route: '/collection/' + s.collection || s.name
             }))];
         return (
