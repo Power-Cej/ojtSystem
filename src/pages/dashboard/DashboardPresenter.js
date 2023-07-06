@@ -24,8 +24,17 @@ class DashboardPresenter extends BaseListPresenter {
         }
     }
 
-    onCLickWidget(object) {
-        console.log(object);
+    async onSubmitDelete(index) {
+        try {
+            this.view.submitting();
+            const object = this.objects[index];
+            await this.deleteObjectUseCase.execute('dashboard', object.id);
+            this.objects.splice(index, 1);
+            this.view.setObjects(this.objects);
+            this.view.submissionSuccess();
+        } catch (error) {
+            this.view.showError(error);
+        }
     }
 }
 

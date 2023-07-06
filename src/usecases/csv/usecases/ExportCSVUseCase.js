@@ -1,4 +1,4 @@
-// import Papa from 'papaparse';
+import Papa from 'papaparse';
 import flatten from '../../../flatten';
 import saveAs from '../../../saveAs';
 
@@ -12,9 +12,10 @@ class ExportCSVUseCase {
                     acc.push(...flatten(cur));
                     return acc;
                 }, []);
-                // const data = Papa.unparse(flat);
-                // const blob = new Blob([data], MIMEType);
-                // saveAs(blob, filename);
+                const data = Papa.unparse(flat);
+                const blob = new Blob([data], MIMEType);
+                saveAs(blob, filename);
+                resolve();
             } catch (error) {
                 reject(error);
             }

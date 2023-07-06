@@ -45,7 +45,7 @@ class MainPage extends BasePage {
                 <Progress/>
             )
         }
-
+        
         const menus = [...schemas
             .filter(s => canRead(roles, s.permissions) || user.isMaster)
             .sort((a, b) => (b.index || 0) - (a.index || 0))
@@ -92,8 +92,8 @@ class MainPage extends BasePage {
                 </Layout.Context.Consumer>
                 <main className="vh-100 d-flex flex-column">
                     <Routes>
-                        <Route exact path={'/collection/:name'} element={<CollectionListPage/>}/>
                         <Route exact path={'/collection/dashboard'} element={<DashboardPage/>}/>
+                        <Route exact path={'/collection/:name'} element={<CollectionListPage/>}/>
                         <Route path={'/collection/roles/form'} element={<RoleFormPage/>}/>
                         <Route path={'/collection/roles/form/:id'} element={<RoleFormPage/>}/>
                         <Route path={'/collection/:name/form/'} element={<CollectionFormPage/>}/>

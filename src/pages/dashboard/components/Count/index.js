@@ -19,6 +19,7 @@ function Count({collection, label, icon, where, actionLabel, ...props}) {
                 console.error(error);
             }
         }
+
         fetchCount();
     }, [collection, where]);
 

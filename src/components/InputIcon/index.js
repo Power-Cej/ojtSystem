@@ -1,6 +1,6 @@
 import React from 'react';
 import {SelectSearch} from 'nq-component';
-import IconItem from "./IconItem";
+import IconItem from "../IconItem";
 
 const icons = [
     "bi bi-123",
@@ -1682,13 +1682,6 @@ const noop = () => {
 const defaultProps = {
     onChange: noop
 };
-
-function map(option) {
-    if (typeof option === 'string') {
-        return {label: option, value: option};
-    }
-    return option;
-}
 
 function InputIcon({className, defaultValue, onChange}) {
     const [value, setValue] = React.useState({});

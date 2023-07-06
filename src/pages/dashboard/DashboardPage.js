@@ -6,6 +6,8 @@ import BaseListPage from "../../base/BaseListPage";
 import {deleteObjectUseCase, findObjectUseCase, upsertUseCase} from "../../usecases/object";
 import {dialog} from "nq-component";
 import AddWidget from "./components/AddWidget";
+import DialogTable from "../../components/DialogTable";
+import DeleteWidget from "./components/DeleteWidget";
 
 class DashboardPage extends BaseListPage {
     constructor(props) {
@@ -46,11 +48,12 @@ class DashboardPage extends BaseListPage {
     onClickDeleteWidget() {
         const schemas = this.getSchemas();
         dialog.fire({
-            html: <AddWidget
+            html: <DeleteWidget
+                objects={this.state.objects}
                 collections={schemas.map(s => s.collection)}
-                onSubmit={o => {
+                onSubmit={i => {
                     dialog.close();
-                    this.presenter.onSubmitAddWidget(o);
+                    this.presenter.onSubmitDelete(i);
                 }}
                 onCancel={() => dialog.close()}/>,
             footer: false
@@ -58,7 +61,15 @@ class DashboardPage extends BaseListPage {
     }
 
     onCLickWidget(object) {
-        this.presenter.onCLickWidget(object);
+        const schema = this.getSchema(object.collection);
+        dialog.fire({
+            html: <DialogTable
+                title={object.collection}
+                where={object.where}
+                schema={schema}
+                onCancel={() => dialog.close()}/>,
+            footer: false
+        });
     }
 
     render() {
@@ -76,6 +87,7 @@ class DashboardPage extends BaseListPage {
                                     <i className='bi bi-folder-plus pe-2'/>Add widget
                                 </button>
                                 <button
+                                    disabled={objects.length < 1}
                                     onClick={this.onClickDeleteWidget.bind(this)}
                                     className="dropdown-item py-3">
                                     <i className='bi bi-trash pe-2'/>Delete widget
@@ -96,6 +108,8 @@ class DashboardPage extends BaseListPage {
                                                 collection={object.collection}
                                                 icon={object.icon}
                                                 where={object.where}
+                                                label={object.label}
+                                                actionLabel={object.actionLabel}
                                                 onClick={this.onCLickWidget.bind(this, object)}/>
                                         </div>
                                     )

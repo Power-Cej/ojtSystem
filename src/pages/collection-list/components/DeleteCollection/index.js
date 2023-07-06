@@ -26,12 +26,12 @@ function DeleteCollection({schema, onSubmit, onCancel}) {
                     <button
                         type="button"
                         className="btn btn-primary btn-sm"
-                        onClick={onCancel}>Cancel
+                        onClick={onCancel}>CANCEL
                     </button>
                     <button
                         type="submit"
                         className="btn btn-outline-danger btn-sm ms-3">
-                        <i className="bi bi-trash me-2"></i>Yes, Delete
+                        <i className="bi bi-trash me-2"></i>YES, DELETE
                     </button>
                 </div>
             </form>

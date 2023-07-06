@@ -32,7 +32,7 @@ class CollectionListPresenter extends BaseListPresenter {
         }
     }
 
-    importClick() {
+    onClickImport() {
         const schema = this.view.getSchema(this.view.getCollectionName());
         browseFile('text/csv')
             .then(files => csvToJson(files[0]))
@@ -51,7 +51,7 @@ class CollectionListPresenter extends BaseListPresenter {
             });
     }
 
-    exportClick() {
+    onClickExport() {
         const objects = this.view.getSelected();
         const collection = this.view.getCollectionName();
         this.exportCSVUseCase.execute(objects, collection)
