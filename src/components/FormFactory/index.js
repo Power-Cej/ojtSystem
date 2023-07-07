@@ -38,7 +38,7 @@ function FormFactory({schema, object, onChange}) {
                             const fields = groups[key];
                             const {label} = sections[key] || {};
                             const components = Object.keys(fields).map((field) => {
-                                let {type, pattern, write, tab, col, label, ...options} = fields[field];
+                                let {type, pattern, write, tab, col, ...options} = fields[field];
                                 if ((_tab && tab) && (_tab !== tab)) return null;
                                 if (write === false) return null;
                                 if (field === 'password') {
@@ -47,8 +47,10 @@ function FormFactory({schema, object, onChange}) {
                                 return (
                                     <div className={col || "col-md-4"}
                                          key={field}>
-                                        <label
-                                            className="form-label fs-sm">{label || field}</label>
+                                        {
+                                            type !== 'Boolean' &&
+                                            <label className="form-label fs-sm">{options.label || field}</label>
+                                        }
                                         <InputFactory
                                             object={object}
                                             field={field}
