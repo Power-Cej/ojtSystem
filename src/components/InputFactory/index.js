@@ -9,6 +9,7 @@ import {
     InputJson,
     InputImage,
     InputFile,
+    InputSignature,
     InputPointer,
     InputSelect,
 } from "nq-component";
@@ -24,20 +25,30 @@ const defaultProps = {
     object: {}
 }
 
-function InputFactory({type, _type, field, object, schemas, hidden, required, ...props}) {
+function InputFactory({type, _type, field, object, schemas, hidden, required, onChange, ...props}) {
     const context = React.useContext(Context);
     const value = object[field];
+
+    function _onChange(field, value) {
+        object[field] = value;
+        onChange(value, field);
+    }
+
     switch (_type || type) {
         case 'Email':
         case 'String':
             return <InputString
                 defaultValue={value}
+                onChange={_onChange.bind(this, field)}
                 type={type.toLowerCase()}
+                required={required}
                 {...props}/>;
         case 'Date':
             return <InputString
                 defaultValue={value && value.slice(0, 10)}
+                onChange={_onChange.bind(this, field)}
                 type={type.toLowerCase()}
+                required={required}
                 {...props}/>;
         case 'Password':
             return <InputPassword
@@ -46,17 +57,19 @@ function InputFactory({type, _type, field, object, schemas, hidden, required, ..
         case 'Tel':
             return <InputNumber
                 defaultValue={value}
+                onChange={_onChange.bind(this, field)}
+                required={required}
                 {...props}/>;
         case 'Text':
             return <InputText
-                field={field}
-                type={type.toLowerCase()}
-                object={object}
+                defaultValue={value}
+                onChange={_onChange.bind(this, field)}
                 required={required}
                 {...props}/>;
         case 'Relation':
             return <InputRelation
                 defaultValue={value}
+                onChange={_onChange.bind(this, field)}
                 isMulti={type === 'Relation'}
                 schema={props.schema || (schemas || context.schemas).find(s => s.collection === props.target)}
                 find={findObject}
@@ -65,6 +78,7 @@ function InputFactory({type, _type, field, object, schemas, hidden, required, ..
         case 'Pointer':
             return <InputPointer
                 defaultValue={value}
+                onChange={_onChange.bind(this, field)}
                 schema={props.schema || (schemas || context.schemas).find(s => s.collection === props.target)}
                 find={findObject}
                 required={required}
@@ -72,31 +86,43 @@ function InputFactory({type, _type, field, object, schemas, hidden, required, ..
         case 'Image':
             return <InputImage
                 value={value}
+                onChange={_onChange.bind(this, field)}
                 save={saveImage}
                 required={required}
                 {...props}/>;
         case 'File':
             return <InputFile
                 value={value}
+                onChange={_onChange.bind(this, field)}
+                save={saveFile}
+                required={required}
+                {...props}/>;
+        case 'Signature':
+            return <InputSignature
+                value={value}
+                onChange={_onChange.bind(this, field)}
                 save={saveFile}
                 required={required}
                 {...props}/>;
         case 'Boolean':
             return <Checkbox
                 defaultChecked={value}
-                id={object.id}
+                onChange={_onChange.bind(this, field)}
+                id={field}
                 required={required}
                 {...props}/>;
         case 'Object':
         case 'Array':
             return <InputJson
                 defaultValue={JSON.stringify(value, null, 4) || ''}
+                onChange={_onChange.bind(this, field)}
                 id={object.id}
                 required={required}
                 {...props}/>;
         case 'Enum':
             return <InputSelect
                 defaultValue={value}
+                onChange={_onChange.bind(this, field)}
                 type={type.toLowerCase()}
                 options={props.options}
                 label={(props.dynamic ? "Select of type " : "Select ") + (field || '')}
@@ -105,6 +131,7 @@ function InputFactory({type, _type, field, object, schemas, hidden, required, ..
         case 'Icon':
             return <InputIcon
                 defaultValue={value}
+                onChange={_onChange.bind(this, field)}
                 options={props.options}
                 required={required}
                 {...props}/>;

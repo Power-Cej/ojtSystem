@@ -4,11 +4,7 @@ import {Switch} from "nq-component";
 
 function FormCollection({schema, onSubmit, onCancel}) {
     const [isAdvanced, setAdvanced] = React.useState(false);
-    const [_schema, setSchema] = React.useState(schema);
-
-    React.useEffect(() => {
-        setSchema(schema);
-    }, [schema]);
+    const [_schema, setSchema] = React.useState({...schema});
 
     function onChange(field, value) {
         setSchema(s => ({...s, [field]: value}));
@@ -52,7 +48,7 @@ function FormCollection({schema, onSubmit, onCancel}) {
                                     <div className="col-md-12">
                                         <label className="form-label">Collection Name</label>
                                         <InputFactory
-                                            onChange={onChange.bind(this, "collection")}
+                                            onChange={onChange}
                                             type="String"
                                             field="collection"
                                             placeholder="Give it a good name"

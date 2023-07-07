@@ -32,9 +32,8 @@ class BaseFormPresenter {
         }
     }
 
-
-    onChange(field, data) {
-        this.change[field] = data;
+    onChange(value, field) {
+        this.change[field] = value;
     }
 
     async save() {
