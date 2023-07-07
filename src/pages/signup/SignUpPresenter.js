@@ -6,12 +6,14 @@ class SignUpPresenter {
         this.change = {};
     }
 
-    onChange(field, value) {
+    onChange(value, field) {
         this.change[field] = value;
+        console.log(this.change);
     }
 
     submit() {
         const {email, password, confirmPassword, ...others} = this.change;
+
         if (password !== confirmPassword) {
             this.view.showError('password must be the same');
             return;

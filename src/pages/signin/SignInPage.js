@@ -23,9 +23,8 @@ class SignInPage extends BasePage {
         return this.props.params && this.props.params.masterKey;
     }
 
-
-    onChange(field, value) {
-        this.presenter.onChange(field, value);
+    onChange(value, field) {
+        this.presenter.onChange(value, field);
     }
 
     render() {
@@ -58,7 +57,8 @@ class SignInPage extends BasePage {
                                                     autoComplete="nope"
                                                     className="form-control"
                                                     placeholder="Email Address"
-                                                    onChange={this.onChange.bind(this, "username")}
+                                                    field="username"
+                                                    onChange={this.onChange.bind(this)}
                                                 />
                                             </div>
                                             <div className="col-md-12">
@@ -68,7 +68,8 @@ class SignInPage extends BasePage {
                                                     required
                                                     className="form-control"
                                                     placeholder="Password"
-                                                    onChange={this.onChange.bind(this, "password")}
+                                                    field="password"
+                                                    onChange={this.onChange.bind(this)}
                                                 />
                                             </div>
                                         </div>

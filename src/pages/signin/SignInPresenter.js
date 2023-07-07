@@ -4,9 +4,11 @@ class SignInPresenter {
         this.signInUseCase = signInUseCase;
         this.change = {};
     }
-    onChange(field, value) {
+
+    onChange(value, field) {
         this.change[field] = value;
     }
+
     submit() {
         const masterKey = this.view.getMasterKey();
         const user = {

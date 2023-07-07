@@ -52,6 +52,7 @@ function InputFactory({type, _type, field, object, schemas, hidden, required, on
                 {...props}/>;
         case 'Password':
             return <InputPassword
+                onChange={_onChange.bind(this, field)}
                 {...props}/>;
         case 'Number':
         case 'Tel':

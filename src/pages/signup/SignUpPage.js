@@ -20,8 +20,8 @@ class SignUpPage extends BasePage {
         this.presenter.submit(this.state.user);
     }
 
-    onChange(field, value) {
-        this.presenter.onChange(field, value);
+    onChange(value, field) {
+        this.presenter.onChange(value, field);
     }
 
     render() {
@@ -50,8 +50,9 @@ class SignUpPage extends BasePage {
                                             <div className="col-md-12">
                                                 <label className="form-label fs-sm">Email Address</label>
                                                 <InputFactory
-                                                    onChange={this.onChange.bind(this, "email")}
+                                                    onChange={this.onChange.bind(this)}
                                                     type="Email"
+                                                    field="email"
                                                     className="form-control"
                                                     placeholder="e.g. username@domain.com"
                                                     required
@@ -60,7 +61,8 @@ class SignUpPage extends BasePage {
                                             <div className="col-md-6">
                                                 <label className="form-label fs-sm">Password</label>
                                                 <InputFactory
-                                                    onChange={this.onChange.bind(this, "password")}
+                                                    onChange={this.onChange.bind(this)}
+                                                    field="password"
                                                     type="Password"
                                                     className="form-control"
                                                     placeholder="Password"
@@ -70,7 +72,8 @@ class SignUpPage extends BasePage {
                                             <div className="col-md-6">
                                                 <label className="form-label fs-sm">Confirm Password</label>
                                                 <InputFactory
-                                                    onChange={this.onChange.bind(this, "confirmPassword")}
+                                                    onChange={this.onChange.bind(this)}
+                                                    field="confirmPassword"
                                                     type="Password"
                                                     className="form-control"
                                                     placeholder="Password"
