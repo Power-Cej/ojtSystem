@@ -28,8 +28,8 @@ class SignUpPage extends BasePage {
         return (
             <div className="vh-100">
                 <div className="d-flex h-100">
-                    <div className="m-auto container p-3 px-lg-5 py-lg-4">
-                        <div className="bg-white shadow rounded p-3 px-lg-5 py-lg-4">
+                    <div className="m-auto container p-3 p-lg-5">
+                        <div className="bg-white shadow rounded p-3 p-lg-5">
                             <div className="row">
                                 <div className="col-md-6 border-end border-1">
                                     <div className="h-100 d-flex align-items-center">
@@ -46,7 +46,7 @@ class SignUpPage extends BasePage {
                                 <div className="col-md-6 p-3 px-lg-5 py-lg-4">
                                     <h2 className="fw-bold mb-3">Register</h2>
                                     <form onSubmit={this.formSubmit.bind(this)}>
-                                        <div className="row g-3 mb-3">
+                                        <div className="row g-3">
                                             <div className="col-md-12">
                                                 <label className="form-label fs-sm">Email Address</label>
                                                 <InputFactory
@@ -99,22 +99,23 @@ class SignUpPage extends BasePage {
                                                     </label>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div className="text-center mb-3">
-                                            <Button
-                                                progress={this.state.progress}
-                                                type="submit"
-                                                className="btn btn-primary w-50">
-                                                {this.state.progress ? 'Please wait...' : 'SIGNUP'}
-                                            </Button>
-                                        </div>
-                                        <div className="text-center">
+
+                                            <div className="text-center">
+                                                <Button
+                                                    progress={this.state.progress}
+                                                    type="submit"
+                                                    className="btn btn-primary w-50">
+                                                    {this.state.progress ? 'Please wait...' : 'SIGNUP'}
+                                                </Button>
+                                            </div>
+                                            <div className="text-center">
                                     <span className="fs-sm">
                                       Already have an account?
                                       <Link to="/signin" className="ms-1">
                                         Sign in
                                       </Link>
                                     </span>
+                                            </div>
                                         </div>
                                     </form>
                                 </div>

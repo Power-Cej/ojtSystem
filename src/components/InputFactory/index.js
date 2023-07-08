@@ -21,16 +21,16 @@ import InputIcon from "../InputIcon";
 const findObject = findObjectUseCase();
 const saveImage = saveImageUseCase();
 const saveFile = saveFileUseCase();
-const defaultProps = {
-    object: {}
-}
+const defaultProps = {}
 
 function InputFactory({type, _type, field, object, schemas, hidden, required, onChange, ...props}) {
     const context = React.useContext(Context);
-    const value = object[field];
+    const value = object && object[field];
 
     function _onChange(field, value) {
-        object[field] = value;
+        if (object) {
+            object[field] = value;
+        }
         onChange(value, field);
     }
 

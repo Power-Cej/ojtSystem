@@ -6,8 +6,9 @@ import MainPage from "./pages/main/MainPage";
 import SignUpPage from "./pages/signup/SignUpPage";
 import AccessDeniedPage from "./pages/denied";
 import Queue from "nq";
-import Redirect from "./Redirect";
+import RedirectPage from "./pages/RedirectPage";
 import TestPage from "./pages/TestPage";
+import TenantPage from "./pages/TenantPage";
 
 Queue.setUrl('https://api.innque.com/v1');
 // Queue.setUrl("http://188.166.177.35:8888/v1");
@@ -26,7 +27,8 @@ function App() {
                     <Route path="/signin" element={<SignInPage/>}/>
                     <Route path="/signin/:masterKey" element={<SignInPage/>}/>
                     <Route path="/signup" element={<SignUpPage/>}/>
-                    <Route path="/redirect/:id" element={<Redirect/>}/>
+                    <Route path="/redirect/:id" element={<RedirectPage/>}/>
+                    <Route path="/app" element={<TenantPage/>}/>
                     <Route path="/*" element={<MainPage/>}/>
                     <Route path={"/denied"} element={<AccessDeniedPage/>}/>
                 </Routes>

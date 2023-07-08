@@ -13,43 +13,49 @@ class MainPagePresenter {
         this.init();
     }
 
-    init() {
+    async init() {
         this.view.showProgress();
-        Promise.resolve()
-            .then(() => this.getUser())
-            .then(() => this.getSchema())
-            .then(() => {
-                this.view.hideProgress();
-            })
-            .catch(error => {
-                this.view.hideProgress();
-                if (error.code === 401) {
+        try {
+            await this.getUser();
+            await this.getSchema();
+            this.view.hideProgress();
+        } catch (error) {
+            this.view.hideProgress();
+            switch (error.code) {
+                case 401:
                     this.view.navigateTo('/signin');
-                } else {
+                    break;
+                case 403:
+                    this.view.navigateTo('/app');
+                    break;
+                default:
                     this.view.showError(error);
-                }
-            });
+            }
+        }
     }
 
-    getUser() {
-        return this.getCurrentUserUseCase.execute()
-            .then(user => {
-                this.user = user;
-                if (!user.roles && !this.user.isMaster) {
-                    this.view.navigateTo('/denied');
-                    return;
-                }
-                this.view.setCurrentRoles(user.roles || []);
-                this.view.setCurrentUser(user);
-            });
+    async getUser() {
+        try {
+            const user = await this.getCurrentUserUseCase.execute();
+            this.user = user;
+            if (!user.roles && !this.user.isMaster) {
+                this.view.navigateTo('/denied');
+                return;
+            }
+            this.view.setCurrentRoles(user.roles || []);
+            this.view.setCurrentUser(user);
+        } catch (error) {
+            throw error;
+        }
     }
 
-
-    getSchema() {
-        return this.getSchemaUseCase.execute()
-            .then(schemas => {
-                this.view.setSchemas(schemas);
-            })
+    async getSchema() {
+        try {
+            const schemas = await this.getSchemaUseCase.execute();
+            this.view.setSchemas(schemas);
+        } catch (error) {
+            throw error;
+        }
     }
 
     onClickSignOut() {
@@ -57,7 +63,8 @@ class MainPagePresenter {
             title: 'Confirm',
             message: 'Are you sure you want to sign out?',
             positiveButton: 'SIGN OUT'
-        }
+        };
+
         this.view.showDialog(options)
             .then(() => this.signOutUseCase.execute())
             .then(() => {
@@ -67,7 +74,7 @@ class MainPagePresenter {
                 this.view.showError(error);
             });
     }
-
 }
+
 
 export default MainPagePresenter;
