@@ -70,7 +70,7 @@ class RoleFormPage extends BaseFormPage {
                                         <label className="form-label fs-sm">Role Name</label>
                                         <InputFactory
                                             object={object}
-                                            onChange={this.onChange.bind(this, "name")}
+                                            onChange={this.onChange.bind(this)}
                                             type="String"
                                             field="name"
                                         />
