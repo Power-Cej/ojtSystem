@@ -48,7 +48,7 @@ class MainPage extends BasePage {
 
         const menus = [...schemas
             .filter(s => canRead(roles, s.permissions) || user.isMaster)
-            .sort((a, b) => (b.index || 0) - (a.index || 0))
+            .sort((a, b) => (a.index || 0) - (b.index || 0))
             .map(s => ({
                 name: s.label || s.collection || s.name,
                 route: '/collection/' + s.collection || s.name

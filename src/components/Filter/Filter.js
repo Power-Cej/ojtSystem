@@ -1,12 +1,13 @@
 import React from "react";
 import FilterFactory from "./FilterFactory";
 
-const types = {
-    String: ["exists", "equals", "contains"],
-    Boolean: ["equals"],
-    Pointer: ["exists", "equals"],
-    Date: ["exists", "before", "after"],
-};
+// const types = {
+//     String: ["exists", "equals", "contains"],
+//     Boolean: ["equals"],
+//     Pointer: ["exists", "equals"],
+//     Date: ["exists", "before", "after"],
+// };
+const exclude = ["Array", "ACL", "Image", "File"];
 
 function Filter({schemas, fields, onSubmit, onCancel}) {
     const [keys, setKeys] = React.useState([]); // Array of keys for each filter
@@ -23,10 +24,6 @@ function Filter({schemas, fields, onSubmit, onCancel}) {
         setWhere(where);
     }
 
-    // React.useEffect(() => {
-    //   const initialKeys = Object.keys(fields).map(() => null); // Initialize all keys as null
-    //   setKeys(initialKeys);
-    // }, [fields]);
 
     React.useEffect(() => {
         const initialKeys = Object.keys(fields);
@@ -60,9 +57,13 @@ function Filter({schemas, fields, onSubmit, onCancel}) {
                                 <div className="input-group mt-2" key={index}>
                                     <select
                                         value={filterKey}
-                                        className="form-select shadow-none fs-xs rounded-0 rounded-start"
+                                        className="form-select shadow-none rounded-0 rounded-start"
                                         onChange={(e) => handleKeyChange(index, e.target.value)}>
                                         {Object.keys(fields).map((key) => {
+                                            const options = fields[key];
+                                            if (exclude.includes(options._type || options.type)) {
+                                                return null;
+                                            }
                                             return (
                                                 <option key={key} value={key}>
                                                     {key}
@@ -70,29 +71,21 @@ function Filter({schemas, fields, onSubmit, onCancel}) {
                                             );
                                         })}
                                     </select>
-                                    {filterKey && (
-                                        <>
-                                            <select className="form-select fs-xs d-none">
-                                                {types[fields[filterKey].type].map((key) => {
-                                                    return (
-                                                        <option key={key} value={key}>
-                                                            {key}
-                                                        </option>
-                                                    );
-                                                })}
-                                            </select>
-                                            <FilterFactory
-                                                onChange={onChange}
-                                                schemas={schemas}
-                                                field={filterKey}
-                                                {...fields[filterKey]}
-                                            />
-                                        </>
-                                    )}
+                                    {
+                                        filterKey && (
+                                            <>
+                                                <FilterFactory
+                                                    onChange={onChange}
+                                                    schemas={schemas}
+                                                    field={filterKey}
+                                                    {...fields[filterKey]}
+                                                />
+                                            </>
+                                        )}
                                 </div>
                             );
                         })}
-                        <div className="mt-2">
+                        <div className="mt-3">
                             <button
                                 onClick={onClickAddFilter}
                                 type="button"

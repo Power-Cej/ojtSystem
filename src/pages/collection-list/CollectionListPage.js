@@ -230,6 +230,7 @@ class CollectionListPage extends BaseListPage {
                                 }
                             </div>
                             <Search
+                                schemas={this.getSchemas()}
                                 className="mt-3"
                                 onSubmit={this.searchSubmit.bind(this)}
                                 fields={schema.fields}/>
