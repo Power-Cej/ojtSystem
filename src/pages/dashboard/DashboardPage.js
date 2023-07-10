@@ -8,6 +8,8 @@ import {dialog} from "nq-component";
 import AddWidget from "./components/AddWidget";
 import DialogTable from "../../components/DialogTable";
 import DeleteWidget from "./components/DeleteWidget";
+import FormCollection from "../collection-list/components/FormCollection";
+import {updateSchemaUseCase} from "../../usecases/schema/usecases";
 
 class DashboardPage extends BaseListPage {
     constructor(props) {
@@ -17,6 +19,7 @@ class DashboardPage extends BaseListPage {
             findObjectUseCase(),
             deleteObjectUseCase(),
             upsertUseCase(),
+            updateSchemaUseCase(),
         );
         this.state = {
             objects: [],
@@ -30,9 +33,12 @@ class DashboardPage extends BaseListPage {
         return "dashboard";
     }
 
+    closeDialog() {
+        dialog.close();
+    }
+
     onClickAddWidget() {
         const schemas = this.getSchemas();
-
         dialog.fire({
             html: <AddWidget
                 collections={schemas.map(s => s.collection)}
@@ -72,8 +78,21 @@ class DashboardPage extends BaseListPage {
         });
     }
 
+    onClickEditCollection() {
+        const schema = this.getSchema(this.getCollectionName());
+        dialog.fire({
+            html: <FormCollection
+                schema={schema}
+                onSubmit={s => this.presenter.onSubmitEditCollection(s)}
+                onCancel={() => dialog.close()}/>,
+            footer: false
+        });
+    }
+
     render() {
+
         const objects = this.state.objects;
+
         return (
             <>
                 <NavBar
@@ -91,6 +110,11 @@ class DashboardPage extends BaseListPage {
                                     onClick={this.onClickDeleteWidget.bind(this)}
                                     className="dropdown-item py-3">
                                     <i className='bi bi-trash pe-2'/>Delete widget
+                                </button>
+                                <button
+                                    onClick={this.onClickEditCollection.bind(this)}
+                                    className="dropdown-item py-3">
+                                    <i className='bi bi-pencil-square pe-2'/>Edit this collection
                                 </button>
                             </div>
                         </div>

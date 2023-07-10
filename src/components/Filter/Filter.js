@@ -61,8 +61,7 @@ function Filter({schemas, fields, onSubmit, onCancel}) {
                                     <select
                                         value={filterKey}
                                         className="form-select shadow-none fs-xs rounded-0 rounded-start"
-                                        onChange={(e) => handleKeyChange(index, e.target.value)}
-                                    >
+                                        onChange={(e) => handleKeyChange(index, e.target.value)}>
                                         {Object.keys(fields).map((key) => {
                                             return (
                                                 <option key={key} value={key}>

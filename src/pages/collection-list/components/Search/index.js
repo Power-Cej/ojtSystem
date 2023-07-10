@@ -45,7 +45,7 @@ function Search({fields, onSubmit}) {
                             })
                     }
                 </select> */}
-                
+
                 {
                     fields[key] && (
                         <InputType
@@ -54,7 +54,7 @@ function Search({fields, onSubmit}) {
                             onChange={onChange}
                         />
                     )
-                
+
                 }
                 <span class="bi bi-filter ps-3 pe-3">Filter</span>
             </div>
