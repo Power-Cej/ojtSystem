@@ -6,7 +6,7 @@ const defaultProps = {
     where: {},
 };
 
-function Count({collection, label, icon, where, actionLabel, ...props}) {
+function Count({collection, label, icon, where, labelAction, ...props}) {
     const [count, setCount] = React.useState(0);
     React.useEffect(() => {
         const query = {count: true, where, limit: 1}; // Move the 'query' object inside the useEffect callback
@@ -27,7 +27,7 @@ function Count({collection, label, icon, where, actionLabel, ...props}) {
         <DashboardCard
             icon={icon || 'bi bi-pie-chart'}
             label={label || <span className="text-capitalize">Total {collection}</span>}
-            actionLabel={actionLabel || "VIEW " + collection}
+            labelAction={labelAction || "VIEW " + collection}
             value={count}
             {...props}
         />

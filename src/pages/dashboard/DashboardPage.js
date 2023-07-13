@@ -133,7 +133,7 @@ class DashboardPage extends BaseListPage {
                                                 icon={object.icon}
                                                 where={object.where}
                                                 label={object.label}
-                                                actionLabel={object.actionLabel}
+                                                labelAction={object.labelAction}
                                                 onClick={this.onCLickWidget.bind(this, object)}/>
                                         </div>
                                     )

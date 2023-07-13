@@ -6,10 +6,10 @@ const defaultProps = {
     icon: "bi bi-people",
     value: "0",
     label: "TOTAL",
-    actionLabel: "VIEW",
+    labelAction: "VIEW",
 };
 
-function DashboardCard({className, icon, label, value, actionLabel, onClick}) {
+function DashboardCard({className, icon, label, value, labelAction, onClick}) {
     const [count, setCount] = useState(0);
     useEffect(() => {
         let start = 0;
@@ -43,7 +43,7 @@ function DashboardCard({className, icon, label, value, actionLabel, onClick}) {
             </div>
             <hr/>
             <button onClick={onClick} className="btn btn-link p-0 w-100 d-flex justify-content-between text-uppercase">
-                {actionLabel}
+                {labelAction}
                 <i className="bi bi-arrow-right"></i>
             </button>
         </div>

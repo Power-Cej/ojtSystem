@@ -64,7 +64,7 @@ class MainPage extends BasePage {
         };
         const menus = [...schemas
             .filter(s => canRead(roles, s.permissions) || user.isMaster)
-            .sort((a, b) => (a.index || 0) - (b.index || 0))
+            .sort((a, b) => (a.index || Number.POSITIVE_INFINITY) - (b.index || Number.POSITIVE_INFINITY))
             .map(s => ({
                 name: s.label || s.collection || s.name,
                 icon: s.icon,
