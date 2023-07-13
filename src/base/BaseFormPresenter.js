@@ -22,9 +22,9 @@ class BaseFormPresenter {
             const params = {include: ['all']};
             try {
                 this.view.showProgress();
-                const object = await this.getObjectUseCase.execute(collection, id, {params});
+                this.object = await this.getObjectUseCase.execute(collection, id, {params});
                 this.view.hideProgress();
-                this.view.setObject(object);
+                this.view.setObject(this.object);
             } catch (error) {
                 this.view.hideProgress();
                 this.view.showError(error);
@@ -38,9 +38,8 @@ class BaseFormPresenter {
 
     async save() {
         const collection = this.view.getCollectionName();
-        const object = this.view.getObject();
-        if (object.id) {
-            this.change.id = object.id;
+        if (this.object.id) {
+            this.change.id = this.object.id;
         } else {
             this.change.acl = this.view.getAcl();
         }

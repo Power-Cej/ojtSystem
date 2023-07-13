@@ -122,9 +122,7 @@ class CollectionListPage extends BaseListPage {
         });
     }
 
-    onClickItem(index, field) {
-        this.presenter.onClickItem(index, field);
-    }
+
 
     onClickImport() {
         this.presenter.onClickImport();

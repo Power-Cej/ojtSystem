@@ -45,14 +45,31 @@ class MainPage extends BasePage {
                 <Progress/>
             )
         }
-
+        const settings = [
+            {
+                name: "Edit Account",
+                route: "/account",
+                icon: "bi bi-person-check",
+            },
+            // {
+            //     name: "Notification",
+            //     route: "/notification",
+            //     icon: "bi bi-bell"
+            // },
+        ];
+        const setting = {
+            name: "Settings",
+            icon: "bi bi-sliders",
+            route: settings,
+        };
         const menus = [...schemas
             .filter(s => canRead(roles, s.permissions) || user.isMaster)
             .sort((a, b) => (a.index || 0) - (b.index || 0))
             .map(s => ({
                 name: s.label || s.collection || s.name,
-                route: '/collection/' + s.collection || s.name
-            }))];
+                icon: s.icon,
+                route: s.route || '/collection/' + s.collection || s.name
+            })), setting];
         return (
             <Layout>
                 <Layout.Context.Consumer>

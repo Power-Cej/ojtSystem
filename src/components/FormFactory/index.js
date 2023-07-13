@@ -55,7 +55,6 @@ function FormFactory({schema, object, onChange}) {
                         if (field === 'password') {
                             type = "Password";
                         }
-
                         return (
                             <div className={col || "col-md-4"} key={field}>
                                 {type !== 'Boolean' &&
