@@ -7,7 +7,7 @@ import {
 import BaseFormPage from "../../base/BaseFormPage";
 import NavBar from "../../components/navbar";
 import InputInfo from "../../components/InputInfo";
-import fieldsPassword from "../../fieldsPassword.json";
+import fieldsPassword from "./fieldsPassword.json";
 import InputInfoMerge from "../../components/InputInfoMerge";
 import {signInUseCase} from "../../usecases/user";
 import {saveImageUseCase} from "../../usecases/file";

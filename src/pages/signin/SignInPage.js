@@ -89,12 +89,12 @@ class SignInPage extends BasePage {
                                                 </Button>
                                             </div>
                                             <div className="text-center">
-                                            <span className="fs-sm">
-                                              Don't have an account?
-                                              <Link to="/signup" className="ms-1">
-                                               <span className="text-decoration-underline">Sign up</span>
-                                              </Link>
-                                            </span>
+                                                <span className="fs-sm">
+                                                  Don't have an account?
+                                                  <Link to="/signup" className="ms-1">
+                                                   <span className="text-decoration-underline">Sign up</span>
+                                                  </Link>
+                                                </span>
                                             </div>
                                         </div>
 
