@@ -115,9 +115,8 @@ function InputFactory({type, _type, field, object, schemas, hidden, required, on
         case 'Object':
         case 'Array':
             return <InputJson
-                defaultValue={JSON.stringify(value, null, 4) || ''}
+                defaultValue={value}
                 onChange={_onChange.bind(this, field)}
-                id={object.id}
                 required={required}
                 {...props}/>;
         case 'Enum':
