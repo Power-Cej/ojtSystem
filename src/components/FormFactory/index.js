@@ -48,47 +48,47 @@ function FormFactory({schema, object, onChange, excludeFields}) {
                 onSet={setTab}
                 tabs={tabs}
             />
-            <div className="row g-3 mt-3">
-                {Object.keys(groups).map(key => {
-                    const fields = groups[key];
-                    const {label} = sections[key] || {};
-                    const components = Object.keys(fields).map(field => {
-                        if (excludeFields.includes(field)) return null;
-                        let {type, pattern, write, tab, col, ...options} = fields[field];
-                        if ((_tab && tab) && (_tab !== tab)) return null;
-                        if (write === false) return null;
-                        if (field === 'password') {
-                            type = "Password";
-                        }
-                        return (
-                            <div className={col || "col-md-4"} key={field}>
-                                {type !== 'Boolean' &&
-                                <label className="form-label fs-sm">{options.label || field}</label>
-                                }
-                                <InputFactory
-                                    object={object}
-                                    field={field}
-                                    onChange={onChange}
-                                    type={type}
-                                    className="fs-sm"
-                                    {...options}
-                                />
-                            </div>
-                        )
-                    }).filter(c => c);
+            {Object.keys(groups).map(key => {
+                const fields = groups[key];
+                const {label} = sections[key] || {};
+                const components = Object.keys(fields).map(field => {
+                    if (excludeFields.includes(field)) return null;
+                    let {type, pattern, write, tab, col, ...options} = fields[field];
+                    if ((_tab && tab) && (_tab !== tab)) return null;
+                    if (write === false) return null;
+                    if (field === 'password') {
+                        type = "Password";
+                    }
                     return (
-                        <>
-                            {(components.length > 0 && Object.keys(sections).length > 0) && (
-                                <div className="col-12">
-                                    <p className="small fw-bold mb-0 ms-1">{label || key}</p>
-                                    <hr/>
-                                </div>
-                            )}
-                            {components}
-                        </>
+                        <div
+                            className={col || "col-md-4"}
+                            key={field}>
+                            {type !== 'Boolean' &&
+                            <label className="form-label fs-sm">{options.label || field}</label>
+                            }
+                            <InputFactory
+                                object={object}
+                                field={field}
+                                onChange={onChange}
+                                type={type}
+                                className="fs-sm"
+                                {...options}
+                            />
+                        </div>
                     )
-                })}
-            </div>
+                }).filter(c => c);
+                return (
+                    <>
+                        {(components.length > 0 && Object.keys(sections).length > 0) && (
+                            <div className="col-12">
+                                <p className="small fw-bold mb-0 ms-1">{label || key}</p>
+                                <hr/>
+                            </div>
+                        )}
+                        {components}
+                    </>
+                )
+            })}
         </>
     )
 }

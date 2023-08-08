@@ -33,12 +33,6 @@ class CollectionListPage extends BaseListPage {
             updateSchemaUseCase(),
             deleteSchemaUseCase(),
         );
-        this.state = {
-            objects: [],
-            selected: [],
-            progress: true,
-            count: 0,
-        };
     }
 
     /*when class change*/
@@ -235,7 +229,8 @@ class CollectionListPage extends BaseListPage {
                             <Table
                                 fields={schema.fields}
                                 objects={objects}
-                                hasSelect
+                                selectable
+                                collapsable
                                 excludeFields={
                                     Object.keys(schema.fields)
                                         .reduce((acc, key) => {

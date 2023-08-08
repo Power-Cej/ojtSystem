@@ -17,6 +17,7 @@ import {findObjectUseCase} from "../../usecases/object";
 import {saveFileUseCase, saveImageUseCase} from "../../usecases/file";
 import Context from "../../AppContext";
 import InputIcon from "../InputIcon";
+import RelatedFactory from "../RelatedFactory";
 
 const findObject = findObjectUseCase();
 const saveImage = saveImageUseCase();
@@ -84,6 +85,15 @@ function InputFactory({type, _type, field, object, schemas, hidden, required, on
                 find={findObject}
                 required={required}
                 {...props}/>;
+        case 'Related':
+            return <RelatedFactory
+                defaultValue={value}
+                onChange={_onChange.bind(this, field)}
+                schema={props.schema || (schemas || context.schemas).find(s => s.collection === props.target)}
+                find={findObject}
+                required={required}
+                field={field}
+                {...props}/>;
         case 'Image':
             return <InputImage
                 value={value}
@@ -125,7 +135,7 @@ function InputFactory({type, _type, field, object, schemas, hidden, required, on
                 onChange={_onChange.bind(this, field)}
                 type={type.toLowerCase()}
                 options={props.options}
-                label={(props.dynamic ? "Select of type " : "Select ") + (field || '')}
+                placeholder={props.placeholder || ((props.dynamic ? "Select of type " : "Select ") + (props.label || field))}
                 required={required}
                 {...props}/>;
         case 'Icon':

@@ -45,20 +45,21 @@ class CollectionFormPage extends BaseFormPage {
                             <h1 className="fw-bold mt-3 text-capitalize">{label + (schema.label || this.getCollectionName())}</h1>
                             <div className="mt-3 bg-white shadow rounded p-3 px-lg-5 py-lg-4">
                                 <form onSubmit={this.onSubmitForm.bind(this)}>
-                                    {
-                                        advanced
-                                            ?
-                                            <InputJson
-                                                defaultValue={object}
-                                                onChange={this.onChange.bind(this)}
-                                                rows="15"/>
-                                            :
-                                            <FormFactory
-                                                schema={schema}
-                                                object={object}
-                                                onChange={this.onChange.bind(this)}/>
-                                    }
-
+                                    <div className="row g-3">
+                                        {
+                                            advanced
+                                                ?
+                                                <InputJson
+                                                    defaultValue={object}
+                                                    onChange={this.onChange.bind(this)}
+                                                    rows="15"/>
+                                                :
+                                                <FormFactory
+                                                    schema={schema}
+                                                    object={object}
+                                                    onChange={this.onChange.bind(this)}/>
+                                        }
+                                    </div>
                                     <div className="mt-4">
                                         <button type="submit" className="btn btn-primary fs-sm me-3">
                                             <i className="bi bi-file-earmark-check me-2"></i>SAVE
