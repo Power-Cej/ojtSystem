@@ -235,7 +235,8 @@ class CollectionListPage extends BaseListPage {
                             <Table
                                 fields={schema.fields}
                                 objects={objects}
-                                hasSelect
+                                selectable
+                                collapsable
                                 excludeFields={
                                     Object.keys(schema.fields)
                                         .reduce((acc, key) => {
