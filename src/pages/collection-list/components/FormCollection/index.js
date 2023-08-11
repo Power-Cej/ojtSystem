@@ -6,7 +6,7 @@ function FormCollection({schema, onSubmit, onCancel}) {
     const [isAdvanced, setAdvanced] = React.useState(false);
     const [_schema, setSchema] = React.useState({...schema});
 
-    function onChange(value,field) {
+    function onChange(value, field) {
         setSchema(s => ({...s, [field]: value}));
     }
 

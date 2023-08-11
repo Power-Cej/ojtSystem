@@ -7,6 +7,7 @@ import FilterFactory from "./FilterFactory";
 //     Pointer: ["exists", "equals"],
 //     Date: ["exists", "before", "after"],
 // };
+
 const exclude = ["Array", "ACL", "Image", "File"];
 
 function Filter({schemas, fields, onSubmit, onCancel}) {

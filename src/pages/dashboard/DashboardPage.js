@@ -10,6 +10,7 @@ import DialogTable from "../../components/DialogTable";
 import DeleteWidget from "./components/DeleteWidget";
 import FormCollection from "../collection-list/components/FormCollection";
 import {updateSchemaUseCase} from "../../usecases/schema/usecases";
+import InputFactory from "../../components/InputFactory";
 
 class DashboardPage extends BaseListPage {
     constructor(props) {
@@ -26,6 +27,7 @@ class DashboardPage extends BaseListPage {
             selected: [],
             progress: true,
             count: 0,
+            where: {},
         };
     }
 
@@ -89,10 +91,27 @@ class DashboardPage extends BaseListPage {
         });
     }
 
+    onChangeFilter(type, value, field) {
+        const where = {};
+        switch (type) {
+            case "Pointer":
+                if (Object.keys(value).length > 0) {
+                    where[field] = {id: value.id};
+                }
+                break;
+            case "Boolean":
+                where[field] = value;
+                break;
+            default:
+                where[field] = {$regex: value, $options: "i"};
+        }
+        this.setState({where});
+    }
+
     render() {
-
         const objects = this.state.objects;
-
+        const where = this.state.where;
+        const schema = this.getSchema('dashboard');
         return (
             <>
                 <NavBar
@@ -123,6 +142,23 @@ class DashboardPage extends BaseListPage {
                 <div className="overflow-auto">
                     <div className="p-3 p-lg-4">
                         <h1 className="fw-bold mt-3 text-capitalize">Dashboard</h1>
+                        <div className="d-flex mt-3">
+                            {
+                                Object.keys(schema.filters || {}).map(field => {
+                                    let {type, ...options} = schema.filters[field];
+                                    return <InputFactory
+                                        key={field}
+                                        className="ms-1"
+                                        type={type}
+                                        field={field}
+                                        where={{}}
+                                        onChange={this.onChangeFilter.bind(this, type)}
+                                        {...options}
+                                    />
+                                })
+                            }
+                        </div>
+
                         <div className="row mt-1 g-3">
                             {
                                 objects.map((object) => {
@@ -131,7 +167,7 @@ class DashboardPage extends BaseListPage {
                                             <Count
                                                 collection={object.collection}
                                                 icon={object.icon}
-                                                where={object.where}
+                                                where={{...where, ...object.where}}
                                                 label={object.label}
                                                 labelAction={object.labelAction}
                                                 onClick={this.onCLickWidget.bind(this, object)}/>

@@ -73,8 +73,7 @@ function Search({className, schemas, fields, onSubmit}) {
             <button
                 onClick={onClickFilter}
                 className="btn btn-link border-0 p-0 ms-1 d-flex align-items-center"
-                type="button"
-            >
+                type="button">
                 <i className="bi bi-filter fs-4"></i>Filter
             </button>
         </div>

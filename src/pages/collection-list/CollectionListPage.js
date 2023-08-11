@@ -117,7 +117,6 @@ class CollectionListPage extends BaseListPage {
     }
 
 
-
     onClickImport() {
         this.presenter.onClickImport();
     }
