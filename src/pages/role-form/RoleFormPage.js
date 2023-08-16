@@ -79,7 +79,8 @@ class RoleFormPage extends BaseFormPage {
                                         progress={this.state.progress}
                                         fields={fields}
                                         objects={objects}
-                                        onCollapse={({schema}) => {
+                                        collapsable
+                                        onCollapse={(index, {schema}) => {
                                             const collection = schema.collection;
                                             const permissions = schema.permissions;
                                             if (progress) return <Progress/>

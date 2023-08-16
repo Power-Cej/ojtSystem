@@ -126,38 +126,42 @@ class DashboardPage extends BaseListPage {
         const objects = this.state.objects;
         const where = this.state.where;
         const schema = this.getSchema('dashboard');
+        const user = this.getCurrentUser();
         return (
             <>
                 <NavBar
-                    action={() => (
-                        <div className="dropdown dropstart d-inline-block">
-                            <i role="button" data-bs-toggle="dropdown" className="bi bi-three-dots-vertical"></i>
-                            <div className="dropdown-menu fs-xs">
-                                <button
-                                    onClick={this.onClickAddWidget.bind(this)}
-                                    className="dropdown-item py-3">
-                                    <i className='bi bi-folder-plus pe-2'/>Add widget
-                                </button>
-                                <button
-                                    disabled={objects.length < 1}
-                                    onClick={this.onClickEditWidget.bind(this)}
-                                    className="dropdown-item py-3">
-                                    <i className='bi bi-pencil-square pe-2'/>Edit widget
-                                </button>
-                                <button
-                                    disabled={objects.length < 1}
-                                    onClick={this.onClickDeleteWidget.bind(this)}
-                                    className="dropdown-item py-3">
-                                    <i className='bi bi-trash pe-2'/>Delete widget
-                                </button>
-                                <button
-                                    onClick={this.onClickEditCollection.bind(this)}
-                                    className="dropdown-item py-3">
-                                    <i className='bi bi-pencil-square pe-2'/>Edit this collection
-                                </button>
+                    action={() => {
+                        if (!user.isMaster) return null;
+                        return (
+                            <div className="dropdown dropstart d-inline-block">
+                                <i role="button" data-bs-toggle="dropdown" className="bi bi-three-dots-vertical"></i>
+                                <div className="dropdown-menu fs-xs">
+                                    <button
+                                        onClick={this.onClickAddWidget.bind(this)}
+                                        className="dropdown-item py-3">
+                                        <i className='bi bi-folder-plus pe-2'/>Add widget
+                                    </button>
+                                    <button
+                                        disabled={objects.length < 1}
+                                        onClick={this.onClickEditWidget.bind(this)}
+                                        className="dropdown-item py-3">
+                                        <i className='bi bi-pencil-square pe-2'/>Edit widget
+                                    </button>
+                                    <button
+                                        disabled={objects.length < 1}
+                                        onClick={this.onClickDeleteWidget.bind(this)}
+                                        className="dropdown-item py-3">
+                                        <i className='bi bi-trash pe-2'/>Delete widget
+                                    </button>
+                                    <button
+                                        onClick={this.onClickEditCollection.bind(this)}
+                                        className="dropdown-item py-3">
+                                        <i className='bi bi-pencil-square pe-2'/>Edit this collection
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                    )}
+                        )
+                    }}
                 />
                 <div className="overflow-auto">
                     <div className="p-3 p-lg-4">
