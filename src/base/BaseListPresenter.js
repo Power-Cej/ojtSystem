@@ -44,12 +44,6 @@ class BaseListPresenter {
         }
     }
 
-    onClickEditItem(index) {
-        const object = this.objects[index];
-        const collection = this.view.getCollectionName();
-        this.view.navigateTo("/collection/" + collection + "/form/" + object.id);
-    }
-
     onSelect(index) {
         const selectedObjects = this.view.getSelected();
         const selected = this.objects[index];

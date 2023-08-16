@@ -34,6 +34,8 @@ class BaseFormPresenter {
 
     onChange(value, field) {
         this.change[field] = value;
+        this.object[field] = value;
+        this.view.setObject(this.object);
     }
 
     async save() {

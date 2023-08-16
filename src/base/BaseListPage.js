@@ -1,6 +1,12 @@
 import BasePage from "./BasePage";
 
 class BaseListPage extends BasePage {
+    state = {
+        objects: [],
+        selected: [],
+        progress: true,
+        count: 0,
+    };
 
     getCollectionName() {
         return this.props.params.name;

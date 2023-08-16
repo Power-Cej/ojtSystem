@@ -18,14 +18,9 @@ class BaseFormPage extends BasePage {
         this.presenter.submit();
     }
 
-    getObject() {
-        return this.state.object;
-    }
-
     onClickBack() {
         this.presenter.onClickBack();
     }
-
 
     setObject(object) {
         this.setState({object});

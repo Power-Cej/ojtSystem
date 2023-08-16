@@ -6,7 +6,8 @@ import {signUpUseCase} from "../../usecases/user";
 import {updateObjectUseCase} from "../../usecases/object";
 import {Button} from "nq-component";
 import withRouter from "../../withRouter";
-import InputFactory from "../../components/InputFactory";
+import FormFactory from "../../components/FormFactory";
+import schemaSignup from "./schemaSignup";
 
 class SignUpPage extends BasePage {
     constructor(props) {
@@ -47,39 +48,10 @@ class SignUpPage extends BasePage {
                                     <h2 className="fw-bold mb-3">Register</h2>
                                     <form onSubmit={this.formSubmit.bind(this)}>
                                         <div className="row g-3">
-                                            <div className="col-md-12">
-                                                <label className="form-label fs-sm">Email Address</label>
-                                                <InputFactory
-                                                    onChange={this.onChange.bind(this)}
-                                                    type="Email"
-                                                    field="email"
-                                                    className="form-control"
-                                                    placeholder="e.g. username@domain.com"
-                                                    required
-                                                />
-                                            </div>
-                                            <div className="col-md-6">
-                                                <label className="form-label fs-sm">Password</label>
-                                                <InputFactory
-                                                    onChange={this.onChange.bind(this)}
-                                                    field="password"
-                                                    type="Password"
-                                                    className="form-control"
-                                                    placeholder="Password"
-                                                    required
-                                                />
-                                            </div>
-                                            <div className="col-md-6">
-                                                <label className="form-label fs-sm">Confirm Password</label>
-                                                <InputFactory
-                                                    onChange={this.onChange.bind(this)}
-                                                    field="confirmPassword"
-                                                    type="Password"
-                                                    className="form-control"
-                                                    placeholder="Password"
-                                                    required
-                                                />
-                                            </div>
+                                            <FormFactory
+                                                schema={schemaSignup}
+                                                onChange={this.onChange.bind(this)}
+                                            />
                                             <div className="col-md-12">
                                                 <div className="form-check">
                                                     <input
@@ -99,7 +71,6 @@ class SignUpPage extends BasePage {
                                                     </label>
                                                 </div>
                                             </div>
-
                                             <div className="text-center">
                                                 <Button
                                                     progress={this.state.progress}
@@ -109,12 +80,12 @@ class SignUpPage extends BasePage {
                                                 </Button>
                                             </div>
                                             <div className="text-center">
-                                    <span className="fs-sm">
-                                      Already have an account?
-                                      <Link to="/signin" className="ms-1">
-                                        Sign in
-                                      </Link>
-                                    </span>
+                                            <span className="fs-sm">
+                                              Already have an account?
+                                              <Link to="/signin" className="ms-1">
+                                                Sign in
+                                              </Link>
+                                            </span>
                                             </div>
                                         </div>
                                     </form>

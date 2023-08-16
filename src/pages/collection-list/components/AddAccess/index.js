@@ -35,6 +35,7 @@ function AddAccess({onSubmit, onBack}) {
                     </div>
                     <div className="col">
                         <InputFactory
+                            field="Access"
                             options={options}
                             onChange={onChangeCollection}
                             type="Enum"/>
@@ -42,8 +43,10 @@ function AddAccess({onSubmit, onBack}) {
                     <div className="col-12">
                         <label className="form-label">{collection}:</label>
                         <InputFactory
+                            dynamic={false}
                             onChange={onChangeAccess}
-                            schema={schemas.find(s => s.collection === collection.toLowerCase())}
+                            target={collection.toLowerCase()}
+                            schemas={schemas}
                             type="Pointer"/>
                     </div>
                     <div className="col-12 text-end mt-5">

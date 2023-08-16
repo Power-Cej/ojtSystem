@@ -8,7 +8,6 @@ class SignUpPresenter {
 
     onChange(value, field) {
         this.change[field] = value;
-        console.log(this.change);
     }
 
     submit() {

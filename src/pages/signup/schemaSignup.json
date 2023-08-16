@@ -1,0 +1,49 @@
+{
+  "fields": {
+    "first_name": {
+      "type": "String",
+      "label": "First Name",
+      "placeholder": "e.g Juan",
+      "required": true,
+      "uppercase": true,
+      "col": "col-md-6"
+    },
+    "last_name": {
+      "type": "String",
+      "label": "Last Name",
+      "placeholder": "e.g Juan",
+      "required": true,
+      "uppercase": true,
+      "col": "col-md-6"
+    },
+    "email": {
+      "type": "String",
+      "label": "Email",
+      "placeholder": "e.g. username@domain.com",
+      "required": true,
+      "col": "col-md-12"
+    },
+    "mobile": {
+      "type": "String",
+      "label": "Mobile Number",
+      "placeholder": "e.g. 09987654321",
+      "col": "col-md-12"
+    },
+    "password": {
+      "type": "String",
+      "_type": "Password",
+      "label": "Password",
+      "placeholder": "Password",
+      "required": true,
+      "col": "col-md-6"
+    },
+    "confirmPassword": {
+      "type": "String",
+      "_type": "Password",
+      "label": "Confirm Password",
+      "placeholder": "Password",
+      "required": true,
+      "col": "col-md-6"
+    }
+  }
+}
