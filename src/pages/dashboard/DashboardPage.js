@@ -11,6 +11,7 @@ import DeleteWidget from "./components/DeleteWidget";
 import FormCollection from "../collection-list/components/FormCollection";
 import {updateSchemaUseCase} from "../../usecases/schema/usecases";
 import InputFactory from "../../components/InputFactory";
+import EditWidget from "./components/EditWidget";
 
 class DashboardPage extends BaseListPage {
     constructor(props) {
@@ -59,6 +60,19 @@ class DashboardPage extends BaseListPage {
             html: <DeleteWidget
                 objects={this.state.objects}
                 collections={schemas.map(s => s.collection)}
+                onSubmit={i => {
+                    dialog.close();
+                    this.presenter.onSubmitDelete(i);
+                }}
+                onCancel={() => dialog.close()}/>,
+            footer: false
+        });
+    }
+
+    onClickEditWidget() {
+        dialog.fire({
+            html: <EditWidget
+                widgets={this.getObjects()}
                 onSubmit={i => {
                     dialog.close();
                     this.presenter.onSubmitDelete(i);
@@ -123,6 +137,12 @@ class DashboardPage extends BaseListPage {
                                     onClick={this.onClickAddWidget.bind(this)}
                                     className="dropdown-item py-3">
                                     <i className='bi bi-folder-plus pe-2'/>Add widget
+                                </button>
+                                <button
+                                    disabled={objects.length < 1}
+                                    onClick={this.onClickEditWidget.bind(this)}
+                                    className="dropdown-item py-3">
+                                    <i className='bi bi-pencil-square pe-2'/>Edit widget
                                 </button>
                                 <button
                                     disabled={objects.length < 1}
