@@ -1,0 +1,164 @@
+{
+  "collection": "residents",
+  "fields": {
+    "picture": {
+      "type": "String",
+      "_type": "Image",
+      "tab": "general",
+      "section": "personal",
+      "label": "Picture",
+      "read": false
+    },
+    "signature": {
+      "type": "String",
+      "_type": "Signature",
+      "tab": "general",
+      "section": "personal",
+      "label": "Signature",
+      "read": false
+    },
+    "first_name": {
+      "type": "String",
+      "tab": "general",
+      "section": "personal",
+      "label": "First Name",
+      "placeholder": "e.g. JUAN",
+      "uppercase": true,
+      "index": 1
+    },
+    "middle_name": {
+      "type": "String",
+      "tab": "general",
+      "section": "personal",
+      "label": "Middle Name",
+      "placeholder": "e.g. DELA",
+      "uppercase": true
+    },
+    "last_name": {
+      "type": "String",
+      "tab": "general",
+      "section": "personal",
+      "label": "Last Name",
+      "placeholder": "e.g. CRUZ",
+      "uppercase": true,
+      "index": 1
+    },
+    "employment_status": {
+      "label": "Employment Status",
+      "tab": "general",
+      "section": "employment",
+      "type": "String",
+      "_type": "Enum",
+      "options": [
+        "Employed",
+        "Unemployed",
+        "Resigned",
+        "Displaced Worker",
+        "OFW",
+        "Retired"
+      ]
+    },
+    "employment_type": {
+      "label": "Employment Type",
+      "tab": "general",
+      "section": "employment",
+      "type": "String",
+      "_type": "Enum",
+      "options": [
+        "Permanent",
+        "Self-Employed",
+        "Contractual",
+        "Seasonal",
+        "Compensation",
+        "Government Official"
+      ]
+    },
+    "employment_field": {
+      "type": "String",
+      "label": "Employment Field",
+      "tab": "general",
+      "section": "employment",
+      "_type": "Enum",
+      "options": [
+        "OFW",
+        "MEDICAL PRACTITIONERS",
+        "FISHERMAN",
+        "TEACHERS",
+        "CALL CENTER",
+        "CONSTRUCTION WORKER",
+        "KASAMBAHAY",
+        "FARMER",
+        "ARMED FORCES",
+        "ATHLETE",
+        "IT PRACTITIONERS",
+        "ENGINEER"
+      ]
+    },
+    "occupation": {
+      "type": "String",
+      "tab": "general",
+      "section": "employment",
+      "placeholder": "e.g. NURSE",
+      "uppercase": true
+    },
+    "voter_status": {
+      "type": "Boolean",
+      "tab": "organization",
+      "section": "resident",
+      "label": "Registered Voter",
+      "read": false
+    },
+    "precinct_number": {
+      "type": "String"
+    }
+  },
+  "sections": {
+    "personal": {
+      "label": "Personal Information"
+    },
+    "contact": {
+      "label": "Contact Information"
+    },
+    "family": {
+      "label": "Family Information"
+    },
+    "address": {
+      "label": "Address Information"
+    },
+    "employment": {
+      "label": "Employment Information"
+    },
+    "education": {
+      "label": "Educational Information"
+    },
+    "resident": {
+      "label": "Resident Information"
+    },
+    "organization": {
+      "label": "Organization Information"
+    },
+    "disability": {
+      "label": "Type Of Disability"
+    }
+  },
+  "tabs": {
+    "general": {
+      "label": "General Information"
+    },
+    "organization": {
+      "label": "Organization Information"
+    },
+    "house": {
+      "label": "House Profile Information"
+    },
+    "vehicle": {
+      "label": "Vehicle Information"
+    },
+    "health": {
+      "label": "Health Information"
+    },
+    "medicine": {
+      "label": "Medicine Information"
+    }
+  }
+}

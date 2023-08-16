@@ -19,6 +19,7 @@ import withRouter from "../../withRouter";
 import Search from "../../components/Search";
 import BaseListPage from "../../base/BaseListPage";
 import NavBar from "../../components/navbar";
+import InputFactory from "../../components/InputFactory";
 
 class CollectionListPage extends BaseListPage {
     constructor(props) {
@@ -125,6 +126,23 @@ class CollectionListPage extends BaseListPage {
         this.presenter.onClickExport();
     }
 
+    onChangeFilter(type, value, field) {
+        const where = {};
+        switch (type) {
+            case "Pointer":
+                if (Object.keys(value).length > 0) {
+                    where[field] = {id: value.id};
+                }
+                break;
+            case "Boolean":
+                where[field] = value;
+                break;
+            default:
+                where[field] = {$regex: value, $options: "i"};
+        }
+        this.searchSubmit(where);
+    }
+
     render() {
         const schema = this.getSchema(this.getCollectionName());
         const {objects, selected, count, progress} = this.state;
@@ -218,6 +236,22 @@ class CollectionListPage extends BaseListPage {
                                                 <span className="fs-sm text-nowrap">{count}</span>
                                             </div>
                                         )
+                                }
+                            </div>
+                            <div className="d-flex mt-3">
+                                {
+                                    Object.keys(schema.filters || {}).map(field => {
+                                        let {type, ...options} = schema.filters[field];
+                                        return <InputFactory
+                                            key={field}
+                                            className="ms-1"
+                                            type={type}
+                                            field={field}
+                                            where={{}}
+                                            onChange={this.onChangeFilter.bind(this, type)}
+                                            {...options}
+                                        />
+                                    })
                                 }
                             </div>
                             <Search
