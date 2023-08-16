@@ -147,66 +147,70 @@ class CollectionListPage extends BaseListPage {
         const schema = this.getSchema(this.getCollectionName());
         const {objects, selected, count, progress} = this.state;
         if (!schema) return <Progress/>;
+        const user = this.getCurrentUser();
         return (
             <>
                 <NavBar
-                    action={() => (
-                        <div className="dropdown dropstart d-inline-block">
-                            <i role="button" data-bs-toggle="dropdown" className="bi bi-three-dots-vertical"></i>
-                            <div className="dropdown-menu fs-xs">
-                                <button
-                                    onClick={this.onClickImport.bind(this)}
-                                    className="dropdown-item py-3">
-                                    <i className='bi bi-arrow-down-square pe-2'/>Import Data
-                                </button>
-                                <button
-                                    onClick={this.onClickExport.bind(this)}
-                                    disabled={selected.length < 1}
-                                    className="dropdown-item py-3">
-                                    <i className='bi bi-arrow-up-square pe-2'/>Export Data
-                                </button>
-                                <button
-                                    onClick={this.onCLickAccess.bind(this)}
-                                    disabled={selected.length < 1}
-                                    className="dropdown-item py-3">
-                                    <i className='bi  bi-ui-checks mr-5 pe-2'/>
-                                    Access
-                                </button>
-                                <button
-                                    onClick={this.onClickDeleteSelected.bind(this)}
-                                    disabled={selected.length < 1}
-                                    className="dropdown-item py-3">
-                                    <i className='bi bi-trash pe-2'/>Delete selected
-                                </button>
-                                <div className="dropdown-divider"></div>
-                                <button
-                                    onClick={this.onClickAddField.bind(this, schema)}
-                                    className="dropdown-item py-3">
-                                    <i className='bi bi-journal-plus pe-2'/>Add a field
-                                </button>
-                                <button
-                                    onClick={this.onClickDeleteField.bind(this)}
-                                    className="dropdown-item py-3">
-                                    <i className='bi bi-journal-x pe-2'/>Delete a field
-                                </button>
-                                <button
-                                    onClick={this.onClickEditCollection.bind(this, schema)}
-                                    className="dropdown-item py-3">
-                                    <i className='bi bi-pencil-square pe-2'/>Edit this collection
-                                </button>
-                                <button
-                                    onClick={this.onClickDeleteCollection.bind(this)}
-                                    className="dropdown-item py-3">
-                                    <i className='bi bi-folder-x pe-2'/>Delete this collection
-                                </button>
-                                <button
-                                    onClick={this.onClickAddCollection.bind(this)}
-                                    className="dropdown-item py-3">
-                                    <i className='bi bi-folder-plus pe-2'/>Add a collection
-                                </button>
+                    action={() => {
+                        if (!user.isMaster) return null;
+                        return (
+                            <div className="dropdown dropstart d-inline-block">
+                                <i role="button" data-bs-toggle="dropdown" className="bi bi-three-dots-vertical"></i>
+                                <div className="dropdown-menu fs-xs">
+                                    <button
+                                        onClick={this.onClickImport.bind(this)}
+                                        className="dropdown-item py-3">
+                                        <i className='bi bi-arrow-down-square pe-2'/>Import Data
+                                    </button>
+                                    <button
+                                        onClick={this.onClickExport.bind(this)}
+                                        disabled={selected.length < 1}
+                                        className="dropdown-item py-3">
+                                        <i className='bi bi-arrow-up-square pe-2'/>Export Data
+                                    </button>
+                                    <button
+                                        onClick={this.onCLickAccess.bind(this)}
+                                        disabled={selected.length < 1}
+                                        className="dropdown-item py-3">
+                                        <i className='bi  bi-ui-checks mr-5 pe-2'/>
+                                        Access
+                                    </button>
+                                    <button
+                                        onClick={this.onClickDeleteSelected.bind(this)}
+                                        disabled={selected.length < 1}
+                                        className="dropdown-item py-3">
+                                        <i className='bi bi-trash pe-2'/>Delete selected
+                                    </button>
+                                    <div className="dropdown-divider"></div>
+                                    <button
+                                        onClick={this.onClickAddField.bind(this, schema)}
+                                        className="dropdown-item py-3">
+                                        <i className='bi bi-journal-plus pe-2'/>Add a field
+                                    </button>
+                                    <button
+                                        onClick={this.onClickDeleteField.bind(this)}
+                                        className="dropdown-item py-3">
+                                        <i className='bi bi-journal-x pe-2'/>Delete a field
+                                    </button>
+                                    <button
+                                        onClick={this.onClickEditCollection.bind(this, schema)}
+                                        className="dropdown-item py-3">
+                                        <i className='bi bi-pencil-square pe-2'/>Edit this collection
+                                    </button>
+                                    <button
+                                        onClick={this.onClickDeleteCollection.bind(this)}
+                                        className="dropdown-item py-3">
+                                        <i className='bi bi-folder-x pe-2'/>Delete this collection
+                                    </button>
+                                    <button
+                                        onClick={this.onClickAddCollection.bind(this)}
+                                        className="dropdown-item py-3">
+                                        <i className='bi bi-folder-plus pe-2'/>Add a collection
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                    )}/>
+                        )
+                    }}/>
                 <div className="overflow-auto">
                     <InfiniteScroll
                         className="h-100"
