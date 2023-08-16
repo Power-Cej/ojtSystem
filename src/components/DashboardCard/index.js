@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 import classNames from "../../classNames";
+import formatNumber from "../../formatNumber";
 
 const defaultProps = {
     className: "bg-white",
@@ -36,7 +37,7 @@ function DashboardCard({className, icon, label, value, labelAction, onClick}) {
                 <span className="fs-1">
                   <i className={icon}></i>
                 </span>
-                <h1>{count}</h1>
+                <h1>{count.toLocaleString()}</h1>
             </div>
             <div className="text-end">
                 <p className="m-0 text-truncate">{label}</p>
