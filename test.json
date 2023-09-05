@@ -1,164 +1,112 @@
 {
-  "collection": "residents",
-  "fields": {
-    "picture": {
-      "type": "String",
-      "_type": "Image",
-      "tab": "general",
-      "section": "personal",
-      "label": "Picture",
-      "read": false
+  "$or": [
+    {
+      "first_name": {
+        "$regex": "ALLAN",
+        "$options": "i"
+      }
     },
-    "signature": {
-      "type": "String",
-      "_type": "Signature",
-      "tab": "general",
-      "section": "personal",
-      "label": "Signature",
-      "read": false
+    {
+      "middle_name": {
+        "$regex": "ALLAN",
+        "$options": "i"
+      }
     },
-    "first_name": {
-      "type": "String",
-      "tab": "general",
-      "section": "personal",
-      "label": "First Name",
-      "placeholder": "e.g. JUAN",
-      "uppercase": true,
-      "index": 1
+    {
+      "last_name": {
+        "$regex": "ALLAN",
+        "$options": "i"
+      }
     },
-    "middle_name": {
-      "type": "String",
-      "tab": "general",
-      "section": "personal",
-      "label": "Middle Name",
-      "placeholder": "e.g. DELA",
-      "uppercase": true
+    {
+      "alias": {
+        "$regex": "ALLAN",
+        "$options": "i"
+      }
     },
-    "last_name": {
-      "type": "String",
-      "tab": "general",
-      "section": "personal",
-      "label": "Last Name",
-      "placeholder": "e.g. CRUZ",
-      "uppercase": true,
-      "index": 1
+    {
+      "sex": {
+        "$regex": "ALLAN",
+        "$options": "i"
+      }
     },
-    "employment_status": {
-      "label": "Employment Status",
-      "tab": "general",
-      "section": "employment",
-      "type": "String",
-      "_type": "Enum",
-      "options": [
-        "Employed",
-        "Unemployed",
-        "Resigned",
-        "Displaced Worker",
-        "OFW",
-        "Retired"
-      ]
+    {
+      "gender": {
+        "$regex": "ALLAN",
+        "$options": "i"
+      }
     },
-    "employment_type": {
-      "label": "Employment Type",
-      "tab": "general",
-      "section": "employment",
-      "type": "String",
-      "_type": "Enum",
-      "options": [
-        "Permanent",
-        "Self-Employed",
-        "Contractual",
-        "Seasonal",
-        "Compensation",
-        "Government Official"
-      ]
+    {
+      "civil_status": {
+        "$regex": "ALLAN",
+        "$options": "i"
+      }
     },
-    "employment_field": {
-      "type": "String",
-      "label": "Employment Field",
-      "tab": "general",
-      "section": "employment",
-      "_type": "Enum",
-      "options": [
-        "OFW",
-        "MEDICAL PRACTITIONERS",
-        "FISHERMAN",
-        "TEACHERS",
-        "CALL CENTER",
-        "CONSTRUCTION WORKER",
-        "KASAMBAHAY",
-        "FARMER",
-        "ARMED FORCES",
-        "ATHLETE",
-        "IT PRACTITIONERS",
-        "ENGINEER"
-      ]
+    {
+      "address": {
+        "$regex": "ALLAN",
+        "$options": "i"
+      }
     },
-    "occupation": {
-      "type": "String",
-      "tab": "general",
-      "section": "employment",
-      "placeholder": "e.g. NURSE",
-      "uppercase": true
+    {
+      "street": {
+        "$regex": "ALLAN",
+        "$options": "i"
+      }
     },
-    "voter_status": {
-      "type": "Boolean",
-      "tab": "organization",
-      "section": "resident",
-      "label": "Registered Voter",
-      "read": false
+    {
+      "first_name": {
+        "$regex": "BERNARDO",
+        "$options": "i"
+      }
     },
-    "precinct_number": {
-      "type": "String"
+    {
+      "middle_name": {
+        "$regex": "BERNARDO",
+        "$options": "i"
+      }
+    },
+    {
+      "last_name": {
+        "$regex": "BERNARDO",
+        "$options": "i"
+      }
+    },
+    {
+      "alias": {
+        "$regex": "BERNARDO",
+        "$options": "i"
+      }
+    },
+    {
+      "sex": {
+        "$regex": "BERNARDO",
+        "$options": "i"
+      }
+    },
+    {
+      "gender": {
+        "$regex": "BERNARDO",
+        "$options": "i"
+      }
+    },
+    {
+      "civil_status": {
+        "$regex": "BERNARDO",
+        "$options": "i"
+      }
+    },
+    {
+      "address": {
+        "$regex": "BERNARDO",
+        "$options": "i"
+      }
+    },
+    {
+      "street": {
+        "$regex": "BERNARDO",
+        "$options": "i"
+      }
     }
-  },
-  "sections": {
-    "personal": {
-      "label": "Personal Information"
-    },
-    "contact": {
-      "label": "Contact Information"
-    },
-    "family": {
-      "label": "Family Information"
-    },
-    "address": {
-      "label": "Address Information"
-    },
-    "employment": {
-      "label": "Employment Information"
-    },
-    "education": {
-      "label": "Educational Information"
-    },
-    "resident": {
-      "label": "Resident Information"
-    },
-    "organization": {
-      "label": "Organization Information"
-    },
-    "disability": {
-      "label": "Type Of Disability"
-    }
-  },
-  "tabs": {
-    "general": {
-      "label": "General Information"
-    },
-    "organization": {
-      "label": "Organization Information"
-    },
-    "house": {
-      "label": "House Profile Information"
-    },
-    "vehicle": {
-      "label": "Vehicle Information"
-    },
-    "health": {
-      "label": "Health Information"
-    },
-    "medicine": {
-      "label": "Medicine Information"
-    }
-  }
+  ]
 }

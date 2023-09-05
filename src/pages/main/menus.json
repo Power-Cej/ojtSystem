@@ -1,0 +1,23 @@
+[
+  {
+    "name": "Dashboard",
+    "route": "/collection/dashboard",
+    "icon": "bi bi-pie-chart"
+  },
+  {
+    "name": "Products",
+    "route": "/collection/residents",
+    "icon": "bi bi-people"
+  },
+  {
+    "name": "Settings",
+    "icon": "bi bi-sliders",
+    "route": [
+      {
+        "name": "Edit Account",
+        "route": "/account",
+        "icon": "bi bi-person-check"
+      }
+    ]
+  }
+]

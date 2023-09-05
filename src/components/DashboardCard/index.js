@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from "react";
 import classNames from "../../classNames";
-import formatNumber from "../../formatNumber";
 
 const defaultProps = {
     className: "bg-white",

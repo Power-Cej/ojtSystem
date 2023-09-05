@@ -1,5 +1,5 @@
 import React from "react";
-import DashboardCard from "../../../../components/DashboardCard";
+import {DashboardCard} from "nq-component";
 import {findObjectUseCase} from "../../../../usecases/object";
 
 const defaultProps = {
@@ -9,7 +9,7 @@ const defaultProps = {
 function Count({collection, label, icon, where, labelAction, ...props}) {
     const [count, setCount] = React.useState(0);
     React.useEffect(() => {
-        const query = {count: true, where, limit: 1}; // Move the 'query' object inside the useEffect callback
+        const query = {count: true, where, limit: -1}; // Move the 'query' object inside the useEffect callback
         async function fetchCount() {
             try {
                 const find = findObjectUseCase(); // Move the 'find' function inside the fetchCount function
