@@ -13,9 +13,9 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.services.panel.loadbalancer.server.port=80
-      - traefik.http.routers.panel.rule=Host("dashboard.figarocoffeegroup.com")
+      - traefik.http.routers.panel.rule=Host("dashboard.zyllem.figarocoffeegroup.com")
       - traefik.http.routers.panel.entrypoints=web
-      - traefik.http.routers.panel_secured.rule=Host("dashboard.figarocoffeegroup.com")
+      - traefik.http.routers.panel_secured.rule=Host("dashboard.zyllem.figarocoffeegroup.com")
       - traefik.http.routers.panel_secured.entrypoints=websecure
       - traefik.http.routers.panel_secured.tls.certresolver=myhttpchallenge
       - traefik.http.routers.panel.middlewares=redirect@file
