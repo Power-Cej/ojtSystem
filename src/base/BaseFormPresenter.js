@@ -38,6 +38,11 @@ class BaseFormPresenter {
         this.view.setObject(this.object);
     }
 
+    onChangeObject(object) {
+        this.change = object;
+        this.object = object;
+    }
+
     async save() {
         const collection = this.view.getCollectionName();
         if (this.object.id) {

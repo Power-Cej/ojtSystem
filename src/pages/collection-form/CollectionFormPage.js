@@ -51,7 +51,7 @@ class CollectionFormPage extends BaseFormPage {
                                                 ?
                                                 <InputJson
                                                     defaultValue={object}
-                                                    onChange={this.onChange.bind(this)}
+                                                    onChange={this.onChangeObject.bind(this)}
                                                     rows="15"/>
                                                 :
                                                 <FormFactory

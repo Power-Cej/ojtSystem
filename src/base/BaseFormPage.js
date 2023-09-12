@@ -29,6 +29,9 @@ class BaseFormPage extends BasePage {
     onChange(value, field) {
         this.presenter.onChange(value, field);
     }
+    onChangeObject(object) {
+        this.presenter.onChangeObject(object);
+    }
 
     getAcl() {
         const roles = this.getCurrentRoles();
