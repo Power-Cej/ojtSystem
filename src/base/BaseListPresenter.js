@@ -1,41 +1,57 @@
 class BaseListPresenter {
-    constructor(view, findObjectUseCase, deleteObjectUseCase) {
+    constructor(view, findObjectUseCase, countObjectUseCase, deleteObjectUseCase) {
         this.view = view;
         this.findObjectUseCase = findObjectUseCase;
+        this.countObjectUseCase = countObjectUseCase;
         this.deleteObjectUseCase = deleteObjectUseCase;
     }
 
     componentDidMount() {
         this.init();
-        this.getObjects();
+        return this.getObjects();
     }
 
     init() {
         this.limit = 10;
-        this.current = 1;
         this.where = {};
-        this.objects = [];
+        this.search = {};
+        this.filter = {};
+        this.include = ['all'];
         this.sort = {createdAt: -1};
+        this.reset();
+    }
+
+    reset() {
+        this.objects = [];
         this.view.setObjects([]);
         this.view.setSelected([]);
+        this.count = 0;
+        this.current = 1;
     }
 
     async getObjects() {
+        console.log('this.current', this.current);
         const collection = this.view.getCollectionName();
         const skip = (this.current - 1) * this.limit;
         const query = {
-            count: true,
             limit: this.limit,
             skip: skip,
-            where: this.where,
-            include: ['all'],
-            sort: this.sort
+            where: {...this.where, ...this.search, ...this.filter},
+            include: this.include,
+            sort: this.sort // it has bug it duplicate if no createdAt in the data
         };
         this.view.showProgress();
+        this.findObjectUseCase.abort();
         try {
-            const {count, objects} = await this.findObjectUseCase.execute(collection, query);
+            // cache count
+            if (this.count === 0) {
+                const {count} = await this.countObjectUseCase.execute(collection, {where: query.where});
+                this.count = count;
+            }
+            const objects = await this.findObjectUseCase.execute(collection, query);
             this.objects = this.objects.concat(objects);
-            this.view.setCount(count);
+            this.view.setTotal(this.objects.length);
+            this.view.setCount(this.count);
             this.view.setObjects(this.objects);
             this.view.hideProgress();
         } catch (error) {
@@ -56,9 +72,15 @@ class BaseListPresenter {
         this.view.setSelected(selectedObjects);
     }
 
-    searchSubmit(where) {
-        this.init();
-        this.where = where;
+    searchSubmit(search) {
+        this.reset();
+        this.search = search;
+        this.getObjects();
+    }
+
+    filterSubmit(where) {
+        this.reset();
+        this.filter = where;
         this.getObjects();
     }
 

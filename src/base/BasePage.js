@@ -129,7 +129,9 @@ class BasePage extends React.Component {
     setCurrentRoles(roles) {
         this.context.setGlobalState({roles});
     }
-
+    setGlobalState(state) {
+        this.context.setGlobalState(state);
+    }
     getCurrentRoles() {
         return this.context.roles;
     }
@@ -183,7 +185,13 @@ class BasePage extends React.Component {
     getParams() {
         return this.props.params;
     }
-
+    /**
+     * Get the value of query from URL
+     * @returns {*}
+     */
+    getQuery() {
+        return this.props.query;
+    }
     navigateBack() {
         this.navigateTo(-1);
     }

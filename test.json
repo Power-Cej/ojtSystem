@@ -1,115 +1,41 @@
 {
   "collection": "residents",
-  "fields": {
-    "picture": {
-      "type": "String",
-      "_type": "Image",
-      "tab": "general",
-      "section": "personal",
-      "label": "Picture",
-      "read": false
+  "filters": {
+    "barangay": {
+      "type": "Pointer",
+      "target": "barangay",
+      "placeholder": "All barangay",
+      "dynamic": false
+    }
+  },
+  "index": 3,
+  "tabs": {
+    "general": {
+      "label": "General Information"
     },
-    "signature": {
-      "type": "String",
-      "_type": "Signature",
-      "tab": "general",
-      "section": "personal",
-      "label": "Signature",
-      "read": false
+    "organization": {
+      "label": "Organization Information"
     },
-    "first_name": {
-      "type": "String",
-      "tab": "general",
-      "section": "personal",
-      "label": "First Name",
-      "placeholder": "e.g. JUAN",
-      "uppercase": true,
-      "index": 1
+    "house": {
+      "label": "House Profile Information"
     },
-    "middle_name": {
-      "type": "String",
-      "tab": "general",
-      "section": "personal",
-      "label": "Middle Name",
-      "placeholder": "e.g. DELA",
-      "uppercase": true
+    "vehicle": {
+      "label": "Vehicles Information"
     },
-    "last_name": {
-      "type": "String",
-      "tab": "general",
-      "section": "personal",
-      "label": "Last Name",
-      "placeholder": "e.g. CRUZ",
-      "uppercase": true,
-      "index": 1
+    "health": {
+      "label": "Health Information"
     },
-    "employment_status": {
-      "label": "Employment Status",
-      "tab": "general",
-      "section": "employment",
-      "type": "String",
-      "_type": "Enum",
-      "options": [
-        "Employed",
-        "Unemployed",
-        "Resigned",
-        "Displaced Worker",
-        "OFW",
-        "Retired"
-      ]
+    "badac": {
+      "label": "BADAC",
+      "if": {
+        "is_badac": true
+      }
     },
-    "employment_type": {
-      "label": "Employment Type",
-      "tab": "general",
-      "section": "employment",
-      "type": "String",
-      "_type": "Enum",
-      "options": [
-        "Permanent",
-        "Self-Employed",
-        "Contractual",
-        "Seasonal",
-        "Compensation",
-        "Government Official"
-      ]
+    "blotter": {
+      "label": "Blotter Report"
     },
-    "employment_field": {
-      "type": "String",
-      "label": "Employment Field",
-      "tab": "general",
-      "section": "employment",
-      "_type": "Enum",
-      "options": [
-        "OFW",
-        "MEDICAL PRACTITIONERS",
-        "FISHERMAN",
-        "TEACHERS",
-        "CALL CENTER",
-        "CONSTRUCTION WORKER",
-        "KASAMBAHAY",
-        "FARMER",
-        "ARMED FORCES",
-        "ATHLETE",
-        "IT PRACTITIONERS",
-        "ENGINEER"
-      ]
-    },
-    "occupation": {
-      "type": "String",
-      "tab": "general",
-      "section": "employment",
-      "placeholder": "e.g. NURSE",
-      "uppercase": true
-    },
-    "voter_status": {
-      "type": "Boolean",
-      "tab": "organization",
-      "section": "resident",
-      "label": "Registered Voter",
-      "read": false
-    },
-    "precinct_number": {
-      "type": "String"
+    "pet": {
+      "label": "Pets Information"
     }
   },
   "sections": {
@@ -131,34 +57,1633 @@
     "education": {
       "label": "Educational Information"
     },
-    "resident": {
-      "label": "Resident Information"
-    },
     "organization": {
       "label": "Organization Information"
+    },
+    "resident": {
+      "label": "Resident Information"
     },
     "disability": {
       "label": "Type Of Disability"
     }
   },
-  "tabs": {
-    "general": {
-      "label": "General Information"
+  "fields": {
+    "id": {
+      "type": "String",
+      "default": "${crypto.uuid}",
+      "setOnInsert": true,
+      "write": false,
+      "read": false,
+      "filter": false
     },
-    "organization": {
-      "label": "Organization Information"
+    "createdAt": {
+      "type": "Date",
+      "write": false,
+      "read": false,
+      "filter": false,
+      "default": "${date.iso}",
+      "setOnInsert": true
     },
-    "house": {
-      "label": "House Profile Information"
+    "updatedAt": {
+      "type": "Date",
+      "write": false,
+      "read": false,
+      "filter": false,
+      "value": "${date.iso}"
     },
-    "vehicle": {
-      "label": "Vehicle Information"
+    "acl": {
+      "type": "ACL",
+      "write": false,
+      "read": false,
+      "default": {
+        "read": [
+          "*",
+          "${user.id}"
+        ],
+        "write": [
+          "${user.id}"
+        ]
+      }
     },
-    "health": {
-      "label": "Health Information"
+    "unique": {
+      "type": "String",
+      "write": false,
+      "read": false,
+      "filter": false,
+      "unique": true
     },
-    "medicine": {
-      "label": "Medicine Information"
+    "picture": {
+      "type": "String",
+      "_type": "Image",
+      "tab": "general",
+      "section": "personal",
+      "label": "Picture",
+      "read": false,
+      "detail": true
+    },
+    "signature": {
+      "type": "String",
+      "_type": "Signature",
+      "tab": "general",
+      "section": "personal",
+      "label": "Signature",
+      "read": false
+    },
+    "government_id": {
+      "type": "String",
+      "_type": "Image",
+      "tab": "general",
+      "section": "personal",
+      "label": "Government Issued ID",
+      "read": false,
+      "print": true
+    },
+    "salutation": {
+      "type": "String",
+      "tab": "general",
+      "section": "personal",
+      "label": "Salutation",
+      "placeholder": "e.g. DR",
+      "uppercase": true,
+      "read": false,
+      "filter": false
+    },
+    "first_name": {
+      "type": "String",
+      "tab": "general",
+      "section": "personal",
+      "label": "First Name",
+      "placeholder": "e.g. JUAN",
+      "uppercase": true,
+      "read": false,
+      "required": true,
+      "filter": false
+    },
+    "middle_name": {
+      "type": "String",
+      "tab": "general",
+      "section": "personal",
+      "label": "Middle Name",
+      "placeholder": "e.g. DELA",
+      "uppercase": true,
+      "read": false,
+      "filter": false
+    },
+    "last_name": {
+      "type": "String",
+      "tab": "general",
+      "section": "personal",
+      "label": "Last Name",
+      "placeholder": "e.g. CRUZ",
+      "uppercase": true,
+      "read": false,
+      "required": true,
+      "filter": false
+    },
+    "suffix": {
+      "type": "String",
+      "tab": "general",
+      "section": "personal",
+      "label": "Suffix",
+      "placeholder": "e.g. (JR, SR)",
+      "uppercase": true,
+      "read": false,
+      "filter": false
+    },
+    "name": {
+      "type": "String",
+      "label": "Name",
+      "write": false,
+      "index": 1,
+      "_index": 1,
+      "value": "${object.last_name} ${object.first_name}"
+    },
+    "alias": {
+      "type": "String",
+      "tab": "general",
+      "section": "personal",
+      "label": "Alias",
+      "placeholder": "e.g. JUAN",
+      "uppercase": true,
+      "read": false,
+      "filter": false
+    },
+    "sex": {
+      "type": "String",
+      "_type": "Enum",
+      "tab": "general",
+      "section": "personal",
+      "label": "Sex",
+      "read": false,
+      "filter": false,
+      "options": [
+        "FEMALE",
+        "MALE"
+      ]
+    },
+    "gender": {
+      "type": "String",
+      "_type": "Enum",
+      "tab": "general",
+      "section": "personal",
+      "label": "Gender",
+      "read": false,
+      "filter": false,
+      "options": [
+        "LESBIAN",
+        "GAY",
+        "BISEXUAL",
+        "TRANSGENDER",
+        "QUEER",
+        "OTHER"
+      ]
+    },
+    "birthdate": {
+      "type": "Date",
+      "tab": "general",
+      "section": "personal",
+      "label": "Birth Date",
+      "read": false,
+      "detail": true,
+      "required": true,
+      "filter": false
+    },
+    "birthplace": {
+      "type": "String",
+      "_type": "Enum",
+      "tab": "general",
+      "section": "personal",
+      "label": "Birth Place",
+      "placeholder": "e.g. MANILA",
+      "uppercase": true,
+      "dynamic": true,
+      "read": false,
+      "filter": false,
+      "options": [
+        "ALAMINOS",
+        "ANGELES",
+        "ANTIPOLO",
+        "BACOLOD",
+        "BACOOR",
+        "BAGO",
+        "BAGUIO",
+        "BAIS",
+        "BALANGA",
+        "BATAC",
+        "BATANGAS CITY",
+        "BAYAWAN",
+        "BAYBAY",
+        "BAYUGAN",
+        "BIÑAN",
+        "BISLIG",
+        "BOGO",
+        "BORONGAN",
+        "BUTUAN",
+        "CABADBARAN",
+        "CABANATUAN",
+        "CABUYAO",
+        "CADIZ",
+        "CAGAYAN DE ORO",
+        "CALAMBA",
+        "CALAPAN",
+        "CALBAYOG",
+        "CALOOCAN",
+        "CANDON",
+        "CANLAON",
+        "CARCAR",
+        "CATBALOGAN",
+        "CAUAYAN",
+        "CAVITE CITY",
+        "CEBU CITY",
+        "COTABATO CITY",
+        "DAGUPAN",
+        "DANAO",
+        "DAPITAN",
+        "DASMARIÑAS",
+        "DAVAO CITY",
+        "DIGOS",
+        "DIPOLOG",
+        "DUMAGUETE",
+        "EL SALVADOR",
+        "ESCALANTE",
+        "GAPAN",
+        "GENERAL SANTOS",
+        "GENERAL TRIAS",
+        "GINGOOG",
+        "GUIHULNGAN",
+        "HIMAMAYLAN",
+        "ILAGAN",
+        "ILIGAN",
+        "ILOILO CITY",
+        "IMUS",
+        "IRIGA",
+        "ISABELA",
+        "KABANKALAN",
+        "KIDAPAWAN",
+        "KORONADAL",
+        "LA CARLOTA",
+        "LAMITAN",
+        "LAOAG",
+        "LAPU-LAPU",
+        "LAS PIÑAS",
+        "LEGAZPI",
+        "LIGAO",
+        "LIPA",
+        "LUCENA",
+        "MAASIN",
+        "MABALACAT",
+        "MAKATI",
+        "MALABON",
+        "MALAYBALAY",
+        "MALOLOS",
+        "MANDALUYONG",
+        "MANDAUE",
+        "MANILA",
+        "MARAWI",
+        "MARIKINA",
+        "MASBATE CITY",
+        "MATI",
+        "MEYCAUAYAN",
+        "MUÑOZ",
+        "MUNTINLUPA",
+        "NAGA (CAMARINES SUR)",
+        "NAGA (CEBU)",
+        "NAVOTAS",
+        "OLONGAPO",
+        "ORMOC",
+        "OROQUIETA",
+        "OZAMIZ",
+        "PAGADIAN",
+        "PALAYAN",
+        "PANABO",
+        "PARAÑAQUE",
+        "PASAY",
+        "PASIG",
+        "PASSI",
+        "PUERTO PRINCESA",
+        "QUEZON CITY",
+        "ROXAS",
+        "SAGAY",
+        "SAMAL",
+        "SAN CARLOS (NEGROS OCCIDENTAL)",
+        "SAN CARLOS (PANGASINAN)",
+        "SAN FERNANDO (LA UNION)",
+        "SAN FERNANDO (PAMPANGA)",
+        "SAN JOSE",
+        "SAN JOSE DEL MONTE",
+        "SAN JUAN",
+        "SAN PABLO",
+        "SAN PEDRO",
+        "SANTA ROSA",
+        "SANTIAGO",
+        "SILAY",
+        "SIPALAY",
+        "SORSOGON CITY",
+        "SURIGAO CITY",
+        "TABACO",
+        "TABUK",
+        "TACLOBAN",
+        "TACURONG",
+        "TAGAYTAY",
+        "TAGBILARAN",
+        "TAGUIG",
+        "TAGUM",
+        "TALISAY (CEBU)",
+        "TALISAY (NEGROS OCCIDENTAL)",
+        "TANAUAN",
+        "TANDAG",
+        "TANGUB",
+        "TANJAY",
+        "TARLAC CITY",
+        "TAYABAS",
+        "TOLEDO",
+        "TRECE MARTIRES",
+        "TUGUEGARAO",
+        "URDANETA",
+        "VALENCIA",
+        "VALENZUELA",
+        "VICTORIAS",
+        "VIGAN",
+        "ZAMBOANGA CITY"
+      ]
+    },
+    "civil_status": {
+      "type": "String",
+      "_type": "Enum",
+      "tab": "general",
+      "section": "personal",
+      "label": "Civil Status",
+      "read": false,
+      "filter": false,
+      "options": [
+        "SINGLE",
+        "MARRIED",
+        "DIVORCED",
+        "WIDOWED",
+        "SEPARATED",
+        "ANNULLED",
+        "LIVE−IN PARTNER"
+      ]
+    },
+    "height": {
+      "type": "String",
+      "_type": "Enum",
+      "tab": "general",
+      "section": "personal",
+      "label": "Height",
+      "read": false,
+      "filter": false,
+      "options": [
+        "121 cm / 47 in",
+        "122 cm / 48 in",
+        "123 cm / 48 in",
+        "124 cm / 48 in",
+        "125 cm / 49 in",
+        "126 cm / 49 in",
+        "127 cm / 50 in",
+        "128 cm / 50 in",
+        "129 cm / 50 in",
+        "130 cm / 51 in",
+        "131 cm / 51 in",
+        "132 cm / 51 in",
+        "133 cm / 52 in",
+        "134 cm / 52 in",
+        "135 cm / 53 in",
+        "136 cm / 53 in",
+        "137 cm / 53 in",
+        "138 cm / 54 in",
+        "139 cm / 54 in",
+        "140 cm / 55 in",
+        "141 cm / 55 in",
+        "142 cm / 55 in",
+        "143 cm / 56 in",
+        "144 cm / 56 in",
+        "145 cm / 57 in",
+        "146 cm / 57 in",
+        "147 cm / 57 in",
+        "148 cm / 58 in",
+        "149 cm / 58 in",
+        "150 cm / 59 in",
+        "151 cm / 59 in",
+        "152 cm / 59 in",
+        "153 cm / 60 in",
+        "154 cm / 60 in",
+        "155 cm / 61 in",
+        "156 cm / 61 in",
+        "157 cm / 61 in",
+        "158 cm / 62 in",
+        "159 cm / 62 in",
+        "160 cm / 62 in",
+        "161 cm / 63 in",
+        "162 cm / 63 in",
+        "163 cm / 64 in",
+        "164 cm / 64 in",
+        "165 cm / 64 in",
+        "166 cm / 65 in",
+        "167 cm / 65 in",
+        "168 cm / 66 in",
+        "169 cm / 66 in",
+        "170 cm / 66 in",
+        "171 cm / 67 in",
+        "172 cm / 67 in",
+        "173 cm / 68 in",
+        "174 cm / 68 in",
+        "175 cm / 68 in",
+        "176 cm / 69 in",
+        "177 cm / 69 in",
+        "178 cm / 70 in",
+        "179 cm / 70 in",
+        "180 cm / 70 in",
+        "181 cm / 71 in",
+        "182 cm / 71 in",
+        "183 cm / 72 in",
+        "184 cm / 72 in",
+        "185 cm / 72 in",
+        "186 cm / 73 in",
+        "187 cm / 73 in",
+        "188 cm / 74 in",
+        "189 cm / 74 in",
+        "190 cm / 74 in"
+      ]
+    },
+    "weight": {
+      "type": "String",
+      "_type": "Enum",
+      "tab": "general",
+      "section": "personal",
+      "label": "Weight",
+      "read": false,
+      "filter": false,
+      "options": [
+        "40 kg / 88 lbs",
+        "41 kg / 90 lbs",
+        "42 kg / 92 lbs",
+        "43 kg / 94 lbs",
+        "44 kg / 97 lbs",
+        "45 kg / 99 lbs",
+        "46 kg / 101 lbs",
+        "47 kg / 103 lbs",
+        "48 kg / 105 lbs",
+        "49 kg / 108 lbs",
+        "50 kg / 110 lbs",
+        "51 kg / 112 lbs",
+        "52 kg / 114 lbs",
+        "53 kg / 116 lbs",
+        "54 kg / 119 lbs",
+        "55 kg / 121 lbs",
+        "56 kg / 123 lbs",
+        "57 kg / 125 lbs",
+        "58 kg / 127 lbs",
+        "59 kg / 130 lbs",
+        "60 kg / 132 lbs",
+        "61 kg / 134 lbs",
+        "62 kg / 136 lbs",
+        "63 kg / 138 lbs",
+        "64 kg / 141 lbs",
+        "65 kg / 143 lbs",
+        "66 kg / 145 lbs",
+        "67 kg / 147 lbs",
+        "68 kg / 149 lbs",
+        "69 kg / 152 lbs",
+        "70 kg / 154 lbs",
+        "71 kg / 156 lbs",
+        "72 kg / 158 lbs",
+        "73 kg / 160 lbs",
+        "74 kg / 163 lbs",
+        "75 kg / 165 lbs",
+        "76 kg / 167 lbs",
+        "77 kg / 169 lbs",
+        "78 kg / 171 lbs",
+        "79 kg / 174 lbs",
+        "80 kg / 176 lbs"
+      ]
+    },
+    "blood_type": {
+      "type": "String",
+      "_type": "Enum",
+      "tab": "general",
+      "section": "personal",
+      "label": "Blood Type",
+      "read": false,
+      "filter": false,
+      "options": [
+        "A",
+        "A-",
+        "B",
+        "B-",
+        "AB",
+        "AB-",
+        "O",
+        "O-"
+      ]
+    },
+    "religion": {
+      "type": "String",
+      "_type": "Enum",
+      "tab": "general",
+      "section": "personal",
+      "label": "Religion",
+      "read": false,
+      "filter": false,
+      "options": [
+        "ROMAN CATHOLIC",
+        "PROTESTANTS",
+        "ISLAM",
+        "IGLESIA NI CRISTO",
+        "EL SHADDAI",
+        "AGLIPAYAN (PHILIPPINE INDEPENDENCE CHURCH)",
+        "JEHOVAH'S WITNESSES",
+        "WORLDWIDE CHURCH OF GOD",
+        "JUDAISM",
+        "BAPTIST WORLD ALLIANCE",
+        "EVANGELICAL",
+        "SEVENTH-DAY ADVENTISTS (CENTRAL PHIL. UNION CONF.)",
+        "CHURCH OF JESUS CHRIST AND THE LATTER DAY SAINTS",
+        "CHURCH OF THE NAZARENE"
+      ]
+    },
+    "ethnic_origin": {
+      "type": "String",
+      "_type": "Enum",
+      "tab": "general",
+      "section": "personal",
+      "label": "Ethnic Origin",
+      "read": false,
+      "filter": false,
+      "options": [
+        "TAGALOG",
+        "VISAYA OR BISAYA",
+        "CEBUANO",
+        "ILOCANO",
+        "HILAGAYNON OR ILONGGO",
+        "BIKOL",
+        "WARAY"
+      ]
+    },
+    "nationality": {
+      "type": "String",
+      "_type": "Enum",
+      "tab": "general",
+      "section": "personal",
+      "label": "Nationality",
+      "read": false,
+      "filter": false,
+      "options": [
+        "FILIPINO",
+        "AFGHAN",
+        "ALBANIAN",
+        "ALGERIAN",
+        "AMERICAN",
+        "ARGENTINIAN",
+        "AUSTRIAN",
+        "AUSTRALIAN",
+        "BANGLADESHI",
+        "BATSWANA",
+        "BELGIAN",
+        "BOLIVIAN",
+        "BRAZILIAN",
+        "BRITISH",
+        "BULGARIAN",
+        "CAMBODIAN",
+        "CAMEROONIAN",
+        "CANADIAN",
+        "CHILEAN",
+        "CHINESE",
+        "COLOMBIAN",
+        "COSTA RICAN",
+        "CROATIAN",
+        "CUBAN",
+        "CZECH",
+        "DANISH",
+        "DOMINICAN",
+        "DUTCH",
+        "ECUADORIAN",
+        "EGYPTIAN",
+        "EMIRATI",
+        "ENGLISH",
+        "ESTONIAN",
+        "ETHIOPIAN",
+        "FIJIAN",
+        "FINNISH",
+        "FRENCH",
+        "GERMAN",
+        "GHANAIAN",
+        "GREEK",
+        "GUATEMALAN",
+        "HAITIAN",
+        "HONDURAN",
+        "HUNGARIAN",
+        "ICELANDIC",
+        "INDIAN",
+        "INDONESIAN",
+        "IRANIAN",
+        "IRAQI",
+        "IRISH",
+        "ISRAELI",
+        "ITALIAN",
+        "JAMAICAN",
+        "JAPANESE",
+        "JORDANIAN",
+        "KENYAN",
+        "KOREAN",
+        "KUWAITI",
+        "LAO",
+        "LATVIAN",
+        "LEBANESE",
+        "LIBYAN",
+        "LITHUANIAN",
+        "MALAGASY",
+        "MALAYSIAN",
+        "MALIAN",
+        "MALTESE",
+        "MEXICAN",
+        "MONGOLIAN",
+        "MOROCCAN",
+        "MOZAMBICAN",
+        "NAMIBIAN",
+        "NEPALESE",
+        "NEW ZEALAND",
+        "NICARAGUAN",
+        "NIGERIAN",
+        "NORWEGIAN",
+        "PAKISTANI",
+        "PANAMANIAN",
+        "PARAGUAYAN",
+        "PERUVIAN",
+        "POLISH",
+        "PORTUGUESE",
+        "ROMANIAN",
+        "RUSSIAN",
+        "SALVADORIAN",
+        "SAUDI",
+        "SCOTTISH",
+        "SENEGALESE",
+        "SERBIAN",
+        "SINGAPOREAN",
+        "SLOVAK",
+        "SOUTH AFRICAN",
+        "SPANISH",
+        "SRI LANKAN",
+        "SUDANESE",
+        "SWEDISH",
+        "SWISS",
+        "SYRIAN",
+        "TAIWANESE",
+        "TAJIKISTANI",
+        "THAI",
+        "TONGAN",
+        "TUNISIAN",
+        "TURKISH",
+        "UKRAINIAN",
+        "URUGUAYAN",
+        "VENEZUELAN",
+        "VIETNAMESE",
+        "WELSH",
+        "ZAMBIAN",
+        "ZIMBABWEAN"
+      ]
+    },
+    "is_voter": {
+      "type": "Boolean",
+      "tab": "general",
+      "section": "personal",
+      "label": "Registered Voter",
+      "read": false
+    },
+    "precinct_number": {
+      "type": "String",
+      "tab": "general",
+      "section": "personal",
+      "label": "Precinct Number",
+      "placeholder": "Enter Precinct Number",
+      "index": 1,
+      "if": {
+        "is_voter": true
+      }
+    },
+    "resident_id": {
+      "type": "String",
+      "unique": true,
+      "read": false,
+      "write": false,
+      "filter": false
+    },
+    "is_head": {
+      "type": "Boolean",
+      "tab": "general",
+      "section": "personal",
+      "label": "Head of house hold",
+      "read": false
+    },
+    "email": {
+      "type": "String",
+      "label": "Email",
+      "tab": "general",
+      "section": "contact",
+      "placeholder": "e.g. username@domain.com",
+      "read": false,
+      "filter": false
+    },
+    "mobile": {
+      "type": "String",
+      "tab": "general",
+      "section": "contact",
+      "label": "Mobile",
+      "placeholder": "e.g. 09987654321",
+      "read": false,
+      "detail": true,
+      "filter": false
+    },
+    "phone": {
+      "type": "String",
+      "tab": "general",
+      "section": "contact",
+      "label": "Phone",
+      "placeholder": "e.g. 70234567",
+      "read": false,
+      "filter": false
+    },
+    "facebook": {
+      "type": "String",
+      "tab": "general",
+      "section": "contact",
+      "label": "Facebook",
+      "placeholder": "e.g. https://facebook.com/juan",
+      "read": false,
+      "filter": false
+    },
+    "twitter": {
+      "type": "String",
+      "tab": "general",
+      "section": "contact",
+      "label": "Twitter",
+      "placeholder": "e.g. https://twitter.com/juan",
+      "read": false,
+      "filter": false
+    },
+    "instagram": {
+      "type": "String",
+      "tab": "general",
+      "section": "contact",
+      "label": "Instagram",
+      "placeholder": "e.g. https://instagram.com/juan",
+      "read": false,
+      "filter": false
+    },
+    "mother": {
+      "type": "Pointer",
+      "target": "residents",
+      "read": false,
+      "tab": "general",
+      "section": "family",
+      "label": "Mother"
+    },
+    "father": {
+      "type": "Pointer",
+      "target": "residents",
+      "read": false,
+      "tab": "general",
+      "section": "family",
+      "label": "Father"
+    },
+    "spouse": {
+      "type": "Pointer",
+      "target": "residents",
+      "tab": "general",
+      "section": "family",
+      "label": "Spouse",
+      "read": false
+    },
+    "representative": {
+      "type": "Pointer",
+      "target": "residents",
+      "tab": "general",
+      "section": "family",
+      "label": "Representative",
+      "read": false
+    },
+    "purok": {
+      "type": "String",
+      "tab": "general",
+      "section": "address",
+      "label": "Purok",
+      "placeholder": "Enter Purok",
+      "read": false,
+      "filter": false
+    },
+    "barangay": {
+      "type": "Pointer",
+      "target": "barangay",
+      "tab": "general",
+      "section": "address",
+      "label": "Barangay"
+    },
+    "address": {
+      "type": "String",
+      "_type": "Text",
+      "tab": "general",
+      "section": "address",
+      "label": "Full Address",
+      "placeholder": "Full Address",
+      "read": false,
+      "filter": false
+    },
+    "street": {
+      "type": "String",
+      "tab": "general",
+      "section": "address",
+      "label": "Street",
+      "placeholder": "Street/Building Name",
+      "read": false,
+      "filter": false
+    },
+    "hoa": {
+      "type": "Pointer",
+      "target": "hoa",
+      "tab": "general",
+      "section": "address",
+      "label": "HOA Name",
+      "read": false
+    },
+    "employment_status": {
+      "label": "Employment Status",
+      "tab": "general",
+      "section": "employment",
+      "type": "String",
+      "_type": "Enum",
+      "read": false,
+      "filter": false,
+      "options": [
+        "FULL-TIME",
+        "PART-TIME",
+        "UNEMPLOYED",
+        "SEASONAL",
+        "CONTRACTUAL",
+        "COMPENSATION",
+        "SELF-EMPLOYED",
+        "RETIRED",
+        "DISPLACED WORKER",
+        "HOMEMAKER",
+        "INTERN"
+      ]
+    },
+    "employment_field": {
+      "type": "String",
+      "label": "Employment Field",
+      "tab": "general",
+      "section": "employment",
+      "_type": "Enum",
+      "dynamic": true,
+      "read": false,
+      "filter": false,
+      "options": [
+        "FARMER",
+        "FISHERMAN",
+        "CONSTRUCTION",
+        "EDUCATION",
+        "FINANCIAL SERVICES",
+        "HEALTH CARE",
+        "INFORMATION TECHNOLOGY",
+        "MANUFACTURING",
+        "MINING",
+        "REAL ESTATE",
+        "GOVERNMENT SERVICES",
+        "CALL CENTER",
+        "KASAMBAHAY",
+        "ATHLETE",
+        "ENGINEER",
+        "OFW"
+      ],
+      "conditions": [
+        {
+          "if": {
+            "not": {
+              "employment_status": "SELF-EMPLOYED"
+            }
+          }
+        },
+        {
+          "if": {
+            "not": {
+              "employment_status": "UNEMPLOYED"
+            }
+          }
+        }
+      ]
+    },
+    "occupation": {
+      "type": "String",
+      "tab": "general",
+      "section": "employment",
+      "placeholder": "e.g. NURSE",
+      "uppercase": true,
+      "label": "Occupation",
+      "read": false,
+      "filter": false,
+      "if": {
+        "not": {
+          "employment_status": "UNEMPLOYED"
+        }
+      }
+    },
+    "monthly_income": {
+      "type": "String",
+      "_type": "Enum",
+      "label": "Monthly Income",
+      "tab": "general",
+      "section": "employment",
+      "read": false,
+      "filter": false,
+      "options": [
+        "0 - 1,000",
+        "1,001 - 5,000",
+        "5,001 - 10,000",
+        "10,001 - 25,000",
+        "25,001 - 50,000",
+        "50,001 - 75,000",
+        "75,001 - 100,000",
+        "100,001 - 250,000",
+        "250,001 - 500,000",
+        "500,001 - 1,000,000",
+        "1,000,001+"
+      ],
+      "if": {
+        "not": {
+          "employment_status": "UNEMPLOYED"
+        }
+      }
+    },
+    "businesses": {
+      "type": "Relation",
+      "_type": "Related",
+      "target": "businesses",
+      "label": "Business Details",
+      "tab": "general",
+      "section": "employment",
+      "col": "col-12",
+      "read": false,
+      "filter": false,
+      "if": {
+        "employment_status": "SELF-EMPLOYED"
+      }
+    },
+    "highest_educational_attainment": {
+      "type": "String",
+      "_type": "Enum",
+      "tab": "general",
+      "section": "education",
+      "label": "Highest Educational Attainment",
+      "read": false,
+      "filter": false,
+      "options": [
+        "NO FORMAL EDUCATION",
+        "ELEMENTARY LEVEL",
+        "HIGH SCHOOL LEVEL",
+        "HIGH SCHOOL GRADUATE",
+        "VOCATIONAL",
+        "COLLEGE LEVEL",
+        "BACHELOR'S DEGREE",
+        "MASTER'S DEGREE",
+        "DOCTORATE DEGREE",
+        "SPECIAL EDUCATION",
+        "ASSOCIATE DEGREE",
+        "ALS (ALTERNATIVE LEARNING SYSTEM)"
+      ]
+    },
+    "is_private_school": {
+      "type": "Boolean",
+      "tab": "general",
+      "section": "education",
+      "label": "Private School",
+      "read": false,
+      "if": {
+        "not": {
+          "highest_educational_attainment": "NO FORMAL EDUCATION",
+          "is_public_school": true
+        }
+      }
+    },
+    "is_public_school": {
+      "type": "Boolean",
+      "tab": "general",
+      "section": "education",
+      "label": "Public School",
+      "read": false,
+      "if": {
+        "not": {
+          "highest_educational_attainment": "NO FORMAL EDUCATION",
+          "is_private_school": true
+        }
+      }
+    },
+    "is_tricycle": {
+      "type": "Boolean",
+      "tab": "organization",
+      "section": "resident",
+      "label": "Tricycle Organization",
+      "read": false
+    },
+    "is_jeep": {
+      "type": "Boolean",
+      "tab": "organization",
+      "section": "resident",
+      "label": "Jeepney Organization",
+      "read": false
+    },
+    "is_puv": {
+      "type": "Boolean",
+      "tab": "organization",
+      "section": "resident",
+      "label": "Public Utility Vehicle  Organization",
+      "read": false
+    },
+    "is_sidecar": {
+      "type": "Boolean",
+      "tab": "organization",
+      "section": "resident",
+      "label": "Sidecar Organization",
+      "read": false
+    },
+    "is_motor": {
+      "type": "Boolean",
+      "tab": "organization",
+      "section": "resident",
+      "label": "Motor Cycle Organization",
+      "read": false
+    },
+    "is_bicycle": {
+      "type": "Boolean",
+      "tab": "organization",
+      "section": "resident",
+      "label": "Bicycle Organization",
+      "read": false
+    },
+    "is_cso": {
+      "type": "Boolean",
+      "tab": "organization",
+      "section": "resident",
+      "label": "Civil Society Organization",
+      "read": false
+    },
+    "is_ngo": {
+      "type": "Boolean",
+      "tab": "organization",
+      "section": "resident",
+      "label": "Non Goverment Organizations",
+      "read": false
+    },
+    "is_solo_parent": {
+      "type": "Boolean",
+      "tab": "organization",
+      "section": "resident",
+      "label": "Solo Parent",
+      "read": false
+    },
+    "is_4ps": {
+      "type": "Boolean",
+      "tab": "organization",
+      "section": "resident",
+      "label": "4Ps",
+      "read": false
+    },
+    "is_pwd": {
+      "read": false,
+      "type": "Boolean",
+      "tab": "organization",
+      "section": "resident",
+      "label": "Person With Disablity"
+    },
+    "4ps_id": {
+      "type": "String",
+      "tab": "organization",
+      "section": "organization",
+      "label": "4Ps ID Number",
+      "placeholder": "4Ps ID Number",
+      "read": false,
+      "filter": false,
+      "if": {
+        "is_4ps": true
+      }
+    },
+    "pwd_id": {
+      "type": "String",
+      "tab": "organization",
+      "section": "organization",
+      "label": "Person With Disability ID Number",
+      "placeholder": "Person With Disability ID Number",
+      "read": false,
+      "filter": false,
+      "if": {
+        "is_pwd": true
+      }
+    },
+    "solo_parent_id": {
+      "type": "String",
+      "tab": "organization",
+      "section": "organization",
+      "label": "Solo Parent ID Number",
+      "placeholder": "Solo Parent ID Number",
+      "read": false,
+      "filter": false,
+      "if": {
+        "is_solo_parent": true
+      }
+    },
+    "politics_position": {
+      "type": "String",
+      "tab": "organization",
+      "section": "organization",
+      "label": "Government Position",
+      "placeholder": "e.g. MAYOR",
+      "read": false,
+      "uppercase": true,
+      "filter": false,
+      "if": {
+        "is_politician": true
+      }
+    },
+    "organizations": {
+      "type": "Relation",
+      "_type": "Related",
+      "target": "resident_organizations",
+      "tab": "organization",
+      "section": "organization",
+      "label": "Organization Details",
+      "read": false,
+      "detail": true,
+      "col": "col-12",
+      "conditions": [
+        {
+          "if": {
+            "is_tricycle": true
+          }
+        },
+        {
+          "if": {
+            "is_jeep": true
+          }
+        },
+        {
+          "if": {
+            "is_puv": true
+          }
+        },
+        {
+          "if": {
+            "is_sidecar": true
+          }
+        },
+        {
+          "if": {
+            "is_motor": true
+          }
+        },
+        {
+          "if": {
+            "is_bicycle": true
+          }
+        },
+        {
+          "if": {
+            "is_cso": true
+          }
+        },
+        {
+          "if": {
+            "is_ngo": true
+          }
+        },
+        {
+          "if": {
+            "is_solo_parent": true
+          }
+        },
+        {
+          "if": {
+            "is_4ps": true
+          }
+        },
+        {
+          "if": {
+            "is_pwd": true
+          }
+        }
+      ]
+    },
+    "is_pensioner": {
+      "type": "Boolean",
+      "tab": "organization",
+      "section": "resident",
+      "label": "Senior Pensioner",
+      "read": false
+    },
+    "is_politician": {
+      "type": "Boolean",
+      "tab": "organization",
+      "section": "resident",
+      "label": "Active in Politics",
+      "read": false
+    },
+    "water_source": {
+      "type": "String",
+      "_type": "Enum",
+      "tab": "house",
+      "label": "Water Source",
+      "dynamic": true,
+      "read": false,
+      "filter": false,
+      "options": [
+        "Maynilad",
+        "NAWASA",
+        "DEEP WEll"
+      ]
+    },
+    "electricity": {
+      "read": false,
+      "type": "String",
+      "tab": "house",
+      "label": "Electricity",
+      "_type": "Enum",
+      "filter": false,
+      "options": [
+        "TAPPED",
+        "OWNED",
+        "ILLEGAL CONNECTION",
+        "NO ACCESS TO ELECTRICITY"
+      ]
+    },
+    "house_build": {
+      "read": false,
+      "type": "String",
+      "tab": "house",
+      "label": "House Build",
+      "_type": "Enum",
+      "filter": false,
+      "options": [
+        "CONCRETE",
+        "CONCRETE/WOOD",
+        "WOOD",
+        "MAKESHIFT HOME",
+        "KUBO"
+      ]
+    },
+    "toilet": {
+      "read": false,
+      "type": "String",
+      "tab": "house",
+      "label": "Toilet",
+      "_type": "Enum",
+      "filter": false,
+      "options": [
+        "OPEN PIT",
+        "CLOSE PIT",
+        "WATER SEALED SEPTIC TANK",
+        "WATER SEALED SEPTIC TANK SHARED",
+        "WATER SEALED SEPTIC DEPOSITORY",
+        "WATER SEALED SEPTIC DEPOSITORY SHARED",
+        "NO ACCESS TO TOILET"
+      ]
+    },
+    "living_situation": {
+      "read": false,
+      "type": "String",
+      "tab": "house",
+      "label": "Living Situation",
+      "_type": "Enum",
+      "filter": false,
+      "options": [
+        "LIVING ALONE",
+        "LIVING WITH PARENTS",
+        "LIVING WITH SPOUSE/PARTNER",
+        "LIVING IN A DORMITORY/BED-SPACE"
+      ]
+    },
+    "housing_situation": {
+      "read": false,
+      "type": "String",
+      "_type": "Enum",
+      "tab": "house",
+      "label": "Housing Situation",
+      "filter": false,
+      "options": [
+        "OWNED HOUSE",
+        "RENTED HOUSE/APARTMENT",
+        "MORTGAGED HOUSE",
+        "GOVERNMENT-SUBSIDIZED HOUSING",
+        "INFORMAL SETTLER",
+        "HOMELESS/SHELTER",
+        "OWNED CONDO",
+        "RENTED CONDO"
+      ]
+    },
+    "landlord": {
+      "type": "Pointer",
+      "target": "residents",
+      "label": "Landlord",
+      "tab": "house",
+      "read": false,
+      "conditions": [
+        {
+          "if": {
+            "housing_situation": "RENTED HOUSE/APARTMENT"
+          }
+        },
+        {
+          "if": {
+            "housing_situation": "RENTED CONDO"
+          }
+        }
+      ]
+    },
+    "drug_type": {
+      "read": false,
+      "type": "String",
+      "_type": "Enum",
+      "tab": "badac",
+      "label": "Type of illegal drugs",
+      "filter": false,
+      "options": [
+        "MARIJUANA",
+        "SYNTHETIC MARIJUANA",
+        "INHALANTS",
+        "KETAMINE",
+        "HEROIN",
+        "ECSTASY",
+        "HALLUCINOGENS",
+        "COCAINE",
+        "METHAMPHETAMINE(SHABU)",
+        "LSD(ACIDS)",
+        "PRESCRIPTION DRUGS"
+      ]
+    },
+    "pwuds_status": {
+      "read": false,
+      "type": "String",
+      "_type": "Enum",
+      "tab": "badac",
+      "label": "P W U D S Status",
+      "filter": false,
+      "options": [
+        "ACTIVE USER",
+        "ACTIVE PUSHER",
+        "UNDER MONITORING",
+        "UNDER REHABILITATION",
+        "REHABILITATED",
+        "CITY REHABILITATION PROGRAM",
+        "DETAIN TO"
+      ]
+    },
+    "pwuds_remark": {
+      "type": "String",
+      "_type": "Enum",
+      "tab": "badac",
+      "label": "PWUDS Remark",
+      "read": false,
+      "filter": false,
+      "options": [
+        "DETAINED",
+        "DECEASED",
+        "SURRENDERS",
+        "BAILED",
+        "NONE"
+      ],
+      "if": {
+        "not": {
+          "pwuds_status": null
+        }
+      }
+    },
+    "rehab_facility": {
+      "read": false,
+      "type": "String",
+      "_type": "Enum",
+      "tab": "badac",
+      "label": "Rehabilitation Facility",
+      "filter": false,
+      "options": [
+        "AMAZING GIFT OF RECOVERY",
+        "BRIDEHALL COMMUNITY FOUND.INC",
+        "CENTER FOR CHRISTIANS",
+        "CHANGE AND RECOVERY TREATMENT CENTER",
+        "CROSSROAD TREATMENT AND REHABILITATION INC",
+        "DOH REHABILITATION AND TREATMENT CENTER",
+        "HEART OF JESUS TREATMENT AND REHABILITATION CENTER",
+        "HIGH POWER PLACE INC",
+        "LIGHT AND CHANGE REHABILITATION CENTER",
+        "LIFE LINE REHABILITATION CENTER",
+        "LORD'S AGAPE RECOVERY CENTER",
+        "LINGAP MAPAGKALINGANG REHABILITASYON"
+      ]
+    },
+    "drug_rehab_history": {
+      "read": false,
+      "type": "String",
+      "_type": "Text",
+      "tab": "badac",
+      "label": "History Of Rehabilitation",
+      "filter": false
+    },
+    "drug_history": {
+      "read": false,
+      "type": "String",
+      "_type": "Text",
+      "tab": "badac",
+      "label": "History of illegal drug use",
+      "filter": false
+    },
+    "modus_operandi": {
+      "read": false,
+      "type": "String",
+      "_type": "Text",
+      "tab": "badac",
+      "label": "Drug related modus operandi",
+      "filter": false
+    },
+    "badac_picture": {
+      "read": false,
+      "type": "String",
+      "_type": "Image",
+      "tab": "badac",
+      "label": "Badac Picture"
+    },
+    "badac_files": {
+      "type": "String",
+      "tab": "badac",
+      "label": "Badac Files",
+      "read": false,
+      "write": false,
+      "filter": false
+    },
+    "medicines": {
+      "read": false,
+      "type": "Relation",
+      "target": "medicines",
+      "tab": "health",
+      "label": "Medicines"
+    },
+    "assistive": {
+      "read": false,
+      "type": "String",
+      "tab": "health",
+      "label": "Assistive Device",
+      "_type": "Enum",
+      "filter": false,
+      "options": [
+        "Wheel Chair",
+        "Electronic Wheel Chair",
+        "Crutches",
+        "Walker",
+        "Quad Cane",
+        "White Cane"
+      ]
+    },
+    "is_badac": {
+      "read": false,
+      "type": "Boolean",
+      "tab": "health",
+      "label": "B.A.D.A.C"
+    },
+    "vaccines": {
+      "type": "Relation",
+      "_type": "Related",
+      "target": "vaccines",
+      "read": false,
+      "tab": "health",
+      "col": "col-12",
+      "label": "Vaccines"
+    },
+    "learning_disability": {
+      "type": "String",
+      "_type": "Enum",
+      "tab": "pwd",
+      "section": "disability",
+      "label": "Learning Disabilities",
+      "read": false,
+      "filter": false,
+      "options": [
+        "ADHD",
+        "Dyslexia",
+        "Dyscalcula",
+        "Dysgraphia"
+      ]
+    },
+    "psychological_disability": {
+      "type": "String",
+      "_type": "Enum",
+      "tab": "pwd",
+      "section": "disability",
+      "label": "Psychological Disabilities",
+      "read": false,
+      "filter": false,
+      "options": [
+        "Mentally ill",
+        "Brain Injury",
+        "Schizophrenia"
+      ]
+    },
+    "visual_disability": {
+      "type": "String",
+      "_type": "Enum",
+      "tab": "pwd",
+      "section": "disability",
+      "label": "Visual Disabilities",
+      "read": false,
+      "filter": false,
+      "options": [
+        "Total",
+        "Partial",
+        "Low Vision"
+      ]
+    },
+    "development_disability": {
+      "type": "String",
+      "_type": "Enum",
+      "tab": "pwd",
+      "section": "disability",
+      "label": "Development Disabilities",
+      "read": false,
+      "filter": false,
+      "options": [
+        "Mental Retardation",
+        "Down Syndrome",
+        "Cerebral Palsy",
+        "Epilepsy",
+        "Autism"
+      ]
+    },
+    "deaf_disability": {
+      "type": "String",
+      "_type": "Enum",
+      "tab": "pwd",
+      "section": "disability",
+      "label": "Deaf",
+      "read": false,
+      "filter": false,
+      "options": [
+        "Hard of Hearing",
+        "Deaf"
+      ]
+    },
+    "other_disability": {
+      "type": "String",
+      "tab": "pwd",
+      "section": "disability",
+      "label": "Others",
+      "read": false,
+      "filter": false
+    },
+    "is_priority": {
+      "type": "Boolean",
+      "tab": "health",
+      "label": "Evacuation Priority",
+      "read": false
+    },
+    "blotters": {
+      "type": "Relation",
+      "_type": "Related",
+      "target": "blotters",
+      "col": "col-12",
+      "tab": "blotter",
+      "label": "Cases",
+      "read": false
+    },
+    "vehicles": {
+      "type": "Relation",
+      "_type": "Related",
+      "target": "vehicles",
+      "col": "col-12",
+      "tab": "vehicle",
+      "label": "Vehicles",
+      "read": false
+    },
+    "pets": {
+      "type": "Relation",
+      "_type": "Related",
+      "target": "pets",
+      "col": "col-12",
+      "tab": "pet",
+      "label": "Pets",
+      "read": false
     }
+  },
+  "permissions": {
+    "create": [
+      "*",
+      "role:admin"
+    ],
+    "get": [
+      "*",
+      "role:admin"
+    ],
+    "find": [
+      "*",
+      "role:admin"
+    ],
+    "update": [
+      "*",
+      "role:admin"
+    ],
+    "delete": [],
+    "modify": []
   }
 }

@@ -4,6 +4,7 @@ import {Table, dialog, Button} from "nq-component";
 import AddField from "./components/AddField";
 import {addSchemaUseCase, updateSchemaUseCase, deleteSchemaUseCase} from '../../usecases/schema/usecases';
 import {
+    countObjectUseCase,
     deleteObjectUseCase,
     findObjectUseCase,
     upsertUseCase
@@ -27,6 +28,7 @@ class CollectionListPage extends BaseListPage {
         this.presenter = new CollectionListPresenter(
             this,
             findObjectUseCase(),
+            countObjectUseCase(),
             deleteObjectUseCase(),
             upsertUseCase(),
             exportCSVUseCase(),
@@ -218,7 +220,7 @@ class CollectionListPage extends BaseListPage {
                         hasMore={(!progress && count > objects.length)}>
                         <div className="p-3 p-lg-4">
                             <div className="d-flex justify-content-between align-items-center">
-                                <h1 className="fw-bold mt-3 text-capitalize">{schema.label || this.getCollectionName()}</h1>
+                                <h1 className="fw-bold text-capitalize">{schema.label || this.getCollectionName()}</h1>
                                 {
                                     selected.length > 0 ? (
                                             <div>
