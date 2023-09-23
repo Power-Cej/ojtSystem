@@ -7,13 +7,14 @@ import BaseListPresenter from "../../base/BaseListPresenter";
 class CollectionListPresenter extends BaseListPresenter {
     constructor(view,
                 findObjectUseCase,
+                countObjectUseCase,
                 deleteObjectUseCase,
                 upsertUseCase,
                 exportCSVUseCase,
                 addSchemaUseCase,
                 updateSchemaUseCase,
                 deleteSchemaUseCase) {
-        super(view, findObjectUseCase, deleteObjectUseCase);
+        super(view, findObjectUseCase, countObjectUseCase, deleteObjectUseCase);
         this.upsertUseCase = upsertUseCase;
         this.exportCSVUseCase = exportCSVUseCase;
         this.addSchemaUseCase = addSchemaUseCase;

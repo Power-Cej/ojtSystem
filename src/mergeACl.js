@@ -8,15 +8,16 @@
 function mergeACl(documents) {
     return documents.reduce((acc, cur) => {
         // Initialize 'read' and 'write' arrays if they haven't been already
-        acc.read = acc.read || [];
-        acc.write = acc.write || [];
+        cur.acl = cur.acl || {};
+        cur.acl.read = cur.acl.read || [];
+        cur.acl.write = cur.acl.write || [];
         // Merge current document's 'read' and 'write' arrays with the accumulated ones
         // and use Set to remove duplicates
         acc.read = [...new Set([...acc.read, ...cur.acl.read])];
         acc.write = [...new Set([...acc.write, ...cur.acl.write])];
         // Return the updated accumulator for the next iteration (or as the final result)
         return acc;
-    }, {});
+    }, {read: [], write: []});
 }
 
 export default mergeACl;

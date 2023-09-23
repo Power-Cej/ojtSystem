@@ -5,7 +5,8 @@ class BaseListPage extends BasePage {
         objects: [],
         selected: [],
         progress: true,
-        count: 0,
+        total: 0,
+        count: 0
     };
 
     getCollectionName() {
@@ -44,12 +45,19 @@ class BaseListPage extends BasePage {
         this.presenter.loadMore();
     }
 
-    searchSubmit(query) {
-        this.presenter.searchSubmit(query);
+    searchSubmit(where, merge) {
+        this.presenter.searchSubmit(where, merge);
+    }
+    filterSubmit(where) {
+        this.presenter.filterSubmit(where);
     }
 
     setCount(count) {
         this.setState({count});
+    }
+
+    setTotal(total) {
+        this.setState({total});
     }
 
     onSelect(index) {
