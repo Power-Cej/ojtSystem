@@ -1,19 +1,23 @@
-import React from 'react';
-import CollectionListPresenter from './CollectionListPresenter';
-import {Table, dialog, Button} from "nq-component";
+import React from "react";
+import CollectionListPresenter from "./CollectionListPresenter";
+import { Table, dialog, Button } from "nq-component";
 import AddField from "./components/AddField";
-import {addSchemaUseCase, updateSchemaUseCase, deleteSchemaUseCase} from '../../usecases/schema/usecases';
 import {
-    countObjectUseCase,
-    deleteObjectUseCase,
-    findObjectUseCase,
-    upsertUseCase
-} from '../../usecases/object';
-import {exportCSVUseCase} from '../../usecases/csv/usecases';
+  addSchemaUseCase,
+  updateSchemaUseCase,
+  deleteSchemaUseCase,
+} from "../../usecases/schema/usecases";
+import {
+  countObjectUseCase,
+  deleteObjectUseCase,
+  findObjectUseCase,
+  upsertUseCase,
+} from "../../usecases/object";
+import { exportCSVUseCase } from "../../usecases/csv/usecases";
 import FormCollection from "./components/FormCollection";
 import DeleteCollection from "./components/DeleteCollection";
 import DeleteField from "./components/DeleteField";
-import {Progress, InfiniteScroll} from "nq-component";
+import { Progress, InfiniteScroll } from "nq-component";
 import FormAccess from "./components/FormAccess";
 import mergeACl from "../../mergeACl";
 import withRouter from "../../withRouter";
@@ -23,293 +27,332 @@ import NavBar from "../../components/navbar";
 import InputFactory from "../../components/InputFactory";
 
 class CollectionListPage extends BaseListPage {
-    constructor(props) {
-        super(props);
-        this.presenter = new CollectionListPresenter(
-            this,
-            findObjectUseCase(),
-            countObjectUseCase(),
-            deleteObjectUseCase(),
-            upsertUseCase(),
-            exportCSVUseCase(),
-            addSchemaUseCase(),
-            updateSchemaUseCase(),
-            deleteSchemaUseCase(),
-        );
+  constructor(props) {
+    super(props);
+    this.presenter = new CollectionListPresenter(
+      this,
+      findObjectUseCase(),
+      countObjectUseCase(),
+      deleteObjectUseCase(),
+      upsertUseCase(),
+      exportCSVUseCase(),
+      addSchemaUseCase(),
+      updateSchemaUseCase(),
+      deleteSchemaUseCase()
+    );
+  }
+
+  /*when class change*/
+  componentDidUpdate(prevProps, prevState) {
+    this.presenter.componentDidUpdate(prevProps, prevState);
+  }
+
+  closeDialog() {
+    dialog.close();
+  }
+
+  onClickAddCollection() {
+    // create empty schema
+    dialog.fire({
+      html: (
+        <FormCollection
+          schema={{}}
+          onSubmit={(schema) => this.presenter.onSubmitAddCollection(schema)}
+          onCancel={() => dialog.close()}
+        />
+      ),
+      footer: false,
+    });
+  }
+
+  onClickEditCollection(schema) {
+    dialog.fire({
+      html: (
+        <FormCollection
+          schema={schema}
+          onSubmit={(s) => this.presenter.onSubmitEditCollection(s)}
+          onCancel={() => dialog.close()}
+        />
+      ),
+      footer: false,
+    });
+  }
+
+  onClickAddField(schema) {
+    const schemas = this.getSchemas();
+    dialog.fire({
+      html: (
+        <AddField
+          schema={schema}
+          collections={schemas.map((s) => s.collection)}
+          onSubmit={(s) => this.presenter.onSubmitEditCollection(s)}
+          onCancel={() => dialog.close()}
+        />
+      ),
+      footer: false,
+    });
+  }
+
+  onCLickAccess() {
+    function submit(acl) {
+      this.presenter.onSubmitAccess(acl);
     }
 
-    /*when class change*/
-    componentDidUpdate(prevProps, prevState) {
-        this.presenter.componentDidUpdate(prevProps, prevState);
-    }
+    const acl = mergeACl(this.state.selected);
+    dialog.fire({
+      html: (
+        <FormAccess
+          currentUser={this.getCurrentUser()}
+          acl={acl}
+          onSubmit={submit.bind(this)}
+          onCancel={() => dialog.close()}
+        />
+      ),
+      footer: false,
+    });
+  }
 
-    closeDialog() {
-        dialog.close();
-    }
+  onClickDeleteField() {
+    const schema = this.getSchema(this.getCollectionName());
+    dialog.fire({
+      html: (
+        <DeleteField
+          fields={Object.keys(schema.fields)}
+          onSubmit={(f) => this.presenter.onSubmitDeleteField(f)}
+          onCancel={() => dialog.close()}
+        />
+      ),
+      footer: false,
+    });
+  }
 
+  onClickDeleteCollection() {
+    const schema = this.getSchema(this.getCollectionName());
+    dialog.fire({
+      html: (
+        <DeleteCollection
+          schema={schema}
+          onSubmit={() =>
+            this.presenter.onSubmitDeleteCollection(schema.collection)
+          }
+          onCancel={() => dialog.close()}
+        />
+      ),
+      footer: false,
+    });
+  }
 
-    onClickAddCollection() {
-        // create empty schema
-        dialog.fire({
-            html: <FormCollection
-                schema={{}}
-                onSubmit={(schema) => this.presenter.onSubmitAddCollection(schema)}
-                onCancel={() => dialog.close()}/>,
-            footer: false
-        });
-    }
+  onClickImport() {
+    this.presenter.onClickImport();
+  }
 
-    onClickEditCollection(schema) {
-        dialog.fire({
-            html: <FormCollection
-                schema={schema}
-                onSubmit={s => this.presenter.onSubmitEditCollection(s)}
-                onCancel={() => dialog.close()}/>,
-            footer: false
-        });
-    }
+  onClickExport() {
+    this.presenter.onClickExport();
+  }
 
-    onClickAddField(schema) {
-        const schemas = this.getSchemas();
-        dialog.fire({
-            html: <AddField
-                schema={schema}
-                collections={schemas.map(s => s.collection)}
-                onSubmit={s => this.presenter.onSubmitEditCollection(s)}
-                onCancel={() => dialog.close()}/>,
-            footer: false,
-        });
-    }
-
-    onCLickAccess() {
-        function submit(acl) {
-            this.presenter.onSubmitAccess(acl);
+  onChangeFilter(type, value, field) {
+    const where = {};
+    switch (type) {
+      case "Pointer":
+        if (Object.keys(value).length > 0) {
+          where[field] = { id: value.id };
         }
-
-        const acl = mergeACl(this.state.selected);
-        dialog.fire({
-            html: <FormAccess
-                currentUser={this.getCurrentUser()}
-                acl={acl}
-                onSubmit={submit.bind(this)}
-                onCancel={() => dialog.close()}/>,
-            footer: false
-        });
+        break;
+      case "Boolean":
+        where[field] = value;
+        break;
+      default:
+        where[field] = { $regex: value, $options: "i" };
     }
+    this.searchSubmit(where);
+  }
 
-    onClickDeleteField() {
-        const schema = this.getSchema(this.getCollectionName());
-        dialog.fire({
-            html: <DeleteField
-                fields={Object.keys(schema.fields)}
-                onSubmit={(f) => this.presenter.onSubmitDeleteField(f)}
-                onCancel={() => dialog.close()}/>,
-            footer: false
-        });
-    }
-
-    onClickDeleteCollection() {
-        const schema = this.getSchema(this.getCollectionName());
-        dialog.fire({
-            html: <DeleteCollection
-                schema={schema}
-                onSubmit={() => this.presenter.onSubmitDeleteCollection(schema.collection)}
-                onCancel={() => dialog.close()}/>,
-            footer: false
-        });
-    }
-
-
-    onClickImport() {
-        this.presenter.onClickImport();
-    }
-
-    onClickExport() {
-        this.presenter.onClickExport();
-    }
-
-    onChangeFilter(type, value, field) {
-        const where = {};
-        switch (type) {
-            case "Pointer":
-                if (Object.keys(value).length > 0) {
-                    where[field] = {id: value.id};
-                }
-                break;
-            case "Boolean":
-                where[field] = value;
-                break;
-            default:
-                where[field] = {$regex: value, $options: "i"};
-        }
-        this.searchSubmit(where);
-    }
-
-    render() {
-        const schema = this.getSchema(this.getCollectionName());
-        const {objects, selected, count, progress} = this.state;
-        if (!schema) return <Progress/>;
-        const user = this.getCurrentUser();
-        return (
-            <>
-                <NavBar
-                    action={() => {
-                        if (!user.isMaster) return null;
-                        return (
-                            <div className="dropdown dropstart d-inline-block">
-                                <i role="button" data-bs-toggle="dropdown" className="bi bi-three-dots-vertical"></i>
-                                <div className="dropdown-menu fs-xs">
-                                    <button
-                                        onClick={this.onClickImport.bind(this)}
-                                        className="dropdown-item py-3">
-                                        <i className='bi bi-arrow-down-square pe-2'/>Import Data
-                                    </button>
-                                    <button
-                                        onClick={this.onClickExport.bind(this)}
-                                        disabled={selected.length < 1}
-                                        className="dropdown-item py-3">
-                                        <i className='bi bi-arrow-up-square pe-2'/>Export Data
-                                    </button>
-                                    <button
-                                        onClick={this.onCLickAccess.bind(this)}
-                                        disabled={selected.length < 1}
-                                        className="dropdown-item py-3">
-                                        <i className='bi  bi-ui-checks mr-5 pe-2'/>
-                                        Access
-                                    </button>
-                                    <button
-                                        onClick={this.onClickDeleteSelected.bind(this)}
-                                        disabled={selected.length < 1}
-                                        className="dropdown-item py-3">
-                                        <i className='bi bi-trash pe-2'/>Delete selected
-                                    </button>
-                                    <div className="dropdown-divider"></div>
-                                    <button
-                                        onClick={this.onClickAddField.bind(this, schema)}
-                                        className="dropdown-item py-3">
-                                        <i className='bi bi-journal-plus pe-2'/>Add a field
-                                    </button>
-                                    <button
-                                        onClick={this.onClickDeleteField.bind(this)}
-                                        className="dropdown-item py-3">
-                                        <i className='bi bi-journal-x pe-2'/>Delete a field
-                                    </button>
-                                    <button
-                                        onClick={this.onClickEditCollection.bind(this, schema)}
-                                        className="dropdown-item py-3">
-                                        <i className='bi bi-pencil-square pe-2'/>Edit this collection
-                                    </button>
-                                    <button
-                                        onClick={this.onClickDeleteCollection.bind(this)}
-                                        className="dropdown-item py-3">
-                                        <i className='bi bi-folder-x pe-2'/>Delete this collection
-                                    </button>
-                                    <button
-                                        onClick={this.onClickAddCollection.bind(this)}
-                                        className="dropdown-item py-3">
-                                        <i className='bi bi-folder-plus pe-2'/>Add a collection
-                                    </button>
-                                </div>
-                            </div>
-                        )
-                    }}/>
-                <div className="overflow-auto">
-                    <InfiniteScroll
-                        className="h-100"
-                        loadMore={this.loadMore.bind(this)}
-                        hasMore={(!progress && count > objects.length)}>
-                        <div className="p-3 p-lg-4">
-                            <div className="d-flex justify-content-between align-items-center">
-                                <h1 className="fw-bold text-capitalize">{schema.label || this.getCollectionName()}</h1>
-                                {
-                                    selected.length > 0 ? (
-                                            <div>
-                                                <span
-                                                    className="ms-2">Selected: </span>
-                                                <span className="fs-sm text-nowrap">{selected.length}</span>
-                                                <span
-                                                    className="ms-1">of </span>
-                                                <span className="fs-sm text-nowrap">{count}</span>
-                                            </div>
-                                        ) :
-                                        (
-                                            <div>
-                                                <span
-                                                    className="ms-2">Total: </span>
-                                                <span className="fs-sm text-nowrap">{objects.length}</span>
-                                                <span
-                                                    className="ms-1">of </span>
-                                                <span className="fs-sm text-nowrap">{count}</span>
-                                            </div>
-                                        )
-                                }
-                            </div>
-                            <div className="d-flex mt-3">
-                                {
-                                    Object.keys(schema.filters || {}).map(field => {
-                                        let {type, ...options} = schema.filters[field];
-                                        return <InputFactory
-                                            key={field}
-                                            className="ms-1"
-                                            type={type}
-                                            field={field}
-                                            where={{}}
-                                            onChange={this.onChangeFilter.bind(this, type)}
-                                            {...options}
-                                        />
-                                    })
-                                }
-                            </div>
-                            <Search
-                                schemas={this.getSchemas()}
-                                className="mt-3"
-                                onSubmit={this.searchSubmit.bind(this)}
-                                fields={schema.fields}/>
-                            <Table
-                                fields={schema.fields}
-                                objects={objects}
-                                selectable
-                                collapsable
-                                excludeFields={
-                                    Object.keys(schema.fields)
-                                        .reduce((acc, key) => {
-                                            const options = schema.fields[key];
-                                            if (options.read === false) {
-                                                acc.push(key);
-                                            }
-                                            switch (options._type || options.type) {
-                                                case 'Relation':
-                                                case 'Array':
-                                                case 'Object':
-                                                case 'File':
-                                                    acc.push(key);
-                                                    break;
-                                                default:
-                                            }
-                                            return acc;
-                                        }, ['acl', 'password'])
-                                }
-                                selected={selected}
-                                onSelect={this.onSelect.bind(this)}
-                                onSelectAll={this.onSelectAll.bind(this)}
-                                progress={progress}
-                                onClickItem={this.onClickItem.bind(this)}
-                                className="mt-3"
-                            />
-                        </div>
-                    </InfiniteScroll>
+  render() {
+    const schema = this.getSchema(this.getCollectionName());
+    const { objects, selected, count, progress } = this.state;
+    console.log("clp", objects);
+    if (!schema) return <Progress />;
+    const user = this.getCurrentUser();
+    return (
+      <>
+        <NavBar
+          action={() => {
+            if (!user.isMaster) return null;
+            return (
+              <div className="dropdown dropstart d-inline-block">
+                <i
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  className="bi bi-three-dots-vertical"
+                ></i>
+                <div className="dropdown-menu fs-xs">
+                  <button
+                    onClick={this.onClickImport.bind(this)}
+                    className="dropdown-item py-3"
+                  >
+                    <i className="bi bi-arrow-down-square pe-2" />
+                    Import Data
+                  </button>
+                  <button
+                    onClick={this.onClickExport.bind(this)}
+                    disabled={selected.length < 1}
+                    className="dropdown-item py-3"
+                  >
+                    <i className="bi bi-arrow-up-square pe-2" />
+                    Export Data
+                  </button>
+                  <button
+                    onClick={this.onCLickAccess.bind(this)}
+                    disabled={selected.length < 1}
+                    className="dropdown-item py-3"
+                  >
+                    <i className="bi  bi-ui-checks mr-5 pe-2" />
+                    Access
+                  </button>
+                  <button
+                    onClick={this.onClickDeleteSelected.bind(this)}
+                    disabled={selected.length < 1}
+                    className="dropdown-item py-3"
+                  >
+                    <i className="bi bi-trash pe-2" />
+                    Delete selected
+                  </button>
+                  <div className="dropdown-divider"></div>
+                  <button
+                    onClick={this.onClickAddField.bind(this, schema)}
+                    className="dropdown-item py-3"
+                  >
+                    <i className="bi bi-journal-plus pe-2" />
+                    Add a field
+                  </button>
+                  <button
+                    onClick={this.onClickDeleteField.bind(this)}
+                    className="dropdown-item py-3"
+                  >
+                    <i className="bi bi-journal-x pe-2" />
+                    Delete a field
+                  </button>
+                  <button
+                    onClick={this.onClickEditCollection.bind(this, schema)}
+                    className="dropdown-item py-3"
+                  >
+                    <i className="bi bi-pencil-square pe-2" />
+                    Edit this collection
+                  </button>
+                  <button
+                    onClick={this.onClickDeleteCollection.bind(this)}
+                    className="dropdown-item py-3"
+                  >
+                    <i className="bi bi-folder-x pe-2" />
+                    Delete this collection
+                  </button>
+                  <button
+                    onClick={this.onClickAddCollection.bind(this)}
+                    className="dropdown-item py-3"
+                  >
+                    <i className="bi bi-folder-plus pe-2" />
+                    Add a collection
+                  </button>
                 </div>
-                <div className="position-fixed bottom-0 end-0 m-4">
-                    <Button
-                        className="btn btn-primary shadow-sm bg-primary"
-                        onClick={this.onClickAdd.bind(this)}
-                        style={{width: '50px', height: '50px', borderRadius: '25px'}}>
-                        <i className="bi bi-plus-lg"/>
-                    </Button>
-                </div>
-            </>
-        );
-    }
+              </div>
+            );
+          }}
+        />
+        <div className="overflow-auto">
+          <InfiniteScroll
+            className="h-100"
+            loadMore={this.loadMore.bind(this)}
+            hasMore={!progress && count > objects.length}
+          >
+            <div className="p-3 p-lg-4">
+              <div className="d-flex justify-content-between align-items-center">
+                <h1 className="fw-bold text-capitalize">
+                  {schema.label || this.getCollectionName()}
+                </h1>
+                {selected.length > 0 ? (
+                  <div>
+                    <span className="ms-2">Selected: </span>
+                    <span className="fs-sm text-nowrap">{selected.length}</span>
+                    <span className="ms-1">of </span>
+                    <span className="fs-sm text-nowrap">{count}</span>
+                  </div>
+                ) : (
+                  <div>
+                    <span className="ms-2">Total: </span>
+                    <span className="fs-sm text-nowrap">{objects.length}</span>
+                    <span className="ms-1">of </span>
+                    <span className="fs-sm text-nowrap">{count}</span>
+                  </div>
+                )}
+              </div>
+              <div className="d-flex mt-3">
+                {Object.keys(schema.filters || {}).map((field) => {
+                  let { type, ...options } = schema.filters[field];
+                  return (
+                    <InputFactory
+                      key={field}
+                      className="ms-1"
+                      type={type}
+                      field={field}
+                      where={{}}
+                      onChange={this.onChangeFilter.bind(this, type)}
+                      {...options}
+                    />
+                  );
+                })}
+              </div>
+              <Search
+                schemas={this.getSchemas()}
+                className="mt-3"
+                onSubmit={this.searchSubmit.bind(this)}
+                fields={schema.fields}
+              />
+              <Table
+                fields={schema.fields}
+                objects={objects}
+                selectable
+                collapsable
+                excludeFields={Object.keys(schema.fields).reduce(
+                  (acc, key) => {
+                    const options = schema.fields[key];
+                    if (options.read === false) {
+                      acc.push(key);
+                    }
+                    switch (options._type || options.type) {
+                      case "Relation":
+                      case "Array":
+                      case "Object":
+                      case "File":
+                        acc.push(key);
+                        break;
+                      default:
+                    }
+                    return acc;
+                  },
+                  ["acl", "password"]
+                )}
+                selected={selected}
+                onSelect={this.onSelect.bind(this)}
+                onSelectAll={this.onSelectAll.bind(this)}
+                progress={progress}
+                onClickItem={this.onClickItem.bind(this)}
+                className="mt-3"
+              />
+            </div>
+          </InfiniteScroll>
+        </div>
+        <div className="position-fixed bottom-0 end-0 m-4">
+          <Button
+            className="btn btn-primary shadow-sm bg-primary"
+            onClick={this.onClickAdd.bind(this)}
+            style={{ width: "50px", height: "50px", borderRadius: "25px" }}
+          >
+            <i className="bi bi-plus-lg" />
+          </Button>
+        </div>
+      </>
+    );
+  }
 }
 
 export default withRouter(CollectionListPage);

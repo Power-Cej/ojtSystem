@@ -1,0 +1,14 @@
+{
+  "collection": {
+    "type": "String"
+  },
+  "url": {
+    "type": "String"
+  },
+  "trigger": {
+    "type": "String"
+  },
+  "Action": {
+    "type": "String"
+  }
+}
