@@ -1,0 +1,17 @@
+{
+  "name": {
+    "type": "String"
+  },
+  "target": {
+    "type": "String"
+  },
+  "query": {
+    "type": "String"
+  },
+  "value": {
+    "type": "String"
+  },
+  "Action": {
+    "type": "String"
+  }
+}
