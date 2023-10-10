@@ -10,7 +10,7 @@ class BaseFormPage extends BasePage {
     }
 
     getObjectId() {
-        return this.props.params.id;
+        return this.props.params && this.props.params.id;
     }
 
     onSubmitForm(e) {

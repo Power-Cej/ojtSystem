@@ -48,6 +48,7 @@ class BaseListPage extends BasePage {
     searchSubmit(where, merge) {
         this.presenter.searchSubmit(where, merge);
     }
+
     filterSubmit(where) {
         this.presenter.filterSubmit(where);
     }
@@ -71,6 +72,47 @@ class BaseListPage extends BasePage {
     onClickItem(index, field) {
         this.presenter.onClickItem(index, field);
     }
+
+    // get only the readable fields
+    getKeys() {
+        const schema = this.getSchema(this.getCollectionName());
+        if (!schema) return [];
+        return Object.keys(schema.fields)
+            .filter(key => {
+                const properties = schema.fields[key];
+
+                if (properties.read === false) {
+                    return false;
+                }
+                switch (properties._type || properties.type) {
+                    case 'Relation':
+                    case 'Array':
+                    case 'Object':
+                    case 'File':
+                        return false;
+                        break;
+                    default:
+                }
+                return true;
+            });
+    }
+    onChangeFilter(type, value, field) {
+        const where = {};
+        switch (type) {
+            case "Pointer":
+                if (Object.keys(value).length > 0) {
+                    where[field] = {id: value.id};
+                }
+                break;
+            case "Boolean":
+                where[field] = value;
+                break;
+            default:
+                where[field] = {$regex: value, $options: "i"};
+        }
+        this.filterSubmit(where);
+    }
+
 }
 
 export default BaseListPage;

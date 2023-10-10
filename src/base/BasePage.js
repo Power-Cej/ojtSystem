@@ -115,7 +115,7 @@ class BasePage extends React.Component {
 
     // show timeout dialog
     showSuccessSnackbar(message) {
-        // return showSuccessDialog(message, true);
+        this.showSuccess(message);
     }
 
     setCurrentUser(user) {
@@ -126,12 +126,19 @@ class BasePage extends React.Component {
         return this.context.user;
     }
 
+
     setCurrentRoles(roles) {
         this.context.setGlobalState({roles});
     }
+
     setGlobalState(state) {
         this.context.setGlobalState(state);
     }
+
+    getGlobalState() {
+        return this.context;
+    }
+
     getCurrentRoles() {
         return this.context.roles;
     }
@@ -185,6 +192,7 @@ class BasePage extends React.Component {
     getParams() {
         return this.props.params;
     }
+
     /**
      * Get the value of query from URL
      * @returns {*}
@@ -192,6 +200,7 @@ class BasePage extends React.Component {
     getQuery() {
         return this.props.query;
     }
+
     navigateBack() {
         this.navigateTo(-1);
     }

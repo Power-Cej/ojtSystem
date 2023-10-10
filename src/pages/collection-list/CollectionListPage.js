@@ -1,19 +1,13 @@
 import React from 'react';
 import CollectionListPresenter from './CollectionListPresenter';
-import {Table, dialog, Button} from "nq-component";
+import {Button, dialog, InfiniteScroll, Progress, Table} from "nq-component";
 import AddField from "./components/AddField";
-import {addSchemaUseCase, updateSchemaUseCase, deleteSchemaUseCase} from '../../usecases/schema/usecases';
-import {
-    countObjectUseCase,
-    deleteObjectUseCase,
-    findObjectUseCase,
-    upsertUseCase
-} from '../../usecases/object';
+import {addSchemaUseCase, deleteSchemaUseCase, updateSchemaUseCase} from '../../usecases/schema/usecases';
+import {countObjectUseCase, deleteObjectUseCase, findObjectUseCase, upsertUseCase} from '../../usecases/object';
 import {exportCSVUseCase} from '../../usecases/csv/usecases';
 import FormCollection from "./components/FormCollection";
 import DeleteCollection from "./components/DeleteCollection";
 import DeleteField from "./components/DeleteField";
-import {Progress, InfiniteScroll} from "nq-component";
 import FormAccess from "./components/FormAccess";
 import mergeACl from "../../mergeACl";
 import withRouter from "../../withRouter";
@@ -25,6 +19,7 @@ import InputFactory from "../../components/InputFactory";
 class CollectionListPage extends BaseListPage {
     constructor(props) {
         super(props);
+
         this.presenter = new CollectionListPresenter(
             this,
             findObjectUseCase(),

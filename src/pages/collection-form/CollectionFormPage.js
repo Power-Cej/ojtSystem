@@ -18,6 +18,10 @@ class CollectionFormPage extends BaseFormPage {
         this.setState({advanced: !this.state.advanced});
     }
 
+    onChangeObject(object) {
+        this.presenter.onChangeObject(object);
+    }
+
     render() {
         const object = this.state.object;
         const advanced = this.state.advanced;

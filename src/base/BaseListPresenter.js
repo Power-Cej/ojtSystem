@@ -12,52 +12,79 @@ class BaseListPresenter {
     }
 
     init() {
-        this.limit = 10;
+        this.limit = 20;
         this.where = {};
         this.search = {};
         this.filter = {};
         this.include = ['all'];
+        this.keys = undefined; // if keys are specified, only those keys will be returned
         this.sort = {createdAt: -1};
+        this.progress = true;
         this.reset();
     }
 
     reset() {
         this.objects = [];
-        this.view.setObjects([]);
-        this.view.setSelected([]);
         this.count = 0;
         this.current = 1;
+        this.view.setObjects([]);
+        this.view.setSelected([]);
+        this.view.setCount(0);
+        this.view.setTotal(0);
     }
 
     async getObjects() {
-        console.log('this.current', this.current);
-        const collection = this.view.getCollectionName();
+        this.reset();
+        await this.countObjects();
+        await this.findObjects();
+    }
+
+    async countObjects() {
+        try {
+            this.showProgress();
+            const collection = this.view.getCollectionName();
+            const query = this.createQuery();
+            const {count} = await this.countObjectUseCase.execute(collection, {where: query.where});
+            this.count = count;
+            this.view.setCount(this.count);
+        } catch (error) {
+            this.hideProgress();
+            this.view.showError(error);
+        }
+
+    }
+
+    createQuery() {
         const skip = (this.current - 1) * this.limit;
         const query = {
-            limit: this.limit,
-            skip: skip,
-            where: {...this.where, ...this.search, ...this.filter},
-            include: this.include,
-            sort: this.sort // it has bug it duplicate if no createdAt in the data
+            limit: this.limit, skip: skip, where: {...this.where, ...this.search, ...this.filter}, include: this.include
         };
-        this.view.showProgress();
-        this.findObjectUseCase.abort();
+        if (this.sort) {
+            query.sort = this.sort;
+        }
+        const keys = this.keys || this.view.getKeys() || [];
+        if (keys.length > 0) {
+            query.keys = keys;
+        }
+        return query;
+    }
+
+    async findObjects() {
+        const collection = this.view.getCollectionName();
+        const query = this.createQuery();
         try {
-            // cache count
-            if (this.count === 0) {
-                const {count} = await this.countObjectUseCase.execute(collection, {where: query.where});
-                this.count = count;
-            }
+            this.showProgress();
+            this.findObjectUseCase.abort();
             const objects = await this.findObjectUseCase.execute(collection, query);
             this.objects = this.objects.concat(objects);
             this.view.setTotal(this.objects.length);
-            this.view.setCount(this.count);
             this.view.setObjects(this.objects);
-            this.view.hideProgress();
+            this.hideProgress();
         } catch (error) {
-            this.view.hideProgress();
+            this.hideProgress();
             this.view.showError(error);
         }
+        this.progress = false;
     }
 
     onSelect(index) {
@@ -85,8 +112,10 @@ class BaseListPresenter {
     }
 
     loadMore() {
-        this.current++;
-        this.getObjects();
+        if (!this.progress) {
+            this.current++;
+            this.findObjects();
+        }
     }
 
     onSelectAll(checked) {
@@ -124,6 +153,16 @@ class BaseListPresenter {
             this.view.hideProgress();
             this.view.showError(error);
         }
+    }
+
+    showProgress() {
+        this.progress = true;
+        this.view.showProgress();
+    }
+
+    hideProgress() {
+        this.progress = false;
+        this.view.hideProgress();
     }
 }
 

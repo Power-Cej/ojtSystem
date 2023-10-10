@@ -3,7 +3,7 @@ import DashboardPresenter from "./DashboardPresenter";
 import NavBar from "../../components/navbar";
 import Count from "./components/Count";
 import BaseListPage from "../../base/BaseListPage";
-import {deleteObjectUseCase, findObjectUseCase, upsertUseCase} from "../../usecases/object";
+import {countObjectUseCase, deleteObjectUseCase, findObjectUseCase, upsertUseCase} from "../../usecases/object";
 import {dialog} from "nq-component";
 import AddWidget from "./components/AddWidget";
 import DialogTable from "../../components/DialogTable";
@@ -19,7 +19,7 @@ class DashboardPage extends BaseListPage {
         this.presenter = new DashboardPresenter(
             this,
             findObjectUseCase(),
-            deleteObjectUseCase(),
+            countObjectUseCase(),
             upsertUseCase(),
             updateSchemaUseCase(),
         );

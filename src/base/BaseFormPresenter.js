@@ -17,7 +17,7 @@ class BaseFormPresenter {
 
     async getObject() {
         const collection = this.view.getCollectionName();
-        const id = this.view.getObjectId();
+        const id = this.object.id || this.view.getObjectId();
         if (id) {
             const params = {include: ['all']};
             try {
@@ -47,6 +47,7 @@ class BaseFormPresenter {
         }
         try {
             await this.upsertUseCase.execute(collection, this.change);
+            this.change = {};
         } catch (error) {
             throw error; // rethrow the error to be caught by the caller
         }
@@ -54,7 +55,7 @@ class BaseFormPresenter {
 
     async submit() {
         if (Object.values(this.change).length === 0) {
-            this.view.navigateBack();
+            this.view.showSuccessSnackbar("Successfully saved!");
             return;
         }
         try {
@@ -62,7 +63,6 @@ class BaseFormPresenter {
             await this.save();
             this.view.submissionSuccess();
             this.view.showSuccessSnackbar("Successfully saved!");
-            this.view.navigateBack();
         } catch (error) {
             this.view.submissionError(error);
             this.view.showError(error);

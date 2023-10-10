@@ -110,7 +110,7 @@ class MainPage extends BasePage {
                 <main className="vh-100 d-flex flex-column">
                     <Routes>
                         <Route exact path={'/'} element={<DashboardPage/>}/>
-                        <Route exact path={'/collection/dashboard'} element={<DashboardPage/>}/>
+                        {/*<Route exact path={'/collection/dashboard'} element={<DashboardPage/>}/>*/}
                         <Route exact path={'/collection/:name'} element={<CollectionListPage/>}/>
                         <Route path={'/collection/roles/form'} element={<RoleFormPage/>}/>
                         <Route path={'/collection/roles/form/:id'} element={<RoleFormPage/>}/>
