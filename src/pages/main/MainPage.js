@@ -18,6 +18,7 @@ import withRouter from "../../withRouter";
 import DashboardPage from "../dashboard/DashboardPage";
 import HooksPage from "../web-hook/HooksPage";
 import FunctionPage from "../web-hook/FunctionPage";
+import SchemaPage from "../schema/SchemaPage";
 
 class MainPage extends BasePage {
   constructor(props) {
@@ -56,11 +57,17 @@ class MainPage extends BasePage {
         route: "/account",
         icon: "bi bi-person-check",
       },
+      {
+        "name": "Schema",
+        "route": "/schema",
+        "icon": "bi bi-filetype-json"
+      }
       // {
       //     name: "Notification",
       //     route: "/notification",
       //     icon: "bi bi-bell"
       // },
+
     ];
 
     const hook = [
@@ -168,6 +175,7 @@ class MainPage extends BasePage {
               element={<CollectionFormPage />}
             />
             <Route path={"/migration"} element={<MigrationPage />} />
+            <Route path={"/schema"} element={<SchemaPage />} />
             <Route path={"/account"} element={<AccountPage />} />
             <Route path={"/hooks"} element={<HooksPage />} />
             <Route path={"/function"} element={<FunctionPage />} />

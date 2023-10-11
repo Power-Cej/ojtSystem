@@ -17,6 +17,11 @@
         "name": "Edit Account",
         "route": "/account",
         "icon": "bi bi-person-check"
+      },
+      {
+        "name": "Schema",
+        "route": "/schema",
+        "icon": "bi bi-filetype-json"
       }
     ]
   }
