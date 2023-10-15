@@ -126,6 +126,7 @@ class DashboardPage extends BaseListPage {
         const objects = this.state.objects;
         const where = this.state.where;
         const schema = this.getSchema('dashboard');
+        if(!schema) return null;
         const user = this.getCurrentUser();
         return (
             <>

@@ -3,17 +3,10 @@ import csvToJson from "../../csvToJson";
 import unflatten from "../../unflatten";
 import jsonToObject from "../../jsonToObject";
 import BaseListPresenter from "../../base/BaseListPresenter";
+import saveAs from "../../saveAs";
 
 class CollectionListPresenter extends BaseListPresenter {
-    constructor(view,
-                findObjectUseCase,
-                countObjectUseCase,
-                deleteObjectUseCase,
-                upsertUseCase,
-                exportCSVUseCase,
-                addSchemaUseCase,
-                updateSchemaUseCase,
-                deleteSchemaUseCase) {
+    constructor(view, findObjectUseCase, countObjectUseCase, deleteObjectUseCase, upsertUseCase, exportCSVUseCase, addSchemaUseCase, updateSchemaUseCase, deleteSchemaUseCase) {
         super(view, findObjectUseCase, countObjectUseCase, deleteObjectUseCase);
         this.upsertUseCase = upsertUseCase;
         this.exportCSVUseCase = exportCSVUseCase;
@@ -33,32 +26,69 @@ class CollectionListPresenter extends BaseListPresenter {
         }
     }
 
-    onClickImport() {
-        const schema = this.view.getSchema(this.view.getCollectionName());
-        browseFile('text/csv')
-            .then(files => csvToJson(files[0]))
-            .then(objects => unflatten(objects))
-            .then(objects => objects.map(o => jsonToObject(o, schema.fields)))
-            .then(async objects => {
-                for (const obj of objects) {
-                    const object = await this.upsertUseCase.execute(schema.collection, obj);
-                    this.objects.push(object);
-                    this.view.setObjects(this.objects);
-                }
-            })
-            .catch(error => {
-                this.view.hideProgress();
-                this.view.showError(error);
-            });
+    onClickImport(file) {
+        this.view.showProgress();
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            try {
+                const json = JSON.parse(e.target.result);
+                this.saveObjects(json);
+            } catch (error) {
+                console.error("Error parsing the JSON file:", error);
+                alert("An error occurred while reading the JSON file.");
+            }
+        };
+        reader.readAsText(file);
     }
-
-    onClickExport() {
-        const objects = this.view.getSelected();
+    async saveObjects(objects){
         const collection = this.view.getCollectionName();
-        this.exportCSVUseCase.execute(objects, collection)
-            .then(() => {
-                //hide progress
-            });
+        this.view.setCount(objects.length);
+        const size = 20;
+        let i = 0;
+        while (i < objects.length) {
+            const batch = objects.slice(i, i + size);
+            // Process each batch
+            await Promise.all(batch.map(async (object, index) => {
+                try {
+                    await this.upsertUseCase.execute(collection,object);
+                    // Update the total count in the view
+                    this.view.setTotal(i + index + 1);
+                } catch (error) {
+                    // Log and ignore errors
+                    console.log(object);
+                    console.log(error);
+                }
+            }));
+            // Move to the next batch
+            i += size;
+        }
+        // Hide the progress indicator
+        this.view.hideProgress();
+        this.init();
+        await this.getObjects();
+    }
+    async onClickExport() {
+        this.view.showProgress();
+        const collection = this.view.getCollectionName();
+        let objects = this.view.getSelected();
+        if (objects.length === 0) {
+            try {
+                const query = {
+                    where: {...this.where, ...this.search, ...this.filter},
+                    include: this.include
+                };
+                await this.view.showConfirmDialog('Export all data take longer!', 'Export all data?', 'EXPORT');
+                objects = await this.findObjectUseCase.execute(collection, query);
+            } catch (e) {
+                return;
+            }
+        }
+        const blob = new Blob([JSON.stringify(objects, null, 2)], {type: 'application/json'});
+        const date = new Date();
+        const day = date.toISOString().slice(0, 10);
+        const time = date.toLocaleTimeString('en-GB').replaceAll(':', '');
+        saveAs(blob, `${collection}-${day}-${time}.json`);
+        this.view.hideProgress();
     }
 
 

@@ -39,7 +39,7 @@ class SchemaPresenter {
             // Process each batch
             await Promise.all(batch.map(async (schema, index) => {
                 try {
-                    await this.saveSchema.execute(schema);
+                    await this.addSchemaUseCase.execute(schema);
                     // Update the total count in the view
                     // this.view.setTotal(i + index + 1);
                 } catch (error) {

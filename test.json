@@ -1,111 +1,98 @@
 {
-  "$or": [
+  "id": "dashboard",
+  "name": "Dashboard",
+  "url": "dashboard.innque.com",
+  "version": "1.0.0",
+  "schemas": [
     {
-      "first_name": {
-        "$regex": "ALLAN",
-        "$options": "i"
+      "collection": "dashboard",
+      "fields": {
+        "type": {
+          "type": "String",
+          "required": true
+        },
+        "collection": {
+          "type": "String",
+          "required": true
+        },
+        "icon": {
+          "type": "String"
+        },
+        "where": {
+          "type": "Object"
+        },
+        "label": {
+          "type": "String"
+        },
+        "actionLabel": {
+          "type": "String"
+        }
       }
     },
     {
-      "middle_name": {
-        "$regex": "ALLAN",
-        "$options": "i"
+      "collection": "roles",
+      "fields": {
+        "name": {
+          "type": "String",
+          "unique": true
+        },
+        "roles": {
+          "type": "Relation",
+          "target": "roles"
+        }
       }
     },
     {
-      "last_name": {
-        "$regex": "ALLAN",
-        "$options": "i"
+      "collection": "users",
+      "fields": {
+        "username": {
+          "type": "String",
+          "unique": true,
+          "required": true,
+          "lowercase": true,
+          "minlength": 2,
+          "index": 1
+        },
+        "password": {
+          "type": "String",
+          "required": true,
+          "transform": "md5",
+          "minlength": 8,
+          "hidden": true
+        },
+        "email": {
+          "type": "String",
+          "unique": true,
+          "pattern": "^.+@.+\\..+$"
+        },
+        "roles": {
+          "type": "Relation",
+          "target": "roles"
+        }
       }
     },
     {
-      "alias": {
-        "$regex": "ALLAN",
-        "$options": "i"
-      }
-    },
-    {
-      "sex": {
-        "$regex": "ALLAN",
-        "$options": "i"
-      }
-    },
-    {
-      "gender": {
-        "$regex": "ALLAN",
-        "$options": "i"
-      }
-    },
-    {
-      "civil_status": {
-        "$regex": "ALLAN",
-        "$options": "i"
-      }
-    },
-    {
-      "address": {
-        "$regex": "ALLAN",
-        "$options": "i"
-      }
-    },
-    {
-      "street": {
-        "$regex": "ALLAN",
-        "$options": "i"
-      }
-    },
-    {
-      "first_name": {
-        "$regex": "BERNARDO",
-        "$options": "i"
-      }
-    },
-    {
-      "middle_name": {
-        "$regex": "BERNARDO",
-        "$options": "i"
-      }
-    },
-    {
-      "last_name": {
-        "$regex": "BERNARDO",
-        "$options": "i"
-      }
-    },
-    {
-      "alias": {
-        "$regex": "BERNARDO",
-        "$options": "i"
-      }
-    },
-    {
-      "sex": {
-        "$regex": "BERNARDO",
-        "$options": "i"
-      }
-    },
-    {
-      "gender": {
-        "$regex": "BERNARDO",
-        "$options": "i"
-      }
-    },
-    {
-      "civil_status": {
-        "$regex": "BERNARDO",
-        "$options": "i"
-      }
-    },
-    {
-      "address": {
-        "$regex": "BERNARDO",
-        "$options": "i"
-      }
-    },
-    {
-      "street": {
-        "$regex": "BERNARDO",
-        "$options": "i"
+      "collection": "sessions",
+      "fields": {
+        "user": {
+          "type": "Pointer",
+          "target": "users"
+        },
+        "expiresAt": {
+          "type": "Date"
+        },
+        "masterKey": {
+          "type": "String",
+          "hidden": true
+        }
+      },
+      "permissions": {
+        "find": [
+          "*"
+        ],
+        "get": [
+          "*"
+        ]
       }
     }
   ]

@@ -25,6 +25,7 @@ import Search from "../../components/Search";
 import BaseListPage from "../../base/BaseListPage";
 import NavBar from "../../components/navbar";
 import InputFactory from "../../components/InputFactory";
+import browseFile from "../../browseFile";
 
 class CollectionListPage extends BaseListPage {
   constructor(props) {
@@ -143,7 +144,13 @@ class CollectionListPage extends BaseListPage {
   }
 
   onClickImport() {
-    this.presenter.onClickImport();
+      browseFile('*')
+          .then(files => {
+              if (files.length > 0) {
+                  const file = files[0];
+                  this.presenter.onClickImport(file);
+              }
+          });
   }
 
   onClickExport() {
@@ -188,14 +195,12 @@ class CollectionListPage extends BaseListPage {
                 <div className="dropdown-menu fs-xs">
                   <button
                     onClick={this.onClickImport.bind(this)}
-                    className="dropdown-item py-3"
-                  >
+                    className="dropdown-item py-3">
                     <i className="bi bi-arrow-down-square pe-2" />
                     Import Data
                   </button>
                   <button
                     onClick={this.onClickExport.bind(this)}
-                    disabled={selected.length < 1}
                     className="dropdown-item py-3"
                   >
                     <i className="bi bi-arrow-up-square pe-2" />
