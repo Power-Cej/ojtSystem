@@ -97,7 +97,6 @@ class MainPage extends BasePage {
 
     const menus = [
       ...schemas
-        .filter((s) => canRead(roles, s.permissions) || user.isMaster)
         .sort(
           (a, b) =>
             (a.index || Number.POSITIVE_INFINITY) -
