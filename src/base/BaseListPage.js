@@ -4,7 +4,7 @@ class BaseListPage extends BasePage {
     state = {
         objects: [],
         selected: [],
-        progress: true,
+        loading: true,
         total: 0,
         count: 0
     };
@@ -96,6 +96,7 @@ class BaseListPage extends BasePage {
                 return true;
             });
     }
+
     onChangeFilter(type, value, field) {
         const where = {};
         switch (type) {

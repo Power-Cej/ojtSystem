@@ -9,23 +9,25 @@ class SignInPresenter {
         this.change[field] = value;
     }
 
-    submit() {
-        const masterKey = this.view.getMasterKey();
-        const user = {
-            ...this.change,
-            masterKey
+    async submit() {
+        try {
+            const masterKey = this.view.getMasterKey();
+            const user = {
+                ...this.change,
+                masterKey
+            };
+
+            this.view.showProgress();
+
+            const signedInUser = await this.signInUseCase.execute(user);
+
+            this.view.navigateTo('/');
+        } catch (error) {
+            this.view.hideProgress();
+            this.view.showError(error);
         }
-        this.view.showProgress();
-        Promise.resolve()
-            .then(() => this.signInUseCase.execute(user))
-            .then((user) => {
-                this.view.navigateTo('/');
-            })
-            .catch(error => {
-                this.view.hideProgress();
-                this.view.showError(error);
-            });
     }
+
 }
 
 export default SignInPresenter;

@@ -25,8 +25,8 @@ class ImageCropperControl extends React.Component {
     }
 
     componentDidMount() {
-        if (this.props.src) {
-            this.loadImage(this.props.src);
+        if (this.props.image) {
+            this.loadImage(this.props.image);
         }
         const canvas = this.ref.current;
         this.pointer = new PointerHandler(canvas, this.handleEvent.bind(this));
@@ -127,7 +127,6 @@ class ImageCropperControl extends React.Component {
         // start drawing
         drawImage(c, this.image, this.cropper);
         drawClip(c, this.cropper, this.props.borderRadius);
-        this.getCrop();
     }
 
 

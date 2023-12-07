@@ -1,98 +1,2509 @@
 {
-  "id": "dashboard",
-  "name": "Dashboard",
-  "url": "dashboard.innque.com",
-  "version": "1.0.0",
-  "schemas": [
+  "results": [
     {
-      "collection": "dashboard",
+      "className": "_Role",
       "fields": {
+        "objectId": {
+          "type": "String"
+        },
+        "createdAt": {
+          "type": "Date"
+        },
+        "updatedAt": {
+          "type": "Date"
+        },
+        "ACL": {
+          "type": "ACL"
+        },
+        "name": {
+          "type": "String"
+        },
+        "users": {
+          "type": "Relation",
+          "targetClass": "_User"
+        },
+        "roles": {
+          "type": "Relation",
+          "targetClass": "_Role"
+        }
+      },
+      "classLevelPermissions": {
+        "find": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "count": {
+          "*": true,
+          "role:ADMIN": true
+        },
+        "get": {
+          "*": true,
+          "role:ADMIN": true
+        },
+        "create": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "update": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "delete": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "addField": {
+          "*": true,
+          "role:ADMIN": true
+        },
+        "protectedFields": {}
+      },
+      "indexes": {
+        "_id_": {
+          "_id": 1
+        },
+        "name_1": {
+          "name": 1
+        }
+      }
+    },
+    {
+      "className": "_User",
+      "fields": {
+        "objectId": {
+          "type": "String"
+        },
+        "createdAt": {
+          "type": "Date"
+        },
+        "updatedAt": {
+          "type": "Date"
+        },
+        "ACL": {
+          "type": "ACL"
+        },
+        "username": {
+          "type": "String"
+        },
+        "password": {
+          "type": "String"
+        },
+        "email": {
+          "type": "String"
+        },
+        "emailVerified": {
+          "type": "Boolean"
+        },
+        "authData": {
+          "type": "Object"
+        },
+        "store": {
+          "type": "Pointer",
+          "targetClass": "Store"
+        },
+        "first_name": {
+          "type": "String"
+        },
+        "last_name": {
+          "type": "String"
+        },
+        "location": {
+          "type": "String"
+        },
+        "name": {
+          "type": "String"
+        },
+        "mobile_number": {
+          "type": "String"
+        },
+        "passcode": {
+          "type": "String"
+        },
+        "firstName": {
+          "type": "String"
+        },
+        "lastName": {
+          "type": "String"
+        },
+        "isHidden": {
+          "type": "Boolean"
+        }
+      },
+      "classLevelPermissions": {
+        "find": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:Cashier": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "count": {
+          "*": true,
+          "role:ADMIN": true,
+          "requiresAuthentication": true
+        },
+        "get": {
+          "*": true,
+          "role:ADMIN": true,
+          "requiresAuthentication": true
+        },
+        "create": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:Cashier": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "update": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:Cashier": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "delete": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:Cashier": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "addField": {
+          "*": true,
+          "role:ADMIN": true,
+          "requiresAuthentication": true
+        },
+        "protectedFields": {}
+      },
+      "indexes": {
+        "_id_": {
+          "_id": 1
+        },
+        "username_1": {
+          "username": 1
+        },
+        "email_1": {
+          "email": 1
+        },
+        "case_insensitive_email": {
+          "email": 1
+        },
+        "case_insensitive_username": {
+          "username": 1
+        }
+      }
+    },
+    {
+      "className": "CashDrawer",
+      "fields": {
+        "objectId": {
+          "type": "String"
+        },
+        "createdAt": {
+          "type": "Date"
+        },
+        "updatedAt": {
+          "type": "Date"
+        },
+        "ACL": {
+          "type": "ACL"
+        },
+        "cashier": {
+          "type": "Pointer",
+          "targetClass": "_User",
+          "required": true
+        },
+        "notes": {
+          "type": "String",
+          "required": false
+        },
+        "cashAmount": {
+          "type": "Number",
+          "required": false,
+          "defaultValue": 0
+        },
+        "hasLink": {
+          "type": "Boolean",
+          "required": false,
+          "defaultValue": false
+        },
+        "shift": {
+          "type": "Pointer",
+          "targetClass": "Shift",
+          "required": false
+        },
         "type": {
           "type": "String",
           "required": true
+        }
+      },
+      "classLevelPermissions": {
+        "find": {
+          "*": true
         },
-        "collection": {
-          "type": "String",
-          "required": true
+        "count": {
+          "*": true
         },
-        "icon": {
-          "type": "String"
+        "get": {
+          "*": true
         },
-        "where": {
-          "type": "Object"
+        "create": {
+          "*": true
         },
-        "label": {
-          "type": "String"
+        "update": {
+          "*": true
         },
-        "actionLabel": {
-          "type": "String"
+        "delete": {
+          "*": true
+        },
+        "addField": {
+          "*": true
+        },
+        "protectedFields": {
+          "*": []
+        }
+      },
+      "indexes": {
+        "_id_": {
+          "_id": 1
         }
       }
     },
     {
-      "collection": "roles",
+      "className": "CashRegister",
       "fields": {
+        "objectId": {
+          "type": "String"
+        },
+        "createdAt": {
+          "type": "Date"
+        },
+        "updatedAt": {
+          "type": "Date"
+        },
+        "ACL": {
+          "type": "ACL"
+        },
         "name": {
           "type": "String",
-          "unique": true
+          "required": false
         },
-        "roles": {
-          "type": "Relation",
-          "target": "roles"
+        "status": {
+          "type": "String",
+          "required": false,
+          "defaultValue": "ENABLED"
+        },
+        "store": {
+          "type": "Pointer",
+          "targetClass": "Store",
+          "required": true
+        },
+        "isHidden": {
+          "type": "Boolean"
+        }
+      },
+      "classLevelPermissions": {
+        "find": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "count": {
+          "*": true,
+          "role:ADMIN": true
+        },
+        "get": {
+          "*": true,
+          "role:ADMIN": true
+        },
+        "create": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "update": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "delete": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "addField": {
+          "*": true,
+          "role:ADMIN": true
+        },
+        "protectedFields": {}
+      },
+      "indexes": {
+        "_id_": {
+          "_id": 1
         }
       }
     },
     {
-      "collection": "users",
+      "className": "Category",
       "fields": {
-        "username": {
-          "type": "String",
-          "unique": true,
-          "required": true,
-          "lowercase": true,
-          "minlength": 2,
-          "index": 1
+        "objectId": {
+          "type": "String"
         },
-        "password": {
+        "createdAt": {
+          "type": "Date"
+        },
+        "updatedAt": {
+          "type": "Date"
+        },
+        "ACL": {
+          "type": "ACL"
+        },
+        "name": {
           "type": "String",
           "required": true,
-          "transform": "md5",
-          "minlength": 8,
-          "hidden": true
+          "defaultValue": ""
+        },
+        "isHidden": {
+          "type": "Boolean",
+          "required": false,
+          "defaultValue": false
+        }
+      },
+      "classLevelPermissions": {
+        "find": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:Branch OIC": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "count": {
+          "*": true,
+          "role:ADMIN": true
+        },
+        "get": {
+          "*": true,
+          "role:ADMIN": true
+        },
+        "create": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "update": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "delete": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "addField": {
+          "*": true,
+          "role:ADMIN": true
+        },
+        "protectedFields": {}
+      },
+      "indexes": {
+        "_id_": {
+          "_id": 1
+        }
+      }
+    },
+    {
+      "className": "Customer",
+      "fields": {
+        "objectId": {
+          "type": "String"
+        },
+        "createdAt": {
+          "type": "Date"
+        },
+        "updatedAt": {
+          "type": "Date"
+        },
+        "ACL": {
+          "type": "ACL"
+        },
+        "firstName": {
+          "type": "String",
+          "required": false
+        },
+        "lastName": {
+          "type": "String",
+          "required": false
+        },
+        "phone": {
+          "type": "String",
+          "required": false
         },
         "email": {
           "type": "String",
-          "unique": true,
-          "pattern": "^.+@.+\\..+$"
+          "required": false
         },
-        "roles": {
-          "type": "Relation",
-          "target": "roles"
+        "memberId": {
+          "type": "String",
+          "required": false
+        },
+        "birthday": {
+          "type": "Date",
+          "required": false
+        },
+        "address": {
+          "type": "String",
+          "required": false
+        },
+        "city": {
+          "type": "String",
+          "required": false
+        },
+        "postCode": {
+          "type": "String",
+          "required": false
+        },
+        "totalSpent": {
+          "type": "Number",
+          "required": false,
+          "defaultValue": 0
+        },
+        "totalTransactions": {
+          "type": "Number",
+          "required": false,
+          "defaultValue": 0
+        },
+        "alternativeAddress": {
+          "type": "String",
+          "required": false
+        },
+        "lastPurchaseDate": {
+          "type": "Date",
+          "required": false
+        },
+        "state": {
+          "type": "String",
+          "required": false
+        },
+        "tags": {
+          "type": "Array",
+          "required": false,
+          "defaultValue": []
+        },
+        "contactPerson": {
+          "type": "String",
+          "required": false
+        },
+        "companyName": {
+          "type": "String",
+          "required": false
+        },
+        "isHidden": {
+          "type": "Boolean",
+          "required": false,
+          "defaultValue": false
+        }
+      },
+      "classLevelPermissions": {
+        "find": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:APPROVER": true,
+          "role:Accounting": true,
+          "role:Sales Staff": true,
+          "role:Branch OIC": true,
+          "role:Cashier": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "count": {
+          "*": true,
+          "role:ADMIN": true
+        },
+        "get": {
+          "*": true,
+          "role:ADMIN": true
+        },
+        "create": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:APPROVER": true,
+          "role:Sales Staff": true,
+          "role:Branch OIC": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "update": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:APPROVER": true,
+          "role:Branch OIC": true,
+          "role:Sales Staff": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "delete": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:APPROVER": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "addField": {
+          "*": true,
+          "role:ADMIN": true
+        },
+        "protectedFields": {}
+      },
+      "indexes": {
+        "_id_": {
+          "_id": 1
         }
       }
     },
     {
-      "collection": "sessions",
+      "className": "Item",
       "fields": {
+        "objectId": {
+          "type": "String"
+        },
+        "createdAt": {
+          "type": "Date"
+        },
+        "updatedAt": {
+          "type": "Date"
+        },
+        "ACL": {
+          "type": "ACL"
+        },
+        "stock": {
+          "type": "Pointer",
+          "targetClass": "Stock",
+          "required": false
+        },
+        "orderedQty": {
+          "type": "Number",
+          "required": false,
+          "defaultValue": 0
+        },
+        "receivedQty": {
+          "type": "Number",
+          "required": false,
+          "defaultValue": 0
+        },
+        "price": {
+          "type": "Number"
+        },
+        "total": {
+          "type": "Number",
+          "required": false,
+          "defaultValue": 0
+        }
+      },
+      "classLevelPermissions": {
+        "find": {
+          "*": true
+        },
+        "count": {
+          "*": true
+        },
+        "get": {
+          "*": true
+        },
+        "create": {
+          "*": true
+        },
+        "update": {
+          "*": true
+        },
+        "delete": {
+          "*": true
+        },
+        "addField": {
+          "*": true
+        },
+        "protectedFields": {}
+      },
+      "indexes": {
+        "_id_": {
+          "_id": 1
+        }
+      }
+    },
+    {
+      "className": "Payment",
+      "fields": {
+        "objectId": {
+          "type": "String"
+        },
+        "createdAt": {
+          "type": "Date"
+        },
+        "updatedAt": {
+          "type": "Date"
+        },
+        "ACL": {
+          "type": "ACL"
+        },
+        "method": {
+          "type": "Pointer",
+          "targetClass": "PaymentMethod",
+          "required": false
+        },
+        "paidAmount": {
+          "type": "Number",
+          "required": false,
+          "defaultValue": 0
+        },
+        "tenderedAmount": {
+          "type": "Number",
+          "required": false,
+          "defaultValue": 0
+        },
+        "changeAmount": {
+          "type": "Number",
+          "required": false,
+          "defaultValue": 0
+        },
+        "notes": {
+          "type": "String",
+          "required": false
+        },
+        "dueAt": {
+          "type": "Date",
+          "required": false
+        },
+        "paidAt": {
+          "type": "Date",
+          "required": false
+        },
+        "status": {
+          "type": "String",
+          "required": false
+        },
+        "chargesDescription": {
+          "type": "String",
+          "required": false
+        },
+        "chargesAmount": {
+          "type": "Number",
+          "required": false,
+          "defaultValue": 0
+        },
+        "voidStatus": {
+          "type": "String"
+        },
+        "isHidden": {
+          "type": "Boolean",
+          "required": false,
+          "defaultValue": false
+        }
+      },
+      "classLevelPermissions": {
+        "find": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:Accounting": true,
+          "role:Cashier only": true,
+          "role:PERSONNEL": true,
+          "role:Personnel": true,
+          "role:PERSONNELS": true,
+          "role:INVENTORY MANAGER": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "count": {
+          "*": true,
+          "role:ADMIN": true
+        },
+        "get": {
+          "*": true,
+          "role:ADMIN": true
+        },
+        "create": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:Accounting": true,
+          "role:Cashier only": true,
+          "role:PERSONNEL": true,
+          "role:Personnel": true,
+          "role:PERSONNELS": true,
+          "role:INVENTORY MANAGER": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "update": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:Accounting": true,
+          "role:Cashier only": true,
+          "role:PERSONNEL": true,
+          "role:Personnel": true,
+          "role:PERSONNELS": true,
+          "role:INVENTORY MANAGER": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "delete": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:Accounting": true,
+          "role:Cashier only": true,
+          "role:PERSONNEL": true,
+          "role:Personnel": true,
+          "role:PERSONNELS": true,
+          "role:INVENTORY MANAGER": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "addField": {
+          "*": true,
+          "role:ADMIN": true
+        },
+        "protectedFields": {}
+      },
+      "indexes": {
+        "_id_": {
+          "_id": 1
+        }
+      }
+    },
+    {
+      "className": "PaymentMethod",
+      "fields": {
+        "objectId": {
+          "type": "String"
+        },
+        "createdAt": {
+          "type": "Date"
+        },
+        "updatedAt": {
+          "type": "Date"
+        },
+        "ACL": {
+          "type": "ACL"
+        },
+        "name": {
+          "type": "String",
+          "required": false
+        },
+        "status": {
+          "type": "String",
+          "required": false,
+          "defaultValue": "ENABLED"
+        },
+        "type": {
+          "type": "String",
+          "required": false,
+          "defaultValue": ""
+        },
+        "isHidden": {
+          "type": "Boolean",
+          "required": false,
+          "defaultValue": false
+        }
+      },
+      "classLevelPermissions": {
+        "find": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:Accounting": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "count": {
+          "*": true,
+          "role:ADMIN": true
+        },
+        "get": {
+          "*": true,
+          "role:ADMIN": true
+        },
+        "create": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:Accounting": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "update": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:Accounting": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "delete": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:Accounting": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "addField": {
+          "*": true,
+          "role:ADMIN": true
+        },
+        "protectedFields": {}
+      },
+      "indexes": {
+        "_id_": {
+          "_id": 1
+        }
+      }
+    },
+    {
+      "className": "PaymentMode",
+      "fields": {
+        "objectId": {
+          "type": "String"
+        },
+        "createdAt": {
+          "type": "Date"
+        },
+        "updatedAt": {
+          "type": "Date"
+        },
+        "ACL": {
+          "type": "ACL"
+        },
+        "name": {
+          "type": "String",
+          "required": false
+        },
+        "status": {
+          "type": "String",
+          "required": false,
+          "defaultValue": "ENABLED"
+        },
+        "isHidden": {
+          "type": "Boolean",
+          "required": false,
+          "defaultValue": false
+        }
+      },
+      "classLevelPermissions": {
+        "find": {
+          "*": true,
+          "role:ADMIN": true
+        },
+        "count": {
+          "*": true,
+          "role:ADMIN": true
+        },
+        "get": {
+          "*": true,
+          "role:ADMIN": true
+        },
+        "create": {
+          "*": true,
+          "role:ADMIN": true
+        },
+        "update": {
+          "*": true,
+          "role:ADMIN": true
+        },
+        "delete": {
+          "*": true,
+          "role:ADMIN": true
+        },
+        "addField": {
+          "*": true,
+          "role:ADMIN": true
+        },
+        "protectedFields": {}
+      },
+      "indexes": {
+        "_id_": {
+          "_id": 1
+        }
+      }
+    },
+    {
+      "className": "Product",
+      "fields": {
+        "objectId": {
+          "type": "String"
+        },
+        "createdAt": {
+          "type": "Date"
+        },
+        "updatedAt": {
+          "type": "Date"
+        },
+        "ACL": {
+          "type": "ACL"
+        },
+        "name": {
+          "type": "String",
+          "required": false
+        },
+        "category": {
+          "type": "Pointer",
+          "targetClass": "Category",
+          "required": false
+        },
+        "sku": {
+          "type": "String",
+          "required": false
+        },
+        "tags": {
+          "type": "Array",
+          "required": false,
+          "defaultValue": []
+        },
+        "thumbnail": {
+          "type": "String",
+          "required": false
+        },
+        "pricingType": {
+          "type": "String",
+          "required": false
+        },
+        "exclusivePrice": {
+          "type": "Number",
+          "required": false,
+          "defaultValue": 0
+        },
+        "cost": {
+          "type": "Number",
+          "required": false,
+          "defaultValue": 0
+        },
+        "description": {
+          "type": "String",
+          "required": false
+        },
+        "variants": {
+          "type": "Object",
+          "required": false,
+          "defaultValue": {}
+        },
+        "parent": {
+          "type": "Pointer",
+          "targetClass": "Product",
+          "required": false
+        },
+        "price": {
+          "type": "Number"
+        },
+        "sellingPrice": {
+          "type": "Number"
+        },
+        "supplier": {
+          "type": "Pointer",
+          "targetClass": "Supplier",
+          "required": false,
+          "defaultValue": {
+            "__type": "Pointer",
+            "className": "Supplier",
+            "objectId": "iE1DdPJqAd"
+          }
+        },
+        "taxCode": {
+          "type": "Pointer",
+          "targetClass": "TaxCode",
+          "required": false,
+          "defaultValue": {
+            "__type": "Pointer",
+            "className": "TaxCode",
+            "objectId": "NvkY6mBwh3"
+          }
+        },
+        "isHidden": {
+          "type": "Boolean",
+          "required": false,
+          "defaultValue": false
+        },
+        "suppliers": {
+          "type": "Array"
+        }
+      },
+      "classLevelPermissions": {
+        "find": {
+          "role:Sales Staff": true,
+          "role:Technician": true,
+          "role:APPROVER": true,
+          "*": true,
+          "role:ADMIN": true,
+          "role:Branch OIC": true,
+          "role:ENCODER": true,
+          "role:Accounting": true,
+          "role:Cashier": true,
+          "role:Cashier only": true,
+          "role:Encoder": true,
+          "role:BRANCH MANAGER": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "count": {
+          "*": true,
+          "role:ADMIN": true
+        },
+        "get": {
+          "*": true,
+          "role:ADMIN": true
+        },
+        "create": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:ENCODER": true,
+          "role:APPROVER": true,
+          "role:Cashier only": true,
+          "role:Encoder": true,
+          "role:BRANCH MANAGER": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "update": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:APPROVER": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "delete": {
+          "role:Cashier only": true
+        },
+        "addField": {
+          "*": true,
+          "role:ADMIN": true
+        },
+        "protectedFields": {}
+      },
+      "indexes": {
+        "_id_": {
+          "_id": 1
+        }
+      }
+    },
+    {
+      "className": "ProductTrail",
+      "fields": {
+        "objectId": {
+          "type": "String"
+        },
+        "createdAt": {
+          "type": "Date"
+        },
+        "updatedAt": {
+          "type": "Date"
+        },
+        "ACL": {
+          "type": "ACL"
+        },
+        "product": {
+          "type": "Pointer",
+          "targetClass": "Product",
+          "required": true
+        },
+        "store": {
+          "type": "Pointer",
+          "targetClass": "Store",
+          "required": true
+        },
+        "employee": {
+          "type": "Pointer",
+          "targetClass": "_User",
+          "required": true
+        },
+        "action": {
+          "type": "String",
+          "required": true
+        },
+        "beforeQty": {
+          "type": "Number",
+          "required": true,
+          "defaultValue": 0
+        },
+        "changeQty": {
+          "type": "Number",
+          "required": true,
+          "defaultValue": 0
+        },
+        "afterQty": {
+          "type": "Number",
+          "required": true,
+          "defaultValue": 0
+        },
+        "foreignObjectId": {
+          "type": "String",
+          "required": true
+        }
+      },
+      "classLevelPermissions": {
+        "find": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:Cashier": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "count": {
+          "*": true,
+          "role:ADMIN": true
+        },
+        "get": {
+          "*": true,
+          "role:ADMIN": true
+        },
+        "create": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "update": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "delete": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "addField": {
+          "*": true,
+          "role:ADMIN": true
+        },
+        "protectedFields": {}
+      },
+      "indexes": {
+        "_id_": {
+          "_id": 1
+        }
+      }
+    },
+    {
+      "className": "PurchaseItem",
+      "fields": {
+        "objectId": {
+          "type": "String"
+        },
+        "createdAt": {
+          "type": "Date"
+        },
+        "updatedAt": {
+          "type": "Date"
+        },
+        "ACL": {
+          "type": "ACL"
+        },
+        "stock": {
+          "type": "Pointer",
+          "targetClass": "Stock",
+          "required": false
+        },
+        "quantity": {
+          "type": "Number",
+          "required": false,
+          "defaultValue": 0
+        },
+        "unitPrice": {
+          "type": "Number",
+          "required": false,
+          "defaultValue": 0
+        },
+        "totalPrice": {
+          "type": "Number",
+          "required": false,
+          "defaultValue": 0
+        },
+        "discount": {
+          "type": "Number",
+          "required": false,
+          "defaultValue": 0
+        },
+        "originalPrice": {
+          "type": "Number",
+          "required": false,
+          "defaultValue": 0
+        },
+        "discountType": {
+          "type": "String",
+          "required": false,
+          "defaultValue": "PERCENTAGE"
+        },
+        "costPrice": {
+          "type": "Number",
+          "required": false
+        },
+        "notes": {
+          "type": "String",
+          "required": false
+        }
+      },
+      "classLevelPermissions": {
+        "find": {
+          "*": true
+        },
+        "count": {
+          "*": true
+        },
+        "get": {
+          "*": true
+        },
+        "create": {
+          "*": true
+        },
+        "update": {
+          "*": true
+        },
+        "delete": {
+          "*": true
+        },
+        "addField": {
+          "*": true
+        },
+        "protectedFields": {
+          "*": []
+        }
+      },
+      "indexes": {
+        "_id_": {
+          "_id": 1
+        }
+      }
+    },
+    {
+      "className": "PurchaseOrder",
+      "fields": {
+        "objectId": {
+          "type": "String"
+        },
+        "createdAt": {
+          "type": "Date"
+        },
+        "updatedAt": {
+          "type": "Date"
+        },
+        "ACL": {
+          "type": "ACL"
+        },
+        "dateOfArrival": {
+          "type": "Date",
+          "required": false
+        },
+        "supplier": {
+          "type": "Pointer",
+          "targetClass": "Supplier",
+          "required": false
+        },
+        "store": {
+          "type": "Pointer",
+          "targetClass": "Store",
+          "required": false
+        },
+        "status": {
+          "type": "String",
+          "required": false
+        },
+        "subTotal": {
+          "type": "Number",
+          "required": false,
+          "defaultValue": 0
+        },
+        "tax": {
+          "type": "Number",
+          "required": false,
+          "defaultValue": 0
+        },
+        "discount": {
+          "type": "Number",
+          "required": false,
+          "defaultValue": 0
+        },
+        "total": {
+          "type": "Number",
+          "required": false,
+          "defaultValue": 0
+        },
+        "notes": {
+          "type": "String",
+          "required": false
+        },
+        "items": {
+          "type": "Array",
+          "required": false,
+          "defaultValue": []
+        },
+        "isHidden": {
+          "type": "Boolean",
+          "required": false,
+          "defaultValue": false
+        }
+      },
+      "classLevelPermissions": {
+        "find": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:APPROVER": true,
+          "role:Accounting": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "count": {
+          "*": true,
+          "role:ADMIN": true
+        },
+        "get": {
+          "*": true,
+          "role:ADMIN": true
+        },
+        "create": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:APPROVER": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "update": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:APPROVER": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "delete": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:APPROVER": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "addField": {
+          "*": true,
+          "role:ADMIN": true
+        },
+        "protectedFields": {}
+      },
+      "indexes": {
+        "_id_": {
+          "_id": 1
+        }
+      }
+    },
+    {
+      "className": "Service",
+      "fields": {
+        "objectId": {
+          "type": "String"
+        },
+        "createdAt": {
+          "type": "Date"
+        },
+        "updatedAt": {
+          "type": "Date"
+        },
+        "ACL": {
+          "type": "ACL"
+        }
+      },
+      "classLevelPermissions": {
+        "find": {
+          "*": true
+        },
+        "count": {
+          "*": true
+        },
+        "get": {
+          "*": true
+        },
+        "create": {
+          "*": true
+        },
+        "update": {
+          "*": true
+        },
+        "delete": {
+          "*": true
+        },
+        "addField": {},
+        "protectedFields": {}
+      }
+    },
+    {
+      "className": "Shift",
+      "fields": {
+        "objectId": {
+          "type": "String"
+        },
+        "createdAt": {
+          "type": "Date"
+        },
+        "updatedAt": {
+          "type": "Date"
+        },
+        "ACL": {
+          "type": "ACL"
+        },
+        "closedAt": {
+          "type": "Date",
+          "required": false
+        },
+        "closingAmount": {
+          "type": "Number",
+          "required": false,
+          "defaultValue": 0
+        },
+        "drawers": {
+          "type": "Array",
+          "required": false,
+          "defaultValue": []
+        },
+        "openingAmount": {
+          "type": "Number",
+          "required": false,
+          "defaultValue": 0
+        },
+        "status": {
+          "type": "String",
+          "required": false,
+          "defaultValue": "OPEN"
+        },
+        "store": {
+          "type": "Pointer",
+          "targetClass": "Store",
+          "required": true
+        },
+        "cashRegister": {
+          "type": "Pointer",
+          "targetClass": "CashRegister",
+          "required": true
+        },
+        "closedBy": {
+          "type": "Pointer",
+          "targetClass": "_User",
+          "required": false
+        },
+        "createdBy": {
+          "type": "Pointer",
+          "targetClass": "_User",
+          "required": false
+        },
+        "totalCashAmount": {
+          "type": "Number",
+          "required": false,
+          "defaultValue": 0
+        },
+        "totalPayIn": {
+          "type": "Number",
+          "required": false,
+          "defaultValue": 0
+        },
+        "totalPayOut": {
+          "type": "Number",
+          "required": false,
+          "defaultValue": 0
+        }
+      },
+      "classLevelPermissions": {
+        "find": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:Accounting": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "count": {
+          "*": true
+        },
+        "get": {
+          "*": true,
+          "role:ADMIN": true
+        },
+        "create": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:Accounting": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "update": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:Accounting": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "delete": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "addField": {
+          "*": true,
+          "role:ADMIN": true
+        },
+        "protectedFields": {
+          "*": []
+        }
+      },
+      "indexes": {
+        "_id_": {
+          "_id": 1
+        }
+      }
+    },
+    {
+      "className": "Stock",
+      "fields": {
+        "objectId": {
+          "type": "String"
+        },
+        "createdAt": {
+          "type": "Date"
+        },
+        "updatedAt": {
+          "type": "Date"
+        },
+        "ACL": {
+          "type": "ACL"
+        },
+        "store": {
+          "type": "Pointer",
+          "targetClass": "Store",
+          "required": false
+        },
+        "product": {
+          "type": "Pointer",
+          "targetClass": "Product",
+          "required": false
+        },
+        "quantity": {
+          "type": "Number",
+          "required": false,
+          "defaultValue": 0
+        },
+        "warningStockLevel": {
+          "type": "Number",
+          "required": false,
+          "defaultValue": 0
+        },
+        "idealStockLevel": {
+          "type": "Number",
+          "required": false,
+          "defaultValue": 0
+        },
+        "isHidden": {
+          "type": "Boolean",
+          "required": false,
+          "defaultValue": false
+        }
+      },
+      "classLevelPermissions": {
+        "find": {
+          "*": true,
+          "role:Branch OIC": true,
+          "role:APPROVER": true,
+          "role:ADMIN": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "count": {
+          "*": true
+        },
+        "get": {
+          "*": true
+        },
+        "create": {
+          "*": true,
+          "role:Branch OIC": true,
+          "role:APPROVER": true,
+          "role:ADMIN": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "update": {
+          "*": true,
+          "role:Branch OIC": true,
+          "role:APPROVER": true,
+          "role:ADMIN": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "delete": {
+          "*": true,
+          "role:APPROVER": true,
+          "role:ADMIN": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "addField": {
+          "*": true
+        },
+        "protectedFields": {}
+      },
+      "indexes": {
+        "_id_": {
+          "_id": 1
+        }
+      }
+    },
+    {
+      "className": "StockReturn",
+      "fields": {
+        "objectId": {
+          "type": "String"
+        },
+        "createdAt": {
+          "type": "Date"
+        },
+        "updatedAt": {
+          "type": "Date"
+        },
+        "ACL": {
+          "type": "ACL"
+        },
+        "total": {
+          "type": "Number",
+          "required": false,
+          "defaultValue": 0
+        },
+        "subTotal": {
+          "type": "Number",
+          "required": false,
+          "defaultValue": 0
+        },
+        "tax": {
+          "type": "Number",
+          "required": false,
+          "defaultValue": 0
+        },
+        "discount": {
+          "type": "Number",
+          "required": false,
+          "defaultValue": 0
+        },
+        "name": {
+          "type": "String",
+          "required": false,
+          "defaultValue": "Stock Return"
+        },
+        "items": {
+          "type": "Array"
+        },
+        "supplier": {
+          "type": "Pointer",
+          "targetClass": "Supplier"
+        },
+        "store": {
+          "type": "Pointer",
+          "targetClass": "Store"
+        },
+        "status": {
+          "type": "String"
+        },
+        "isHidden": {
+          "type": "Boolean",
+          "required": false,
+          "defaultValue": false
+        }
+      },
+      "classLevelPermissions": {
+        "find": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:APPROVER": true,
+          "role:Accounting": true,
+          "role:Branch OIC": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "count": {
+          "*": true,
+          "role:ADMIN": true
+        },
+        "get": {
+          "*": true,
+          "role:ADMIN": true
+        },
+        "create": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:APPROVER": true,
+          "role:Branch OIC": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "update": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:APPROVER": true,
+          "role:Branch OIC": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "delete": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:APPROVER": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "addField": {
+          "role:ADMIN": true
+        },
+        "protectedFields": {}
+      },
+      "indexes": {
+        "_id_": {
+          "_id": 1
+        }
+      }
+    },
+    {
+      "className": "StockTransfer",
+      "fields": {
+        "objectId": {
+          "type": "String"
+        },
+        "createdAt": {
+          "type": "Date"
+        },
+        "updatedAt": {
+          "type": "Date"
+        },
+        "ACL": {
+          "type": "ACL"
+        },
+        "status": {
+          "type": "String"
+        },
+        "dateOfArrival": {
+          "type": "Date"
+        },
+        "items": {
+          "type": "Array"
+        },
+        "srcStore": {
+          "type": "Pointer",
+          "targetClass": "Store"
+        },
+        "destStore": {
+          "type": "Pointer",
+          "targetClass": "Store"
+        },
+        "notes": {
+          "type": "String"
+        },
+        "total": {
+          "type": "Number",
+          "required": false,
+          "defaultValue": 0
+        },
+        "isHidden": {
+          "type": "Boolean",
+          "required": false,
+          "defaultValue": false
+        }
+      },
+      "classLevelPermissions": {
+        "find": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:APPROVER": true,
+          "role:Accounting": true,
+          "role:Branch OIC": true,
+          "role:Technician": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "count": {
+          "*": true,
+          "role:ADMIN": true
+        },
+        "get": {
+          "*": true,
+          "role:ADMIN": true
+        },
+        "create": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:APPROVER": true,
+          "role:Branch OIC": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "update": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:APPROVER": true,
+          "role:Branch OIC": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "delete": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:APPROVER": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "addField": {
+          "*": true,
+          "role:ADMIN": true
+        },
+        "protectedFields": {}
+      },
+      "indexes": {
+        "_id_": {
+          "_id": 1
+        }
+      }
+    },
+    {
+      "className": "Store",
+      "fields": {
+        "objectId": {
+          "type": "String"
+        },
+        "createdAt": {
+          "type": "Date"
+        },
+        "updatedAt": {
+          "type": "Date"
+        },
+        "ACL": {
+          "type": "ACL"
+        },
+        "name": {
+          "type": "String",
+          "required": true
+        },
+        "address": {
+          "type": "String",
+          "required": false
+        },
+        "description": {
+          "type": "String",
+          "required": false
+        },
+        "phone": {
+          "type": "String",
+          "required": false
+        },
+        "logo": {
+          "type": "String",
+          "required": false
+        },
+        "manager": {
+          "type": "Pointer",
+          "targetClass": "_User",
+          "required": false
+        },
+        "accessControl": {
+          "type": "Object",
+          "required": false,
+          "defaultValue": {}
+        },
+        "isHidden": {
+          "type": "Boolean",
+          "required": false,
+          "defaultValue": false
+        },
+        "stationNumber": {
+          "type": "Number"
+        }
+      },
+      "classLevelPermissions": {
+        "find": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:Cashier": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "count": {
+          "*": true,
+          "role:ADMIN": true
+        },
+        "get": {
+          "*": true,
+          "role:ADMIN": true
+        },
+        "create": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "update": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "delete": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "addField": {
+          "*": true,
+          "role:ADMIN": true
+        },
+        "protectedFields": {}
+      },
+      "indexes": {
+        "_id_": {
+          "_id": 1
+        }
+      }
+    },
+    {
+      "className": "Supplier",
+      "fields": {
+        "objectId": {
+          "type": "String"
+        },
+        "createdAt": {
+          "type": "Date"
+        },
+        "updatedAt": {
+          "type": "Date"
+        },
+        "ACL": {
+          "type": "ACL"
+        },
+        "firstName": {
+          "type": "String",
+          "required": false
+        },
+        "lastName": {
+          "type": "String",
+          "required": false
+        },
+        "landlineNumber": {
+          "type": "String",
+          "required": false
+        },
+        "company": {
+          "type": "String",
+          "required": false
+        },
+        "mobileNumber": {
+          "type": "String",
+          "required": false
+        },
+        "address": {
+          "type": "String",
+          "required": false
+        },
+        "email": {
+          "type": "String",
+          "required": false
+        },
+        "isHidden": {
+          "type": "Boolean",
+          "required": false,
+          "defaultValue": false
+        },
+        "stationNumber": {
+          "type": "Number"
+        }
+      },
+      "classLevelPermissions": {
+        "find": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "count": {
+          "*": true,
+          "role:ADMIN": true
+        },
+        "get": {
+          "*": true,
+          "role:ADMIN": true
+        },
+        "create": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "update": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "delete": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "addField": {
+          "*": true,
+          "role:ADMIN": true
+        },
+        "protectedFields": {}
+      },
+      "indexes": {
+        "_id_": {
+          "_id": 1
+        }
+      }
+    },
+    {
+      "className": "TaxCode",
+      "fields": {
+        "objectId": {
+          "type": "String"
+        },
+        "createdAt": {
+          "type": "Date"
+        },
+        "updatedAt": {
+          "type": "Date"
+        },
+        "ACL": {
+          "type": "ACL"
+        },
+        "name": {
+          "type": "String",
+          "required": false
+        },
+        "rate": {
+          "type": "Number",
+          "required": false
+        }
+      },
+      "classLevelPermissions": {
+        "find": {
+          "*": true
+        },
+        "count": {
+          "*": true
+        },
+        "get": {
+          "*": true
+        },
+        "create": {
+          "*": true
+        },
+        "update": {
+          "*": true
+        },
+        "delete": {
+          "*": true
+        },
+        "addField": {
+          "*": true
+        },
+        "protectedFields": {}
+      },
+      "indexes": {
+        "_id_": {
+          "_id": 1
+        }
+      }
+    },
+    {
+      "className": "Transaction",
+      "fields": {
+        "objectId": {
+          "type": "String"
+        },
+        "createdAt": {
+          "type": "Date"
+        },
+        "updatedAt": {
+          "type": "Date"
+        },
+        "ACL": {
+          "type": "ACL"
+        },
+        "customer": {
+          "type": "Pointer",
+          "targetClass": "Customer",
+          "required": false
+        },
+        "items": {
+          "type": "Array",
+          "required": false,
+          "defaultValue": []
+        },
+        "totalItems": {
+          "type": "Number",
+          "required": false,
+          "defaultValue": 0
+        },
+        "discount": {
+          "type": "Number",
+          "required": false,
+          "defaultValue": 0
+        },
+        "discountType": {
+          "type": "String",
+          "required": false,
+          "defaultValue": "PERCENTAGE"
+        },
+        "subTotalPrice": {
+          "type": "Number",
+          "required": false,
+          "defaultValue": 0
+        },
+        "totalPrice": {
+          "type": "Number",
+          "required": false,
+          "defaultValue": 0
+        },
+        "payments": {
+          "type": "Array",
+          "required": false,
+          "defaultValue": []
+        },
+        "cashier": {
+          "type": "Pointer",
+          "targetClass": "_User",
+          "required": false
+        },
+        "status": {
+          "type": "String",
+          "required": false,
+          "defaultValue": "PAID"
+        },
+        "notes": {
+          "type": "String",
+          "required": false
+        },
+        "store": {
+          "type": "Pointer",
+          "targetClass": "Store",
+          "required": false
+        },
+        "completedAt": {
+          "type": "Date",
+          "required": false
+        },
+        "paymentMode": {
+          "type": "Pointer",
+          "targetClass": "PaymentMode",
+          "required": false,
+          "defaultValue": {
+            "__type": "Pointer",
+            "className": "PaymentMode",
+            "objectId": "EnnoZSXijB"
+          }
+        },
+        "expectedPickUpAt": {
+          "type": "Date"
+        },
+        "actualPickUpAt": {
+          "type": "Date"
+        },
+        "pickUpBy": {
+          "type": "String"
+        },
+        "voidStatus": {
+          "type": "String"
+        },
+        "remarks": {
+          "type": "String"
+        },
+        "cashRegister": {
+          "type": "Pointer",
+          "targetClass": "CashRegister",
+          "required": false
+        },
+        "shift": {
+          "type": "Pointer",
+          "targetClass": "Shift",
+          "required": false
+        },
+        "isHidden": {
+          "type": "Boolean",
+          "required": false,
+          "defaultValue": false
+        },
+        "receiptNumber": {
+          "type": "String"
+        },
+        "sequence": {
+          "type": "Number"
+        }
+      },
+      "classLevelPermissions": {
+        "find": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:APPROVER": true,
+          "role:Branch OIC": true,
+          "role:Accounting": true,
+          "role:Sales Staff": true,
+          "role:Cashier": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true,
+          "role:Employee": true
+        },
+        "count": {
+          "*": true
+        },
+        "get": {
+          "*": true,
+          "role:ADMIN": true
+        },
+        "create": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:APPROVER": true,
+          "role:Branch OIC": true,
+          "role:Accounting": true,
+          "role:Sales Staff": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true,
+          "role:Employee": true
+        },
+        "update": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:APPROVER": true,
+          "role:Branch OIC": true,
+          "role:Accounting": true,
+          "role:Sales Staff": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true,
+          "role:Employee": true
+        },
+        "delete": {
+          "*": true,
+          "role:ADMIN": true,
+          "role:APPROVER": true,
+          "role:Accounting": true,
+          "role:Cashier only": true,
+          "role:Branch Approver": true,
+          "role:Administrator": true,
+          "role:Branch Manager": true
+        },
+        "addField": {
+          "*": true,
+          "role:ADMIN": true
+        },
+        "protectedFields": {
+          "*": []
+        }
+      },
+      "indexes": {
+        "_id_": {
+          "_id": 1
+        }
+      }
+    },
+    {
+      "className": "_Session",
+      "fields": {
+        "objectId": {
+          "type": "String"
+        },
+        "createdAt": {
+          "type": "Date"
+        },
+        "updatedAt": {
+          "type": "Date"
+        },
+        "ACL": {
+          "type": "ACL"
+        },
+        "restricted": {
+          "type": "Boolean"
+        },
         "user": {
           "type": "Pointer",
-          "target": "users"
+          "targetClass": "_User"
+        },
+        "installationId": {
+          "type": "String"
+        },
+        "sessionToken": {
+          "type": "String"
         },
         "expiresAt": {
           "type": "Date"
         },
-        "masterKey": {
-          "type": "String",
-          "hidden": true
+        "createdWith": {
+          "type": "Object"
         }
       },
-      "permissions": {
-        "find": [
-          "*"
-        ],
-        "get": [
-          "*"
-        ]
+      "classLevelPermissions": {
+        "find": {
+          "*": true
+        },
+        "count": {
+          "*": true
+        },
+        "get": {
+          "*": true
+        },
+        "create": {
+          "*": true
+        },
+        "update": {
+          "*": true
+        },
+        "delete": {
+          "*": true
+        },
+        "addField": {
+          "*": true
+        },
+        "protectedFields": {
+          "*": []
+        }
+      },
+      "indexes": {
+        "_id_": {
+          "_id": 1
+        }
       }
     }
   ]

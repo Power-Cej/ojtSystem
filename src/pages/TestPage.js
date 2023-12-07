@@ -1,5 +1,5 @@
 import React from "react";
-import Cropper from "../components/ImageCropper/index4";
+import Cropper from "../components/ImageCropper";
 
 const createImage = (url) =>
     new Promise((resolve, reject) => {

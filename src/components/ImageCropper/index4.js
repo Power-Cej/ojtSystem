@@ -179,6 +179,46 @@ class Cropper extends React.Component {
         const crop = this.getCropSize();
         this.setState({crop});
     }
+    cropImage() {
+        const { zoom, rotation, position, crop } = this.state;
+        const image = this.imageRef.current;
+
+        // Create a canvas element
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+
+        // Set canvas size to the crop size
+        canvas.width = crop.width;
+        canvas.height = crop.height;
+
+        // Calculate the scale and position to draw the image on canvas
+        const scaleX = image.naturalWidth / image.offsetWidth;
+        const scaleY = image.naturalHeight / image.offsetHeight;
+        const cropX = (image.offsetWidth / 2 - position.x - crop.width / 2) * scaleX;
+        const cropY = (image.offsetHeight / 2 - position.y - crop.height / 2) * scaleY;
+        const cropWidth = crop.width * scaleX;
+        const cropHeight = crop.height * scaleY;
+
+        // Apply rotation if needed
+        if (rotation !== 0) {
+            ctx.translate(canvas.width / 2, canvas.height / 2);
+            ctx.rotate((rotation * Math.PI) / 180);
+            ctx.translate(-canvas.width / 2, -canvas.height / 2);
+        }
+
+        // Draw the image on canvas
+        ctx.drawImage(
+            image,
+            cropX, cropY, // Start clipping
+            cropWidth, cropHeight, // Clip width and height
+            0, 0, // Place the image on canvas
+            canvas.width, canvas.height // Image size
+        );
+
+        // Return the cropped image
+        return canvas.toDataURL();
+    }
+
 
     render() {
         const {image} = this.props;
@@ -242,6 +282,7 @@ class Cropper extends React.Component {
                 style={cropStyles}/>
         </div>)
     }
+
 
 }
 

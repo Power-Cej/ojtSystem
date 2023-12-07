@@ -1,6 +1,10 @@
 import BasePage from "./BasePage";
 
 class BaseFormPage extends BasePage {
+    state = {
+        object: {},
+        advanced: false
+    };
     componentDidMount() {
         this.presenter.componentDidMount();
     }

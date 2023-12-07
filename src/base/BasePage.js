@@ -10,12 +10,21 @@ import ConfirmDialog from "./ConfirmDialog";
  */
 
 class BasePage extends React.Component {
-    showProgress() {
-        this.setState({progress: true});
+    state = {loading: true}
+    showLoading() {
+        this.setState({loading: true});
     }
 
+    hideLoading() {
+        this.setState({loading: false});
+    }
+    // @deprecated
+    showProgress() {
+        this.setState({loading: true});
+    }
+    // @deprecated
     hideProgress() {
-        this.setState({progress: false});
+        this.setState({loading: false});
     }
 
     submitting() {
@@ -30,7 +39,7 @@ class BasePage extends React.Component {
         this.setState({submitting: false});
     }
 
-    // block the UI to show the progress dialog
+    // block the UI to show the loading dialog
     showProgressDialog() {
         const promise = createPromise();
         dialog.fire({
@@ -135,8 +144,8 @@ class BasePage extends React.Component {
         this.context.setGlobalState(state);
     }
 
-    getGlobalState() {
-        return this.context;
+    getGlobalState(key) {
+        return key ? this.context[key] : this.context;
     }
 
     getCurrentRoles() {
