@@ -33,16 +33,6 @@ class BaseFormPage extends BasePage {
     onChange(value, field) {
         this.presenter.onChange(value, field);
     }
-
-    getAcl() {
-        const roles = this.getCurrentRoles();
-        const aclRoles = roles.map(r => `role:${r.name}`);
-        const user = this.getCurrentUser();
-        return {
-            read: ['*', user.id, ...aclRoles],
-            write: [user.id, ...aclRoles],
-        };
-    }
 }
 
 export default BaseFormPage;

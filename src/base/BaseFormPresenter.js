@@ -42,8 +42,6 @@ class BaseFormPresenter {
         const collection = this.view.getCollectionName();
         if (this.object.id) {
             this.change.id = this.object.id;
-        } else {
-            this.change.acl = this.view.getAcl();
         }
         try {
             await this.upsertUseCase.execute(collection, this.change);

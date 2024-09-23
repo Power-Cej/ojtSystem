@@ -16,7 +16,7 @@ class BaseListPresenter {
         this.where = {};
         this.search = {};
         this.filter = {};
-        this.include = ['all'];
+        this.include = [''];
         this.keys = undefined; // if keys are specified, only those keys will be returned
         this.sort = {createdAt: -1};
         this.progress = true;

@@ -13,7 +13,6 @@ import { Layout, Progress, LogoHolder } from "nq-component";
 import MigrationPage from "../migration/MigrationPage";
 import AccountPage from "../account/AccountPage";
 import RoleFormPage from "../role-form/RoleFormPage";
-import canRead from "../../canRead";
 import withRouter from "../../withRouter";
 import DashboardPage from "../dashboard/DashboardPage";
 import HooksPage from "../web-hook/HooksPage";
@@ -150,19 +149,14 @@ class MainPage extends BasePage {
         <main className="vh-100 d-flex flex-column">
           <Routes>
             <Route exact path={"/"} element={<DashboardPage />} />
-            {/*<Route*/}
-            {/*  exact*/}
-            {/*  path={"/collection/dashboard"}*/}
-            {/*  element={<DashboardPage />}*/}
-            {/*/>*/}
             <Route
               exact
               path={"/collection/:name"}
               element={<CollectionListPage />}
             />
-            <Route path={"/collection/roles/form"} element={<RoleFormPage />} />
+            <Route path={"/roles/form"} element={<RoleFormPage />} />
             <Route
-              path={"/collection/roles/form/:id"}
+              path={"/roles/form/:id"}
               element={<RoleFormPage />}
             />
             <Route

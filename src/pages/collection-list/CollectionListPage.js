@@ -177,7 +177,6 @@ class CollectionListPage extends BaseListPage {
     render() {
         const schema = this.getSchema(this.getCollectionName());
         const {objects, selected, count, progress} = this.state;
-        console.log("clp", objects);
         if (!schema) return <Progress/>;
         const user = this.getCurrentUser();
         return (
@@ -273,21 +272,12 @@ class CollectionListPage extends BaseListPage {
                                 <h1 className="fw-bold text-capitalize">
                                     {schema.label || this.getCollectionName()}
                                 </h1>
-                                {selected.length > 0 ? (
-                                    <div>
-                                        <span className="ms-2">Selected: </span>
-                                        <span className="fs-sm text-nowrap">{selected.length}</span>
-                                        <span className="ms-1">of </span>
-                                        <span className="fs-sm text-nowrap">{count}</span>
-                                    </div>
-                                ) : (
-                                    <div>
-                                        <span className="ms-2">Total: </span>
-                                        <span className="fs-sm text-nowrap">{objects.length}</span>
-                                        <span className="ms-1">of </span>
-                                        <span className="fs-sm text-nowrap">{count}</span>
-                                    </div>
-                                )}
+                                <div className="text-nowrap">
+                                    <span className="ms-2">{selected.length > 0 ? 'Selected: ' : 'Total: '}</span>
+                                    <span className="fs-sm text-nowrap">{selected.length > 0 ? selected.length : objects.length}</span>
+                                    <span className="ms-1">of </span>
+                                    <span className="fs-sm text-nowrap">{count}</span>
+                                </div>
                             </div>
                             <div className="d-flex mt-3">
                                 {Object.keys(schema.filters || {}).map((field) => {

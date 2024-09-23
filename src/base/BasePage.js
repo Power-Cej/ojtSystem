@@ -10,21 +10,27 @@ import ConfirmDialog from "./ConfirmDialog";
  */
 
 class BasePage extends React.Component {
-    state = {loading: true}
+    state = {
+        loading: true,
+        progress: true,
+    }
+
     showLoading() {
-        this.setState({loading: true});
+        this.setState({progress: true, loading: true});
     }
 
     hideLoading() {
-        this.setState({loading: false});
+        this.setState({progress: false, loading: false});
     }
+
     // @deprecated
     showProgress() {
-        this.setState({loading: true});
+        this.setState({progress: true, loading: true});
     }
+
     // @deprecated
     hideProgress() {
-        this.setState({loading: false});
+        this.setState({progress: false, loading: false});
     }
 
     submitting() {

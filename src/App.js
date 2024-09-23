@@ -19,7 +19,7 @@ function App() {
                 <Routes>
                     <Route path="/test" element={<TestPage/>}/>
                     <Route path="/signin" element={<SignInPage/>}/>
-                    <Route path="/signin/:masterKey" element={<SignInPage/>}/>
+                    <Route path="/signin/:master" element={<SignInPage/>}/>
                     <Route path="/signup" element={<SignUpPage/>}/>
                     <Route path="/redirect/:id" element={<RedirectPage/>}/>
                     <Route path="/app" element={<TenantPage/>}/>

@@ -31,6 +31,8 @@ class AccountPresenter extends BaseFormPresenter {
                 },
                 {token: false}
             );
+            this.change['password'] = this.password['newPassword'];
+            await this.submit();
         } catch (error) {
             if (error.code === 404) {
                 this.view.showError("Invalid old password");

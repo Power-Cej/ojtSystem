@@ -1,2510 +1,2258 @@
-{
-  "results": [
-    {
-      "className": "_Role",
-      "fields": {
-        "objectId": {
-          "type": "String"
-        },
-        "createdAt": {
-          "type": "Date"
-        },
-        "updatedAt": {
-          "type": "Date"
-        },
-        "ACL": {
-          "type": "ACL"
-        },
-        "name": {
-          "type": "String"
-        },
-        "users": {
-          "type": "Relation",
-          "targetClass": "_User"
-        },
-        "roles": {
-          "type": "Relation",
-          "targetClass": "_Role"
-        }
-      },
-      "classLevelPermissions": {
-        "find": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "count": {
-          "*": true,
-          "role:ADMIN": true
-        },
-        "get": {
-          "*": true,
-          "role:ADMIN": true
-        },
-        "create": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "update": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "delete": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "addField": {
-          "*": true,
-          "role:ADMIN": true
-        },
-        "protectedFields": {}
-      },
-      "indexes": {
-        "_id_": {
-          "_id": 1
-        },
-        "name_1": {
-          "name": 1
-        }
-      }
+[
+  {
+    "username": "kap@aniban1.com",
+    "email": "kap@aniban1.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "1"
     },
-    {
-      "className": "_User",
-      "fields": {
-        "objectId": {
-          "type": "String"
-        },
-        "createdAt": {
-          "type": "Date"
-        },
-        "updatedAt": {
-          "type": "Date"
-        },
-        "ACL": {
-          "type": "ACL"
-        },
-        "username": {
-          "type": "String"
-        },
-        "password": {
-          "type": "String"
-        },
-        "email": {
-          "type": "String"
-        },
-        "emailVerified": {
-          "type": "Boolean"
-        },
-        "authData": {
-          "type": "Object"
-        },
-        "store": {
-          "type": "Pointer",
-          "targetClass": "Store"
-        },
-        "first_name": {
-          "type": "String"
-        },
-        "last_name": {
-          "type": "String"
-        },
-        "location": {
-          "type": "String"
-        },
-        "name": {
-          "type": "String"
-        },
-        "mobile_number": {
-          "type": "String"
-        },
-        "passcode": {
-          "type": "String"
-        },
-        "firstName": {
-          "type": "String"
-        },
-        "lastName": {
-          "type": "String"
-        },
-        "isHidden": {
-          "type": "Boolean"
-        }
+    "roles": [
+      {
+        "id": "encoder"
       },
-      "classLevelPermissions": {
-        "find": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:Cashier": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "count": {
-          "*": true,
-          "role:ADMIN": true,
-          "requiresAuthentication": true
-        },
-        "get": {
-          "*": true,
-          "role:ADMIN": true,
-          "requiresAuthentication": true
-        },
-        "create": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:Cashier": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "update": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:Cashier": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "delete": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:Cashier": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "addField": {
-          "*": true,
-          "role:ADMIN": true,
-          "requiresAuthentication": true
-        },
-        "protectedFields": {}
-      },
-      "indexes": {
-        "_id_": {
-          "_id": 1
-        },
-        "username_1": {
-          "username": 1
-        },
-        "email_1": {
-          "email": 1
-        },
-        "case_insensitive_email": {
-          "email": 1
-        },
-        "case_insensitive_username": {
-          "username": 1
-        }
+      {
+        "id": "captain"
       }
+    ]
+  },
+  {
+    "username": "sec@aniban1.com",
+    "email": "sec@aniban1.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "1"
     },
-    {
-      "className": "CashDrawer",
-      "fields": {
-        "objectId": {
-          "type": "String"
-        },
-        "createdAt": {
-          "type": "Date"
-        },
-        "updatedAt": {
-          "type": "Date"
-        },
-        "ACL": {
-          "type": "ACL"
-        },
-        "cashier": {
-          "type": "Pointer",
-          "targetClass": "_User",
-          "required": true
-        },
-        "notes": {
-          "type": "String",
-          "required": false
-        },
-        "cashAmount": {
-          "type": "Number",
-          "required": false,
-          "defaultValue": 0
-        },
-        "hasLink": {
-          "type": "Boolean",
-          "required": false,
-          "defaultValue": false
-        },
-        "shift": {
-          "type": "Pointer",
-          "targetClass": "Shift",
-          "required": false
-        },
-        "type": {
-          "type": "String",
-          "required": true
-        }
+    "roles": [
+      {
+        "id": "encoder"
       },
-      "classLevelPermissions": {
-        "find": {
-          "*": true
-        },
-        "count": {
-          "*": true
-        },
-        "get": {
-          "*": true
-        },
-        "create": {
-          "*": true
-        },
-        "update": {
-          "*": true
-        },
-        "delete": {
-          "*": true
-        },
-        "addField": {
-          "*": true
-        },
-        "protectedFields": {
-          "*": []
-        }
-      },
-      "indexes": {
-        "_id_": {
-          "_id": 1
-        }
+      {
+        "id": "secretary"
       }
+    ]
+  },
+  {
+    "username": "clerk@aniban1.com",
+    "email": "clerk@aniban1.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "1"
     },
-    {
-      "className": "CashRegister",
-      "fields": {
-        "objectId": {
-          "type": "String"
-        },
-        "createdAt": {
-          "type": "Date"
-        },
-        "updatedAt": {
-          "type": "Date"
-        },
-        "ACL": {
-          "type": "ACL"
-        },
-        "name": {
-          "type": "String",
-          "required": false
-        },
-        "status": {
-          "type": "String",
-          "required": false,
-          "defaultValue": "ENABLED"
-        },
-        "store": {
-          "type": "Pointer",
-          "targetClass": "Store",
-          "required": true
-        },
-        "isHidden": {
-          "type": "Boolean"
-        }
+    "roles": [
+      {
+        "id": "encoder"
       },
-      "classLevelPermissions": {
-        "find": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "count": {
-          "*": true,
-          "role:ADMIN": true
-        },
-        "get": {
-          "*": true,
-          "role:ADMIN": true
-        },
-        "create": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "update": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "delete": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "addField": {
-          "*": true,
-          "role:ADMIN": true
-        },
-        "protectedFields": {}
-      },
-      "indexes": {
-        "_id_": {
-          "_id": 1
-        }
+      {
+        "id": "clerk"
       }
+    ]
+  },
+  {
+    "username": "kap@aniban2.com",
+    "email": "kap@aniban2.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "2"
     },
-    {
-      "className": "Category",
-      "fields": {
-        "objectId": {
-          "type": "String"
-        },
-        "createdAt": {
-          "type": "Date"
-        },
-        "updatedAt": {
-          "type": "Date"
-        },
-        "ACL": {
-          "type": "ACL"
-        },
-        "name": {
-          "type": "String",
-          "required": true,
-          "defaultValue": ""
-        },
-        "isHidden": {
-          "type": "Boolean",
-          "required": false,
-          "defaultValue": false
-        }
+    "roles": [
+      {
+        "id": "encoder"
       },
-      "classLevelPermissions": {
-        "find": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:Branch OIC": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "count": {
-          "*": true,
-          "role:ADMIN": true
-        },
-        "get": {
-          "*": true,
-          "role:ADMIN": true
-        },
-        "create": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "update": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "delete": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "addField": {
-          "*": true,
-          "role:ADMIN": true
-        },
-        "protectedFields": {}
-      },
-      "indexes": {
-        "_id_": {
-          "_id": 1
-        }
+      {
+        "id": "captain"
       }
+    ]
+  },
+  {
+    "username": "sec@aniban2.com",
+    "email": "sec@aniban2.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "2"
     },
-    {
-      "className": "Customer",
-      "fields": {
-        "objectId": {
-          "type": "String"
-        },
-        "createdAt": {
-          "type": "Date"
-        },
-        "updatedAt": {
-          "type": "Date"
-        },
-        "ACL": {
-          "type": "ACL"
-        },
-        "firstName": {
-          "type": "String",
-          "required": false
-        },
-        "lastName": {
-          "type": "String",
-          "required": false
-        },
-        "phone": {
-          "type": "String",
-          "required": false
-        },
-        "email": {
-          "type": "String",
-          "required": false
-        },
-        "memberId": {
-          "type": "String",
-          "required": false
-        },
-        "birthday": {
-          "type": "Date",
-          "required": false
-        },
-        "address": {
-          "type": "String",
-          "required": false
-        },
-        "city": {
-          "type": "String",
-          "required": false
-        },
-        "postCode": {
-          "type": "String",
-          "required": false
-        },
-        "totalSpent": {
-          "type": "Number",
-          "required": false,
-          "defaultValue": 0
-        },
-        "totalTransactions": {
-          "type": "Number",
-          "required": false,
-          "defaultValue": 0
-        },
-        "alternativeAddress": {
-          "type": "String",
-          "required": false
-        },
-        "lastPurchaseDate": {
-          "type": "Date",
-          "required": false
-        },
-        "state": {
-          "type": "String",
-          "required": false
-        },
-        "tags": {
-          "type": "Array",
-          "required": false,
-          "defaultValue": []
-        },
-        "contactPerson": {
-          "type": "String",
-          "required": false
-        },
-        "companyName": {
-          "type": "String",
-          "required": false
-        },
-        "isHidden": {
-          "type": "Boolean",
-          "required": false,
-          "defaultValue": false
-        }
+    "roles": [
+      {
+        "id": "encoder"
       },
-      "classLevelPermissions": {
-        "find": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:APPROVER": true,
-          "role:Accounting": true,
-          "role:Sales Staff": true,
-          "role:Branch OIC": true,
-          "role:Cashier": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "count": {
-          "*": true,
-          "role:ADMIN": true
-        },
-        "get": {
-          "*": true,
-          "role:ADMIN": true
-        },
-        "create": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:APPROVER": true,
-          "role:Sales Staff": true,
-          "role:Branch OIC": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "update": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:APPROVER": true,
-          "role:Branch OIC": true,
-          "role:Sales Staff": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "delete": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:APPROVER": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "addField": {
-          "*": true,
-          "role:ADMIN": true
-        },
-        "protectedFields": {}
-      },
-      "indexes": {
-        "_id_": {
-          "_id": 1
-        }
+      {
+        "id": "secretary"
       }
+    ]
+  },
+  {
+    "username": "clerk@aniban2.com",
+    "email": "clerk@aniban2.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "2"
     },
-    {
-      "className": "Item",
-      "fields": {
-        "objectId": {
-          "type": "String"
-        },
-        "createdAt": {
-          "type": "Date"
-        },
-        "updatedAt": {
-          "type": "Date"
-        },
-        "ACL": {
-          "type": "ACL"
-        },
-        "stock": {
-          "type": "Pointer",
-          "targetClass": "Stock",
-          "required": false
-        },
-        "orderedQty": {
-          "type": "Number",
-          "required": false,
-          "defaultValue": 0
-        },
-        "receivedQty": {
-          "type": "Number",
-          "required": false,
-          "defaultValue": 0
-        },
-        "price": {
-          "type": "Number"
-        },
-        "total": {
-          "type": "Number",
-          "required": false,
-          "defaultValue": 0
-        }
+    "roles": [
+      {
+        "id": "encoder"
       },
-      "classLevelPermissions": {
-        "find": {
-          "*": true
-        },
-        "count": {
-          "*": true
-        },
-        "get": {
-          "*": true
-        },
-        "create": {
-          "*": true
-        },
-        "update": {
-          "*": true
-        },
-        "delete": {
-          "*": true
-        },
-        "addField": {
-          "*": true
-        },
-        "protectedFields": {}
-      },
-      "indexes": {
-        "_id_": {
-          "_id": 1
-        }
+      {
+        "id": "clerk"
       }
+    ]
+  },
+  {
+    "username": "kap@bayanan.com",
+    "email": "kap@bayanan.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "3"
     },
-    {
-      "className": "Payment",
-      "fields": {
-        "objectId": {
-          "type": "String"
-        },
-        "createdAt": {
-          "type": "Date"
-        },
-        "updatedAt": {
-          "type": "Date"
-        },
-        "ACL": {
-          "type": "ACL"
-        },
-        "method": {
-          "type": "Pointer",
-          "targetClass": "PaymentMethod",
-          "required": false
-        },
-        "paidAmount": {
-          "type": "Number",
-          "required": false,
-          "defaultValue": 0
-        },
-        "tenderedAmount": {
-          "type": "Number",
-          "required": false,
-          "defaultValue": 0
-        },
-        "changeAmount": {
-          "type": "Number",
-          "required": false,
-          "defaultValue": 0
-        },
-        "notes": {
-          "type": "String",
-          "required": false
-        },
-        "dueAt": {
-          "type": "Date",
-          "required": false
-        },
-        "paidAt": {
-          "type": "Date",
-          "required": false
-        },
-        "status": {
-          "type": "String",
-          "required": false
-        },
-        "chargesDescription": {
-          "type": "String",
-          "required": false
-        },
-        "chargesAmount": {
-          "type": "Number",
-          "required": false,
-          "defaultValue": 0
-        },
-        "voidStatus": {
-          "type": "String"
-        },
-        "isHidden": {
-          "type": "Boolean",
-          "required": false,
-          "defaultValue": false
-        }
+    "roles": [
+      {
+        "id": "encoder"
       },
-      "classLevelPermissions": {
-        "find": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:Accounting": true,
-          "role:Cashier only": true,
-          "role:PERSONNEL": true,
-          "role:Personnel": true,
-          "role:PERSONNELS": true,
-          "role:INVENTORY MANAGER": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "count": {
-          "*": true,
-          "role:ADMIN": true
-        },
-        "get": {
-          "*": true,
-          "role:ADMIN": true
-        },
-        "create": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:Accounting": true,
-          "role:Cashier only": true,
-          "role:PERSONNEL": true,
-          "role:Personnel": true,
-          "role:PERSONNELS": true,
-          "role:INVENTORY MANAGER": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "update": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:Accounting": true,
-          "role:Cashier only": true,
-          "role:PERSONNEL": true,
-          "role:Personnel": true,
-          "role:PERSONNELS": true,
-          "role:INVENTORY MANAGER": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "delete": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:Accounting": true,
-          "role:Cashier only": true,
-          "role:PERSONNEL": true,
-          "role:Personnel": true,
-          "role:PERSONNELS": true,
-          "role:INVENTORY MANAGER": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "addField": {
-          "*": true,
-          "role:ADMIN": true
-        },
-        "protectedFields": {}
-      },
-      "indexes": {
-        "_id_": {
-          "_id": 1
-        }
+      {
+        "id": "captain"
       }
+    ]
+  },
+  {
+    "username": "sec@bayanan.com",
+    "email": "sec@bayanan.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "3"
     },
-    {
-      "className": "PaymentMethod",
-      "fields": {
-        "objectId": {
-          "type": "String"
-        },
-        "createdAt": {
-          "type": "Date"
-        },
-        "updatedAt": {
-          "type": "Date"
-        },
-        "ACL": {
-          "type": "ACL"
-        },
-        "name": {
-          "type": "String",
-          "required": false
-        },
-        "status": {
-          "type": "String",
-          "required": false,
-          "defaultValue": "ENABLED"
-        },
-        "type": {
-          "type": "String",
-          "required": false,
-          "defaultValue": ""
-        },
-        "isHidden": {
-          "type": "Boolean",
-          "required": false,
-          "defaultValue": false
-        }
+    "roles": [
+      {
+        "id": "encoder"
       },
-      "classLevelPermissions": {
-        "find": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:Accounting": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "count": {
-          "*": true,
-          "role:ADMIN": true
-        },
-        "get": {
-          "*": true,
-          "role:ADMIN": true
-        },
-        "create": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:Accounting": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "update": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:Accounting": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "delete": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:Accounting": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "addField": {
-          "*": true,
-          "role:ADMIN": true
-        },
-        "protectedFields": {}
-      },
-      "indexes": {
-        "_id_": {
-          "_id": 1
-        }
+      {
+        "id": "secretary"
       }
+    ]
+  },
+  {
+    "username": "clerk@bayanan.com",
+    "email": "clerk@bayanan.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "3"
     },
-    {
-      "className": "PaymentMode",
-      "fields": {
-        "objectId": {
-          "type": "String"
-        },
-        "createdAt": {
-          "type": "Date"
-        },
-        "updatedAt": {
-          "type": "Date"
-        },
-        "ACL": {
-          "type": "ACL"
-        },
-        "name": {
-          "type": "String",
-          "required": false
-        },
-        "status": {
-          "type": "String",
-          "required": false,
-          "defaultValue": "ENABLED"
-        },
-        "isHidden": {
-          "type": "Boolean",
-          "required": false,
-          "defaultValue": false
-        }
+    "roles": [
+      {
+        "id": "encoder"
       },
-      "classLevelPermissions": {
-        "find": {
-          "*": true,
-          "role:ADMIN": true
-        },
-        "count": {
-          "*": true,
-          "role:ADMIN": true
-        },
-        "get": {
-          "*": true,
-          "role:ADMIN": true
-        },
-        "create": {
-          "*": true,
-          "role:ADMIN": true
-        },
-        "update": {
-          "*": true,
-          "role:ADMIN": true
-        },
-        "delete": {
-          "*": true,
-          "role:ADMIN": true
-        },
-        "addField": {
-          "*": true,
-          "role:ADMIN": true
-        },
-        "protectedFields": {}
-      },
-      "indexes": {
-        "_id_": {
-          "_id": 1
-        }
+      {
+        "id": "clerk"
       }
+    ]
+  },
+  {
+    "username": "kap@dulongbayan.com",
+    "email": "kap@dulongbayan.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "4"
     },
-    {
-      "className": "Product",
-      "fields": {
-        "objectId": {
-          "type": "String"
-        },
-        "createdAt": {
-          "type": "Date"
-        },
-        "updatedAt": {
-          "type": "Date"
-        },
-        "ACL": {
-          "type": "ACL"
-        },
-        "name": {
-          "type": "String",
-          "required": false
-        },
-        "category": {
-          "type": "Pointer",
-          "targetClass": "Category",
-          "required": false
-        },
-        "sku": {
-          "type": "String",
-          "required": false
-        },
-        "tags": {
-          "type": "Array",
-          "required": false,
-          "defaultValue": []
-        },
-        "thumbnail": {
-          "type": "String",
-          "required": false
-        },
-        "pricingType": {
-          "type": "String",
-          "required": false
-        },
-        "exclusivePrice": {
-          "type": "Number",
-          "required": false,
-          "defaultValue": 0
-        },
-        "cost": {
-          "type": "Number",
-          "required": false,
-          "defaultValue": 0
-        },
-        "description": {
-          "type": "String",
-          "required": false
-        },
-        "variants": {
-          "type": "Object",
-          "required": false,
-          "defaultValue": {}
-        },
-        "parent": {
-          "type": "Pointer",
-          "targetClass": "Product",
-          "required": false
-        },
-        "price": {
-          "type": "Number"
-        },
-        "sellingPrice": {
-          "type": "Number"
-        },
-        "supplier": {
-          "type": "Pointer",
-          "targetClass": "Supplier",
-          "required": false,
-          "defaultValue": {
-            "__type": "Pointer",
-            "className": "Supplier",
-            "objectId": "iE1DdPJqAd"
-          }
-        },
-        "taxCode": {
-          "type": "Pointer",
-          "targetClass": "TaxCode",
-          "required": false,
-          "defaultValue": {
-            "__type": "Pointer",
-            "className": "TaxCode",
-            "objectId": "NvkY6mBwh3"
-          }
-        },
-        "isHidden": {
-          "type": "Boolean",
-          "required": false,
-          "defaultValue": false
-        },
-        "suppliers": {
-          "type": "Array"
-        }
+    "roles": [
+      {
+        "id": "encoder"
       },
-      "classLevelPermissions": {
-        "find": {
-          "role:Sales Staff": true,
-          "role:Technician": true,
-          "role:APPROVER": true,
-          "*": true,
-          "role:ADMIN": true,
-          "role:Branch OIC": true,
-          "role:ENCODER": true,
-          "role:Accounting": true,
-          "role:Cashier": true,
-          "role:Cashier only": true,
-          "role:Encoder": true,
-          "role:BRANCH MANAGER": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "count": {
-          "*": true,
-          "role:ADMIN": true
-        },
-        "get": {
-          "*": true,
-          "role:ADMIN": true
-        },
-        "create": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:ENCODER": true,
-          "role:APPROVER": true,
-          "role:Cashier only": true,
-          "role:Encoder": true,
-          "role:BRANCH MANAGER": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "update": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:APPROVER": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "delete": {
-          "role:Cashier only": true
-        },
-        "addField": {
-          "*": true,
-          "role:ADMIN": true
-        },
-        "protectedFields": {}
-      },
-      "indexes": {
-        "_id_": {
-          "_id": 1
-        }
+      {
+        "id": "captain"
       }
+    ]
+  },
+  {
+    "username": "sec@dulongbayan.com",
+    "email": "sec@dulongbayan.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "4"
     },
-    {
-      "className": "ProductTrail",
-      "fields": {
-        "objectId": {
-          "type": "String"
-        },
-        "createdAt": {
-          "type": "Date"
-        },
-        "updatedAt": {
-          "type": "Date"
-        },
-        "ACL": {
-          "type": "ACL"
-        },
-        "product": {
-          "type": "Pointer",
-          "targetClass": "Product",
-          "required": true
-        },
-        "store": {
-          "type": "Pointer",
-          "targetClass": "Store",
-          "required": true
-        },
-        "employee": {
-          "type": "Pointer",
-          "targetClass": "_User",
-          "required": true
-        },
-        "action": {
-          "type": "String",
-          "required": true
-        },
-        "beforeQty": {
-          "type": "Number",
-          "required": true,
-          "defaultValue": 0
-        },
-        "changeQty": {
-          "type": "Number",
-          "required": true,
-          "defaultValue": 0
-        },
-        "afterQty": {
-          "type": "Number",
-          "required": true,
-          "defaultValue": 0
-        },
-        "foreignObjectId": {
-          "type": "String",
-          "required": true
-        }
+    "roles": [
+      {
+        "id": "encoder"
       },
-      "classLevelPermissions": {
-        "find": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:Cashier": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "count": {
-          "*": true,
-          "role:ADMIN": true
-        },
-        "get": {
-          "*": true,
-          "role:ADMIN": true
-        },
-        "create": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "update": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "delete": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "addField": {
-          "*": true,
-          "role:ADMIN": true
-        },
-        "protectedFields": {}
-      },
-      "indexes": {
-        "_id_": {
-          "_id": 1
-        }
+      {
+        "id": "secretary"
       }
+    ]
+  },
+  {
+    "username": "clerk@dulongbayan.com",
+    "email": "clerk@dulongbayan.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "4"
     },
-    {
-      "className": "PurchaseItem",
-      "fields": {
-        "objectId": {
-          "type": "String"
-        },
-        "createdAt": {
-          "type": "Date"
-        },
-        "updatedAt": {
-          "type": "Date"
-        },
-        "ACL": {
-          "type": "ACL"
-        },
-        "stock": {
-          "type": "Pointer",
-          "targetClass": "Stock",
-          "required": false
-        },
-        "quantity": {
-          "type": "Number",
-          "required": false,
-          "defaultValue": 0
-        },
-        "unitPrice": {
-          "type": "Number",
-          "required": false,
-          "defaultValue": 0
-        },
-        "totalPrice": {
-          "type": "Number",
-          "required": false,
-          "defaultValue": 0
-        },
-        "discount": {
-          "type": "Number",
-          "required": false,
-          "defaultValue": 0
-        },
-        "originalPrice": {
-          "type": "Number",
-          "required": false,
-          "defaultValue": 0
-        },
-        "discountType": {
-          "type": "String",
-          "required": false,
-          "defaultValue": "PERCENTAGE"
-        },
-        "costPrice": {
-          "type": "Number",
-          "required": false
-        },
-        "notes": {
-          "type": "String",
-          "required": false
-        }
+    "roles": [
+      {
+        "id": "encoder"
       },
-      "classLevelPermissions": {
-        "find": {
-          "*": true
-        },
-        "count": {
-          "*": true
-        },
-        "get": {
-          "*": true
-        },
-        "create": {
-          "*": true
-        },
-        "update": {
-          "*": true
-        },
-        "delete": {
-          "*": true
-        },
-        "addField": {
-          "*": true
-        },
-        "protectedFields": {
-          "*": []
-        }
-      },
-      "indexes": {
-        "_id_": {
-          "_id": 1
-        }
+      {
+        "id": "clerk"
       }
+    ]
+  },
+  {
+    "username": "kap@habay1.com",
+    "email": "kap@habay1.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "5"
     },
-    {
-      "className": "PurchaseOrder",
-      "fields": {
-        "objectId": {
-          "type": "String"
-        },
-        "createdAt": {
-          "type": "Date"
-        },
-        "updatedAt": {
-          "type": "Date"
-        },
-        "ACL": {
-          "type": "ACL"
-        },
-        "dateOfArrival": {
-          "type": "Date",
-          "required": false
-        },
-        "supplier": {
-          "type": "Pointer",
-          "targetClass": "Supplier",
-          "required": false
-        },
-        "store": {
-          "type": "Pointer",
-          "targetClass": "Store",
-          "required": false
-        },
-        "status": {
-          "type": "String",
-          "required": false
-        },
-        "subTotal": {
-          "type": "Number",
-          "required": false,
-          "defaultValue": 0
-        },
-        "tax": {
-          "type": "Number",
-          "required": false,
-          "defaultValue": 0
-        },
-        "discount": {
-          "type": "Number",
-          "required": false,
-          "defaultValue": 0
-        },
-        "total": {
-          "type": "Number",
-          "required": false,
-          "defaultValue": 0
-        },
-        "notes": {
-          "type": "String",
-          "required": false
-        },
-        "items": {
-          "type": "Array",
-          "required": false,
-          "defaultValue": []
-        },
-        "isHidden": {
-          "type": "Boolean",
-          "required": false,
-          "defaultValue": false
-        }
+    "roles": [
+      {
+        "id": "encoder"
       },
-      "classLevelPermissions": {
-        "find": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:APPROVER": true,
-          "role:Accounting": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "count": {
-          "*": true,
-          "role:ADMIN": true
-        },
-        "get": {
-          "*": true,
-          "role:ADMIN": true
-        },
-        "create": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:APPROVER": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "update": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:APPROVER": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "delete": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:APPROVER": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "addField": {
-          "*": true,
-          "role:ADMIN": true
-        },
-        "protectedFields": {}
-      },
-      "indexes": {
-        "_id_": {
-          "_id": 1
-        }
+      {
+        "id": "captain"
       }
+    ]
+  },
+  {
+    "username": "sec@habay1.com",
+    "email": "sec@habay1.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "5"
     },
-    {
-      "className": "Service",
-      "fields": {
-        "objectId": {
-          "type": "String"
-        },
-        "createdAt": {
-          "type": "Date"
-        },
-        "updatedAt": {
-          "type": "Date"
-        },
-        "ACL": {
-          "type": "ACL"
-        }
+    "roles": [
+      {
+        "id": "encoder"
       },
-      "classLevelPermissions": {
-        "find": {
-          "*": true
-        },
-        "count": {
-          "*": true
-        },
-        "get": {
-          "*": true
-        },
-        "create": {
-          "*": true
-        },
-        "update": {
-          "*": true
-        },
-        "delete": {
-          "*": true
-        },
-        "addField": {},
-        "protectedFields": {}
+      {
+        "id": "secretary"
       }
+    ]
+  },
+  {
+    "username": "clerk@habay1.com",
+    "email": "clerk@habay1.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "5"
     },
-    {
-      "className": "Shift",
-      "fields": {
-        "objectId": {
-          "type": "String"
-        },
-        "createdAt": {
-          "type": "Date"
-        },
-        "updatedAt": {
-          "type": "Date"
-        },
-        "ACL": {
-          "type": "ACL"
-        },
-        "closedAt": {
-          "type": "Date",
-          "required": false
-        },
-        "closingAmount": {
-          "type": "Number",
-          "required": false,
-          "defaultValue": 0
-        },
-        "drawers": {
-          "type": "Array",
-          "required": false,
-          "defaultValue": []
-        },
-        "openingAmount": {
-          "type": "Number",
-          "required": false,
-          "defaultValue": 0
-        },
-        "status": {
-          "type": "String",
-          "required": false,
-          "defaultValue": "OPEN"
-        },
-        "store": {
-          "type": "Pointer",
-          "targetClass": "Store",
-          "required": true
-        },
-        "cashRegister": {
-          "type": "Pointer",
-          "targetClass": "CashRegister",
-          "required": true
-        },
-        "closedBy": {
-          "type": "Pointer",
-          "targetClass": "_User",
-          "required": false
-        },
-        "createdBy": {
-          "type": "Pointer",
-          "targetClass": "_User",
-          "required": false
-        },
-        "totalCashAmount": {
-          "type": "Number",
-          "required": false,
-          "defaultValue": 0
-        },
-        "totalPayIn": {
-          "type": "Number",
-          "required": false,
-          "defaultValue": 0
-        },
-        "totalPayOut": {
-          "type": "Number",
-          "required": false,
-          "defaultValue": 0
-        }
+    "roles": [
+      {
+        "id": "encoder"
       },
-      "classLevelPermissions": {
-        "find": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:Accounting": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "count": {
-          "*": true
-        },
-        "get": {
-          "*": true,
-          "role:ADMIN": true
-        },
-        "create": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:Accounting": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "update": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:Accounting": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "delete": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "addField": {
-          "*": true,
-          "role:ADMIN": true
-        },
-        "protectedFields": {
-          "*": []
-        }
-      },
-      "indexes": {
-        "_id_": {
-          "_id": 1
-        }
+      {
+        "id": "clerk"
       }
+    ]
+  },
+  {
+    "username": "kap@habay2.com",
+    "email": "kap@habay2.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "6"
     },
-    {
-      "className": "Stock",
-      "fields": {
-        "objectId": {
-          "type": "String"
-        },
-        "createdAt": {
-          "type": "Date"
-        },
-        "updatedAt": {
-          "type": "Date"
-        },
-        "ACL": {
-          "type": "ACL"
-        },
-        "store": {
-          "type": "Pointer",
-          "targetClass": "Store",
-          "required": false
-        },
-        "product": {
-          "type": "Pointer",
-          "targetClass": "Product",
-          "required": false
-        },
-        "quantity": {
-          "type": "Number",
-          "required": false,
-          "defaultValue": 0
-        },
-        "warningStockLevel": {
-          "type": "Number",
-          "required": false,
-          "defaultValue": 0
-        },
-        "idealStockLevel": {
-          "type": "Number",
-          "required": false,
-          "defaultValue": 0
-        },
-        "isHidden": {
-          "type": "Boolean",
-          "required": false,
-          "defaultValue": false
-        }
+    "roles": [
+      {
+        "id": "encoder"
       },
-      "classLevelPermissions": {
-        "find": {
-          "*": true,
-          "role:Branch OIC": true,
-          "role:APPROVER": true,
-          "role:ADMIN": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "count": {
-          "*": true
-        },
-        "get": {
-          "*": true
-        },
-        "create": {
-          "*": true,
-          "role:Branch OIC": true,
-          "role:APPROVER": true,
-          "role:ADMIN": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "update": {
-          "*": true,
-          "role:Branch OIC": true,
-          "role:APPROVER": true,
-          "role:ADMIN": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "delete": {
-          "*": true,
-          "role:APPROVER": true,
-          "role:ADMIN": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "addField": {
-          "*": true
-        },
-        "protectedFields": {}
-      },
-      "indexes": {
-        "_id_": {
-          "_id": 1
-        }
+      {
+        "id": "captain"
       }
+    ]
+  },
+  {
+    "username": "sec@habay2.com",
+    "email": "sec@habay2.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "6"
     },
-    {
-      "className": "StockReturn",
-      "fields": {
-        "objectId": {
-          "type": "String"
-        },
-        "createdAt": {
-          "type": "Date"
-        },
-        "updatedAt": {
-          "type": "Date"
-        },
-        "ACL": {
-          "type": "ACL"
-        },
-        "total": {
-          "type": "Number",
-          "required": false,
-          "defaultValue": 0
-        },
-        "subTotal": {
-          "type": "Number",
-          "required": false,
-          "defaultValue": 0
-        },
-        "tax": {
-          "type": "Number",
-          "required": false,
-          "defaultValue": 0
-        },
-        "discount": {
-          "type": "Number",
-          "required": false,
-          "defaultValue": 0
-        },
-        "name": {
-          "type": "String",
-          "required": false,
-          "defaultValue": "Stock Return"
-        },
-        "items": {
-          "type": "Array"
-        },
-        "supplier": {
-          "type": "Pointer",
-          "targetClass": "Supplier"
-        },
-        "store": {
-          "type": "Pointer",
-          "targetClass": "Store"
-        },
-        "status": {
-          "type": "String"
-        },
-        "isHidden": {
-          "type": "Boolean",
-          "required": false,
-          "defaultValue": false
-        }
+    "roles": [
+      {
+        "id": "encoder"
       },
-      "classLevelPermissions": {
-        "find": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:APPROVER": true,
-          "role:Accounting": true,
-          "role:Branch OIC": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "count": {
-          "*": true,
-          "role:ADMIN": true
-        },
-        "get": {
-          "*": true,
-          "role:ADMIN": true
-        },
-        "create": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:APPROVER": true,
-          "role:Branch OIC": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "update": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:APPROVER": true,
-          "role:Branch OIC": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "delete": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:APPROVER": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "addField": {
-          "role:ADMIN": true
-        },
-        "protectedFields": {}
-      },
-      "indexes": {
-        "_id_": {
-          "_id": 1
-        }
+      {
+        "id": "secretary"
       }
+    ]
+  },
+  {
+    "username": "clerk@habay2.com",
+    "email": "clerk@habay2.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "6"
     },
-    {
-      "className": "StockTransfer",
-      "fields": {
-        "objectId": {
-          "type": "String"
-        },
-        "createdAt": {
-          "type": "Date"
-        },
-        "updatedAt": {
-          "type": "Date"
-        },
-        "ACL": {
-          "type": "ACL"
-        },
-        "status": {
-          "type": "String"
-        },
-        "dateOfArrival": {
-          "type": "Date"
-        },
-        "items": {
-          "type": "Array"
-        },
-        "srcStore": {
-          "type": "Pointer",
-          "targetClass": "Store"
-        },
-        "destStore": {
-          "type": "Pointer",
-          "targetClass": "Store"
-        },
-        "notes": {
-          "type": "String"
-        },
-        "total": {
-          "type": "Number",
-          "required": false,
-          "defaultValue": 0
-        },
-        "isHidden": {
-          "type": "Boolean",
-          "required": false,
-          "defaultValue": false
-        }
+    "roles": [
+      {
+        "id": "encoder"
       },
-      "classLevelPermissions": {
-        "find": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:APPROVER": true,
-          "role:Accounting": true,
-          "role:Branch OIC": true,
-          "role:Technician": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "count": {
-          "*": true,
-          "role:ADMIN": true
-        },
-        "get": {
-          "*": true,
-          "role:ADMIN": true
-        },
-        "create": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:APPROVER": true,
-          "role:Branch OIC": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "update": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:APPROVER": true,
-          "role:Branch OIC": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "delete": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:APPROVER": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "addField": {
-          "*": true,
-          "role:ADMIN": true
-        },
-        "protectedFields": {}
-      },
-      "indexes": {
-        "_id_": {
-          "_id": 1
-        }
+      {
+        "id": "clerk"
       }
+    ]
+  },
+  {
+    "username": "kap@kaingindigman.com",
+    "email": "kap@kaingindigman.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "7"
     },
-    {
-      "className": "Store",
-      "fields": {
-        "objectId": {
-          "type": "String"
-        },
-        "createdAt": {
-          "type": "Date"
-        },
-        "updatedAt": {
-          "type": "Date"
-        },
-        "ACL": {
-          "type": "ACL"
-        },
-        "name": {
-          "type": "String",
-          "required": true
-        },
-        "address": {
-          "type": "String",
-          "required": false
-        },
-        "description": {
-          "type": "String",
-          "required": false
-        },
-        "phone": {
-          "type": "String",
-          "required": false
-        },
-        "logo": {
-          "type": "String",
-          "required": false
-        },
-        "manager": {
-          "type": "Pointer",
-          "targetClass": "_User",
-          "required": false
-        },
-        "accessControl": {
-          "type": "Object",
-          "required": false,
-          "defaultValue": {}
-        },
-        "isHidden": {
-          "type": "Boolean",
-          "required": false,
-          "defaultValue": false
-        },
-        "stationNumber": {
-          "type": "Number"
-        }
+    "roles": [
+      {
+        "id": "encoder"
       },
-      "classLevelPermissions": {
-        "find": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:Cashier": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "count": {
-          "*": true,
-          "role:ADMIN": true
-        },
-        "get": {
-          "*": true,
-          "role:ADMIN": true
-        },
-        "create": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "update": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "delete": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "addField": {
-          "*": true,
-          "role:ADMIN": true
-        },
-        "protectedFields": {}
-      },
-      "indexes": {
-        "_id_": {
-          "_id": 1
-        }
+      {
+        "id": "captain"
       }
+    ]
+  },
+  {
+    "username": "sec@kaingindigman.com",
+    "email": "sec@kaingindigman.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "7"
     },
-    {
-      "className": "Supplier",
-      "fields": {
-        "objectId": {
-          "type": "String"
-        },
-        "createdAt": {
-          "type": "Date"
-        },
-        "updatedAt": {
-          "type": "Date"
-        },
-        "ACL": {
-          "type": "ACL"
-        },
-        "firstName": {
-          "type": "String",
-          "required": false
-        },
-        "lastName": {
-          "type": "String",
-          "required": false
-        },
-        "landlineNumber": {
-          "type": "String",
-          "required": false
-        },
-        "company": {
-          "type": "String",
-          "required": false
-        },
-        "mobileNumber": {
-          "type": "String",
-          "required": false
-        },
-        "address": {
-          "type": "String",
-          "required": false
-        },
-        "email": {
-          "type": "String",
-          "required": false
-        },
-        "isHidden": {
-          "type": "Boolean",
-          "required": false,
-          "defaultValue": false
-        },
-        "stationNumber": {
-          "type": "Number"
-        }
+    "roles": [
+      {
+        "id": "encoder"
       },
-      "classLevelPermissions": {
-        "find": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "count": {
-          "*": true,
-          "role:ADMIN": true
-        },
-        "get": {
-          "*": true,
-          "role:ADMIN": true
-        },
-        "create": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "update": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "delete": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "addField": {
-          "*": true,
-          "role:ADMIN": true
-        },
-        "protectedFields": {}
-      },
-      "indexes": {
-        "_id_": {
-          "_id": 1
-        }
+      {
+        "id": "secretary"
       }
+    ]
+  },
+  {
+    "username": "clerk@kaingindigman.com",
+    "email": "clerk@kaingindigman.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "7"
     },
-    {
-      "className": "TaxCode",
-      "fields": {
-        "objectId": {
-          "type": "String"
-        },
-        "createdAt": {
-          "type": "Date"
-        },
-        "updatedAt": {
-          "type": "Date"
-        },
-        "ACL": {
-          "type": "ACL"
-        },
-        "name": {
-          "type": "String",
-          "required": false
-        },
-        "rate": {
-          "type": "Number",
-          "required": false
-        }
+    "roles": [
+      {
+        "id": "encoder"
       },
-      "classLevelPermissions": {
-        "find": {
-          "*": true
-        },
-        "count": {
-          "*": true
-        },
-        "get": {
-          "*": true
-        },
-        "create": {
-          "*": true
-        },
-        "update": {
-          "*": true
-        },
-        "delete": {
-          "*": true
-        },
-        "addField": {
-          "*": true
-        },
-        "protectedFields": {}
-      },
-      "indexes": {
-        "_id_": {
-          "_id": 1
-        }
+      {
+        "id": "clerk"
       }
+    ]
+  },
+  {
+    "username": "kap@ligas1.com",
+    "email": "kap@ligas1.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "8"
     },
-    {
-      "className": "Transaction",
-      "fields": {
-        "objectId": {
-          "type": "String"
-        },
-        "createdAt": {
-          "type": "Date"
-        },
-        "updatedAt": {
-          "type": "Date"
-        },
-        "ACL": {
-          "type": "ACL"
-        },
-        "customer": {
-          "type": "Pointer",
-          "targetClass": "Customer",
-          "required": false
-        },
-        "items": {
-          "type": "Array",
-          "required": false,
-          "defaultValue": []
-        },
-        "totalItems": {
-          "type": "Number",
-          "required": false,
-          "defaultValue": 0
-        },
-        "discount": {
-          "type": "Number",
-          "required": false,
-          "defaultValue": 0
-        },
-        "discountType": {
-          "type": "String",
-          "required": false,
-          "defaultValue": "PERCENTAGE"
-        },
-        "subTotalPrice": {
-          "type": "Number",
-          "required": false,
-          "defaultValue": 0
-        },
-        "totalPrice": {
-          "type": "Number",
-          "required": false,
-          "defaultValue": 0
-        },
-        "payments": {
-          "type": "Array",
-          "required": false,
-          "defaultValue": []
-        },
-        "cashier": {
-          "type": "Pointer",
-          "targetClass": "_User",
-          "required": false
-        },
-        "status": {
-          "type": "String",
-          "required": false,
-          "defaultValue": "PAID"
-        },
-        "notes": {
-          "type": "String",
-          "required": false
-        },
-        "store": {
-          "type": "Pointer",
-          "targetClass": "Store",
-          "required": false
-        },
-        "completedAt": {
-          "type": "Date",
-          "required": false
-        },
-        "paymentMode": {
-          "type": "Pointer",
-          "targetClass": "PaymentMode",
-          "required": false,
-          "defaultValue": {
-            "__type": "Pointer",
-            "className": "PaymentMode",
-            "objectId": "EnnoZSXijB"
-          }
-        },
-        "expectedPickUpAt": {
-          "type": "Date"
-        },
-        "actualPickUpAt": {
-          "type": "Date"
-        },
-        "pickUpBy": {
-          "type": "String"
-        },
-        "voidStatus": {
-          "type": "String"
-        },
-        "remarks": {
-          "type": "String"
-        },
-        "cashRegister": {
-          "type": "Pointer",
-          "targetClass": "CashRegister",
-          "required": false
-        },
-        "shift": {
-          "type": "Pointer",
-          "targetClass": "Shift",
-          "required": false
-        },
-        "isHidden": {
-          "type": "Boolean",
-          "required": false,
-          "defaultValue": false
-        },
-        "receiptNumber": {
-          "type": "String"
-        },
-        "sequence": {
-          "type": "Number"
-        }
+    "roles": [
+      {
+        "id": "encoder"
       },
-      "classLevelPermissions": {
-        "find": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:APPROVER": true,
-          "role:Branch OIC": true,
-          "role:Accounting": true,
-          "role:Sales Staff": true,
-          "role:Cashier": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true,
-          "role:Employee": true
-        },
-        "count": {
-          "*": true
-        },
-        "get": {
-          "*": true,
-          "role:ADMIN": true
-        },
-        "create": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:APPROVER": true,
-          "role:Branch OIC": true,
-          "role:Accounting": true,
-          "role:Sales Staff": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true,
-          "role:Employee": true
-        },
-        "update": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:APPROVER": true,
-          "role:Branch OIC": true,
-          "role:Accounting": true,
-          "role:Sales Staff": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true,
-          "role:Employee": true
-        },
-        "delete": {
-          "*": true,
-          "role:ADMIN": true,
-          "role:APPROVER": true,
-          "role:Accounting": true,
-          "role:Cashier only": true,
-          "role:Branch Approver": true,
-          "role:Administrator": true,
-          "role:Branch Manager": true
-        },
-        "addField": {
-          "*": true,
-          "role:ADMIN": true
-        },
-        "protectedFields": {
-          "*": []
-        }
-      },
-      "indexes": {
-        "_id_": {
-          "_id": 1
-        }
+      {
+        "id": "captain"
       }
+    ]
+  },
+  {
+    "username": "sec@ligas1.com",
+    "email": "sec@ligas1.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "8"
     },
-    {
-      "className": "_Session",
-      "fields": {
-        "objectId": {
-          "type": "String"
-        },
-        "createdAt": {
-          "type": "Date"
-        },
-        "updatedAt": {
-          "type": "Date"
-        },
-        "ACL": {
-          "type": "ACL"
-        },
-        "restricted": {
-          "type": "Boolean"
-        },
-        "user": {
-          "type": "Pointer",
-          "targetClass": "_User"
-        },
-        "installationId": {
-          "type": "String"
-        },
-        "sessionToken": {
-          "type": "String"
-        },
-        "expiresAt": {
-          "type": "Date"
-        },
-        "createdWith": {
-          "type": "Object"
-        }
+    "roles": [
+      {
+        "id": "encoder"
       },
-      "classLevelPermissions": {
-        "find": {
-          "*": true
-        },
-        "count": {
-          "*": true
-        },
-        "get": {
-          "*": true
-        },
-        "create": {
-          "*": true
-        },
-        "update": {
-          "*": true
-        },
-        "delete": {
-          "*": true
-        },
-        "addField": {
-          "*": true
-        },
-        "protectedFields": {
-          "*": []
-        }
-      },
-      "indexes": {
-        "_id_": {
-          "_id": 1
-        }
+      {
+        "id": "secretary"
       }
-    }
-  ]
-}
+    ]
+  },
+  {
+    "username": "clerk@ligas1.com",
+    "email": "clerk@ligas1.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "8"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "clerk"
+      }
+    ]
+  },
+  {
+    "username": "kap@ligas2.com",
+    "email": "kap@ligas2.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "9"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "captain"
+      }
+    ]
+  },
+  {
+    "username": "sec@ligas2.com",
+    "email": "sec@ligas2.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "9"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "secretary"
+      }
+    ]
+  },
+  {
+    "username": "clerk@ligas2.com",
+    "email": "clerk@ligas2.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "9"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "clerk"
+      }
+    ]
+  },
+  {
+    "username": "kap@mabolo.com",
+    "email": "kap@mabolo.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "10"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "captain"
+      }
+    ]
+  },
+  {
+    "username": "sec@mabolo.com",
+    "email": "sec@mabolo.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "10"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "secretary"
+      }
+    ]
+  },
+  {
+    "username": "clerk@mabolo.com",
+    "email": "clerk@mabolo.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "10"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "clerk"
+      }
+    ]
+  },
+  {
+    "username": "kap@maliksi1.com",
+    "email": "kap@maliksi1.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "11"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "captain"
+      }
+    ]
+  },
+  {
+    "username": "sec@maliksi1.com",
+    "email": "sec@maliksi1.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "11"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "secretary"
+      }
+    ]
+  },
+  {
+    "username": "clerk@maliksi1.com",
+    "email": "clerk@maliksi1.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "11"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "clerk"
+      }
+    ]
+  },
+  {
+    "username": "kap@maliksi2.com",
+    "email": "kap@maliksi2.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "12"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "captain"
+      }
+    ]
+  },
+  {
+    "username": "sec@maliksi2.com",
+    "email": "sec@maliksi2.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "12"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "secretary"
+      }
+    ]
+  },
+  {
+    "username": "clerk@maliksi2.com",
+    "email": "clerk@maliksi2.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "12"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "clerk"
+      }
+    ]
+  },
+  {
+    "username": "kap@mambog1.com",
+    "email": "kap@mambog1.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "13"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "captain"
+      }
+    ]
+  },
+  {
+    "username": "sec@mambog1.com",
+    "email": "sec@mambog1.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "13"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "secretary"
+      }
+    ]
+  },
+  {
+    "username": "clerk@mambog1.com",
+    "email": "clerk@mambog1.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "13"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "clerk"
+      }
+    ]
+  },
+  {
+    "username": "kap@mambog2.com",
+    "email": "kap@mambog2.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "14"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "captain"
+      }
+    ]
+  },
+  {
+    "username": "sec@mambog2.com",
+    "email": "sec@mambog2.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "14"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "secretary"
+      }
+    ]
+  },
+  {
+    "username": "clerk@mambog2.com",
+    "email": "clerk@mambog2.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "14"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "clerk"
+      }
+    ]
+  },
+  {
+    "username": "kap@mambog3.com",
+    "email": "kap@mambog3.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "15"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "captain"
+      }
+    ]
+  },
+  {
+    "username": "sec@mambog3.com",
+    "email": "sec@mambog3.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "15"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "secretary"
+      }
+    ]
+  },
+  {
+    "username": "clerk@mambog3.com",
+    "email": "clerk@mambog3.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "15"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "clerk"
+      }
+    ]
+  },
+  {
+    "username": "kap@mambog4.com",
+    "email": "kap@mambog4.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "16"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "captain"
+      }
+    ]
+  },
+  {
+    "username": "sec@mambog4.com",
+    "email": "sec@mambog4.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "16"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "secretary"
+      }
+    ]
+  },
+  {
+    "username": "clerk@mambog4.com",
+    "email": "clerk@mambog4.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "16"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "clerk"
+      }
+    ]
+  },
+  {
+    "username": "kap@molino1.com",
+    "email": "kap@molino1.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "17"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "captain"
+      }
+    ]
+  },
+  {
+    "username": "sec@molino1.com",
+    "email": "sec@molino1.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "17"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "secretary"
+      }
+    ]
+  },
+  {
+    "username": "clerk@molino1.com",
+    "email": "clerk@molino1.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "17"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "clerk"
+      }
+    ]
+  },
+  {
+    "username": "kap@molino2.com",
+    "email": "kap@molino2.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "18"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "captain"
+      }
+    ]
+  },
+  {
+    "username": "sec@molino2.com",
+    "email": "sec@molino2.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "18"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "secretary"
+      }
+    ]
+  },
+  {
+    "username": "clerk@molino2.com",
+    "email": "clerk@molino2.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "18"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "clerk"
+      }
+    ]
+  },
+  {
+    "username": "kap@molino3.com",
+    "email": "kap@molino3.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "19"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "captain"
+      }
+    ]
+  },
+  {
+    "username": "sec@molino3.com",
+    "email": "sec@molino3.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "19"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "secretary"
+      }
+    ]
+  },
+  {
+    "username": "clerk@molino3.com",
+    "email": "clerk@molino3.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "19"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "clerk"
+      }
+    ]
+  },
+  {
+    "username": "kap@molino4.com",
+    "email": "kap@molino4.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "20"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "captain"
+      }
+    ]
+  },
+  {
+    "username": "sec@molino4.com",
+    "email": "sec@molino4.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "20"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "secretary"
+      }
+    ]
+  },
+  {
+    "username": "clerk@molino4.com",
+    "email": "clerk@molino4.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "20"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "clerk"
+      }
+    ]
+  },
+  {
+    "username": "kap@molino5.com",
+    "email": "kap@molino5.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "21"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "captain"
+      }
+    ]
+  },
+  {
+    "username": "sec@molino5.com",
+    "email": "sec@molino5.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "21"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "secretary"
+      }
+    ]
+  },
+  {
+    "username": "clerk@molino5.com",
+    "email": "clerk@molino5.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "21"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "clerk"
+      }
+    ]
+  },
+  {
+    "username": "kap@molino6.com",
+    "email": "kap@molino6.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "22"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "captain"
+      }
+    ]
+  },
+  {
+    "username": "sec@molino6.com",
+    "email": "sec@molino6.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "22"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "secretary"
+      }
+    ]
+  },
+  {
+    "username": "clerk@molino6.com",
+    "email": "clerk@molino6.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "22"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "clerk"
+      }
+    ]
+  },
+  {
+    "username": "kap@molino7.com",
+    "email": "kap@molino7.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "23"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "captain"
+      }
+    ]
+  },
+  {
+    "username": "sec@molino7.com",
+    "email": "sec@molino7.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "23"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "secretary"
+      }
+    ]
+  },
+  {
+    "username": "clerk@molino7.com",
+    "email": "clerk@molino7.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "23"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "clerk"
+      }
+    ]
+  },
+  {
+    "username": "kap@niog.com",
+    "email": "kap@niog.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "24"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "captain"
+      }
+    ]
+  },
+  {
+    "username": "sec@niog.com",
+    "email": "sec@niog.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "24"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "secretary"
+      }
+    ]
+  },
+  {
+    "username": "clerk@niog.com",
+    "email": "clerk@niog.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "24"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "clerk"
+      }
+    ]
+  },
+  {
+    "username": "kap@panapaan1.com",
+    "email": "kap@panapaan1.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "25"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "captain"
+      }
+    ]
+  },
+  {
+    "username": "sec@panapaan1.com",
+    "email": "sec@panapaan1.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "25"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "secretary"
+      }
+    ]
+  },
+  {
+    "username": "clerk@panapaan1.com",
+    "email": "clerk@panapaan1.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "25"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "clerk"
+      }
+    ]
+  },
+  {
+    "username": "kap@panapaan2.com",
+    "email": "kap@panapaan2.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "26"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "captain"
+      }
+    ]
+  },
+  {
+    "username": "sec@panapaan2.com",
+    "email": "sec@panapaan2.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "26"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "secretary"
+      }
+    ]
+  },
+  {
+    "username": "clerk@panapaan2.com",
+    "email": "clerk@panapaan2.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "26"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "clerk"
+      }
+    ]
+  },
+  {
+    "username": "kap@panapaan3.com",
+    "email": "kap@panapaan3.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "27"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "captain"
+      }
+    ]
+  },
+  {
+    "username": "sec@panapaan3.com",
+    "email": "sec@panapaan3.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "27"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "secretary"
+      }
+    ]
+  },
+  {
+    "username": "clerk@panapaan3.com",
+    "email": "clerk@panapaan3.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "27"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "clerk"
+      }
+    ]
+  },
+  {
+    "username": "kap@panapaan4.com",
+    "email": "kap@panapaan4.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "28"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "captain"
+      }
+    ]
+  },
+  {
+    "username": "sec@panapaan4.com",
+    "email": "sec@panapaan4.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "28"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "secretary"
+      }
+    ]
+  },
+  {
+    "username": "clerk@panapaan4.com",
+    "email": "clerk@panapaan4.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "28"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "clerk"
+      }
+    ]
+  },
+  {
+    "username": "kap@panapaan5.com",
+    "email": "kap@panapaan5.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "29"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "captain"
+      }
+    ]
+  },
+  {
+    "username": "sec@panapaan5.com",
+    "email": "sec@panapaan5.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "29"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "secretary"
+      }
+    ]
+  },
+  {
+    "username": "clerk@panapaan5.com",
+    "email": "clerk@panapaan5.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "29"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "clerk"
+      }
+    ]
+  },
+  {
+    "username": "kap@panapaan6.com",
+    "email": "kap@panapaan6.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "30"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "captain"
+      }
+    ]
+  },
+  {
+    "username": "sec@panapaan6.com",
+    "email": "sec@panapaan6.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "30"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "secretary"
+      }
+    ]
+  },
+  {
+    "username": "clerk@panapaan6.com",
+    "email": "clerk@panapaan6.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "30"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "clerk"
+      }
+    ]
+  },
+  {
+    "username": "kap@poblacion.com",
+    "email": "kap@poblacion.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "31"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "captain"
+      }
+    ]
+  },
+  {
+    "username": "sec@poblacion.com",
+    "email": "sec@poblacion.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "31"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "secretary"
+      }
+    ]
+  },
+  {
+    "username": "clerk@poblacion.com",
+    "email": "clerk@poblacion.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "31"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "clerk"
+      }
+    ]
+  },
+  {
+    "username": "kap@queensrowcentral.com",
+    "email": "kap@queensrowcentral.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "32"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "captain"
+      }
+    ]
+  },
+  {
+    "username": "sec@queensrowcentral.com",
+    "email": "sec@queensrowcentral.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "32"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "secretary"
+      }
+    ]
+  },
+  {
+    "username": "clerk@queensrowcentral.com",
+    "email": "clerk@queensrowcentral.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "32"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "clerk"
+      }
+    ]
+  },
+  {
+    "username": "kap@queensroweast.com",
+    "email": "kap@queensroweast.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "33"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "captain"
+      }
+    ]
+  },
+  {
+    "username": "sec@queensroweast.com",
+    "email": "sec@queensroweast.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "33"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "secretary"
+      }
+    ]
+  },
+  {
+    "username": "clerk@queensroweast.com",
+    "email": "clerk@queensroweast.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "33"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "clerk"
+      }
+    ]
+  },
+  {
+    "username": "kap@queensrowwest.com",
+    "email": "kap@queensrowwest.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "34"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "captain"
+      }
+    ]
+  },
+  {
+    "username": "sec@queensrowwest.com",
+    "email": "sec@queensrowwest.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "34"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "secretary"
+      }
+    ]
+  },
+  {
+    "username": "clerk@queensrowwest.com",
+    "email": "clerk@queensrowwest.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "34"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "clerk"
+      }
+    ]
+  },
+  {
+    "username": "kap@real.com",
+    "email": "kap@real.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "35"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "captain"
+      }
+    ]
+  },
+  {
+    "username": "sec@real.com",
+    "email": "sec@real.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "35"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "secretary"
+      }
+    ]
+  },
+  {
+    "username": "clerk@real.com",
+    "email": "clerk@real.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "35"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "clerk"
+      }
+    ]
+  },
+  {
+    "username": "kap@salinas1.com",
+    "email": "kap@salinas1.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "36"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "captain"
+      }
+    ]
+  },
+  {
+    "username": "sec@salinas1.com",
+    "email": "sec@salinas1.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "36"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "secretary"
+      }
+    ]
+  },
+  {
+    "username": "clerk@salinas1.com",
+    "email": "clerk@salinas1.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "36"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "clerk"
+      }
+    ]
+  },
+  {
+    "username": "kap@salinas2.com",
+    "email": "kap@salinas2.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "37"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "captain"
+      }
+    ]
+  },
+  {
+    "username": "sec@salinas2.com",
+    "email": "sec@salinas2.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "37"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "secretary"
+      }
+    ]
+  },
+  {
+    "username": "clerk@salinas2.com",
+    "email": "clerk@salinas2.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "37"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "clerk"
+      }
+    ]
+  },
+  {
+    "username": "kap@sannicolas1.com",
+    "email": "kap@sannicolas1.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "38"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "captain"
+      }
+    ]
+  },
+  {
+    "username": "sec@sannicolas1.com",
+    "email": "sec@sannicolas1.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "38"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "secretary"
+      }
+    ]
+  },
+  {
+    "username": "clerk@sannicolas1.com",
+    "email": "clerk@sannicolas1.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "38"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "clerk"
+      }
+    ]
+  },
+  {
+    "username": "kap@sannicolas2.com",
+    "email": "kap@sannicolas2.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "39"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "captain"
+      }
+    ]
+  },
+  {
+    "username": "sec@sannicolas2.com",
+    "email": "sec@sannicolas2.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "39"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "secretary"
+      }
+    ]
+  },
+  {
+    "username": "clerk@sannicolas2.com",
+    "email": "clerk@sannicolas2.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "39"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "clerk"
+      }
+    ]
+  },
+  {
+    "username": "kap@sannicolas3.com",
+    "email": "kap@sannicolas3.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "40"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "captain"
+      }
+    ]
+  },
+  {
+    "username": "sec@sannicolas3.com",
+    "email": "sec@sannicolas3.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "40"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "secretary"
+      }
+    ]
+  },
+  {
+    "username": "clerk@sannicolas3.com",
+    "email": "clerk@sannicolas3.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "40"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "clerk"
+      }
+    ]
+  },
+  {
+    "username": "kap@sinbanali.com",
+    "email": "kap@sinbanali.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "41"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "captain"
+      }
+    ]
+  },
+  {
+    "username": "sec@sinbanali.com",
+    "email": "sec@sinbanali.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "41"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "secretary"
+      }
+    ]
+  },
+  {
+    "username": "clerk@sinbanali.com",
+    "email": "clerk@sinbanali.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "41"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "clerk"
+      }
+    ]
+  },
+  {
+    "username": "kap@talaba1.com",
+    "email": "kap@talaba1.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "42"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "captain"
+      }
+    ]
+  },
+  {
+    "username": "sec@talaba1.com",
+    "email": "sec@talaba1.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "42"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "secretary"
+      }
+    ]
+  },
+  {
+    "username": "clerk@talaba1.com",
+    "email": "clerk@talaba1.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "42"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "clerk"
+      }
+    ]
+  },
+  {
+    "username": "kap@talaba2.com",
+    "email": "kap@talaba2.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "43"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "captain"
+      }
+    ]
+  },
+  {
+    "username": "sec@talaba2.com",
+    "email": "sec@talaba2.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "43"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "secretary"
+      }
+    ]
+  },
+  {
+    "username": "clerk@talaba2.com",
+    "email": "clerk@talaba2.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "43"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "clerk"
+      }
+    ]
+  },
+  {
+    "username": "kap@talaba3.com",
+    "email": "kap@talaba3.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "44"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "captain"
+      }
+    ]
+  },
+  {
+    "username": "sec@talaba3.com",
+    "email": "sec@talaba3.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "44"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "secretary"
+      }
+    ]
+  },
+  {
+    "username": "clerk@talaba3.com",
+    "email": "clerk@talaba3.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "44"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "clerk"
+      }
+    ]
+  },
+  {
+    "username": "kap@zapote1.com",
+    "email": "kap@zapote1.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "45"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "captain"
+      }
+    ]
+  },
+  {
+    "username": "sec@zapote1.com",
+    "email": "sec@zapote1.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "45"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "secretary"
+      }
+    ]
+  },
+  {
+    "username": "clerk@zapote1.com",
+    "email": "clerk@zapote1.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "45"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "clerk"
+      }
+    ]
+  },
+  {
+    "username": "kap@zapote2.com",
+    "email": "kap@zapote2.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "46"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "captain"
+      }
+    ]
+  },
+  {
+    "username": "sec@zapote2.com",
+    "email": "sec@zapote2.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "46"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "secretary"
+      }
+    ]
+  },
+  {
+    "username": "clerk@zapote2.com",
+    "email": "clerk@zapote2.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "46"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "clerk"
+      }
+    ]
+  },
+  {
+    "username": "kap@zapote3.com",
+    "email": "kap@zapote3.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "47"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "captain"
+      }
+    ]
+  },
+  {
+    "username": "sec@zapote3.com",
+    "email": "sec@zapote3.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "47"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "secretary"
+      }
+    ]
+  },
+  {
+    "username": "clerk@zapote3.com",
+    "email": "clerk@zapote3.com",
+    "password": "12345678",
+    "barangay": {
+      "id": "47"
+    },
+    "roles": [
+      {
+        "id": "encoder"
+      },
+      {
+        "id": "clerk"
+      }
+    ]
+  }
+]

@@ -8,7 +8,6 @@ import {FormFactory as Factory} from "nq-component";
 
 function FormFactory({schema, object, onChange, excludeFields, ...props}) {
     const context = React.useContext(Context);
-
     return <Factory
         className="col-md-4"
         schema={schema}

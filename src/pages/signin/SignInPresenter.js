@@ -11,17 +11,14 @@ class SignInPresenter {
 
     async submit() {
         try {
-            const masterKey = this.view.getMasterKey();
             const user = {
                 ...this.change,
-                masterKey
             };
-
             this.view.showProgress();
-
             const signedInUser = await this.signInUseCase.execute(user);
 
             this.view.navigateTo('/');
+            this.view.reload();
         } catch (error) {
             this.view.hideProgress();
             this.view.showError(error);

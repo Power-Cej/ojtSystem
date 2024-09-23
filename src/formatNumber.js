@@ -5,4 +5,4 @@ function formatNumber(number, minimum) {
     })
 }
 
-export default formatNumber;
+module.exports = formatNumber;
