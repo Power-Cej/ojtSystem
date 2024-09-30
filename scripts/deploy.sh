@@ -1,15 +1,15 @@
-SSH_HOST=$1
-SSH_USERNAME=$2
-REPOSITORY_NAME=$3
-REPOSITORY_OWNER=$4
-SSH_COMMAND="ssh -A -o StrictHostKeyChecking=no $SSH_USERNAME@$SSH_HOST"
+# Set default SSH username if not provided
+if [ -z "$SSH_USERNAME" ]; then
+  SSH_USERNAME="root"
+fi
 # check host name
 if [ -z "$SSH_HOST" ]; then
   echo "missing host" && exit 1
 fi
 echo "using $SSH_HOST"
+SSH_COMMAND="ssh -A -o StrictHostKeyChecking=no $SSH_USERNAME@$SSH_HOST"
 
-TARGET_PATH="/$SSH_USERNAME/$REPOSITORY_NAME"
+TARGET_PATH="/$SSH_USERNAME/$GITHUB_REPOSITORY_NAME"
 # add github to known hosts
 $SSH_COMMAND "ssh-keyscan -t rsa github.com >>~/.ssh/known_hosts"
 
@@ -19,7 +19,7 @@ if $SSH_COMMAND [ -d "$TARGET_PATH" ]; then
   # restart docker
   #  $SSH_COMMAND "docker-compose restart" no need to restart the nginx
 else
-  $SSH_COMMAND "git clone git@github.com:$REPOSITORY_OWNER/$REPOSITORY_NAME.git $TARGET_PATH"
+  $SSH_COMMAND "git clone git@github.com:$GITHUB_REPOSITORY_OWNER/$GITHUB_REPOSITORY_NAME.git $TARGET_PATH"
   # run docker
   $SSH_COMMAND "cd $TARGET_PATH && docker-compose up -d"
 fi

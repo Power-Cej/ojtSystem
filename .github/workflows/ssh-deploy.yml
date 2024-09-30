@@ -13,4 +13,12 @@ jobs:
         run: |
           eval $(ssh-agent)
           ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"
-          ./scripts/deploy.sh ${{secrets.SSH_HOST}} ${{secrets.SSH_USERNAME}} ${{github.event.repository.name}} ${{ github.repository_owner }}
+          ./scripts/deploy.sh
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_REPOSITORY_NAME: ${{github.event.repository.name}}
+          GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
