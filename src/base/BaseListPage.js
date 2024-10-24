@@ -4,7 +4,7 @@ class BaseListPage extends BasePage {
     state = {
         objects: [],
         selected: [],
-        loading: true,
+        loading: false,
         total: 0,
         count: 0
     };
