@@ -35,7 +35,7 @@ class SetupPresenter {
                 if (hasChanged) {
                     const object = {id: user.id};
                     object.roles = user.roles.map(role => ({id: role.name}));
-                    await this.updateObjectUseCase.execute('users', user);
+                    await this.updateObjectUseCase.execute('users', object);
                 }
             }
         } catch (e) {
@@ -61,7 +61,7 @@ class SetupPresenter {
     async onClickUpdateRoles() {
         this.view.showLoading();
         const roles = await this.findRoles();
-        if(roles.length>0){
+        if (roles.length > 0) {
             await this.updateUserRoles();
         }
         await this.createNewRoles(roles);
