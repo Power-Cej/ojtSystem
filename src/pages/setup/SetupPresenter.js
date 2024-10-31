@@ -9,10 +9,7 @@ class SetupPresenter {
     }
 
     async findRoles() {
-        const query = {
-            keys: ['name']
-        }
-        const roles = await this.findObjectUseCase.execute('roles', query);
+        const roles = await this.findObjectUseCase.execute('roles');
         return roles.reduce((acc, role) => {
             if (role.name !== role.id) {
                 acc.push(role);
@@ -48,9 +45,10 @@ class SetupPresenter {
         for (let i = 0; i < roles.length; i++) {
             const role = roles[i];
             try {
-                const newRole = {id: role.name, name: role.name};
-                await this.saveObjectUseCase.execute('roles', newRole);
-                await this.deleteObjectUseCase.execute('roles', role.id);
+                const id = role.id;
+                role.id = role.name;
+                await this.saveObjectUseCase.execute('roles', role);
+                await this.deleteObjectUseCase.execute('roles', id);
                 this.view.setCount(i + 1);
             } catch (e) {
                 console.log(e)
