@@ -1,19 +1,23 @@
 import React from "react";
-import {NavBar as Nav, Layout} from "nq-component";
-
+import { Layout } from "nq-component";
+import NavigationBar from "../NavigationBar";
 
 function NavBar(props) {
-    const {collapsed, setCollapse} = React.useContext(Layout.Context);
+  const { collapsed, setCollapse } = React.useContext(Layout.Context);
 
-    function onClickNavigate() {
-        setCollapse(!collapsed);
-    }
+  function onClickNavigate() {
+    setCollapse(!collapsed);
+  }
 
-    return <Nav
-        className="shadow-sm"
-        title="DASHBOARD"
-        onClickNavigate={onClickNavigate}
-        {...props}/>
+  return (
+    <NavigationBar
+      className="shadow-sm"
+      // title="DASHBOARD"
+      logo="/nq-3.png"
+      onClickNavigate={onClickNavigate}
+      {...props}
+    />
+  );
 }
 
 export default NavBar;

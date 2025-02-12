@@ -80,7 +80,8 @@ function FormCollection({ schema, onSubmit, onCancel }) {
               <button
                 type="submit"
                 disabled={!isJsonValid}
-                className="btn btn-primary btn-sm"
+                className="btn text-white btn-sm"
+                style={{ backgroundColor: "#006BAC" }}
               >
                 <i className="bi bi-file-earmark-check me-2"></i>SAVE
               </button>

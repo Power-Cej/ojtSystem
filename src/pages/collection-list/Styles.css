@@ -1,0 +1,5 @@
+.dropdown-item:hover {
+    background-color: #006BAC !important;
+    color: white !important; /* Ensures text remains readable */
+  }
+  

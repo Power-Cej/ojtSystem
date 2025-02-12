@@ -1,9 +1,11 @@
 import React from "react";
-import { InputFactory as Factory, RelatedFactory } from "nq-component";
+
 import { findObjectUseCase, saveObjectUseCase } from "../../usecases/object";
 import { saveFileUseCase, saveImageUseCase } from "../../usecases/file";
 import Context from "../../AppContext";
 import InputJson from "../InputJson";
+import RelatedFactory from "../RelatedFactory";
+import Factory from "../Factory";
 
 const defaultProps = {};
 
