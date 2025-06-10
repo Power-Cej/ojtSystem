@@ -6,24 +6,32 @@ import {
   addSchemaUseCase,
   updateSchemaUseCase,
   deleteSchemaUseCase,
+  addSchemaUseCase,
+  updateSchemaUseCase,
+  deleteSchemaUseCase,
 } from "../../usecases/schema/usecases";
 import {
   countObjectUseCase,
   deleteObjectUseCase,
   findObjectUseCase,
   upsertUseCase,
+  countObjectUseCase,
+  deleteObjectUseCase,
+  findObjectUseCase,
+  upsertUseCase,
 } from "../../usecases/object";
+import { exportCSVUseCase } from "../../usecases/csv/usecases";
 import { exportCSVUseCase } from "../../usecases/csv/usecases";
 import FormCollection from "./components/FormCollection";
 import DeleteCollection from "./components/DeleteCollection";
 import DeleteField from "./components/DeleteField";
+import { Progress, InfiniteScroll } from "nq-component";
 import { Progress, InfiniteScroll } from "nq-component";
 import FormAccess from "./components/FormAccess";
 import mergeACl from "../../mergeACl";
 import withRouter from "../../withRouter";
 import Search from "../../components/Search";
 import BaseListPage from "../../base/BaseListPage";
-import NavBar from "../../components/navbar";
 import InputFactory from "../../components/InputFactory";
 import browseFile from "../../browseFile";
 import "./Styles.css";
@@ -44,12 +52,33 @@ class CollectionListPage extends BaseListPage {
       deleteSchemaUseCase()
     );
   }
+  constructor(props) {
+    super(props);
+    this.presenter = new CollectionListPresenter(
+      this,
+      findObjectUseCase(),
+      countObjectUseCase(),
+      deleteObjectUseCase(),
+      upsertUseCase(),
+      exportCSVUseCase(),
+      addSchemaUseCase(),
+      updateSchemaUseCase(),
+      deleteSchemaUseCase()
+    );
+  }
 
   /*when class change*/
   componentDidUpdate(prevProps, prevState) {
     this.presenter.componentDidUpdate(prevProps, prevState);
   }
+  /*when class change*/
+  componentDidUpdate(prevProps, prevState) {
+    this.presenter.componentDidUpdate(prevProps, prevState);
+  }
 
+  closeDialog() {
+    dialog.close();
+  }
   closeDialog() {
     dialog.close();
   }
@@ -67,7 +96,32 @@ class CollectionListPage extends BaseListPage {
       footer: false,
     });
   }
+  onClickAddCollection() {
+    // create empty schema
+    dialog.fire({
+      html: (
+        <FormCollection
+          schema={{}}
+          onSubmit={(schema) => this.presenter.onSubmitAddCollection(schema)}
+          onCancel={() => dialog.close()}
+        />
+      ),
+      footer: false,
+    });
+  }
 
+  onClickEditCollection(schema) {
+    dialog.fire({
+      html: (
+        <FormCollection
+          schema={schema}
+          onSubmit={(s) => this.presenter.onSubmitEditCollection(s)}
+          onCancel={() => dialog.close()}
+        />
+      ),
+      footer: false,
+    });
+  }
   onClickEditCollection(schema) {
     dialog.fire({
       html: (
@@ -95,7 +149,25 @@ class CollectionListPage extends BaseListPage {
       footer: false,
     });
   }
+  onClickAddField(schema) {
+    const schemas = this.getSchemas();
+    dialog.fire({
+      html: (
+        <AddField
+          schema={schema}
+          collections={schemas.map((s) => s.collection)}
+          onSubmit={(s) => this.presenter.onSubmitEditCollection(s)}
+          onCancel={() => dialog.close()}
+        />
+      ),
+      footer: false,
+    });
+  }
 
+  onCLickAccess() {
+    function submit(acl) {
+      this.presenter.onSubmitAccess(acl);
+    }
   onCLickAccess() {
     function submit(acl) {
       this.presenter.onSubmitAccess(acl);
@@ -114,7 +186,33 @@ class CollectionListPage extends BaseListPage {
       footer: false,
     });
   }
+    const acl = mergeACl(this.state.selected);
+    dialog.fire({
+      html: (
+        <FormAccess
+          currentUser={this.getCurrentUser()}
+          acl={acl}
+          onSubmit={submit.bind(this)}
+          onCancel={() => dialog.close()}
+        />
+      ),
+      footer: false,
+    });
+  }
 
+  onClickDeleteField() {
+    const schema = this.getSchema(this.getCollectionName());
+    dialog.fire({
+      html: (
+        <DeleteField
+          fields={Object.keys(schema.fields)}
+          onSubmit={(f) => this.presenter.onSubmitDeleteField(f)}
+          onCancel={() => dialog.close()}
+        />
+      ),
+      footer: false,
+    });
+  }
   onClickDeleteField() {
     const schema = this.getSchema(this.getCollectionName());
     dialog.fire({
@@ -144,6 +242,21 @@ class CollectionListPage extends BaseListPage {
       footer: false,
     });
   }
+  onClickDeleteCollection() {
+    const schema = this.getSchema(this.getCollectionName());
+    dialog.fire({
+      html: (
+        <DeleteCollection
+          schema={schema}
+          onSubmit={() =>
+            this.presenter.onSubmitDeleteCollection(schema.collection)
+          }
+          onCancel={() => dialog.close()}
+        />
+      ),
+      footer: false,
+    });
+  }
 
   onClickImport() {
     browseFile("*").then((files) => {
@@ -153,7 +266,18 @@ class CollectionListPage extends BaseListPage {
       }
     });
   }
+  onClickImport() {
+    browseFile("*").then((files) => {
+      if (files.length > 0) {
+        const file = files[0];
+        this.presenter.onClickImport(file);
+      }
+    });
+  }
 
+  onClickExport() {
+    this.presenter.onClickExport();
+  }
   onClickExport() {
     this.presenter.onClickExport();
   }

@@ -1,5 +1,10 @@
 import React from "react";
 import MainPagePresenter from "./MainPagePresenter";
+import { Menu } from "nq-component";
+import { getAllSchemasUseCase } from "../../usecases/schema/usecases";
+import { getCurrentUserUseCase, signOutUseCase } from "../../usecases/user";
+import { Routes, Route } from "react-router-dom";
+import { OffCanvas } from "nq-component";
 import { getAllSchemasUseCase } from "../../usecases/schema/usecases";
 import { getCurrentUserUseCase, signOutUseCase } from "../../usecases/user";
 import { Routes, Route } from "react-router-dom";
@@ -8,6 +13,7 @@ import CollectionListPage from "../collection-list/CollectionListPage";
 import CollectionFormPage from "../collection-form/CollectionFormPage";
 import BasePage from "../../base/BasePage";
 import NotFoundPage from "../notfound";
+import { Layout, Progress, LogoHolder } from "nq-component";
 import { Layout, Progress, LogoHolder } from "nq-component";
 import MigrationPage from "../migration/MigrationPage";
 import AccountPage from "../account/AccountPage";
@@ -18,9 +24,19 @@ import HooksPage from "../web-hook/HooksPage";
 import FunctionPage from "../web-hook/FunctionPage";
 import SchemaPage from "../schema/SchemaPage";
 import SetupPage from "../setup/SetupPage";
+import TimeRecordPage from "../time-record/TimeRecordPage";
 import Menu from "../../components/Menu";
 
 class MainPage extends BasePage {
+  constructor(props) {
+    super(props);
+    this.presenter = new MainPagePresenter(
+      this,
+      getCurrentUserUseCase(),
+      signOutUseCase(),
+      getAllSchemasUseCase()
+    );
+  }
   constructor(props) {
     super(props);
     this.presenter = new MainPagePresenter(
@@ -34,7 +50,13 @@ class MainPage extends BasePage {
   componentDidMount() {
     this.presenter.componentDidMount();
   }
+  componentDidMount() {
+    this.presenter.componentDidMount();
+  }
 
+  onClickSignOut() {
+    this.presenter.onClickSignOut();
+  }
   onClickSignOut() {
     this.presenter.onClickSignOut();
   }
@@ -43,7 +65,35 @@ class MainPage extends BasePage {
     e.preventDefault();
     this.navigateTo(item.route);
   }
+  onClickMenu(e, item) {
+    e.preventDefault();
+    this.navigateTo(item.route);
+  }
 
+  render() {
+    const user = this.getCurrentUser();
+    const schemas = this.getSchemas();
+    const roles = this.getCurrentRoles();
+    if (user === undefined || schemas === undefined) {
+      return <Progress />;
+    }
+    const settings = [
+      {
+        name: "Edit Account",
+        route: "/account",
+        icon: "bi bi-person-check",
+      },
+      {
+        name: "Schema",
+        route: "/schema",
+        icon: "bi bi-filetype-json",
+      },
+      // {
+      //     name: "Notification",
+      //     route: "/notification",
+      //     icon: "bi bi-bell"
+      // },
+    ];
   render() {
     const user = this.getCurrentUser();
     const schemas = this.getSchemas();
@@ -81,13 +131,40 @@ class MainPage extends BasePage {
         icon: "bi bi-person-check",
       },
     ];
+    const hook = [
+      {
+        name: "Hooks",
+        route: "/hooks",
+        icon: "bi bi-person-check",
+      },
+      {
+        name: "Function",
+        route: "/function",
+        icon: "bi bi-person-check",
+      },
+    ];
 
     const setting = {
       name: "Settings",
       icon: "bi bi-sliders",
       route: settings,
     };
+    const setting = {
+      name: "Settings",
+      icon: "bi bi-sliders",
+      route: settings,
+    };
 
+    const hooksMenu = {
+      name: "WebHook",
+      icon: "bi bi-sliders",
+      route: hook,
+    };
+    const timeMenu = {
+      name: "Recorded Dashboard",
+      icon: "bi bi-sliders",
+      route: "/timeRec",
+    };
     const hooksMenu = {
       name: "WebHook",
       icon: "bi bi-sliders",
