@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import CollapseView from "./CollapseView";
-import { Checkbox, OutputFactory } from "nq-component";
+import { Checkbox } from "nq-component";
 import AccordionCollapse from "nq-component/dist/Accordion/AccordionCollapse";
 import AccordionProvider from "nq-component/dist/Accordion/AccordionProvider";
 import { motion } from "framer-motion";
 import { container, item } from "../../animationUtils";
 import Accordion from "../Accordion";
+import OutputFactory from "../OutputFactory";
 
 let timeoutId;
 
 function Body({
+  collection,
   objects,
   fields,
   excludeFields,
@@ -94,7 +96,12 @@ function Body({
                   maxWidth: "15em",
                 }}
               >
-                <OutputFactory field={field} object={object} {...options} />
+                <OutputFactory
+                  field={field}
+                  object={object}
+                  {...options}
+                  collection={collection}
+                />
               </Accordion>
             );
           })}

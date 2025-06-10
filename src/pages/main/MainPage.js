@@ -5,15 +5,10 @@ import { getAllSchemasUseCase } from "../../usecases/schema/usecases";
 import { getCurrentUserUseCase, signOutUseCase } from "../../usecases/user";
 import { Routes, Route } from "react-router-dom";
 import { OffCanvas } from "nq-component";
-import { getAllSchemasUseCase } from "../../usecases/schema/usecases";
-import { getCurrentUserUseCase, signOutUseCase } from "../../usecases/user";
-import { Routes, Route } from "react-router-dom";
-import { OffCanvas } from "nq-component";
 import CollectionListPage from "../collection-list/CollectionListPage";
 import CollectionFormPage from "../collection-form/CollectionFormPage";
 import BasePage from "../../base/BasePage";
 import NotFoundPage from "../notfound";
-import { Layout, Progress, LogoHolder } from "nq-component";
 import { Layout, Progress, LogoHolder } from "nq-component";
 import MigrationPage from "../migration/MigrationPage";
 import AccountPage from "../account/AccountPage";
@@ -25,7 +20,6 @@ import FunctionPage from "../web-hook/FunctionPage";
 import SchemaPage from "../schema/SchemaPage";
 import SetupPage from "../setup/SetupPage";
 import TimeRecordPage from "../time-record/TimeRecordPage";
-import Menu from "../../components/Menu";
 
 class MainPage extends BasePage {
   constructor(props) {
@@ -37,19 +31,7 @@ class MainPage extends BasePage {
       getAllSchemasUseCase()
     );
   }
-  constructor(props) {
-    super(props);
-    this.presenter = new MainPagePresenter(
-      this,
-      getCurrentUserUseCase(),
-      signOutUseCase(),
-      getAllSchemasUseCase()
-    );
-  }
 
-  componentDidMount() {
-    this.presenter.componentDidMount();
-  }
   componentDidMount() {
     this.presenter.componentDidMount();
   }
@@ -57,43 +39,11 @@ class MainPage extends BasePage {
   onClickSignOut() {
     this.presenter.onClickSignOut();
   }
-  onClickSignOut() {
-    this.presenter.onClickSignOut();
-  }
-
-  onClickMenu(e, item) {
-    e.preventDefault();
-    this.navigateTo(item.route);
-  }
   onClickMenu(e, item) {
     e.preventDefault();
     this.navigateTo(item.route);
   }
 
-  render() {
-    const user = this.getCurrentUser();
-    const schemas = this.getSchemas();
-    const roles = this.getCurrentRoles();
-    if (user === undefined || schemas === undefined) {
-      return <Progress />;
-    }
-    const settings = [
-      {
-        name: "Edit Account",
-        route: "/account",
-        icon: "bi bi-person-check",
-      },
-      {
-        name: "Schema",
-        route: "/schema",
-        icon: "bi bi-filetype-json",
-      },
-      // {
-      //     name: "Notification",
-      //     route: "/notification",
-      //     icon: "bi bi-bell"
-      // },
-    ];
   render() {
     const user = this.getCurrentUser();
     const schemas = this.getSchemas();
@@ -131,48 +81,33 @@ class MainPage extends BasePage {
         icon: "bi bi-person-check",
       },
     ];
-    const hook = [
-      {
-        name: "Hooks",
-        route: "/hooks",
-        icon: "bi bi-person-check",
-      },
-      {
-        name: "Function",
-        route: "/function",
-        icon: "bi bi-person-check",
-      },
-    ];
 
     const setting = {
       name: "Settings",
       icon: "bi bi-sliders",
       route: settings,
     };
-    const setting = {
-      name: "Settings",
-      icon: "bi bi-sliders",
-      route: settings,
-    };
 
-    const hooksMenu = {
-      name: "WebHook",
-      icon: "bi bi-sliders",
-      route: hook,
-    };
+    // const hooksMenu = {
+    //   name: "WebHook",
+    //   icon: "bi bi-sliders",
+    //   route: hook,
+    // };
     const timeMenu = {
       name: "Recorded Dashboard",
       icon: "bi bi-sliders",
       route: "/timeRec",
     };
-    const hooksMenu = {
-      name: "WebHook",
-      icon: "bi bi-sliders",
-      route: hook,
-    };
 
+    const filterSchema = schemas.filter(
+      (item) =>
+        item.collection === "users" ||
+        item.collection === "daily_time_record" ||
+        item.collection === "biometric_logs"
+    );
     const menus = [
-      ...schemas
+      timeMenu,
+      ...filterSchema
         .sort(
           (a, b) =>
             (a.index || Number.POSITIVE_INFINITY) -
@@ -183,7 +118,7 @@ class MainPage extends BasePage {
           icon: s.icon,
           route: s.route || "/collection/" + s.collection || s.name,
         })),
-      hooksMenu,
+      // hooksMenu,
       setting,
     ];
     return (
@@ -234,12 +169,13 @@ class MainPage extends BasePage {
         </Layout.Context.Consumer>
         <main className="vh-100 d-flex flex-column">
           <Routes>
-            <Route exact path={"/"} element={<DashboardPage />} />
+            <Route exact path={"/"} element={<TimeRecordPage />} />
             <Route
               exact
               path={"/collection/:name"}
               element={<CollectionListPage />}
             />
+            <Route exact path={"/timeRec"} element={<TimeRecordPage />} />
             <Route path={"/roles/form"} element={<RoleFormPage />} />
             <Route path={"/roles/form/:id"} element={<RoleFormPage />} />
             <Route

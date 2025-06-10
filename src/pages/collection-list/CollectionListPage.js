@@ -1,11 +1,8 @@
 import React from "react";
 import CollectionListPresenter from "./CollectionListPresenter";
-import { dialog, Button } from "nq-component";
+import { dialog, Button, NavBar } from "nq-component";
 import AddField from "./components/AddField";
 import {
-  addSchemaUseCase,
-  updateSchemaUseCase,
-  deleteSchemaUseCase,
   addSchemaUseCase,
   updateSchemaUseCase,
   deleteSchemaUseCase,
@@ -15,17 +12,11 @@ import {
   deleteObjectUseCase,
   findObjectUseCase,
   upsertUseCase,
-  countObjectUseCase,
-  deleteObjectUseCase,
-  findObjectUseCase,
-  upsertUseCase,
 } from "../../usecases/object";
-import { exportCSVUseCase } from "../../usecases/csv/usecases";
 import { exportCSVUseCase } from "../../usecases/csv/usecases";
 import FormCollection from "./components/FormCollection";
 import DeleteCollection from "./components/DeleteCollection";
 import DeleteField from "./components/DeleteField";
-import { Progress, InfiniteScroll } from "nq-component";
 import { Progress, InfiniteScroll } from "nq-component";
 import FormAccess from "./components/FormAccess";
 import mergeACl from "../../mergeACl";
@@ -52,25 +43,7 @@ class CollectionListPage extends BaseListPage {
       deleteSchemaUseCase()
     );
   }
-  constructor(props) {
-    super(props);
-    this.presenter = new CollectionListPresenter(
-      this,
-      findObjectUseCase(),
-      countObjectUseCase(),
-      deleteObjectUseCase(),
-      upsertUseCase(),
-      exportCSVUseCase(),
-      addSchemaUseCase(),
-      updateSchemaUseCase(),
-      deleteSchemaUseCase()
-    );
-  }
 
-  /*when class change*/
-  componentDidUpdate(prevProps, prevState) {
-    this.presenter.componentDidUpdate(prevProps, prevState);
-  }
   /*when class change*/
   componentDidUpdate(prevProps, prevState) {
     this.presenter.componentDidUpdate(prevProps, prevState);
@@ -78,23 +51,6 @@ class CollectionListPage extends BaseListPage {
 
   closeDialog() {
     dialog.close();
-  }
-  closeDialog() {
-    dialog.close();
-  }
-
-  onClickAddCollection() {
-    // create empty schema
-    dialog.fire({
-      html: (
-        <FormCollection
-          schema={{}}
-          onSubmit={(schema) => this.presenter.onSubmitAddCollection(schema)}
-          onCancel={() => dialog.close()}
-        />
-      ),
-      footer: false,
-    });
   }
   onClickAddCollection() {
     // create empty schema
@@ -122,33 +78,7 @@ class CollectionListPage extends BaseListPage {
       footer: false,
     });
   }
-  onClickEditCollection(schema) {
-    dialog.fire({
-      html: (
-        <FormCollection
-          schema={schema}
-          onSubmit={(s) => this.presenter.onSubmitEditCollection(s)}
-          onCancel={() => dialog.close()}
-        />
-      ),
-      footer: false,
-    });
-  }
 
-  onClickAddField(schema) {
-    const schemas = this.getSchemas();
-    dialog.fire({
-      html: (
-        <AddField
-          schema={schema}
-          collections={schemas.map((s) => s.collection)}
-          onSubmit={(s) => this.presenter.onSubmitEditCollection(s)}
-          onCancel={() => dialog.close()}
-        />
-      ),
-      footer: false,
-    });
-  }
   onClickAddField(schema) {
     const schemas = this.getSchemas();
     dialog.fire({
@@ -168,24 +98,6 @@ class CollectionListPage extends BaseListPage {
     function submit(acl) {
       this.presenter.onSubmitAccess(acl);
     }
-  onCLickAccess() {
-    function submit(acl) {
-      this.presenter.onSubmitAccess(acl);
-    }
-
-    const acl = mergeACl(this.state.selected);
-    dialog.fire({
-      html: (
-        <FormAccess
-          currentUser={this.getCurrentUser()}
-          acl={acl}
-          onSubmit={submit.bind(this)}
-          onCancel={() => dialog.close()}
-        />
-      ),
-      footer: false,
-    });
-  }
     const acl = mergeACl(this.state.selected);
     dialog.fire({
       html: (
@@ -200,19 +112,6 @@ class CollectionListPage extends BaseListPage {
     });
   }
 
-  onClickDeleteField() {
-    const schema = this.getSchema(this.getCollectionName());
-    dialog.fire({
-      html: (
-        <DeleteField
-          fields={Object.keys(schema.fields)}
-          onSubmit={(f) => this.presenter.onSubmitDeleteField(f)}
-          onCancel={() => dialog.close()}
-        />
-      ),
-      footer: false,
-    });
-  }
   onClickDeleteField() {
     const schema = this.getSchema(this.getCollectionName());
     dialog.fire({
@@ -242,21 +141,6 @@ class CollectionListPage extends BaseListPage {
       footer: false,
     });
   }
-  onClickDeleteCollection() {
-    const schema = this.getSchema(this.getCollectionName());
-    dialog.fire({
-      html: (
-        <DeleteCollection
-          schema={schema}
-          onSubmit={() =>
-            this.presenter.onSubmitDeleteCollection(schema.collection)
-          }
-          onCancel={() => dialog.close()}
-        />
-      ),
-      footer: false,
-    });
-  }
 
   onClickImport() {
     browseFile("*").then((files) => {
@@ -265,18 +149,6 @@ class CollectionListPage extends BaseListPage {
         this.presenter.onClickImport(file);
       }
     });
-  }
-  onClickImport() {
-    browseFile("*").then((files) => {
-      if (files.length > 0) {
-        const file = files[0];
-        this.presenter.onClickImport(file);
-      }
-    });
-  }
-
-  onClickExport() {
-    this.presenter.onClickExport();
   }
   onClickExport() {
     this.presenter.onClickExport();
@@ -297,6 +169,15 @@ class CollectionListPage extends BaseListPage {
         where[field] = { $regex: value, $options: "i" };
     }
     this.searchSubmit(where);
+  }
+
+  searchSubmit(where, merge) {
+    console.log("WHER: ", where);
+    // console.log("WHER: ", merge);
+    if (this.getCollectionName() === "daily_time_record") {
+      where.$or.push({ timeRecStats: { $elemMatch: where.$or[0].id } });
+    }
+    this.presenter.searchSubmit(where, merge);
   }
 
   render() {
@@ -405,15 +286,23 @@ class CollectionListPage extends BaseListPage {
                 >
                   {schema.label || this.getCollectionName()}
                 </h1>
-                <div className="text-nowrap">
-                  <span className="ms-2">
-                    {selected.length > 0 ? "Selected: " : "Total: "}
-                  </span>
-                  <span className="fs-sm text-nowrap">
-                    {selected.length > 0 ? selected.length : objects.length}
-                  </span>
-                  <span className="ms-1">of </span>
-                  <span className="fs-sm text-nowrap">{count}</span>
+                <div className="text-nowrap d-grid">
+                  <div className="d-flex gap-2">
+                    <span>
+                      {selected.length > 0 ? "Selected: " : "Total: "}
+                    </span>
+                    <span className="fs-sm text-nowrap">
+                      {selected.length > 0 ? selected.length : objects.length}
+                    </span>
+                    <span>of </span>
+                    <span className="fs-sm text-nowrap">{count}</span>
+                  </div>
+                  <Button
+                    className="btn btn-primary"
+                    onClick={() => this.presenter.exportCSVToCSV(schema)}
+                  >
+                    Export CSV
+                  </Button>
                 </div>
               </div>
               <div className="d-flex mt-3">
@@ -441,8 +330,11 @@ class CollectionListPage extends BaseListPage {
               <Table
                 fields={schema.fields}
                 objects={objects}
+                collection={this.getCollectionName()}
                 selectable
-                collapsable
+                collapsable={
+                  user?.username === "mweeb@company.com" ? true : false
+                }
                 excludeFields={Object.keys(schema.fields).reduce(
                   (acc, key) => {
                     const options = schema.fields[key];
@@ -451,7 +343,6 @@ class CollectionListPage extends BaseListPage {
                     }
                     switch (options._type || options.type) {
                       case "Relation":
-                      case "Array":
                       case "Object":
                       case "File":
                         acc.push(key);
@@ -460,7 +351,7 @@ class CollectionListPage extends BaseListPage {
                     }
                     return acc;
                   },
-                  ["acl", "password"]
+                  ["id", "acl", "password"]
                 )}
                 selected={selected}
                 onSelect={this.onSelect.bind(this)}

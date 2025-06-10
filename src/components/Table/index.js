@@ -41,6 +41,7 @@ function Table({
   actionsList,
   setRef,
   selectable,
+  collection,
   onCollapse,
   collapsable,
   toggleable,
@@ -87,6 +88,7 @@ function Table({
             )}
             <Body
               objects={objects}
+              collection={collection}
               fields={fields}
               excludeFields={excludeFields}
               selected={selected}

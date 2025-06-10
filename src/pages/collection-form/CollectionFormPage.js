@@ -1,8 +1,6 @@
 import React from "react";
 import { InputJson } from "nq-component";
-import { InputJson } from "nq-component";
 import CollectionFormPresenter from "./CollectionFormPresenter";
-import { getObjectUseCase, upsertUseCase } from "../../usecases/object";
 import { getObjectUseCase, upsertUseCase } from "../../usecases/object";
 import withRouter from "../../withRouter";
 import BaseFormPage from "../../base/BaseFormPage";
@@ -19,26 +17,11 @@ class CollectionFormPage extends BaseFormPage {
       upsertUseCase()
     );
   }
-  constructor(props) {
-    super(props);
-    this.state = { object: {}, advanced: false };
-    this.presenter = new CollectionFormPresenter(
-      this,
-      getObjectUseCase(),
-      upsertUseCase()
-    );
-  }
 
   onClickAdvance() {
     this.setState({ advanced: !this.state.advanced });
   }
-  onClickAdvance() {
-    this.setState({ advanced: !this.state.advanced });
-  }
 
-  onChangeObject(object) {
-    this.presenter.onChangeObject(object);
-  }
   onChangeObject(object) {
     this.presenter.onChangeObject(object);
   }
