@@ -1,13 +1,21 @@
 [
   {
-    "name": "Dashboard",
-    "route": "/collection/dashboard",
-    "icon": "bi bi-pie-chart"
+      "name": "Biometric Logs",
+      "icon": "bi bi-sliders",
+      "route": "/collection/biometric_logs",
+      "access": ["ADMIN"]
+    },
+  {
+    "name": "Daily Time Record",
+    "route": "/collection/daily_time_record",
+    "icon": "bi bi-people",
+    "access": ["ADMIN", "OJT"]
   },
   {
-    "name": "Products",
-    "route": "/collection/residents",
-    "icon": "bi bi-people"
+    "name": "Users",
+    "route": "/collection/users",
+    "icon": "bi bi-people",
+    "access": ["ADMIN"]
   },
   {
     "name": "Settings",
@@ -17,12 +25,8 @@
         "name": "Edit Account",
         "route": "/account",
         "icon": "bi bi-person-check"
-      },
-      {
-        "name": "Schema",
-        "route": "/schema",
-        "icon": "bi bi-filetype-json"
       }
-    ]
+    ],
+    "access": ["ADMIN", "OJT"]
   }
 ]

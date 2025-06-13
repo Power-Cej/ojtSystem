@@ -1,11 +1,8 @@
-import { NavBar, Table } from "nq-component";
-import { Progress } from "nq-component";
 import { Button } from "nq-component";
 import {
   countObjectUseCase,
   deleteObjectUseCase,
   findObjectUseCase,
-  getObjectUseCase,
   upsertUseCase,
 } from "../../usecases/object";
 import {
@@ -14,23 +11,21 @@ import {
   updateSchemaUseCase,
 } from "../../usecases/schema/usecases";
 import withRouter from "../../withRouter";
-import React from "react";
-import BaseFormPage from "../../base/BaseFormPage";
 import InputFactory from "../../components/InputFactory";
-import RoleFormPresenter from "../role-form/RoleFormPresenter";
 import BaseListPage from "../../base/BaseListPage";
 import { exportCSVUseCase } from "../../usecases/csv/usecases";
+import PrintCOC from "./PrintCOC/printCOC";
+import { createRef } from "react";
+import DashboardMainPresenter from "./DashboardMainPresenter";
+import NavBar from "../../components/navbar";
 
-import { Schema } from "nq";
-import CollectionListPresenter from "./CollectionListPresenter";
-
-class TimeRecordPage extends BaseListPage {
+class DashboardMain extends BaseListPage {
   constructor(props) {
     super(props);
     this.state = {
       object: {},
     };
-    this.presenter = new CollectionListPresenter(
+    this.presenter = new DashboardMainPresenter(
       this,
       findObjectUseCase(),
       countObjectUseCase(),
@@ -41,6 +36,7 @@ class TimeRecordPage extends BaseListPage {
       updateSchemaUseCase(),
       deleteSchemaUseCase()
     );
+    this.contractPDF = createRef();
   }
 
   getCollectionName() {
@@ -96,40 +92,90 @@ class TimeRecordPage extends BaseListPage {
       }
 
       acc[record.user].totalSeconds += outSeconds - inSeconds;
-
       return acc;
     }, {});
+  }
+  setObjects(objects) {
+    this.setState({ objects });
+  }
+  getUser() {
+    return this.getCurrentUser();
   }
 
   render() {
     const { objects } = this.state;
     const schema = this.getSchema(this.getCollectionName());
-    // console.log("OBJECTS: ", this.groupByUser(this.state.objectss));
-
+    const minTimeDuration = "286";
     return (
       <>
         <NavBar />
         <div className="overflow-auto">
           <div className="p-3 p-lg-4">
             <h1 className="fw-bold mt-3 text-capitalize">{schema.label}</h1>
+
+            <div className="mt-2 d-none">
+              <div ref={this.contractPDF} id="contractPDF">
+                <PrintCOC object={this.state.object} />
+              </div>
+            </div>
+            <div className="d-flex mt-3">
+              {Object.keys(schema.filters || {}).map((field) => {
+                let { type, ...options } = schema.filters[field];
+                return (
+                  <InputFactory
+                    key={field}
+                    className="ms-1"
+                    type={type}
+                    field={field}
+                    where={{}}
+                    onChange={this.onChangeFilter.bind(this, type)}
+                    {...options}
+                  />
+                );
+              })}
+            </div>
             <div className="row d-flex">
               {/* {this.TimeLogs()} */}
               {Array.isArray(objects) && objects.length > 0 ? (
                 Object.entries(this.groupByUser(objects)).map(
-                  ([user, times]) => (
-                    <div className="col-lg-4 p-2" key={user}>
-                      <div className="d-grid text-center p-2 border rounded bg-white shadow-sm">
-                        <h2>
-                          <b>{user.toUpperCase()}</b>
-                        </h2>
-
-                        <h5>
-                          Duration:{" "}
-                          {this.secondsToTime(times.totalSeconds, user)}
-                        </h5>
+                  ([user, times]) => {
+                    const isComplete =
+                      this.secondsToTime(times.totalSeconds, user) >=
+                      minTimeDuration;
+                    return (
+                      <div className="col-lg-4 p-2" key={user}>
+                        <div
+                          className="d-grid text-center p-2 border rounded shadow-sm"
+                          style={{
+                            backgroundColor: isComplete
+                              ? "rgb(0, 107, 172)"
+                              : "white",
+                            color: isComplete ? "white" : "black",
+                          }}
+                        >
+                          <div className="p-2 ms-auto">
+                            <Button
+                              style={{ backgroundColor: "green" }}
+                              disabled={!isComplete}
+                              onClick={
+                                () => this.presenter.openModal(user, times)
+                                // this.presenter.handlePrintCOC()
+                              }
+                            >
+                              Print COC
+                            </Button>
+                          </div>
+                          <h2>
+                            <b>{user.toUpperCase()}</b>
+                          </h2>
+                          <h5>
+                            Duration:{" "}
+                            {this.secondsToTime(times.totalSeconds, user)}
+                          </h5>
+                        </div>
                       </div>
-                    </div>
-                  )
+                    );
+                  }
                 )
               ) : (
                 <div
@@ -147,4 +193,4 @@ class TimeRecordPage extends BaseListPage {
   }
 }
 
-export default withRouter(TimeRecordPage);
+export default withRouter(DashboardMain);

@@ -1,5 +1,3 @@
-import { upsertUseCase } from "../../usecases/object";
-
 class SignUpPresenter {
   constructor(view, signUpUseCase, updateObjectUseCase) {
     this.view = view;
@@ -25,12 +23,9 @@ class SignUpPresenter {
       password,
       ...others,
     };
-    // console.log("user: ", user);
-    // return;
     this.view.showProgress();
-    console.log("user: ", user);
     Promise.resolve()
-      .then(() => upsertUseCase().execute("users", user))
+      .then(() => this.signUpUseCase.execute(user))
       .then(() => {
         this.view.hideProgress();
         this.view

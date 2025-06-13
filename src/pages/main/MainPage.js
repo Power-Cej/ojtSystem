@@ -19,7 +19,9 @@ import HooksPage from "../web-hook/HooksPage";
 import FunctionPage from "../web-hook/FunctionPage";
 import SchemaPage from "../schema/SchemaPage";
 import SetupPage from "../setup/SetupPage";
-import TimeRecordPage from "../time-record/TimeRecordPage";
+import jsonMenu from "./menus.json";
+import DailyTimerecord from "../DailyTimeRecord/DailyTimerecord";
+import DashboardMain from "../DashboardMain/DashboardMain";
 
 class MainPage extends BasePage {
   constructor(props) {
@@ -44,6 +46,21 @@ class MainPage extends BasePage {
     this.navigateTo(item.route);
   }
 
+  filterAccess(menus, roles) {
+    return menus.filter((menu) => {
+      if (Array.isArray(menu.route)) {
+        menu.route = this.filterAccess(menu.route, roles);
+      }
+      if (!menu.access) {
+        return true;
+      }
+      if (roles.some((role) => menu.access.includes(role?.id))) {
+        return true;
+      }
+      return false;
+    });
+  }
+
   render() {
     const user = this.getCurrentUser();
     const schemas = this.getSchemas();
@@ -51,42 +68,42 @@ class MainPage extends BasePage {
     if (user === undefined || schemas === undefined) {
       return <Progress />;
     }
-    const settings = [
-      {
-        name: "Edit Account",
-        route: "/account",
-        icon: "bi bi-person-check",
-      },
-      {
-        name: "Schema",
-        route: "/schema",
-        icon: "bi bi-filetype-json",
-      },
-      // {
-      //     name: "Notification",
-      //     route: "/notification",
-      //     icon: "bi bi-bell"
-      // },
-    ];
+    // const settings = [
+    //   {
+    //     name: "Edit Account",
+    //     route: "/account",
+    //     icon: "bi bi-person-check",
+    //   },
+    //   {
+    //     name: "Schema",
+    //     route: "/schema",
+    //     icon: "bi bi-filetype-json",
+    //   },
+    //   // {
+    //   //     name: "Notification",
+    //   //     route: "/notification",
+    //   //     icon: "bi bi-bell"
+    //   // },
+    // ];
 
-    const hook = [
-      {
-        name: "Hooks",
-        route: "/hooks",
-        icon: "bi bi-person-check",
-      },
-      {
-        name: "Function",
-        route: "/function",
-        icon: "bi bi-person-check",
-      },
-    ];
+    // const hook = [
+    //   {
+    //     name: "Hooks",
+    //     route: "/hooks",
+    //     icon: "bi bi-person-check",
+    //   },
+    //   {
+    //     name: "Function",
+    //     route: "/function",
+    //     icon: "bi bi-person-check",
+    //   },
+    // ];
 
-    const setting = {
-      name: "Settings",
-      icon: "bi bi-sliders",
-      route: settings,
-    };
+    // const setting = {
+    //   name: "Settings",
+    //   icon: "bi bi-sliders",
+    //   route: settings,
+    // };
 
     // const hooksMenu = {
     //   name: "WebHook",
@@ -99,28 +116,31 @@ class MainPage extends BasePage {
       route: "/timeRec",
     };
 
-    const filterSchema = schemas.filter(
-      (item) =>
-        item.collection === "users" ||
-        item.collection === "daily_time_record" ||
-        item.collection === "biometric_logs"
-    );
+    // const filterSchema = schemas.filter(
+    //   (item) =>
+    //     item.collection === "users" ||
+    //     item.collection === "roles" ||
+    //     item.collection === "daily_time_record" ||
+    //     item.collection === "biometric_logs"
+    // );
     const menus = [
       timeMenu,
-      ...filterSchema
-        .sort(
-          (a, b) =>
-            (a.index || Number.POSITIVE_INFINITY) -
-            (b.index || Number.POSITIVE_INFINITY)
-        )
-        .map((s) => ({
-          name: s.label || s.collection || s.name,
-          icon: s.icon,
-          route: s.route || "/collection/" + s.collection || s.name,
-        })),
+      ...jsonMenu,
+      // ...filterSchema
+      //   .sort(
+      //     (a, b) =>
+      //       (a.index || Number.POSITIVE_INFINITY) -
+      //       (b.index || Number.POSITIVE_INFINITY)
+      //   )
+      //   .map((s) => ({
+      //     name: s.label || s.collection || s.name,
+      //     icon: s.icon,
+      //     route: s.route || "/collection/" + s.collection || s.name,
+      //   })),
       // hooksMenu,
-      setting,
+      // setting,
     ];
+
     return (
       <Layout>
         <Layout.Context.Consumer>
@@ -148,9 +168,16 @@ class MainPage extends BasePage {
                   <hr className="dropdown-divider bg-light" />
                   <div className="m-3">
                     {" "}
-                    <Menu
+                    {/* <Menu
                       onClickItem={this.onClickMenu.bind(this)}
                       menus={menus}
+                    /> */}
+                    <Menu
+                      onClickItem={(e, item) => {
+                        value.setCollapse(false); // <--- This closes the sidebar
+                        this.onClickMenu(e, item);
+                      }}
+                      menus={this.filterAccess(menus, roles)}
                     />
                   </div>
                 </nav>
@@ -169,13 +196,18 @@ class MainPage extends BasePage {
         </Layout.Context.Consumer>
         <main className="vh-100 d-flex flex-column">
           <Routes>
-            <Route exact path={"/"} element={<TimeRecordPage />} />
+            <Route exact path={"/"} element={<DashboardMain />} />
             <Route
               exact
               path={"/collection/:name"}
               element={<CollectionListPage />}
             />
-            <Route exact path={"/timeRec"} element={<TimeRecordPage />} />
+            <Route
+              exact
+              path={"/collection/daily_time_record"}
+              element={<DailyTimerecord />}
+            />
+            <Route exact path={"/timeRec"} element={<DashboardMain />} />
             <Route path={"/roles/form"} element={<RoleFormPage />} />
             <Route path={"/roles/form/:id"} element={<RoleFormPage />} />
             <Route

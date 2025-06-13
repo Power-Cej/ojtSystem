@@ -1,6 +1,6 @@
 import React from "react";
 import CollectionListPresenter from "./CollectionListPresenter";
-import { dialog, Button, NavBar } from "nq-component";
+import { dialog, Button } from "nq-component";
 import AddField from "./components/AddField";
 import {
   addSchemaUseCase,
@@ -27,6 +27,7 @@ import InputFactory from "../../components/InputFactory";
 import browseFile from "../../browseFile";
 import "./Styles.css";
 import Table from "../../components/Table";
+import NavBar from "../../components/navbar";
 
 class CollectionListPage extends BaseListPage {
   constructor(props) {
@@ -172,7 +173,7 @@ class CollectionListPage extends BaseListPage {
   }
 
   searchSubmit(where, merge) {
-    console.log("WHER: ", where);
+    // console.log("WHER: ", where);
     // console.log("WHER: ", merge);
     if (this.getCollectionName() === "daily_time_record") {
       where.$or.push({ timeRecStats: { $elemMatch: where.$or[0].id } });

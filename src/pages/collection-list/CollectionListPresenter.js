@@ -32,14 +32,38 @@ class CollectionListPresenter extends BaseListPresenter {
     }
   }
 
+  init() {
+    this.limit = 20;
+    this.where = {};
+    this.search = {};
+    this.filter = {};
+    this.include = [""];
+    this.keys = undefined; // if keys are specified, only those keys will be returned
+    this.sort = { createdAt: -1 };
+    this.progress = true;
+    this.reset();
+  }
+
   createQuery() {
     const skip = (this.current - 1) * this.limit;
     const collection = this.view.getCollectionName();
-    console.log("COLLL: ", collection);
+    const user = this.view.getCurrentUser();
+    const roles = this.view.getCurrentRoles();
+    let where = {};
+    if (
+      collection === "daily_time_record" &&
+      user?.username &&
+      roles?.[0]?.id.includes("OJT")
+    ) {
+      where = { user: user?.username };
+    }
+    // collection === "biometric_logs" && user?.username
+    //   ? { username: user?.username }
+    //   : {};
     const query = {
       limit: this.limit,
       skip: skip,
-      where: { ...this.where, ...this.search, ...this.filter },
+      where: { ...this.where, ...this.search, ...this.filter, ...where },
       include: this.include,
     };
     if (this.sort) {

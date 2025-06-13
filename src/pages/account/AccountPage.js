@@ -86,7 +86,7 @@ class AccountPage extends BaseFormPage {
                         <i className="bi bi-camera"></i>
                       </button>
                     </div>
-                    <div className="text-center">
+                    {/* <div className="text-center">
                       <InputImage
                         value={user.picture}
                         name={name}
@@ -94,7 +94,7 @@ class AccountPage extends BaseFormPage {
                         save={saveImageUseCase()}
                       />
                       <p className="m-0 fs-sm fw-bold mt-3">{name}</p>
-                    </div>
+                    </div> */}
                     <hr />
                     <span className="text-muted fs-sm">User Information</span>
                     <ul className="list-group list-group-flush">
