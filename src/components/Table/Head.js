@@ -40,6 +40,7 @@ function Head({
               backgroundColor: "#006BAC",
               color: "white",
               borderRadius: "0",
+              fontSize: "clamp(12px, 2vw, 1rem)",
             }}
             key={field}
             className="fs-xs align-middle text-nowrap"
@@ -61,7 +62,10 @@ function Head({
           <th
             className="fs-xs align-middle text-nowrap"
             colSpan={actionsList.length}
-            style={{ borderRadius: "10px" }}
+            style={{
+              borderRadius: "10px",
+              fontSize: "clamp(12px, 2vw, 1rem)",
+            }}
           >
             ACTIONS
           </th>

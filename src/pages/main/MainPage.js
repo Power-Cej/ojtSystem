@@ -22,6 +22,7 @@ import SetupPage from "../setup/SetupPage";
 import jsonMenu from "./menus.json";
 import DailyTimerecord from "../DailyTimeRecord/DailyTimerecord";
 import DashboardMain from "../DashboardMain/DashboardMain";
+import BiometricLogs from "../BiometricLogs/BiometricLogs";
 
 class MainPage extends BasePage {
   constructor(props) {
@@ -166,7 +167,10 @@ class MainPage extends BasePage {
                     </p>
                   </div>
                   <hr className="dropdown-divider bg-light" />
-                  <div className="m-3">
+                  <div
+                    className="m-3"
+                    style={{ fontSize: "clamp(12px, 2vw, 1rem)" }}
+                  >
                     {" "}
                     {/* <Menu
                       onClickItem={this.onClickMenu.bind(this)}
@@ -205,6 +209,21 @@ class MainPage extends BasePage {
             <Route
               exact
               path={"/collection/daily_time_record"}
+              element={<DailyTimerecord />}
+            />
+            <Route
+              exact
+              path={"/collection/biometric_logs"}
+              element={<BiometricLogs />}
+            />
+            <Route
+              exact
+              path={"/collection/biometric_logs/:id"}
+              element={<BiometricLogs />}
+            />
+            <Route
+              exact
+              path={"/collection/daily_time_record/:id"}
               element={<DailyTimerecord />}
             />
             <Route exact path={"/timeRec"} element={<DashboardMain />} />

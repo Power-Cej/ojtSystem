@@ -13,7 +13,7 @@ function CollapseView(
 ) {
   return (
     <>
-      <div className="d-flex">
+      <div className="d-flex" style={{ fontFamily: "sans-serif" }}>
         {fieldImage && (
           <div
             className="mb-3"

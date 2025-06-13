@@ -4,7 +4,6 @@ import {
   InputFactory,
   printComponent,
   Progress,
-  Search,
 } from "nq-component";
 import BaseListPage from "../../base/BaseListPage";
 import {
@@ -12,17 +11,16 @@ import {
   findObjectUseCase,
   upsertUseCase,
 } from "../../usecases/object";
-import DailyTimerecordPresenter from "./DailyTimerecordPresenter";
 import NavBar from "../../components/navbar";
 import Table from "../../components/Table";
 import withRouter from "../../withRouter";
-import PrintDTR from "./PrintDTR/PrintDTR";
 import { createRef } from "react";
+import BiometricLogsPresenter from "./BiometricLogsPresenter";
 
-class DailyTimerecord extends BaseListPage {
+class BiometricLogs extends BaseListPage {
   constructor(props) {
     super(props);
-    this.presenter = new DailyTimerecordPresenter(
+    this.presenter = new BiometricLogsPresenter(
       this,
       findObjectUseCase(),
       upsertUseCase(),
@@ -54,7 +52,7 @@ class DailyTimerecord extends BaseListPage {
   }
 
   getCollectionName() {
-    return "daily_time_record";
+    return "biometric_logs";
   }
 
   paramsTest() {
@@ -80,11 +78,6 @@ class DailyTimerecord extends BaseListPage {
             loadMore={this.loadMore.bind(this)}
             hasMore={!progress && count > objects?.length}
           >
-            <div className="d-none mt-5">
-              <div ref={this.printPDF} id="printPDF">
-                <PrintDTR objects={objects} object={this.state.object} />
-              </div>
-            </div>
             <div className="p-3 p-lg-4">
               <div className="d-flex justify-content-between align-items-center">
                 <h1
@@ -125,60 +118,6 @@ class DailyTimerecord extends BaseListPage {
                     Export CSV
                   </Button>
                 </div>
-              </div>
-              <div>
-                <form
-                  className="d-flex justify-content-between"
-                  style={{ margin: "1rem 0" }}
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    printComponent(this.printPDF.current, "Task");
-                  }}
-                >
-                  <div style={{ width: "clamp(200px, 20vw, 25%)" }}>
-                    <InputFactory
-                      className="ms-1"
-                      type="String"
-                      _type="Enum"
-                      required={true}
-                      onChange={(value) => {
-                        this.setState({
-                          object: {
-                            // ...user,
-                            fullName: `${user.firstName || ""} ${
-                              user.middleName || ""
-                            } ${user.lastName || ""}`,
-                            selectedMonth: value,
-                          },
-                        });
-                        this.onChangeFilter("String", value, "month");
-                      }}
-                      placeholder="Select Month"
-                      options={this.state.month.map((item) => {
-                        const value = {
-                          January: "0",
-                          February: "1",
-                          March: "2",
-                          April: "3",
-                          May: "4",
-                          June: "5",
-                          July: "6",
-                          August: "7",
-                          September: "8",
-                          October: "9",
-                          November: "10",
-                          December: "11",
-                        };
-                        return {
-                          label: item,
-                          value: value[item],
-                        };
-                      })}
-                    />
-                  </div>
-
-                  <Button type="submit">Print DTR</Button>
-                </form>
               </div>
               <Table
                 fields={schema.fields}
@@ -235,4 +174,4 @@ class DailyTimerecord extends BaseListPage {
   }
 }
 
-export default withRouter(DailyTimerecord);
+export default withRouter(BiometricLogs);

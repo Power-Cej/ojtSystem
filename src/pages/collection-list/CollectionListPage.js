@@ -191,7 +191,12 @@ class CollectionListPage extends BaseListPage {
         <NavBar
           action={() => {
             return (
-              <div className="dropdown dropstart d-inline-block">
+              <div
+                className="dropdown dropstart d-inline-block"
+                style={{
+                  fontSize: "clamp(12px, 2vw, 1rem)",
+                }}
+              >
                 <i
                   role="button"
                   data-bs-toggle="dropdown"
@@ -273,7 +278,12 @@ class CollectionListPage extends BaseListPage {
             );
           }}
         />
-        <div className="overflow-auto">
+        <div
+          className="overflow-auto"
+          style={{
+            fontSize: "clamp(12px, 2vw, 1rem)",
+          }}
+        >
           <InfiniteScroll
             className="h-100"
             loadMore={this.loadMore.bind(this)}
@@ -283,7 +293,9 @@ class CollectionListPage extends BaseListPage {
               <div className="d-flex justify-content-between align-items-center">
                 <h1
                   className="fw-bold text-capitalize"
-                  // style={{ color: "#006BAC" }}
+                  style={{
+                    fontSize: "clamp(1.5rem, 4vw, 2.5rem)", // scales between 1rem and 2.5rem based on viewport
+                  }}
                 >
                   {schema.label || this.getCollectionName()}
                 </h1>
@@ -292,11 +304,23 @@ class CollectionListPage extends BaseListPage {
                     <span>
                       {selected.length > 0 ? "Selected: " : "Total: "}
                     </span>
-                    <span className="fs-sm text-nowrap">
+                    <span
+                      className="fs-sm text-nowrap"
+                      style={{
+                        fontSize: "clamp(12px, 2vw, 1rem)",
+                      }}
+                    >
                       {selected.length > 0 ? selected.length : objects.length}
                     </span>
                     <span>of </span>
-                    <span className="fs-sm text-nowrap">{count}</span>
+                    <span
+                      className="fs-sm text-nowrap"
+                      style={{
+                        fontSize: "clamp(12px, 2vw, 1rem)",
+                      }}
+                    >
+                      {count}
+                    </span>
                   </div>
                   <Button
                     className="btn btn-primary"

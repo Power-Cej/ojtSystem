@@ -128,7 +128,14 @@ function OutputString({ field, object, keys, refetch, collection }) {
         </div>
       );
     }
-    return <div dangerouslySetInnerHTML={{ __html: value }} />;
+    return (
+      <div
+        style={{
+          fontSize: "clamp(12px, 2vw, 1rem)",
+        }}
+        dangerouslySetInnerHTML={{ __html: value }}
+      />
+    );
   }
 
   const values = [];

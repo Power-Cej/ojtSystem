@@ -1,7 +1,7 @@
 import * as XLSX from "xlsx";
 import BaseListPresenter from "../../base/BaseListPresenter";
 
-class DailyTimerecordPresenter extends BaseListPresenter {
+class BiometricLogsPresenter extends BaseListPresenter {
   constructor(view, findObjectUseCase, upsertUseCase, countObjectUseCase) {
     super(view, findObjectUseCase);
     this.upsertUseCase = upsertUseCase;
@@ -24,19 +24,21 @@ class DailyTimerecordPresenter extends BaseListPresenter {
     const skip = (this.current - 1) * this.limit;
     const collection = this.view.getCollectionName();
 
-    const user = this.view.getCurrentUser();
-    const roles = this.view.getCurrentRoles();
+    // const user = this.view.getCurrentUser();
+    // const roles = this.view.getCurrentRoles();
 
     let where = {};
-    if (
-      collection === "daily_time_record" &&
-      user?.username &&
-      roles?.[0]?.id.includes("OJT")
-    ) {
-      where = { user: user?.username };
-    }
+    // if (
+    //   collection === "daily_time_record" &&
+    //   user?.username &&
+    //   roles?.[0]?.id.includes("OJT")
+    // ) {
+    //   where = { user: user?.username };
+    // }
     if (this.view.paramsTest()?.id) {
-      where = { user: this.view.paramsTest()?.id };
+      where = {
+        logMessage: { $regex: this.view.paramsTest()?.id, $options: "i" },
+      };
     }
     const query = {
       limit: this.limit,
@@ -62,6 +64,19 @@ class DailyTimerecordPresenter extends BaseListPresenter {
       this.showProgress();
       this.findObjectUseCase.abort();
       const objects = await this.findObjectUseCase.execute(collection, query);
+      objects.forEach((object) => {
+        if (object?.createdAt) {
+          const formatDate = new Date(object.createdAt).toLocaleDateString(
+            "en-US",
+            {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            }
+          );
+          return (object.createdAt = formatDate);
+        }
+      });
       this.objects = this.objects.concat(objects);
       this.view.setTotal(this.objects.length);
       this.view.setObjects(this.objects);
@@ -195,4 +210,4 @@ class DailyTimerecordPresenter extends BaseListPresenter {
   }
 }
 
-export default DailyTimerecordPresenter;
+export default BiometricLogsPresenter;

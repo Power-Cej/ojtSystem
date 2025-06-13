@@ -42,11 +42,18 @@ function OutputFactory({
     case "Image":
       return <OutputImage field={field} object={object} {...options} />;
     case "Pointer":
-      return <OutputPointer field={field} object={object} {...options} />;
     case "inputPointer":
       return <OutputPointer field={field} object={object} {...options} />;
     case "Component":
-      return object[field];
+      return (
+        <div
+          style={{
+            fontSize: "clamp(12px, 2vw, 1rem)",
+          }}
+        >
+          {object[field]}
+        </div>
+      );
     case "Array":
       return (
         <OutputArray

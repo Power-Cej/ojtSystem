@@ -8,20 +8,51 @@ function OutputPointer({ field, object }) {
     (pointer && field === "employee") ||
     (pointer && field === "assignedEmployee")
   ) {
-    return ` ${pointer?.surname || ""} ${pointer?.Firstname || ""} ${
-      pointer?.Middlename || ""
-    }`;
+    return (
+      <div
+        style={{
+          fontSize: "clamp(12px, 2vw, 1rem)",
+        }}
+      >
+        ` ${pointer?.surname || ""} ${pointer?.Firstname || ""} $
+        {pointer?.Middlename || ""}`;
+      </div>
+    );
   } else if (
     pointer &&
     (field === "requestType" || field === "loanType" || field === "area")
   ) {
-    return pointer.name;
+    return (
+      <div
+        style={{
+          fontSize: "clamp(12px, 2vw, 1rem)",
+        }}
+      >
+        {pointer.name}
+      </div>
+    );
   } else if (pointer && (field === "position" || field === "positionTitle")) {
-    return pointer.position_title;
+    return (
+      <div
+        style={{
+          fontSize: "clamp(12px, 2vw, 1rem)",
+        }}
+      >
+        {pointer.position_title}
+      </div>
+    );
   } else if (pointer && field === "user") {
-    return `${pointer?.employee?.Firstname || ""} ${
-      pointer?.employee?.Middlename || ""
-    } ${pointer?.employee?.surname || ""}`;
+    return (
+      <div
+        style={{
+          fontSize: "clamp(12px, 2vw, 1rem)",
+        }}
+      >
+        `${pointer?.employee?.Firstname || ""} $
+        {pointer?.employee?.Middlename || ""} $
+        {pointer?.employee?.surname || ""}`;
+      </div>
+    );
   }
   return null;
 }

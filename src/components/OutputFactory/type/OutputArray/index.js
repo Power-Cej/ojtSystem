@@ -25,7 +25,12 @@ function OutputArray({ field, object, collection }) {
           ))}
         </div>
       ) : ( */}
-      <div className="d-flex p-0">
+      <div
+        className="d-flex p-0"
+        style={{
+          fontSize: "clamp(12px, 2vw, 1rem)",
+        }}
+      >
         {value.map((item, index) => (
           <span
             key={index}

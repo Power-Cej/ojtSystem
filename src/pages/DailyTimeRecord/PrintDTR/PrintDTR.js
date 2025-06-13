@@ -140,7 +140,7 @@ export default function PrintDTR({ objects, object }) {
               return (
                 <tr key={dayNumber}>
                   <td
-                    style={tableStyle({ fontSize: "12px" })}
+                    style={tableStyle({ fontSize: "12px", textAlign: "left" })}
                   >{`${dayNumber} - ${dayName}`}</td>
                   <td style={tableStyle({ fontSize: "12px" })}>
                     {record?.timeIn}

@@ -97,7 +97,10 @@ class AccountPage extends BaseFormPage {
                     </div> */}
                     <hr />
                     <span className="text-muted fs-sm">User Information</span>
-                    <ul className="list-group list-group-flush">
+                    <ul
+                      className="list-group list-group-flush"
+                      style={{ fontFamily: "sans-serif" }}
+                    >
                       {Object.keys(fields).map((field) => {
                         const { type, write, ...options } = fields[field];
                         if (write === false) return null;
@@ -114,7 +117,7 @@ class AccountPage extends BaseFormPage {
                             onChange={this.onChange.bind(this)}
                             onSubmit={this.onSubmitForm.bind(this)}
                             label={options.label || field + ":"}
-                            placeholder="fist-name last-name"
+                            // placeholder="fist-name last-name"
                           />
                         );
                       })}

@@ -18,6 +18,7 @@ import PrintCOC from "./PrintCOC/printCOC";
 import { createRef } from "react";
 import DashboardMainPresenter from "./DashboardMainPresenter";
 import NavBar from "../../components/navbar";
+import { Popover, Tooltip } from "antd";
 
 class DashboardMain extends BaseListPage {
   constructor(props) {
@@ -153,22 +154,73 @@ class DashboardMain extends BaseListPage {
                             color: isComplete ? "white" : "black",
                           }}
                         >
-                          <div className="p-2 ms-auto">
-                            <Button
-                              style={{ backgroundColor: "green" }}
-                              disabled={!isComplete}
-                              onClick={
-                                () => this.presenter.openModal(user, times)
-                                // this.presenter.handlePrintCOC()
-                              }
+                          <Popover
+                            trigger="hover"
+                            placement="bottomRight"
+                            content={
+                              <div className="d-grid gap-2">
+                                <Button
+                                  type="primary"
+                                  size="small"
+                                  style={{
+                                    backgroundColor: "green",
+                                    borderColor: "green",
+                                  }}
+                                  disabled={!isComplete}
+                                  onClick={() =>
+                                    this.presenter.openModal(user, times)
+                                  }
+                                >
+                                  Print COC
+                                </Button>
+                                <Button
+                                  type="primary"
+                                  size="small"
+                                  style={{
+                                    backgroundColor: "red",
+                                    borderColor: "red",
+                                  }}
+                                  onClick={() => {
+                                    this.navigateTo(
+                                      `/collection/daily_time_record/${user}`
+                                    );
+                                  }}
+                                >
+                                  DTR
+                                </Button>
+                                {this.getCurrentRoles().some((data) =>
+                                  data.id.includes("ADMIN")
+                                ) && (
+                                  <Button
+                                    type="primary"
+                                    size="small"
+                                    style={{
+                                      backgroundColor: "gray",
+                                      borderColor: "gray",
+                                    }}
+                                    onClick={() => {
+                                      this.navigateTo(
+                                        `/collection/biometric_logs/${user}`
+                                      );
+                                    }}
+                                  >
+                                    Biometric Logs
+                                  </Button>
+                                )}
+                              </div>
+                            }
+                          >
+                            <div
+                              className="p-2 ms-auto"
+                              style={{ cursor: "pointer" }}
                             >
-                              Print COC
-                            </Button>
-                          </div>
-                          <h2>
+                              <i className="bi bi-three-dots-vertical" />
+                            </div>
+                          </Popover>
+                          <h2 style={{ fontSize: "clamp(1.2rem,2vw, 1.5rem)" }}>
                             <b>{user.toUpperCase()}</b>
                           </h2>
-                          <h5>
+                          <h5 style={{ fontSize: "clamp(1rem, 2vw, 1.3rem)" }}>
                             Duration:{" "}
                             {this.secondsToTime(times.totalSeconds, user)}
                           </h5>
