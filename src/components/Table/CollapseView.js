@@ -9,6 +9,7 @@ function CollapseView(
   fields,
   actions,
   onClickItem,
+  onClickView,
   fieldImage
 ) {
   return (
@@ -41,7 +42,7 @@ function CollapseView(
             if (!output) return null;
             return (
               <li key={field}>
-                <span className="ms-2 fw-light">
+                <span className="ms-2 fw-light fw-bold">
                   {options.label || field}:{" "}
                 </span>
                 <span className="fs-sm text-nowrap">{output}</span>
@@ -64,12 +65,21 @@ function CollapseView(
           </button>
         ))
       ) : (
-        <button
-          className="btn btn-primary btn-sm"
-          onClick={() => onClickItem(index)}
-        >
-          EDIT
-        </button>
+        <div className="d-flex gap-2">
+          <button
+            className="btn btn-sm text-primary"
+            style={{ backgroundColor: "#D1D1D1E7" }}
+            onClick={() => onClickItem(index)}
+          >
+            <i className="bi bi-pen-fill" /> EDIT
+          </button>
+          <button
+            className="btn btn-sm text-white bg-primary"
+            onClick={() => onClickView(index)}
+          >
+            <i className="bi bi-eye-fill" /> View
+          </button>
+        </div>
       )}
     </>
   );

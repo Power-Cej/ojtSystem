@@ -20,15 +20,19 @@ function NavigationBar({
         <button
           onClick={onClickNavigate}
           type="button"
-          className="btn btn-sm btn-link fs-4 ps-0 text-dark"
+          className="btn btn-sm btn-link ps-0 text-white"
+          style={{ fontSize: "clamp(1.5rem, 2vw, 1.8rem)" }}
         >
           <i className={navigateIcon}></i>
         </button>
-        <div className="d-flex align-items-center">
+        <div
+          className="d-flex align-items-center bg-white rounded-circle p-1"
+          // style={{ width: "clamp(10px, 1vw, 5%)" }}
+        >
           {logo && (
-            <img className="w-auto" src={logo} height="40" alt="title-logo" />
+            <img className="w-auto" src={logo} height="30vh" alt="title-logo" />
           )}
-          {title && <h6 className="fw-bold m-0 ms-2 text-dark">{title}</h6>}
+          {title && <h6 className="fw-bold m-0 ms-2 text-white">{title}</h6>}
         </div>
         {(action && action()) || <div />}
       </div>

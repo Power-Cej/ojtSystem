@@ -46,7 +46,10 @@ class FunctionPage extends BasePage {
           action={() => {
             // if (!user.isMaster) return null;
             return (
-              <div className="dropdown dropstart d-inline-block">
+              <div
+                className="dropdown dropstart d-inline-block"
+                style={{ fontSize: "clamp(1.5rem, 2vw, 1.8rem)" }}
+              >
                 <i
                   role="button"
                   data-bs-toggle="dropdown"

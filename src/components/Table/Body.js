@@ -25,6 +25,7 @@ function Body({
   toggleable,
   actions,
   onClickItem,
+  onClickView,
   fieldImage,
   onCollapse,
 }) {
@@ -152,6 +153,7 @@ function Body({
                     fields,
                     actions,
                     onClickItem,
+                    onClickView,
                     fieldImage
                   )}
               </AccordionCollapse>

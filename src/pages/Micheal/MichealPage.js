@@ -1,10 +1,4 @@
-import {
-  Button,
-  InfiniteScroll,
-  InputFactory,
-  printComponent,
-  Progress,
-} from "nq-component";
+import { Button, InfiniteScroll, Progress } from "nq-component";
 import BaseListPage from "../../base/BaseListPage";
 import {
   countObjectUseCase,
@@ -15,12 +9,12 @@ import NavBar from "../../components/navbar";
 import Table from "../../components/Table";
 import withRouter from "../../withRouter";
 import { createRef } from "react";
-import BiometricLogsPresenter from "./BiometricLogsPresenter";
+import MichealPagePresenter from "./MichealPagePresenter";
 
-class BiometricLogs extends BaseListPage {
+class MichealPage extends BaseListPage {
   constructor(props) {
     super(props);
-    this.presenter = new BiometricLogsPresenter(
+    this.presenter = new MichealPagePresenter(
       this,
       findObjectUseCase(),
       upsertUseCase(),
@@ -52,7 +46,7 @@ class BiometricLogs extends BaseListPage {
   }
 
   getCollectionName() {
-    return "biometric_logs";
+    return "Micheal";
   }
 
   paramsTest() {
@@ -141,9 +135,9 @@ class BiometricLogs extends BaseListPage {
                 objects={objects}
                 collection={this.getCollectionName()}
                 selectable
-                collapsable={
-                  user?.username === "mweeb@company.com" ? true : false
-                }
+                // collapsable={
+                //   user?.username === "mweeb@company.com" ? true : false
+                // }
                 excludeFields={Object.keys(schema.fields).reduce(
                   (acc, key) => {
                     const options = schema.fields[key];
@@ -192,4 +186,4 @@ class BiometricLogs extends BaseListPage {
   }
 }
 
-export default withRouter(BiometricLogs);
+export default withRouter(MichealPage);

@@ -13,11 +13,11 @@ function Head({
   objects,
 }) {
   return (
-    <tr style={{ backgroundColor: "#006BAC" }}>
+    <tr style={{ backgroundColor: "" }}>
       {selectable && (
         <th
+          className="bg-primary"
           style={{
-            backgroundColor: "#006BAC",
             color: "white",
             borderRadius: "10px 0 0 0",
           }}
@@ -37,13 +37,12 @@ function Head({
         return (
           <th
             style={{
-              backgroundColor: "#006BAC",
               color: "white",
               borderRadius: "0",
               fontSize: "clamp(12px, 2vw, 1rem)",
             }}
             key={field}
-            className="fs-xs align-middle text-nowrap"
+            className="fs-xs align-middle text-nowrap bg-primary"
           >
             {label}
           </th>
@@ -52,15 +51,15 @@ function Head({
       {actionsList.length > 0 && (
         <>
           <th
+            className="bg-primary"
             style={{
-              backgroundColor: "#006BAC",
               borderRadius: "10px",
             }}
           >
             <div style={{ width: "50px" }}></div>
           </th>
           <th
-            className="fs-xs align-middle text-nowrap"
+            className="fs-xs align-middle text-nowrap bg-primary"
             colSpan={actionsList.length}
             style={{
               borderRadius: "10px",
@@ -77,9 +76,9 @@ function Head({
           <div style={{ width: "50px" }}></div>
         </th> */}
         <th
-          className="fs-xs align-middle text-nowrap"
+          className="fs-xs align-middle text-nowrap bg-primary"
           style={{
-            backgroundColor: "#006BAC",
+            backgroundColor: "",
             color: "white",
             borderRadius: "0px 10px 0px 0px",
           }}

@@ -193,14 +193,12 @@ class CollectionListPage extends BaseListPage {
             return (
               <div
                 className="dropdown dropstart d-inline-block"
-                style={{
-                  fontSize: "clamp(12px, 2vw, 1rem)",
-                }}
+                style={{ fontSize: "clamp(1.5rem, 2vw, 1.8rem)" }}
               >
                 <i
                   role="button"
                   data-bs-toggle="dropdown"
-                  className="bi bi-three-dots-vertical text-dark"
+                  className="bi bi-three-dots-vertical text-white"
                 ></i>
                 <div className="dropdown-menu fs-xs">
                   <button
@@ -383,6 +381,7 @@ class CollectionListPage extends BaseListPage {
                 onSelectAll={this.onSelectAll.bind(this)}
                 progress={progress}
                 onClickItem={this.onClickItem.bind(this)}
+                onClickView={this.onClickView.bind(this)}
                 className="mt-3"
               />
             </div>
@@ -390,7 +389,7 @@ class CollectionListPage extends BaseListPage {
         </div>
         <div className="position-fixed bottom-0 end-0 m-4">
           <Button
-            className="btn text-white shadow-sm"
+            className="btn text-white shadow-sm bg-primary"
             onClick={this.onClickAdd.bind(this)}
             style={{
               width: "50px",

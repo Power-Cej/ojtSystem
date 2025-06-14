@@ -140,6 +140,11 @@ class BaseListPresenter {
     const collection = this.view.getCollectionName();
     this.view.navigateTo("/collection/" + collection + "/form/" + object.id);
   }
+  onClickView(index) {
+    const object = this.objects[index];
+    const collection = this.view.getCollectionName();
+    this.view.navigateTo("/collection/" + collection + "/view/" + object.id);
+  }
 
   onClickAdd() {
     const collection = this.view.getCollectionName();

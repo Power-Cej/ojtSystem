@@ -11,9 +11,9 @@ function NavBar(props) {
 
   return (
     <NavigationBar
-      className="shadow-sm"
+      className="shadow-sm bg-primary"
       // title="DASHBOARD"
-      logo="/nq-3.png"
+      logo="/logo.svg"
       onClickNavigate={onClickNavigate}
       {...props}
     />

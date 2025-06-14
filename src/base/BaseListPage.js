@@ -73,6 +73,10 @@ class BaseListPage extends BasePage {
     this.presenter.onClickItem(index, field);
   }
 
+  onClickView(index, field) {
+    this.presenter.onClickView(index, field);
+  }
+
   // get only the readable fields
   getKeys() {
     const schema = this.getSchema(this.getCollectionName());

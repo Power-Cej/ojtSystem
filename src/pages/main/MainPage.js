@@ -9,12 +9,11 @@ import CollectionListPage from "../collection-list/CollectionListPage";
 import CollectionFormPage from "../collection-form/CollectionFormPage";
 import BasePage from "../../base/BasePage";
 import NotFoundPage from "../notfound";
-import { Layout, Progress, LogoHolder } from "nq-component";
+import { Layout, Progress } from "nq-component";
 import MigrationPage from "../migration/MigrationPage";
 import AccountPage from "../account/AccountPage";
 import RoleFormPage from "../role-form/RoleFormPage";
 import withRouter from "../../withRouter";
-import DashboardPage from "../dashboard/DashboardPage";
 import HooksPage from "../web-hook/HooksPage";
 import FunctionPage from "../web-hook/FunctionPage";
 import SchemaPage from "../schema/SchemaPage";
@@ -23,6 +22,9 @@ import jsonMenu from "./menus.json";
 import DailyTimerecord from "../DailyTimeRecord/DailyTimerecord";
 import DashboardMain from "../DashboardMain/DashboardMain";
 import BiometricLogs from "../BiometricLogs/BiometricLogs";
+import LogoHolder from "../../components/LogoHolder";
+import PeterPage from "../Peter/PeterPage";
+import MichealPage from "../Micheal/MichealPage";
 
 class MainPage extends BasePage {
   constructor(props) {
@@ -115,6 +117,7 @@ class MainPage extends BasePage {
       name: "Recorded Dashboard",
       icon: "bi bi-sliders",
       route: "/timeRec",
+      access: ["ADMIN", "OJT"],
     };
 
     // const filterSchema = schemas.filter(
@@ -153,13 +156,13 @@ class MainPage extends BasePage {
               >
                 <nav className="">
                   <div
-                    className="text-center  p-4"
-                    style={{ backgroundColor: "#006BAC" }}
+                    className="text-center  p-4 bg-primary"
+                    // style={{ backgroundColor: "#006BAC" }}
                   >
                     <LogoHolder
-                      className="bg-white"
+                      className="bg-red"
                       textClassName="text-dark"
-                      logo={"/nq-4.png"}
+                      logo={"/logo.svg"}
                       name={user.username}
                     />
                     <p className="text-white mt-3">
@@ -186,7 +189,7 @@ class MainPage extends BasePage {
                   </div>
                 </nav>
               </div>
-              <div className="bg-white p-2" style={{ color: "#0b74b2" }}>
+              <div className="bg-white p-2 text-primary">
                 <button
                   className="nav-link  btn btn-link"
                   onClick={this.onClickSignOut.bind(this)}
@@ -216,6 +219,12 @@ class MainPage extends BasePage {
               path={"/collection/biometric_logs"}
               element={<BiometricLogs />}
             />
+            <Route exact path={"/collection/Peter"} element={<PeterPage />} />
+            <Route
+              exact
+              path={"/collection/Micheal"}
+              element={<MichealPage />}
+            />
             <Route
               exact
               path={"/collection/biometric_logs/:id"}
@@ -235,6 +244,10 @@ class MainPage extends BasePage {
             />
             <Route
               path={"/collection/:name/form/:id"}
+              element={<CollectionFormPage />}
+            />
+            <Route
+              path={"/collection/:name/view/:id"}
               element={<CollectionFormPage />}
             />
             <Route path={"/migration"} element={<MigrationPage />} />

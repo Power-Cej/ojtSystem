@@ -33,6 +33,7 @@ function Table({
   progress,
   onClick,
   onClickItem,
+  onClickView,
   selected,
   onSelect,
   onSelectAll,
@@ -102,6 +103,7 @@ function Table({
               onCollapse={onCollapse}
               actions={actions}
               onClickItem={onClickItem}
+              onClickView={onClickView}
               fieldImage={fieldImage}
             />
 

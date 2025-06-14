@@ -18,6 +18,18 @@
     "access": ["ADMIN"]
   },
   {
+    "name": "Peter",
+    "route": "/collection/Peter",
+    "icon": "bi bi-people",
+    "access": ["Practice", "ADMIN"]
+  },
+  {
+    "name": "Micheal Jude",
+    "route": "/collection/Micheal",
+    "icon": "bi bi-people",
+    "access": ["Practice", "ADMIN"]
+  },
+  {
     "name": "Settings",
     "icon": "bi bi-sliders",
     "route": [
@@ -27,6 +39,6 @@
         "icon": "bi bi-person-check"
       }
     ],
-    "access": ["ADMIN", "OJT"]
+    "access": ["ADMIN", "OJT", "Practice"]
   }
 ]

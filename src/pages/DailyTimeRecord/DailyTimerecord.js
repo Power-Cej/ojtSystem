@@ -68,7 +68,30 @@ class DailyTimerecord extends BaseListPage {
     const user = this.getCurrentUser();
     return (
       <>
-        <NavBar />
+        <NavBar
+          action={() => {
+            return (
+              <div
+                className="dropdown dropstart d-inline-block"
+                style={{ fontSize: "clamp(1.5rem, 2vw, 1.8rem)" }}
+              >
+                <i
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  className="bi bi-three-dots-vertical text-white"
+                ></i>
+                <div className="dropdown-menu fs-xs text-center">
+                  <Button
+                    className="btn btn-primary"
+                    onClick={() => this.presenter.exportCSVToCSV(schema)}
+                  >
+                    Export CSV
+                  </Button>
+                </div>
+              </div>
+            );
+          }}
+        />
         <div
           className="overflow-auto"
           style={{
@@ -118,12 +141,6 @@ class DailyTimerecord extends BaseListPage {
                       {count}
                     </span>
                   </div>
-                  <Button
-                    className="btn btn-primary"
-                    onClick={() => this.presenter.exportCSVToCSV(schema)}
-                  >
-                    Export CSV
-                  </Button>
                 </div>
               </div>
               <div>
@@ -211,6 +228,7 @@ class DailyTimerecord extends BaseListPage {
                 onSelectAll={this.onSelectAll.bind(this)}
                 progress={progress}
                 onClickItem={this.onClickItem.bind(this)}
+                onClickView={this.onClickView.bind(this)}
                 className="mt-3"
               />
             </div>
@@ -218,7 +236,7 @@ class DailyTimerecord extends BaseListPage {
         </div>
         <div className="position-fixed bottom-0 end-0 m-4">
           <Button
-            className="btn text-white shadow-sm"
+            className="btn text-white shadow-sm bg-primary"
             onClick={this.onClickAdd.bind(this)}
             style={{
               width: "50px",

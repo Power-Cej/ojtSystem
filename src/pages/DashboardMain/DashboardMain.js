@@ -125,7 +125,7 @@ class DashboardMain extends BaseListPage {
                 return (
                   <InputFactory
                     key={field}
-                    className="ms-1"
+                    className="p-1"
                     type={type}
                     field={field}
                     where={{}}
@@ -135,94 +135,120 @@ class DashboardMain extends BaseListPage {
                 );
               })}
             </div>
-            <div className="row d-flex">
+            <div className="row d-flex  p-1">
               {/* {this.TimeLogs()} */}
               {Array.isArray(objects) && objects.length > 0 ? (
                 Object.entries(this.groupByUser(objects)).map(
                   ([user, times]) => {
+                    const hour = this.secondsToTime(
+                      times.totalSeconds,
+                      user
+                    ).split(":");
                     const isComplete =
-                      this.secondsToTime(times.totalSeconds, user) >=
-                      minTimeDuration;
+                      Number(hour[0]) >= Number(minTimeDuration);
+                    const firstName = "Maria Jearand";
+                    const lastName = "Bulawan";
                     return (
-                      <div className="col-lg-4 p-2" key={user}>
+                      <div className="col-6 col-sm-6 col-md-4 p-2" key={user}>
                         <div
                           className="d-grid text-center p-2 border rounded shadow-sm"
                           style={{
-                            backgroundColor: isComplete
-                              ? "rgb(0, 107, 172)"
-                              : "white",
+                            backgroundColor: isComplete ? "#28A745" : "white",
                             color: isComplete ? "white" : "black",
                           }}
                         >
-                          <Popover
-                            trigger="hover"
-                            placement="bottomRight"
-                            content={
-                              <div className="d-grid gap-2">
-                                <Button
-                                  type="primary"
-                                  size="small"
-                                  style={{
-                                    backgroundColor: "green",
-                                    borderColor: "green",
-                                  }}
-                                  disabled={!isComplete}
-                                  onClick={() =>
-                                    this.presenter.openModal(user, times)
-                                  }
-                                >
-                                  Print COC
-                                </Button>
-                                <Button
-                                  type="primary"
-                                  size="small"
-                                  style={{
-                                    backgroundColor: "red",
-                                    borderColor: "red",
-                                  }}
-                                  onClick={() => {
-                                    this.navigateTo(
-                                      `/collection/daily_time_record/${user}`
-                                    );
-                                  }}
-                                >
-                                  DTR
-                                </Button>
-                                {this.getCurrentRoles().some((data) =>
-                                  data.id.includes("ADMIN")
-                                ) && (
+                          <div className="d-flex justify-content-between align-items-start flex-wrap">
+                            <h2
+                              className="ps-4 pt-2 m-auto mb-0 text-break d-grid"
+                              style={{
+                                fontSize: "clamp(0.7rem, 2vw, 1rem)",
+                                maxWidth: "85%",
+                              }}
+                            >
+                              <b>{user.toUpperCase()}</b>
+                              {/* <b>{firstName}</b>
+                              <label
+                                style={{
+                                  fontSize: "clamp(0.7rem, 2vw, 1rem)",
+                                }}
+                              >
+                                {lastName}
+                              </label> */}
+                            </h2>
+                            <Popover
+                              trigger="hover"
+                              placement="bottomRight"
+                              content={
+                                <div className="d-grid gap-2">
                                   <Button
                                     type="primary"
                                     size="small"
                                     style={{
-                                      backgroundColor: "gray",
-                                      borderColor: "gray",
+                                      backgroundColor: "primary",
+                                      borderColor: "primary",
                                     }}
                                     onClick={() => {
                                       this.navigateTo(
-                                        `/collection/biometric_logs/${user}`
+                                        `/collection/daily_time_record/${user}`
                                       );
                                     }}
                                   >
-                                    Biometric Logs
+                                    <i className="bi bi-file-earmark-arrow-down" />{" "}
+                                    DTR
                                   </Button>
-                                )}
-                              </div>
-                            }
-                          >
-                            <div
-                              className="p-2 ms-auto"
-                              style={{ cursor: "pointer" }}
+                                  <Button
+                                    type="primary"
+                                    size="small"
+                                    style={{
+                                      backgroundColor: "green",
+                                      borderColor: "green",
+                                    }}
+                                    disabled={!isComplete}
+                                    onClick={() =>
+                                      this.presenter.openModal(user, times)
+                                    }
+                                  >
+                                    <i className="bi bi-file-earmark-arrow-down" />{" "}
+                                    Print COC
+                                  </Button>
+                                  {this.getCurrentRoles().some((data) =>
+                                    data.id.includes("ADMIN")
+                                  ) && (
+                                    <Button
+                                      type="primary"
+                                      size="small"
+                                      style={{
+                                        backgroundColor: "#123DB3",
+                                        borderColor: "#123DB3",
+                                      }}
+                                      onClick={() => {
+                                        this.navigateTo(
+                                          `/collection/biometric_logs/${user}`
+                                        );
+                                      }}
+                                    >
+                                      <i className="bi bi-file-earmark-arrow-down" />{" "}
+                                      Biometric Logs
+                                    </Button>
+                                  )}
+                                </div>
+                              }
                             >
-                              <i className="bi bi-three-dots-vertical" />
-                            </div>
-                          </Popover>
-                          <h2 style={{ fontSize: "clamp(1.2rem,2vw, 1.5rem)" }}>
-                            <b>{user.toUpperCase()}</b>
-                          </h2>
-                          <h5 style={{ fontSize: "clamp(1rem, 2vw, 1.3rem)" }}>
-                            Duration:{" "}
+                              <div
+                                style={{
+                                  cursor: "pointer",
+                                  fontSize: "1.2rem",
+                                }}
+                              >
+                                <i className="bi bi-three-dots-vertical" />
+                              </div>
+                            </Popover>
+                          </div>
+
+                          <h5 style={{ fontSize: "clamp(.8rem, 2vw, 1rem)" }}>
                             {this.secondsToTime(times.totalSeconds, user)}
+                            <br />
+                            Duration
                           </h5>
                         </div>
                       </div>
