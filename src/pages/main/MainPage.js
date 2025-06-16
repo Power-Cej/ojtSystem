@@ -23,8 +23,6 @@ import DailyTimerecord from "../DailyTimeRecord/DailyTimerecord";
 import DashboardMain from "../DashboardMain/DashboardMain";
 import BiometricLogs from "../BiometricLogs/BiometricLogs";
 import LogoHolder from "../../components/LogoHolder";
-import PeterPage from "../Peter/PeterPage";
-import MichealPage from "../Micheal/MichealPage";
 
 class MainPage extends BasePage {
   constructor(props) {
@@ -115,7 +113,7 @@ class MainPage extends BasePage {
     // };
     const timeMenu = {
       name: "Recorded Dashboard",
-      icon: "bi bi-sliders",
+      icon: "bi bi-grid",
       route: "/timeRec",
       access: ["ADMIN", "OJT"],
     };
@@ -218,12 +216,6 @@ class MainPage extends BasePage {
               exact
               path={"/collection/biometric_logs"}
               element={<BiometricLogs />}
-            />
-            <Route exact path={"/collection/Peter"} element={<PeterPage />} />
-            <Route
-              exact
-              path={"/collection/Micheal"}
-              element={<MichealPage />}
             />
             <Route
               exact

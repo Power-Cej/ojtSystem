@@ -25,6 +25,7 @@ function ModalContent({
   footer,
   className,
   closable,
+  ...props
 }) {
   const [open, setOpen] = React.useState(isOpen);
   React.useEffect(() => {
@@ -34,7 +35,13 @@ function ModalContent({
     minWidth: "6em",
   };
   return (
-    <Modal isOpen={open} onClosed={onClosed} size={size} closable={closable}>
+    <Modal
+      isOpen={open}
+      onClosed={onClosed}
+      size={size}
+      closable={closable}
+      {...props}
+    >
       <Modal.Body className={classNames("p-0", className)}>
         {children}
       </Modal.Body>

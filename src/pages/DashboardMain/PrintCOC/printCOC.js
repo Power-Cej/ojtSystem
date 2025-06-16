@@ -41,7 +41,7 @@ export default function PrintCOC({ object }) {
     return (
       <div
         style={{
-          width: "40rem",
+          width: "auto",
           position: "absolute",
           textAlign: "center",
           top: "18rem",
@@ -88,7 +88,7 @@ export default function PrintCOC({ object }) {
         </h1>
       )}
       {contentText(
-        { top: "23.4rem", width: "50rem" },
+        { top: "23.4rem" },
         <label
           style={{
             fontStyle: "italic",
@@ -103,7 +103,7 @@ export default function PrintCOC({ object }) {
         </label>
       )}
       {contentText(
-        { top: "28.2rem", width: "50rem" },
+        { top: "28.2rem" },
         <label
           style={{
             fontStyle: "italic",
@@ -122,7 +122,6 @@ export default function PrintCOC({ object }) {
       {contentText(
         {
           top: "35rem",
-          width: "50rem",
           textAlign: "center",
         },
         <label style={{ fontSize: "20px", color: "#333" }}>

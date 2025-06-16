@@ -1,14 +1,14 @@
 [
   {
       "name": "Biometric Logs",
-      "icon": "bi bi-sliders",
+      "icon": "bi bi-fingerprint",
       "route": "/collection/biometric_logs",
       "access": ["ADMIN"]
     },
   {
     "name": "Daily Time Record",
     "route": "/collection/daily_time_record",
-    "icon": "bi bi-people",
+    "icon": "bi bi-clock-history",
     "access": ["ADMIN", "OJT"]
   },
   {
@@ -18,20 +18,8 @@
     "access": ["ADMIN"]
   },
   {
-    "name": "Peter",
-    "route": "/collection/Peter",
-    "icon": "bi bi-people",
-    "access": ["Practice", "ADMIN"]
-  },
-  {
-    "name": "Micheal Jude",
-    "route": "/collection/Micheal",
-    "icon": "bi bi-people",
-    "access": ["Practice", "ADMIN"]
-  },
-  {
     "name": "Settings",
-    "icon": "bi bi-sliders",
+    "icon": "bi bi-gear",
     "route": [
       {
         "name": "Edit Account",

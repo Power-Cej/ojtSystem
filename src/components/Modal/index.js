@@ -33,7 +33,9 @@ function Modal({ children, isOpen, className, closable, ...props }) {
       <>
         <div className="w-100 h-100 position-absolute" onClick={onCLick} />
         <div className={classes}>
-          <div className="modal-content">{children}</div>
+          <div className="modal-content" style={props.style}>
+            {children}
+          </div>
         </div>
       </>
     );

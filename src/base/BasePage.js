@@ -1,9 +1,10 @@
 import React from "react";
 import createPromise from "../createPromise";
 import Context from "../AppContext";
-import { dialog } from "nq-component";
+import { classNames } from "nq-component";
 import ProgressDialog from "./ProgressDialog";
 import ConfirmDialog from "./ConfirmDialog";
+import dialog from "../components/Modal/dialog";
 
 /**
  * responsible for global function use for all components
@@ -81,7 +82,8 @@ class BasePage extends React.Component {
     const options = {
       title: title || "Success",
       message: message,
-      icon: "bi bi-check-circle-fill",
+      // icon: "bi bi-check-circle-fill",
+      icon: "/checked.svg",
       type: "primary",
       positiveButton: "OKAY",
       negativeButton: false,
@@ -94,7 +96,8 @@ class BasePage extends React.Component {
     const options = {
       title: title || "Are you sure?",
       message: message,
-      icon: "bi bi-exclamation-triangle",
+      // icon: "bi bi-exclamation-triangle",
+      icon: "/exclamation.svg",
       type: "primary",
       positiveButton: positiveButton || "OKAY",
       negativeButton: negativeButton || "CANCEL",
@@ -106,6 +109,7 @@ class BasePage extends React.Component {
   showDialog({ title, message, icon, type, ...options }) {
     const promise = createPromise();
     dialog.fire({
+      style: { backgroundColor: "#EEEBE7" },
       html: (
         <ConfirmDialog
           icon={icon}

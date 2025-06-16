@@ -161,7 +161,6 @@ class DailyTimerecord extends BaseListPage {
                       onChange={(value) => {
                         this.setState({
                           object: {
-                            // ...user,
                             fullName: `${user.firstName || ""} ${
                               user.middleName || ""
                             } ${user.lastName || ""}`,

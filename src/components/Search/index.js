@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { dialog } from "nq-component";
 import Filter from "../Filter/Filter";
 import classNames from "../../classNames";
+import { Drawer } from "antd";
+import InputFactory from "../InputFactory";
+import { label } from "framer-motion/client";
+import FormFactory from "../FormFactory";
 
 let timeout;
 
@@ -32,25 +36,53 @@ function Search({ className, schemas, fields, onSubmit }) {
     }, 300);
   }
 
-  function onClickFilter() {
-    function _onSubmit(where) {
-      dialog.close();
-      onSubmit(where);
-    }
+  const [isClicked, setIsClicked] = useState(false);
 
-    dialog.fire({
-      html: (
-        <Filter
-          schemas={schemas}
-          fields={fields}
-          onSubmit={_onSubmit}
-          onCancel={() => dialog.close()}
-        />
-      ),
-      footer: false,
-    });
+  const showDrawer = () => {
+    setIsClicked(true);
+  };
+
+  function _onSubmit(where) {
+    // dialog.close();
+    onSubmit(where);
   }
 
+  // function onClickFilter() {
+
+  //   dialog.fire({
+  //     html: (
+  //       <Filter
+  //         schemas={schemas}
+  //         fields={fields}
+  //         onSubmit={_onSubmit}
+  //         onCancel={() => dialog.close()}
+  //       />
+  //     ),
+  //     footer: false,
+  //   });
+  // }
+  const isMobile = window.innerWidth <= 768;
+  const schemaFields = {
+    fields: {
+      batch: {
+        type: "String",
+        _type: "Enum",
+        options: Array.from({ length: 10 }, (_, i) => (i + 1).toString()),
+      },
+    },
+  };
+
+  const handleChange = (value, field) => {
+    const where = {
+      [field]: value,
+    };
+    if (value) {
+      _onSubmit(where);
+    } else {
+      _onSubmit({});
+    }
+    setIsClicked(false);
+  };
   return (
     <div className={classNames("input-group", className)}>
       {/* <i
@@ -71,12 +103,33 @@ function Search({ className, schemas, fields, onSubmit }) {
         style={{ width: "100px" }}
       />
       <button
-        onClick={onClickFilter}
+        onClick={showDrawer}
         className="btn btn-link border-0 p-0 ms-1 d-flex align-items-center bg-transparent"
         type="button"
       >
         <i className="bi bi-filter fs-4" />
       </button>
+
+      {/* show Drawer  */}
+      <Drawer
+        title="Basic Drawer"
+        width={isMobile ? "70vw" : "30vw"}
+        closable={{ "aria-label": "Close Button" }}
+        onClose={() => setIsClicked(false)}
+        open={isClicked}
+      >
+        {/* <Filter
+            schemas={schemas}
+            fields={fields}
+            onSubmit={_onSubmit}
+            onCancel={() => dialog.close()}
+          /> */}
+        <FormFactory
+          className="w-100"
+          schema={schemaFields}
+          onChange={(value, field) => handleChange(value, field)}
+        />
+      </Drawer>
     </div>
   );
 }

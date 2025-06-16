@@ -173,11 +173,11 @@ class CollectionListPage extends BaseListPage {
   }
 
   searchSubmit(where, merge) {
-    // console.log("WHER: ", where);
+    console.log("SUBMIT: ", where);
     // console.log("WHER: ", merge);
-    if (this.getCollectionName() === "daily_time_record") {
-      where.$or.push({ timeRecStats: { $elemMatch: where.$or[0].id } });
-    }
+    // if (this.getCollectionName() === "daily_time_record") {
+    //   where.$or.push({ timeRecStats: { $elemMatch: where.$or[0].id } });
+    // }
     this.presenter.searchSubmit(where, merge);
   }
 
