@@ -50,13 +50,11 @@ class DashboardMain extends BaseListPage {
   }
 
   secondsToTime(totalSeconds, user) {
-    const additionH = user === "gestanestle" ? 106 : user === "jalen" ? 84 : 0;
+    // const additionH = user === "gestanestle" ? 106 : user === "jalen" ? 84 : 0;
+    const additionH = ["ken", "charles", "laila", "rafh"].includes(user) && 193;
     const h = Math.floor(totalSeconds / 3600) + additionH;
     const m = Math.floor((totalSeconds % 3600) / 60);
     const s = totalSeconds % 60;
-    // console.log("TOTAL : ", h);
-    // console.log("MIN : ", m);
-    // console.log("SEC : ", s);
     return `${String(h).padStart(2, "0")}:${String(m).padStart(
       2,
       "0"
@@ -106,7 +104,7 @@ class DashboardMain extends BaseListPage {
   render() {
     const { objects } = this.state;
     const schema = this.getSchema(this.getCollectionName());
-    const minTimeDuration = "286";
+    const minTimeDuration = "486";
     return (
       <>
         <NavBar />
@@ -196,40 +194,42 @@ class DashboardMain extends BaseListPage {
                                     <i className="bi bi-file-earmark-arrow-down" />{" "}
                                     DTR
                                   </Button>
-                                  <Button
-                                    type="primary"
-                                    size="small"
-                                    style={{
-                                      backgroundColor: "green",
-                                      borderColor: "green",
-                                    }}
-                                    disabled={!isComplete}
-                                    onClick={() =>
-                                      this.presenter.openModal(user, times)
-                                    }
-                                  >
-                                    <i className="bi bi-file-earmark-arrow-down" />{" "}
-                                    Print COC
-                                  </Button>
                                   {this.getCurrentRoles().some((data) =>
                                     data.id.includes("ADMIN")
                                   ) && (
-                                    <Button
-                                      type="primary"
-                                      size="small"
-                                      style={{
-                                        backgroundColor: "#123DB3",
-                                        borderColor: "#123DB3",
-                                      }}
-                                      onClick={() => {
-                                        this.navigateTo(
-                                          `/collection/biometric_logs/${user}`
-                                        );
-                                      }}
-                                    >
-                                      <i className="bi bi-file-earmark-arrow-down" />{" "}
-                                      Biometric Logs
-                                    </Button>
+                                    <>
+                                      <Button
+                                        type="primary"
+                                        size="small"
+                                        style={{
+                                          backgroundColor: "green",
+                                          borderColor: "green",
+                                        }}
+                                        disabled={!isComplete}
+                                        onClick={() =>
+                                          this.presenter.openModal(user, times)
+                                        }
+                                      >
+                                        <i className="bi bi-file-earmark-arrow-down" />{" "}
+                                        Print COC
+                                      </Button>
+                                      <Button
+                                        type="primary"
+                                        size="small"
+                                        style={{
+                                          backgroundColor: "#123DB3",
+                                          borderColor: "#123DB3",
+                                        }}
+                                        onClick={() => {
+                                          this.navigateTo(
+                                            `/collection/biometric_logs/${user}`
+                                          );
+                                        }}
+                                      >
+                                        <i className="bi bi-file-earmark-arrow-down" />{" "}
+                                        Biometric Logs
+                                      </Button>
+                                    </>
                                   )}
                                 </div>
                               }

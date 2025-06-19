@@ -59,10 +59,16 @@ class DailyTimerecordPresenter extends BaseListPresenter {
     const collection = this.view.getCollectionName();
     const query = this.createQuery();
     try {
+      // console.log("WEHRE: ", query.where.user);
       this.showProgress();
       this.findObjectUseCase.abort();
       const objects = await this.findObjectUseCase.execute(collection, query);
+      const users = await this.findObjectUseCase.execute("users", {
+        where: { username: query.where.user },
+      });
+      // console.log("USERS: ", users);
       this.objects = this.objects.concat(objects);
+      this.view.setState({ currentUser: users[0] });
       this.view.setTotal(this.objects.length);
       this.view.setObjects(this.objects);
       this.hideProgress();

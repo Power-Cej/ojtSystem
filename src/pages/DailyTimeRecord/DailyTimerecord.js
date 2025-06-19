@@ -30,6 +30,7 @@ class DailyTimerecord extends BaseListPage {
     );
     this.state = {
       objects: [],
+      object: {},
       selected: [],
       month: [
         "January",
@@ -45,6 +46,7 @@ class DailyTimerecord extends BaseListPage {
         "November",
         "December",
       ],
+      currentUser: {},
     };
     this.printPDF = createRef();
   }
@@ -63,7 +65,8 @@ class DailyTimerecord extends BaseListPage {
 
   render() {
     const schema = this.getSchema(this.getCollectionName());
-    const { objects, selected, count, progress } = this.state;
+    const { objects, selected, count, progress, object, currentUser } =
+      this.state;
     if (!schema) return <Progress />;
     const user = this.getCurrentUser();
     return (
@@ -105,7 +108,7 @@ class DailyTimerecord extends BaseListPage {
           >
             <div className="d-none mt-5">
               <div ref={this.printPDF} id="printPDF">
-                <PrintDTR objects={objects} object={this.state.object} />
+                <PrintDTR objects={objects} object={object} />
               </div>
             </div>
             <div className="p-3 p-lg-4">
@@ -161,9 +164,9 @@ class DailyTimerecord extends BaseListPage {
                       onChange={(value) => {
                         this.setState({
                           object: {
-                            fullName: `${user.firstName || ""} ${
-                              user.middleName || ""
-                            } ${user.lastName || ""}`,
+                            fullName: `${currentUser?.firstName || ""} ${
+                              currentUser?.middleName || ""
+                            } ${currentUser?.lastName || ""}`,
                             selectedMonth: value,
                           },
                         });

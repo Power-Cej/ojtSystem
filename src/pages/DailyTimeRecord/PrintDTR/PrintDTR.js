@@ -1,9 +1,4 @@
-import { data } from "framer-motion/client";
-
 export default function PrintDTR({ objects, object }) {
-  console.log("OBJECT: ", objects);
-  console.log("object: ", object);
-
   const monthOf = {
     0: "January",
     1: "February",
