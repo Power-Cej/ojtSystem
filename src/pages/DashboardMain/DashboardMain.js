@@ -205,7 +205,7 @@ class DashboardMain extends BaseListPage {
                                           backgroundColor: "green",
                                           borderColor: "green",
                                         }}
-                                        disabled={!isComplete}
+                                        // disabled={!isComplete}
                                         onClick={() =>
                                           this.presenter.openModal(user, times)
                                         }

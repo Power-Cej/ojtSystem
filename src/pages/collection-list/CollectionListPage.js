@@ -356,7 +356,8 @@ class CollectionListPage extends BaseListPage {
                 collection={this.getCollectionName()}
                 selectable
                 collapsable={
-                  user?.username === "mweeb@company.com" ? true : false
+                  // user?.username === "mweeb@company.com" ? true : false
+                  true
                 }
                 excludeFields={Object.keys(schema.fields).reduce(
                   (acc, key) => {

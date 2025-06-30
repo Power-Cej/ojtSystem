@@ -13,22 +13,44 @@ function dateFormatter(date) {
 
 export default function PrintCOC({ object }) {
   const PRINT_STYLES = {
+    // container: {
+    //   // width: "11.69in", // landscape width
+    //   // height: "8.27in",
+    //   // border: "1px solid red",
+    //   display: "flex",
+    //   justifyContent: "center",
+    //   alignItems: "center",
+    //   position: "relative",
+    //   // marginLeft: "-10px",
+    //   // marginTop: "-10px",
+    //   // border: "3px solid red",
+    //   fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+    //   fontSize: "18px",
+    //   fontWeight: 400,
+    //   lineHeight: 1.5,
+    //   letterSpacing: "2px",
+    //   textAlign: "center",
+    // },
     container: {
-      width: "11.69in", // landscape width
-      height: "8.27in",
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
       position: "relative",
-      marginLeft: "-10px",
-      marginTop: "-10px",
-      border: "1px solid",
       fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
       fontSize: "18px",
       fontWeight: 400,
       lineHeight: 1.5,
       letterSpacing: "2px",
       textAlign: "center",
+      backgroundImage: "url('/printCOC.png')",
+      backgroundSize: "cover",
+      backgroundRepeat: "no-repeat",
+      backgroundPosition: "center",
+      // Force background to print
+      WebkitPrintColorAdjust: "exact",
+      colorAdjust: "exact",
+      printColorAdjust: "exact",
+      minHeight: "100vh", // Ensure container has height
     },
     image: {
       maxWidth: "100%",
@@ -67,13 +89,16 @@ export default function PrintCOC({ object }) {
   const date = [dateFormatter(object?.dateFrom), dateFormatter(object?.dateTo)];
   const OjtDuration = date.filter(Boolean).join(" - ");
 
+  const nameOfSignatory = object?.nameOfSignatory?.toUpperCase() ?? "";
+  const position = object?.position ?? "";
+
   return (
     <div style={PRINT_STYLES.container}>
-      <img
+      {/* <img
         src="/printCOC.png"
         style={PRINT_STYLES.image}
         alt="Leave Template"
-      />
+      /> */}
       {contentText(
         {},
         <h1
@@ -97,9 +122,9 @@ export default function PrintCOC({ object }) {
             color: "#333",
           }}
         >
-          &nbsp;&nbsp;&nbsp;&nbsp;has completed the {timeRender} hours
-          On-The-Job Training at Mweeb <br />
-          Information Technology Inc. from {OjtDuration}
+          &nbsp;&nbsp;&nbsp;&nbsp;has been completed the {timeRender} hours
+          On-The-Job Training at MWeeb <br />
+          Information Technology Inc., from <b>{OjtDuration}</b>.
         </label>
       )}
       {contentText(
@@ -114,7 +139,7 @@ export default function PrintCOC({ object }) {
         >
           We found this sincere, hardworking, dedicated, and result oriented.
           <br />
-          He workded well as part of the team during his venture. We thnak this
+          He worked well as part of the team during his venture. We thank this
           <br />
           opportunity to thank him and wish him all the best for his future.
         </label>
@@ -127,6 +152,27 @@ export default function PrintCOC({ object }) {
         <label style={{ fontSize: "20px", color: "#333" }}>
           Awarded this {`${awardDate}`} at Mandaluyong City, Philippines
         </label>
+      )}
+      {contentText(
+        {
+          top: "43rem",
+          textAlign: "center",
+        },
+        <h3
+          style={{
+            borderTop: "2px solid black",
+          }}
+        >
+          {nameOfSignatory}
+        </h3>
+      )}
+      {contentText(
+        {
+          top: "45rem",
+          textAlign: "center",
+          fontSize: "21px",
+        },
+        <label style={{ color: "#333" }}>{position}, MWeeb Inc.</label>
       )}
     </div>
   );

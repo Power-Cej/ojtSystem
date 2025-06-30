@@ -113,12 +113,11 @@ class DashboardMainPresenter extends BaseListPresenter {
     const currentUser = await this.findObjectUseCase.execute("users", {
       where: { username: user },
     });
-    console.log("USER: ", currentUser);
     this.view.setState({ object: { ...(currentUser[0] || {}), times } });
     const cocSchema = {
       fields: {
         timeRendered: {
-          type: "String",
+          type: "Number",
           required: true,
         },
         dateFrom: {
@@ -127,6 +126,15 @@ class DashboardMainPresenter extends BaseListPresenter {
         },
         dateTo: {
           type: "Date",
+          required: true,
+        },
+        nameOfSignatory: {
+          type: "String",
+          required: true,
+          uppercase: true,
+        },
+        position: {
+          type: "String",
           required: true,
         },
       },
@@ -163,63 +171,76 @@ class DashboardMainPresenter extends BaseListPresenter {
   }
 
   async handlePrintCOC() {
-    printComponent(this.view.contractPDF.current, "Tasks");
+    // printComponent(this.view.contractPDF.current, "Tasks");
     // const object = this.view.state;
-    // const iframe = document.createElement("iframe");
-    // iframe.style.position = "absolute";
-    // iframe.style.width = "0";
-    // iframe.style.height = "0";
-    // iframe.style.border = "none";
+    const iframe = document.createElement("iframe");
+    iframe.style.position = "absolute";
+    iframe.style.width = "0";
+    iframe.style.height = "0";
+    iframe.style.border = "none";
 
-    // document.body.appendChild(iframe);
+    document.body.appendChild(iframe);
 
-    // const iframeDoc = iframe.contentWindow.document;
+    const iframeDoc = iframe.contentWindow.document;
 
     // const printContentElement = PrintCOC({
     //   object: object,
     // });
-    // const printContentHTML = renderToStaticMarkup(printContentElement);
+    const printContentHTML = this.view.contractPDF.current.outerHTML;
 
-    // iframeDoc.open();
-    // iframeDoc.write(
-    //   `<html><head><title>Print PDS</title><style>
-    //     body {
-    //       font-family: Arial, sans-serif;
-    //   margin: 0;
-    //   padding: 0;
-    //   counter-reset: page;
-    //   -webkit-print-color-adjust: exact !important;
-    //   color-adjust: exact !important;
-    //   print-color-adjust: exact !important;
-    //     }
-    //     .print-content-container {
-    //       display: flex;
-    //       flex-direction: row;
-    //       justify-content: center;
-    //     }
-    //     .print-content {
-    //       position: relative;
-    //     }
-    //     @page {
-    //       size: auto;
-    //         margin: 0;
-    //         padding: 0;
-    //     }
-    //   </style>
-    //   </head><body>`
-    // );
-    // // iframeDoc.write('<div class="print-content-container">');
-    // // iframeDoc.write('<div class="print-content">');
-    // iframeDoc.write(printContentHTML);
-    // iframeDoc.write("</body></html>");
-    // iframeDoc.close();
+    iframeDoc.open();
+    iframeDoc.write(`
+  <html>
+    <head>
+      <title>Print PDS</title>
+      <style>
+        * {
+          margin: 0 !important;
+          padding: 0 !important;
+          box-sizing: border-box;
+        }
 
-    // iframe.onload = () => {
-    //   iframe.contentWindow.print();
-    //   setTimeout(() => {
-    //     document.body.removeChild(iframe);
-    //   }, 1000);
-    // };
+        html, body {
+          font-family: Arial, sans-serif;
+          width: 100%;
+          height: 100%;
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+          color-adjust: exact !important;
+        }
+
+        .print-content-container {
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          width: 100%;
+        }
+
+        .print-content {
+          position: relative;
+          width: 100%;
+        }
+
+        @page {
+          size: auto;
+          margin: 0;
+        }
+      </style>
+    </head>
+    <body>
+`);
+    // iframeDoc.write('<div class="print-content-container">');
+    // iframeDoc.write('<div class="print-content">');
+    iframeDoc.write(printContentHTML);
+    iframeDoc.write("</body></html>");
+    iframeDoc.close();
+
+    iframe.onload = () => {
+      iframe.contentWindow.print();
+      setTimeout(() => {
+        document.body.removeChild(iframe);
+      }, 1000);
+    };
   }
 }
 
