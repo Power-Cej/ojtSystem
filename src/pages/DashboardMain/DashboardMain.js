@@ -61,32 +61,67 @@ class DashboardMain extends BaseListPage {
     )}:${String(s).padStart(2, "0")}`;
   }
 
+  // groupByUser(record) {
+  //   return record.reduce((acc, record) => {
+  //     if (!acc[record.user]) {
+  //       acc[record.user] = { totalSeconds: 0 };
+  //     }
+
+  //     // Check if timeIn or timeOut is "--:--", if so, skip this record
+  //     if (record.timeIn === "--:--" || record.timeOut === "--:--") {
+  //       return acc;
+  //     }
+
+  //     // Convert time values to seconds
+  //     let inSeconds = this.timeToSeconds(record.timeIn);
+  //     let outSeconds = this.timeToSeconds(record.timeOut);
+  //     console.log("REC: ", record);
+
+  //     // Define threshold times in seconds
+  //     const minTimeIn = this.timeToSeconds("09:00:00");
+  //     const maxTimeOut = this.timeToSeconds("17:00:00");
+
+  //     // Adjust timeIn: If it's before 09:00:00, set it to 09:00:00
+  //     if (inSeconds < minTimeIn) {
+  //       inSeconds = minTimeIn;
+  //     }
+
+  //     // Adjust timeOut: If it's after 17:00:00, set it to 17:00:00
+  //     if (outSeconds > maxTimeOut) {
+  //       outSeconds = maxTimeOut;
+  //     }
+
+  //     acc[record.user].totalSeconds += outSeconds - inSeconds;
+  //     return acc;
+  //   }, {});
+  // }
+
   groupByUser(record) {
     return record.reduce((acc, record) => {
       if (!acc[record.user]) {
         acc[record.user] = { totalSeconds: 0 };
       }
 
-      // Check if timeIn or timeOut is "--:--", if so, skip this record
       if (record.timeIn === "--:--" || record.timeOut === "--:--") {
         return acc;
       }
 
-      // Convert time values to seconds
       let inSeconds = this.timeToSeconds(record.timeIn);
       let outSeconds = this.timeToSeconds(record.timeOut);
 
-      // Define threshold times in seconds
       const minTimeIn = this.timeToSeconds("09:00:00");
       const maxTimeOut = this.timeToSeconds("17:00:00");
 
-      // Adjust timeIn: If it's before 09:00:00, set it to 09:00:00
+      // Adjust timeIn if earlier than 09:00:00
       if (inSeconds < minTimeIn) {
         inSeconds = minTimeIn;
       }
 
-      // Adjust timeOut: If it's after 17:00:00, set it to 17:00:00
-      if (outSeconds > maxTimeOut) {
+      // Only cap timeOut if date is before July 15, 2025
+      const recordDate = new Date(record.date);
+      const capEndDate = new Date("2025-07-16");
+
+      if (recordDate < capEndDate && outSeconds > maxTimeOut) {
         outSeconds = maxTimeOut;
       }
 
@@ -94,6 +129,7 @@ class DashboardMain extends BaseListPage {
       return acc;
     }, {});
   }
+
   setObjects(objects) {
     this.setState({ objects });
   }

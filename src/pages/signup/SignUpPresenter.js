@@ -21,6 +21,7 @@ class SignUpPresenter {
       username: email,
       email,
       password,
+      batch: "44",
       ...others,
     };
     this.view.showProgress();
