@@ -11,7 +11,7 @@ import TestPage from "./pages/TestPage";
 import TenantPage from "./pages/TenantPage";
 
 Queue.setUrl("https://api.innque.com/v1");
-Queue.setApplicationId("08c4235d-feb7-4d66-b138-08a54be60c8b");
+Queue.setApplicationId("ojt_system");
 
 function App() {
   return (

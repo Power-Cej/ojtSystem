@@ -16,7 +16,7 @@ class SignInPresenter {
         // masterKey: "e443e1c7-de63-49a5-b93f-a110f13a1b7e",
       };
       if (user?.username === "mweeb@company.com") {
-        user.masterKey = "e443e1c7-de63-49a5-b93f-a110f13a1b7e";
+        user.masterKey = "04e6a13c-d9d1-4203-bf21-af3d41e869ed";
       }
       this.view.showProgress();
       await this.signInUseCase.execute(user);
