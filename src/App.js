@@ -4,7 +4,6 @@ import AppProvider from "./AppProvider";
 import SignInPage from "./pages/signin/SignInPage";
 import MainPage from "./pages/main/MainPage";
 import SignUpPage from "./pages/signup/SignUpPage";
-import AccessDeniedPage from "./pages/denied";
 import Queue from "nq";
 import RedirectPage from "./pages/RedirectPage";
 import TestPage from "./pages/TestPage";
